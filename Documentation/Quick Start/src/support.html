@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="./img/fav.png" type="image/x-icon">
+    <title>Gymstick | Documentation</title>
+    <link rel="stylesheet" href="output.css">
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+
+        * {
+            list-style: none;
+            text-decoration: none;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Open Sans', sans-serif;
+        }
+
+        body {
+            background: #f5f6fa;
+        }
+
+        .wrapper .sidebar {
+            background: rgb(5, 68, 104);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 265px;
+            height: 100%;
+            padding: 20px 0;
+            transition: all 0.5s ease;
+        }
+
+        .wrapper .sidebar .profile {
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .wrapper .sidebar .profile img {
+            display: block;
+            width: 80px;
+            height: 50px;
+            margin: 0 auto;
+        }
+
+        .wrapper .sidebar .profile h3 {
+            color: #ffffff;
+            margin: 10px 0 5px;
+        }
+
+        .wrapper .sidebar .profile p {
+            color: rgb(206, 240, 253);
+            font-size: 14px;
+        }
+
+        .wrapper .sidebar ul li a {
+            display: block;
+            padding: 13px 30px;
+            border-bottom: 1px solid #10558d;
+            color: rgb(241, 237, 237);
+            font-size: 16px;
+            position: relative;
+        }
+
+        .wrapper .sidebar ul li a .icon {
+            color: #dee4ec;
+            width: 30px;
+            display: inline-block;
+        }
+
+
+
+        .wrapper .sidebar ul li a:hover,
+        .wrapper .sidebar ul li a.active {
+            color: #0c7db1;
+
+            background: white;
+            border-right: 2px solid rgb(5, 68, 104);
+        }
+
+        .wrapper .sidebar ul li a:hover .icon,
+        .wrapper .sidebar ul li a.active .icon {
+            color: #0c7db1;
+        }
+
+        .wrapper .sidebar ul li a:hover:before,
+        .wrapper .sidebar ul li a.active:before {
+            display: block;
+        }
+
+        .wrapper .section {
+            width: calc(100% - 225px);
+            margin-left: 225px;
+            transition: all 0.5s ease;
+        }
+
+        .wrapper .section .top_navbar {
+            background: rgb(7, 105, 185);
+            height: 50px;
+            display: flex;
+            align-items: center;
+            padding: 0 30px;
+
+        }
+
+        .wrapper .section .top_navbar .hamburger a {
+            font-size: 28px;
+            color: #f4fbff;
+            padding-left: 25px;
+        }
+
+        .wrapper .section .top_navbar .hamburger a:hover {
+            color: #a2ecff;
+        }
+
+
+
+        body.active .wrapper .sidebar {
+            left: -265px;
+        }
+
+        body.active .wrapper .section {
+            margin-left: 0;
+            width: 100%;
+        }
+
+        body.active .main_padding {
+            width: 100%;
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+
+        .main_padding {
+            padding-left: 265px;
+        }
+
+        @media only screen and (max-width: 678px) {
+            .main_padding {
+                padding-left: 50px;
+                padding-right: 10px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <section class="">
+        <div class="wrapper">
+            <div class="section">
+                <div class="top_navbar">
+                    <div class="hamburger">
+                        <a href="#">
+                            <i class="fas fa-bars"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="sidebar">
+                <div class="profile">
+                    <a href="../index.html">
+                        <h3>Gymstick</h3>
+                        <p>Quick Start</p>
+                    </a>
+                </div>
+                <ul>
+                    <li>
+                        <a href="./install.html">
+                            <span class="icon"><i class="fas fa-light fa-layer-group"></i></span>
+                            <span class="item">Installation Process</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="./env.html">
+                            <span class="icon"><i class="fas fa-tachometer-alt"></i></span>
+                            <span class="item">Admin Configuration</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="./support.html" class="active">
+                            <span class="icon"><i class="fas fa-solid fa-phone-volume"></i></span>
+                            <span class="item">Help and Support</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://gymstick.docs.appstick.com.bd/" target="_blank" style="text-decoration: none;">
+                            <span class="icon"><i class="fas fa-solid fa-shekel-sign"></i></span>
+                            <span class="item">Full Documentation</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+
+
+        <div class="main_padding">
+            <div class='p-10 lg:m-10 rounded lg:grid lg:grid-cols-2 lg:gap-8 font_family'>
+                <div>
+                    <h2 class='flex gap-2 items-center text-[34px]'><span>
+                            <FcOnlineSupport size={30} />
+                        </span> Get in touch</h2>
+                    <p class='text-[18px] leading-loose'>Want to get in touch? We would love to hear from you.</p>
+                    <p class='text-[20px]'>Email:
+                        <a href='mailto:support@appstick.com.bd' class='cursor-pointer'>
+                            support@appstick.com.bd</a>
+                    </p>
+                    <div class='text-[20px] md:flex gap-2'>Website:
+                        <a href='https://appstick.com.bd' class='cursor-pointer '
+                            target='_blank'><span>www.appstick.com.bd</span> </a>
+                    </div>
+                    <div class='my-2 cursor-pointer text-[18px] p-3 lg:w-[40%] bg-[#00A4E1] rounded-lg'>
+                        <a href='https://join.skype.com/invite/vAanTx5sbAUD' class='flex justify-center items-center gap-2 text-white'
+                            target='_blank'>
+                            <span>
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white"
+                                    viewBox="0 0 448 512">
+                                    <path
+                                        d="M424.7 299.8c2.9-14 4.7-28.9 4.7-43.8 0-113.5-91.9-205.3-205.3-205.3-14.9 0-29.7 1.7-43.8 4.7C161.3 40.7 137.7 32 112 32 50.2 32 0 82.2 0 144c0 25.7 8.7 49.3 23.3 68.2-2.9 14-4.7 28.9-4.7 43.8 0 113.5 91.9 205.3 205.3 205.3 14.9 0 29.7-1.7 43.8-4.7 19 14.6 42.6 23.3 68.2 23.3 61.8 0 112-50.2 112-112 .1-25.6-8.6-49.2-23.2-68.1zm-194.6 91.5c-65.6 0-120.5-29.2-120.5-65 0-16 9-30.6 29.5-30.6 31.2 0 34.1 44.9 88.1 44.9 25.7 0 42.3-11.4 42.3-26.3 0-18.7-16-21.6-42-28-62.5-15.4-117.8-22-117.8-87.2 0-59.2 58.6-81.1 109.1-81.1 55.1 0 110.8 21.9 110.8 55.4 0 16.9-11.4 31.8-30.3 31.8-28.3 0-29.2-33.5-75-33.5-25.7 0-42 7-42 22.5 0 19.8 20.8 21.8 69.1 33 41.4 9.3 90.7 26.8 90.7 77.6 0 59.1-57.1 86.5-112 86.5z" />
+                                </svg>
+                            </span> <span>Skype</span> </a>
+                    </div>
+
+                    <div class=' cursor-pointer text-[18px] p-3 lg:w-[40%] bg-green-500 rounded-lg'>
+                        <a href="https://wa.me/+8801404049797" class='flex justify-center items-center gap-2 text-white'
+                            target='_blank'>
+                            <span>
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white"
+                                    viewBox="0 0 448 512">
+                                    <path
+                                        d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z" />
+                                </svg>
+                            </span>
+                            <span class="white">Whatsapp</span>
+                        </a>
+                    </div>
+                    <div class='my-2 cursor-pointer text-[18px] p-3 lg:w-[40%] bg-blue-500 rounded-lg'>
+                        <a href="https://www.facebook.com/appstick.com.bd" class='flex justify-center items-center gap-2 text-white'
+                            target='_blank'><span>
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white"
+                                    viewBox="0 0 512 512">
+                                    <path
+                                        d="M504 256C504 119 393 8 256 8S8 119 8 256c0 123.78 90.69 226.38 209.25 245V327.69h-63V256h63v-54.64c0-62.15 37-96.48 93.67-96.48 27.14 0 55.52 4.84 55.52 4.84v61h-31.28c-30.8 0-40.41 19.12-40.41 38.73V256h68.78l-11 71.69h-57.78V501C413.31 482.38 504 379.78 504 256z" />
+                                </svg>
+                            </span><span>Facebook</span></a>
+                    </div>
+                    <div class=' cursor-pointer text-[18px] p-3 lg:w-[40%] bg-[#FF0000] rounded-lg'>
+                        <a href="https://www.youtube.com/channel/UC3FOvh2oLyTOb3jTjJafBFw"
+                            class='flex justify-center items-center gap-2 text-white' target='_blank'><span>
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white"
+                                    viewBox="0 0 576 512">
+                                    <path
+                                        d="M549.655 124.083c-6.281-23.65-24.787-42.276-48.284-48.597C458.781 64 288 64 288 64S117.22 64 74.629 75.486c-23.497 6.322-42.003 24.947-48.284 48.597-11.412 42.867-11.412 132.305-11.412 132.305s0 89.438 11.412 132.305c6.281 23.65 24.787 41.5 48.284 47.821C117.22 448 288 448 288 448s170.78 0 213.371-11.486c23.497-6.321 42.003-24.171 48.284-47.821 11.412-42.867 11.412-132.305 11.412-132.305s0-89.438-11.412-132.305zm-317.51 213.508V175.185l142.739 81.205-142.739 81.201z" />
+                                </svg>
+                            </span><span>Youtube</span> </a>
+                    </div>
+                </div>
+                <div class='bg-[#f3f6fe] flex items-center drop-shadow-lg h-[600px] w-full'>
+                    <img class='scene rounded drop-shadow-lg' src="./img/appstick.jpg" alt="" />
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+
+    <script>
+        var hamburger = document.querySelector(".hamburger");
+        hamburger.addEventListener("click", function () {
+            document.querySelector("body").classList.toggle("active");
+        })
+    </script>
+</body>
+
+</html>

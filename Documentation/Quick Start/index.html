@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css"
+        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <title>Gymstick | Documentation</title>
+    <link rel="shortcut icon" href="./src/img/fav.png" type="image/x-icon">
+    <link rel="stylesheet" href="./src/output.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+
+        * {
+            list-style: none;
+            text-decoration: none;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Open Sans', sans-serif;
+        }
+
+        body {
+            background: #f5f6fa;
+        }
+
+        .wrapper .sidebar {
+            background: rgb(5, 68, 104);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 265px;
+            height: 100%;
+            padding: 20px 0;
+            transition: all 0.5s ease;
+        }
+
+        .wrapper .sidebar .profile {
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .wrapper .sidebar .profile img {
+            display: block;
+            width: 80px;
+            height: 50px;
+            margin: 0 auto;
+        }
+
+        .wrapper .sidebar .profile h3 {
+            color: #ffffff;
+            margin: 10px 0 5px;
+        }
+
+        .wrapper .sidebar .profile p {
+            color: rgb(206, 240, 253);
+            font-size: 14px;
+        }
+
+        .wrapper .sidebar ul li a {
+            display: block;
+            padding: 13px 30px;
+            border-bottom: 1px solid #10558d;
+            color: rgb(241, 237, 237);
+            font-size: 16px;
+            position: relative;
+        }
+
+        .wrapper .sidebar ul li a .icon {
+            color: #dee4ec;
+            width: 30px;
+            display: inline-block;
+        }
+
+
+
+        .wrapper .sidebar ul li a:hover,
+        .wrapper .sidebar ul li a.active {
+            color: #0c7db1;
+            text-decoration: none;
+            background: white;
+            border-right: 2px solid rgb(5, 68, 104);
+        }
+
+        .wrapper .sidebar ul li a:hover .icon,
+        .wrapper .sidebar ul li a.active .icon {
+            color: #0c7db1;
+        }
+
+        .wrapper .sidebar ul li a:hover:before,
+        .wrapper .sidebar ul li a.active:before {
+            display: block;
+        }
+
+        .wrapper .section {
+            width: calc(100% - 225px);
+            margin-left: 225px;
+            transition: all 0.5s ease;
+        }
+
+        .wrapper .section .top_navbar {
+            background: rgb(7, 105, 185);
+            height: 50px;
+            display: flex;
+            align-items: center;
+            padding: 0 30px;
+
+        }
+
+        .wrapper .section .top_navbar .hamburger a {
+            font-size: 28px;
+            color: #f4fbff;
+            padding-left: 25px;
+        }
+
+        .wrapper .section .top_navbar .hamburger a:hover {
+            color: #a2ecff;
+        }
+
+
+
+        body.active .wrapper .sidebar {
+            left: -265px;
+        }
+
+        body.active .wrapper .section {
+            margin-left: 0;
+            width: 100%;
+        }
+
+        .main_title {
+            width: 70%;
+        }
+
+        body.active .main_padding {
+            width: 100%;
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+
+        .main_padding {
+            padding-left: 265px;
+        }
+
+        @media only screen and (max-width: 678px) {
+            .main_title {
+                width: 100%;
+                font-size: 16px!important;
+            }
+
+            .main_padding {
+                padding-left: 50px;
+                padding-right: 10px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <section class="">
+        <div class="wrapper">
+            <div class="section">
+                <div class="top_navbar">
+                    <div class="hamburger">
+                        <a href="#">
+                            <i class="fas fa-bars"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="sidebar">
+                <div class="profile">
+                    <a href="./index.html">
+                        <h3>Gymstick</h3>
+                        <p>Quick Start</p>
+                    </a>
+                </div>
+                <ul>
+                    <li>
+                        <a href="./src/install.html">
+                            <span class="icon"><i class="fas fa-light fa-layer-group"></i></span>
+                            <span class="item">Installation Process</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="./src/env.html">
+                            <span class="icon"><i class="fas fa-tachometer-alt"></i></span>
+                            <span class="item">Admin Configuration</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="./src/support.html">
+                            <span class="icon"><i class="fas fa-solid fa-phone-volume"></i></span>
+                            <span class="item">Help and Support</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://gymstick.docs.appstick.com.bd/" target="_blank" style="text-decoration: none;">
+                            <span class="icon"><i class="fas fa-solid fa-shekel-sign"></i></span>
+                            <span class="item">Full Documentation</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="main_padding">
+            <h4 style="text-align: center; margin-top: 5%; font-size: 20px; font-weight: 600;">Welcome to Gymstick</h4>
+            <div style="text-align: justify; margin:auto; margin-top: 2%; font-size: 18px; font-weight: 500;"
+                class="main_title">
+                <p class="text-gray-700">
+                    GymStick is a web-based solution that provides a complete online-based gym management system. It provides a full gym website with admin, trainer, and user panels where each individual can manage their gym management easily. Any organization involved in gym management may use the solution in accordance with their demands because it is entirely dynamic as well as easy to customize.
+                </p>
+
+                <div class="flex justify-center main_title w-full">
+                    <div class="overflow-hidden w-full space-y-1 mt-10 text-[16px]">
+                        <code class="text-black">This script includes: </code>
+                        <p>1. A complete backend and frontend</p>
+                        <p>2. Complete Admin Panel</p>
+                        <p>3. Complete Business Website</p>
+                        <p>4. Complete Trainer Panel</p>
+                        <p>4. Complete User Panel</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+
+
+
+    <script>
+        var hamburger = document.querySelector(".hamburger");
+        hamburger.addEventListener("click", function () {
+            document.querySelector("body").classList.toggle("active");
+        })
+
+        if (window.innerWidth <= 500) {
+            (function () {
+                document.querySelector("body").classList.toggle("active");
+            })();
+        }
+    </script>
+</body>
+
+</html>
