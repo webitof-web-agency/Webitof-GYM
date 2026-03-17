@@ -14,15 +14,14 @@ body {
 }
 
 .sidebar {
-  @apply w-0 overflow-y-auto md:w-[16rem] h-screen fixed left-0 z-10 top-0 bg-[#003049] transition-all duration-300;
+  @apply w-0 overflow-y-auto md:w-[16rem] h-screen fixed left-0 z-10 top-0 bg-white border-r border-gray-200 shadow-sm transition-all duration-300;
   scrollbar-width: none;
   -ms-overflow-style: none;
 
   .title {
-    @apply h-[70px] flex justify-center items-center text-white font-semibold;
+    @apply h-[70px] flex justify-center items-center font-semibold border-b border-gray-200;
     color: var(--brand-main);
-    background: rgba(255, 255, 255, 0.12);
-    backdrop-filter: blur(6px);
+    background: #ffffff;
   }
 
   .menu {
@@ -33,27 +32,27 @@ body {
     @apply py-8;
 
     .nav-menu {
-      @apply uppercase pl-6 pr-2 py-2 text-xs text-gray-200;
+      @apply uppercase pl-6 pr-2 py-2 text-xs text-gray-500;
     }
 
     .nav-link {
-      @apply flex items-center gap-4 pl-6 pr-2 py-2.5 text-sm text-gray-100 hover:text-white hover:border-l-[12px] hover:rounded-md hover:transition-all hover:duration-300 hover:ease-in-out relative;
+      @apply flex items-center gap-4 pl-6 pr-2 py-2.5 text-sm text-gray-700 hover:text-[#1f2937] hover:border-l-[12px] hover:rounded-md hover:transition-all hover:duration-300 hover:ease-in-out relative;
       background-color: transparent;
 
       &.active {
-        @apply text-white border-l-[12px] rounded-sm;
+        @apply text-[#1f2937] border-l-[12px] rounded-sm;
         border-color: var(--brand-main);
-        background: rgba(255, 255, 255, 0.2);
+        background: rgba(85, 114, 252, 0.1);
       }
 
       &:hover {
         border-color: var(--brand-second);
-        background: rgba(255, 255, 255, 0.12);
+        background: rgba(85, 114, 252, 0.06);
       }
 
       &.has-arrow::after {
         content: "";
-        @apply border-r border-b border-gray-100 w-1.5 h-1.5 absolute right-5 top-5 transform -rotate-45 transition-all duration-300 ease-in-out;
+        @apply border-r border-b border-gray-500 w-1.5 h-1.5 absolute right-5 top-5 transform -rotate-45 transition-all duration-300 ease-in-out;
       }
 
       &.active.has-arrow::after {
@@ -62,23 +61,23 @@ body {
     }
 
     .nav-link-sub {
-      @apply flex items-center gap-4 pl-6 pr-2 py-2.5 text-sm text-gray-100 hover:text-white hover:border-l-[12px] hover:rounded-md hover:transition-all hover:duration-300 hover:ease-in-out relative;
+      @apply flex items-center gap-4 pl-6 pr-2 py-2.5 text-sm text-gray-700 hover:text-[#1f2937] hover:border-l-[12px] hover:rounded-md hover:transition-all hover:duration-300 hover:ease-in-out relative;
       background-color: transparent;
 
       &.active {
-        @apply text-white border-l-[12px] rounded-md;
+        @apply text-[#1f2937] border-l-[12px] rounded-md;
         border-color: var(--brand-main);
-        background: rgba(255, 255, 255, 0.2);
+        background: rgba(85, 114, 252, 0.1);
       }
 
       &:hover {
         border-color: var(--brand-second);
-        background: rgba(255, 255, 255, 0.12);
+        background: rgba(85, 114, 252, 0.06);
       }
 
       &.has-arrow::after {
         content: "";
-        @apply border-r border-b border-gray-100 w-1.5 h-1.5 absolute right-5 top-5 transform -rotate-45 transition-all duration-300 ease-in-out;
+        @apply border-r border-b border-gray-500 w-1.5 h-1.5 absolute right-5 top-5 transform -rotate-45 transition-all duration-300 ease-in-out;
       }
 
       &.active.has-arrow::after {
@@ -135,8 +134,62 @@ body {
   @apply fixed left-0 md:left-[240px] top-0 right-0 h-[70px] bg-white shadow transition-all duration-300;
 }
 
+.admin-header-icon-button {
+  @apply inline-flex h-9 w-9 items-center justify-center rounded-full align-middle transition-colors duration-200;
+  line-height: 1;
+
+  &:hover {
+    background: rgba(85, 114, 252, 0.08);
+  }
+}
+
+.admin-header-profile-trigger,
+.admin-header-link {
+  @apply inline-flex items-center;
+  line-height: 1;
+}
+
+.admin-header-icon {
+  @apply block shrink-0;
+  vertical-align: middle;
+}
+
 .content {
   @apply pt-[70px] md:pl-[250px] transition-all duration-300;
+}
+
+.dashboard-pagination {
+  @apply items-center gap-1;
+}
+
+.dashboard-pagination-link {
+  @apply inline-flex min-h-10 min-w-10 items-center justify-center rounded-md border border-gray-200 bg-white px-3 py-2 text-sm font-semibold text-gray-700 transition-colors duration-200;
+
+  &:hover {
+    border-color: var(--brand-main);
+    color: var(--brand-main);
+    background: rgba(85, 114, 252, 0.08);
+  }
+}
+
+.dashboard-pagination-link-active {
+  border-color: var(--brand-main);
+  background: var(--brand-main);
+  color: #ffffff !important;
+
+  &:hover {
+    border-color: var(--brand-main);
+    background: var(--brand-main);
+    color: #ffffff !important;
+  }
+}
+
+.dashboard-pagination-link-disabled {
+  @apply cursor-not-allowed border-gray-200 bg-gray-100 text-gray-400;
+
+  &:hover {
+    @apply border-gray-200 bg-gray-100 text-gray-400;
+  }
 }
 
 .ant-notification-notice-message {

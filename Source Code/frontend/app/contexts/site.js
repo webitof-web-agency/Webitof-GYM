@@ -3,7 +3,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import { fetchCartlist, fetchCurrency, fetchTheme } from "../helpers/backend";
-import { useFetch } from "../helpers/hooks";
 
 const SiteContext = createContext({});
 
@@ -13,9 +12,10 @@ const SiteProvider = ({ children }) => {
     const [currencySymbol, setCurrencySymbol] = useState('');
     const [currencyRate, setCurrencyRate] = useState(1);
     const [countCartQuantity, setCountCartQuantity] = useState(0);
-    const [cartItems, getCartItems] = useFetch(fetchCartlist)
-    const [allThemes, getAllThemes] = useFetch(fetchTheme)
+    const [cartItems, setCartItems] = useState();
+    const [allThemes, setAllThemes] = useState([]);
     const findDefaultTheme = allThemes?.find((theme) => theme?.isDefault === true);
+
     useEffect(() => {
         fetchCurrency().then(({ data }) => {
             const isDefault = data?.find(c => c.default === true);
@@ -40,6 +40,38 @@ const SiteProvider = ({ children }) => {
         }).catch(error => {
             console.error("Error fetching currencies:", error);
             setCurrencies([]);
+        });
+    }, []);
+
+    useEffect(() => {
+        fetchTheme().then(({ error, data }) => {
+            if (!error) {
+                setAllThemes(Array.isArray(data) ? data : []);
+            }
+        }).catch(() => {
+            setAllThemes([]);
+        });
+    }, []);
+
+    const getCartItems = async (query = {}) => {
+        const token = localStorage.getItem('token');
+        if (!token) {
+            setCartItems(undefined);
+            return { data: undefined, error: false };
+        }
+
+        const response = await fetchCartlist(query);
+        if (response?.error === false) {
+            setCartItems(response.data);
+        } else {
+            setCartItems(undefined);
+        }
+        return response;
+    };
+
+    useEffect(() => {
+        getCartItems().catch(() => {
+            setCartItems(undefined);
         });
     }, []);
 

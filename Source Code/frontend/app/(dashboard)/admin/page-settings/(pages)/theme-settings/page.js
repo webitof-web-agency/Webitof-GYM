@@ -30,6 +30,14 @@ const ThemeSetting = () => {
         }
     }, [hoveredIndex]);
 
+    const getPreviewSrc = (name) => {
+        if (name === 'home1') return '/home1.png';
+        if (name === 'home2') return '/home2.png';
+        if (name === 'home3') return '/home3.png';
+        if (name === 'home4') return '/home4.png';
+        return '/home1.png';
+    };
+
     return (
         <div className="space-y-4">
             <Card>
@@ -48,7 +56,7 @@ const ThemeSetting = () => {
                                 className="absolute inset-0 overflow-y-scroll hide-scrollbar scrollbar-hide"
                             >
                                 <Image 
-                                    src={theme?.name=='home1' ? '/home1.png' : theme?.name=='home2' ? '/home2.png' : theme?.name=='home3' ? '/home3.png' : theme?.name=='home4' && '/home4.png'}
+                                    src={getPreviewSrc(theme?.name)}
                                     alt={`ThemePreview`}
                                     width={500}
                                     height={2000}

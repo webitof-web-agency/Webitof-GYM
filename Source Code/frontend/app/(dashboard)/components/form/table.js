@@ -202,13 +202,14 @@ export const DetailTable = ({ data, columns, title, actions }) => {
 
 export const TableImage = ({ url }) => {
     const [image, setImage] = useState();
+    const finalUrl = url?.startsWith('/uploads') ? `${process.env.backend_url}${url.substring(1)}` : url;
     return (
         <div className='w-inline-block h-8'>
             <img
                 role='button'
-                src={url}
+                src={finalUrl}
                 alt='Image'
-                onClick={() => setImage(url)}
+                onClick={() => setImage(finalUrl)}
                 style={{ maxWidth: '100%', maxHeight: '100%' }}
             />
             <Modal

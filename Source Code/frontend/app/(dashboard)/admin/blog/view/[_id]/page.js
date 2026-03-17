@@ -13,8 +13,10 @@ const AdminBlogView = ({ params }) => {
     const i18n = useI18n()
 
     useEffect(() => {
-        getData({ _id: params._id });
-    }, [params._id]);
+        if (params?._id) getData({ _id: params._id });
+    }, [params?._id]);
+
+    const imageSrc = typeof data?.image === 'string' ? data.image : '';
 
     return (
         <div>
@@ -24,7 +26,19 @@ const AdminBlogView = ({ params }) => {
                     <div className="lg:pr-10 px-5">
                         <div className="">
                             <div className="w-full py-5">
-                                <Image width={1000} height={1000} className="w-full  rounded-md h-[600px] object-cover" src={data?.image} alt="blog" />
+                                {imageSrc ? (
+                                    <Image
+                                        width={1000}
+                                        height={1000}
+                                        className="w-full rounded-md h-[600px] object-cover"
+                                        src={imageSrc}
+                                        alt="blog"
+                                    />
+                                ) : (
+                                    <div className="w-full rounded-md h-[600px] bg-gray-100 flex items-center justify-center text-gray-500">
+                                        {i18n?.t('No image')}
+                                    </div>
+                                )}
                             </div>
                             <div className="">
                                 <h1 className=" font-bold text-2xl py-2">{columnFormatter(data?.title)}</h1>
@@ -49,7 +63,7 @@ const AdminBlogView = ({ params }) => {
                                     </div>
                                 </div>
                             </div>
-                            <CommentSection commentsList={data?.comments} blogId={params._id} getData={getData}/>
+                            <CommentSection commentsList={data?.comments} blogId={params?._id} getData={getData} />
                         </div>
                     </div>
                 </div>

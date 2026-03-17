@@ -9,8 +9,6 @@ import { useCurrency } from '../../../../../../contexts/site';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useI18n } from '../../../../../../providers/i18n';
-import jsPDF from 'jspdf';
-import html2canvas from 'html2canvas';
 
 const InfoRow = ({ label, value, customClass }) => (
   <tr>
@@ -29,6 +27,10 @@ const OrderDetails = ({ params }) => {
   const invoiceRef = useRef();
 
   const downloadInvoice = async () => {
+    const [{ default: jsPDF }, { default: html2canvas }] = await Promise.all([
+      import('jspdf'),
+      import('html2canvas'),
+    ]);
     const element = invoiceRef.current;
     const canvas = await html2canvas(element, { scale: 2 });
     const imgData = canvas.toDataURL('image/png');

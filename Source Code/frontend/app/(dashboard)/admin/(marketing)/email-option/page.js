@@ -1,12 +1,12 @@
 'use client';
 import React, { useState } from 'react';
 import { AiOutlineContacts } from "react-icons/ai";
-import { LiaBorderStyleSolid } from "react-icons/lia";
 import { useI18n } from '../../../../providers/i18n';
 import PageTitle from '../../../components/common/page-title';
 import { MdEmail, MdScheduleSend } from 'react-icons/md';
 import { SiMinutemailer } from "react-icons/si";
 import { RiMailCloseFill } from "react-icons/ri";
+import { TbClockHour4, TbMailCheck } from "react-icons/tb";
 import AllEmail from './(pages)/all-email';
 import SendEmail from './(pages)/send-email';
 import ScheduleEmail from './(pages)/schedule-email';
@@ -36,12 +36,12 @@ const Content = () => {
         },
         {
             label: ("Pending Email"),
-            icon: <LiaBorderStyleSolid />,
+            icon: <TbClockHour4 />,
             form: <PendingEmail/>
         },
         {
             label: ("Delivered Email"),
-            icon: <LiaBorderStyleSolid />,
+            icon: <TbMailCheck />,
             form: <DeliveredEmail/>
         },
         {

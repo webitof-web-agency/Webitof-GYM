@@ -12,17 +12,23 @@ import MultipleImageInput from '../../components/form/multiImage';
 import PageTitle from '../../components/common/page-title';
 import dayjs from 'dayjs';
 
+const fallbackLanguage = { code: 'en', name: 'English' };
+
 const Page = () => {
     const i18n = useI18n();
     const [form] = Form.useForm();
     let { languages, langCode } = useI18n();
+    const availableLanguages =
+        Array.isArray(languages?.docs) && languages.docs.length > 0
+            ? languages.docs
+            : [fallbackLanguage];
     const [data, getData, { loading }] = useFetch(fetchFeatures);
     const [open, setOpen] = useState(false);
     const [editingFeature, setEditingFeature] = useState(null);
-    const [selectedLang, setSelectedLang] = useState(langCode);
+    const [selectedLang, setSelectedLang] = useState('en');
     useEffect(() => {
-        setSelectedLang(langCode);
-    }, [langCode]);
+        setSelectedLang(langCode || availableLanguages[0]?.code || 'en');
+    }, [availableLanguages, langCode]);
 
     const columns = [
         {
@@ -42,33 +48,31 @@ const Page = () => {
         {
             text: 'Name',
             dataField: 'name',
-            formatter: (value) => value[langCode],
+            formatter: (value) => value?.[langCode] || value?.en || '',
         },
         {
             text: 'Description',
             dataField: 'description',
-            formatter: (value) => value[langCode],
+            formatter: (value) => value?.[langCode] || value?.en || '',
         },
     ];
 
     const handleSubmit = async (values) => {
-        if (values?.image[0]?.originFileObj) {
-            const image = values?.image[0]?.originFileObj;
-            const { data } = await postSingleImage({ image: image, image_name: 'feature' });
-            values.image = data;
-        } else {
-            values.image = values?.image[0]?.url;
+        let imageUrl = editingFeature?.image || '';
+        if (values?.image?.[0]?.originFileObj) {
+            const image = values.image[0].originFileObj;
+            const { data } = await postSingleImage({ image, image_name: 'feature' });
+            imageUrl = data;
+        } else if (values?.image?.[0]?.url) {
+            imageUrl = values.image[0].url;
         }
 
-        const multiLangFields = ['name', 'description', 'image'];
+        const multiLangFields = ['name', 'description'];
         const formattedData = multiLangFields.reduce((acc, field) => {
             acc[field] = {};
-            languages?.docs?.forEach((lang) => {
-                if (values[field] && values[field][lang.code]) {
+            availableLanguages.forEach((lang) => {
+                if (values?.[field]?.[lang.code]) {
                     acc[field][lang.code] = values[field][lang.code];
-                }
-                if (values?.image) {
-                    acc.image = values?.image?.url;
                 }
             });
             return acc;
@@ -77,14 +81,10 @@ const Page = () => {
         const submitData = {
             ...formattedData,
             _id: editingFeature?._id || undefined,
-            name: values?.name || 'name',
-            description: values?.description || 'description',
-            image: values?.image,
+            image: imageUrl,
         };
 
-        const action = editingFeature ? addFeature : addFeature;
-
-        useAction(action, submitData, () => {
+        useAction(addFeature, submitData, () => {
             setOpen(false);
             getData();
             form.resetFields();
@@ -105,6 +105,7 @@ const Page = () => {
                         onClick={() => {
                             setEditingFeature(null);
                             form.resetFields();
+                            setSelectedLang(langCode || availableLanguages[0]?.code || 'en');
                             setOpen(true);
                         }}
                     >
@@ -114,11 +115,13 @@ const Page = () => {
                 onDelete={delFeature}
                 onEdit={(feature) => {
                     setEditingFeature(feature);
+                    form.resetFields();
                     form.setFieldsValue({
                         image: [{ url: feature.image }],
                         name: feature.name,
                         description: feature.description,
                     });
+                    setSelectedLang(langCode || availableLanguages[0]?.code || 'en');
                     setOpen(true);
                 }}
                 indexed
@@ -133,7 +136,7 @@ const Page = () => {
                 destroyOnClose={true}
             >
                 <div className='flex flex-wrap justify-start gap-3'>
-                    {languages?.docs?.map((l, index) => (
+                    {availableLanguages.map((l, index) => (
                         <button
                             onClick={() => setSelectedLang(l.code)}
                             className={`rounded-full px-3 py-1 text-sm font-medium transition-colors duration-200 ${l.code === selectedLang
@@ -147,12 +150,12 @@ const Page = () => {
                     ))}
                 </div>
                 <Form form={form} layout='vertical' onFinish={handleSubmit} className='mt-5'>
-                    {languages?.docs?.map((l, index) => (
+                    {availableLanguages.map((l, index) => (
                         <div
                             key={index}
                             style={{ display: l.code === selectedLang ? 'block' : 'none' }}
                         >
-                            <MultipleImageInput name={'image'} label={i18n?.t('Image')} />
+                            <MultipleImageInput name={'image'} label={i18n?.t('Image')} required={!editingFeature} />
                             <FormInput
                             placeholder={i18n?.t('Enter Name')}
                                 name={['name', l.code]}

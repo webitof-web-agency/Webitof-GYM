@@ -6,17 +6,26 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useUser } from '../../app/contexts/user';
-import { fetchAdminSettings, postLogin, postResetPassword, postVerifyOtp, sendOtp } from '../../app/helpers/backend'
+import { postLogin, postResetPassword, postVerifyOtp, sendOtp } from '../../app/helpers/backend'
 import OTPInput from 'react-otp-input';
 import { useTimer } from 'use-timer';
 import { useI18n } from '../../app/providers/i18n';
-import { useFetch } from '../../app/helpers/hooks';
+import { useEnv } from '../../app/contexts/envContext';
 
+const getDashboardPath = (role) => {
+    if (role === 'admin' || role === 'employee') {
+        return '/admin';
+    }
+    if (role === 'trainer') {
+        return '/trainer';
+    }
+    return '/user';
+};
 
 const SignIn = () => {
     const router = useRouter();
     const i18n = useI18n();
-    const [data] = useFetch(fetchAdminSettings);
+    const data = useEnv();
     const [loadingRequest, setLoadingRequest] = useState(true);
     const { getUser, user } = useUser();
     const [form] = Form.useForm();
@@ -36,33 +45,12 @@ const SignIn = () => {
             setLoadingRequest(false)
         }
         else {
-            if (data?.role === "trainer") {
-                localStorage.setItem('token', data?.token)
-                await getUser()
-                setLoadingRequest(false)
-                router.push("/trainer")
-                message.success(msg)
-            } else if (data?.role === "admin") {
-                setLoadingRequest(false)
-                localStorage.setItem('token', data?.token)
-                await getUser()
-                router.push("/admin")
-                message.success(msg)
-            }
-            else if(data?.role === "employee"){
-                setLoadingRequest(false)
-                localStorage.setItem('token', data?.token)
-                await getUser()
-                router.push("/admin")
-                message.success(msg)
-            }
-            else {
-                localStorage.setItem('token', data?.token)
-                await getUser()
-                setLoadingRequest(false)
-                router.push("/user")
-                message.success(msg)
-            }
+            const redirectPath = getDashboardPath(data?.role);
+            localStorage.setItem('token', data?.token)
+            await getUser()
+            setLoadingRequest(false)
+            message.success(msg)
+            window.location.href = redirectPath
         }
     }
 
@@ -80,15 +68,7 @@ const SignIn = () => {
     useEffect(() => {
         if (user?.role) {
             setLoadingRequest(false);
-            if (user.role === 'admin') {
-                router.push('/admin');
-            } else if (user.role === 'user') {
-                router.push('/user');
-            } else if (user.role === 'trainer') {
-                router.push('/trainer');
-            }else if(user.role === 'employee'){
-                router.push('/admin');
-            }
+            router.replace(getDashboardPath(user.role));
         }
         setLoadingRequest(false);
     }, [user, router]);

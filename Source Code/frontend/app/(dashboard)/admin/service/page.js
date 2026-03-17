@@ -12,18 +12,24 @@ import { noSelected } from '../../../helpers/utils';
 import { useI18n } from '../../../providers/i18n';
 import dayjs from 'dayjs';
 
+const fallbackLanguage = { code: 'en', name: 'English' };
+
 const AdminService = () => {
     const [form] = Form.useForm();
     const i18n = useI18n()
     let { languages, langCode } = useI18n();
+    const availableLanguages =
+        Array.isArray(languages?.docs) && languages.docs.length > 0
+            ? languages.docs
+            : [fallbackLanguage];
     const [open, setOpen] = useState(false);
     const [data, getData, { loading }] = useFetch(fetchServices);
     const [isEdit, setIsEdit] = useState(false);
-    const [selectedLang, setSelectedLang] = useState(langCode);
+    const [selectedLang, setSelectedLang] = useState('en');
 
     useEffect(() => {
-        setSelectedLang(langCode)
-    }, [langCode])
+        setSelectedLang(langCode || availableLanguages[0]?.code || 'en')
+    }, [availableLanguages, langCode])
 
     const columns = [
         {
@@ -47,14 +53,14 @@ const AdminService = () => {
                 </div>
             ),
         },
-        { text: "Name", dataField: "name", formatter: (name) => <span className=''>{name[langCode]}</span> },
+        { text: "Name", dataField: "name", formatter: (name) => <span className=''>{name?.[langCode] || name?.en || ''}</span> },
         {
             text: "Description", dataField: "description",
             formatter: (description) => <span className=''>{
-                <Tooltip title={description[langCode]?.length > 30 ? description[langCode] : ''}
+                <Tooltip title={description?.[langCode]?.length > 30 ? description?.[langCode] : ''}
                 >
                     <span className='cursor-help'>
-                        {description[langCode]?.length > 30 ? description[langCode]?.slice(0, 30) + '...' : description[langCode]}
+                        {description?.[langCode]?.length > 30 ? description?.[langCode]?.slice(0, 30) + '...' : (description?.[langCode] || description?.en || '')}
                     </span>
                 </Tooltip>
             }</span>,
@@ -73,6 +79,7 @@ const AdminService = () => {
                     <Button
                         onClick={() => {
                             form.resetFields();
+                            setSelectedLang(langCode || availableLanguages[0]?.code || 'en');
                             setOpen(true);
                             setIsEdit(false);
                         }}
@@ -81,13 +88,15 @@ const AdminService = () => {
                     </Button>
                 }
                 onEdit={(values) => {
+                    form.resetFields();
                     form.setFieldsValue({
                         name: values.name,
                         description: values.description,
-                        icon: values.icon ? [{ uid: '-1', name: 'icon.png', status: 'done', url: values.icon }] : [{ url: values?.icon }],
-                        image: values.image ? [{ uid: '-1', name: 'image.png', status: 'done', url: values.image }] : [{ url: values?.image }],
+                        icon: values?.icon ? [{ uid: '-1', name: 'icon.png', status: 'done', url: values.icon }] : [],
+                        image: values?.image ? [{ uid: '-1', name: 'image.png', status: 'done', url: values.image }] : [],
                         _id: values._id,
                     });
+                    setSelectedLang(langCode || availableLanguages[0]?.code || 'en');
                     setOpen(true);
                     setIsEdit(true);
                 }}
@@ -101,9 +110,10 @@ const AdminService = () => {
                 onCancel={() => setOpen(false)}
                 title={i18n.t(isEdit ? "Edit Service" : "Add Service")}
                 footer={null}
+                destroyOnClose={true}
             >
                 <div className="flex justify-start flex-wrap gap-3">
-                    {languages?.docs?.map((l, index) => (
+                    {availableLanguages.map((l, index) => (
                         <button
                             onClick={() => setSelectedLang(l.code)}
                             className={`px-3 py-1 rounded-full text-sm font-medium transition-colors duration-200 ${l?.code === selectedLang
@@ -138,7 +148,7 @@ const AdminService = () => {
                         const multiLangFields = ['name', 'description'];
                         const formattedData = multiLangFields.reduce((acc, field) => {
                             acc[field] = {};
-                            languages?.docs?.forEach(lang => {
+                            availableLanguages.forEach((lang) => {
                                 if (values[field] && values[field][lang.code]) {
                                     acc[field][lang.code] = values[field][lang.code];
                                 }
@@ -166,7 +176,7 @@ const AdminService = () => {
                     }
 
                     <div className="mt-4">
-                        {languages?.docs?.map((l, index) => (
+                        {availableLanguages.map((l, index) => (
                             <div key={index} style={{ display: l?.code === selectedLang ? 'block' : 'none' }}>
                                 <FormInput placeholder={("Enter Name")} label={("Name")} name={['name', l?.code]} required />
                                 <FormInput placeholder={("Enter Description")} label={("Description")} name={['description', l?.code]} required textArea />

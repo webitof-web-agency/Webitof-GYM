@@ -147,7 +147,9 @@ export const removeUser = (data) => del("/user/remove/user", data);
 
 // admin image file
 export const postSingleImage = (data) => postForm("/file/single-image-upload", data);
+export const postLocalSingleImage = (data) => postForm("/file/local-single-image-upload", data);
 export const postMultipleImage = (data) => postForm("/file/multiple-image-upload", data);
+export const postLocalMultipleImage = (data) => postForm("/file/local-multiple-image-upload", data);
 export const pdfFileUpload = (data) => postForm("/file/pdf-upload", data);
 //agent profile
 export const userProfileUpdate = (data) => postForm("/user", data);

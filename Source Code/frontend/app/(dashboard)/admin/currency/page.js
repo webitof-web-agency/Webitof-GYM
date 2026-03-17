@@ -65,6 +65,7 @@ const Currency = () => {
                 data={data}
                 loading={loading}
                 onReload={getData}
+                pagination
                 action={
                     <Button
                         onClick={() => {

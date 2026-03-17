@@ -10,12 +10,16 @@ import Button from '../../../../../../components/common/button';
 // import Table from '../../../../../components/common/table';
 // import Button from '../../../../../components/common/button';
 
+const havePermission = (permission, permissions) => {
+    return Array.isArray(permissions) ? permissions.includes(permission) : false;
+};
+
 const RolePermission = ({params}) => {
     // const searchParams = useSearchParams();
     // const query = searchParams.get('_id');
     const [elements] = useFetch(fetchPermissions);
     const [role, getRoles] = useFetch(singleRole, {}, false);
-    const user = useUser();
+    const { user } = useUser();
     const { push } = useRouter();
     const [update, setUpdate] = useState(false);
     const reload = () => setUpdate(!update);
@@ -61,6 +65,11 @@ const RolePermission = ({params}) => {
         reload();
     };
 
+    const currentPermissions = Array.isArray(user?.permission)
+        ? user.permission
+        : Array.isArray(user?.roles)
+            ? user.roles.flatMap((role) => role?.permissions || [])
+            : [];
     const admin = user?.role === 'admin';
     const Check = ({ d }) => (
         <Checkbox onChange={(e) => handleChange(e, d)} checked={isChecked(d)} />
@@ -74,7 +83,7 @@ const RolePermission = ({params}) => {
             dataField: '',
             formatter: (_, data) =>
                 data.child &&
-                (admin || havePermission(`${data?.permission}_create`, user?.permission)) && (
+                (admin || havePermission(`${data?.permission}_create`, currentPermissions)) && (
                     <Check
                         d={data?.child?.find((d) => d.permission === `${data?.permission}_create`)}
                     />
@@ -85,7 +94,7 @@ const RolePermission = ({params}) => {
             dataField: '',
             formatter: (_, data) =>
                 data.child &&
-                (admin || havePermission(`${data?.permission}_edit`, user?.permission)) && (
+                (admin || havePermission(`${data?.permission}_edit`, currentPermissions)) && (
                     <Check
                         d={data?.child?.find((d) => d.permission === `${data?.permission}_edit`)}
                     />
@@ -96,7 +105,7 @@ const RolePermission = ({params}) => {
             dataField: '',
             formatter: (_, data) =>
                 data.child &&
-                (admin || havePermission(`${data?.permission}_delete`, user?.permission)) && (
+                (admin || havePermission(`${data?.permission}_delete`, currentPermissions)) && (
                     <Check
                         d={data?.child?.find((d) => d.permission === `${data?.permission}_delete`)}
                     />
@@ -107,7 +116,7 @@ const RolePermission = ({params}) => {
             dataField: '',
             formatter: (_, data) =>
                 data.child &&
-                (admin || havePermission(`${data?.permission}_view`, user?.permission)) && (
+                (admin || havePermission(`${data?.permission}_view`, currentPermissions)) && (
                     <Check
                         d={data?.child?.find((d) => d.permission === `${data?.permission}_view`)}
                     />
@@ -127,12 +136,12 @@ const RolePermission = ({params}) => {
                         if (admin) {
                             return true;
                         }
-                        if (havePermission(d.permission, user?.permission)) {
+                        if (havePermission(d.permission, currentPermissions)) {
                             return true;
                         }
                         if (d?.child) {
                             for (let c of d.child) {
-                                if (havePermission(c.permission, user?.permission)) {
+                                if (havePermission(c.permission, currentPermissions)) {
                                     return true;
                                 }
                             }
@@ -146,7 +155,7 @@ const RolePermission = ({params}) => {
                                 ? admin
                                     ? d.child
                                     : d.child?.filter((d) =>
-                                          havePermission(d.permission, user?.permission)
+                                          havePermission(d.permission, currentPermissions)
                                       )
                                 : undefined,
                         };

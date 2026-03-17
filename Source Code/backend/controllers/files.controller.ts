@@ -1,4 +1,6 @@
 import { s3DeleteFiles, s3UploadFile, s3UploadFiles } from "../utils/s3bucket";
+import path from "path";
+import fs from "fs";
 
 // single image upload
 export const singleImageUpload = async (req, res) => {
@@ -26,6 +28,57 @@ export const singleImageUpload = async (req, res) => {
             data: image,
             msg: 'Image uploaded successfully'
         })
+    } catch (e) {
+        return res.status(500).send({
+            error: true,
+            msg: "Internal Server Error"
+        })
+    }
+}
+
+// local single image upload
+export const localSingleImageUpload = async (req, res) => {
+    try {
+        let { files } = req;
+        if (!files?.image) {
+            return res.status(400).send({
+                error: true,
+                msg: 'Image is required'
+            })
+        }
+        
+        const mimetypes = ['image/png', 'image/jpeg', 'image/webp', 'image/jpg', 'image/gif', 'image/svg+xml']
+        if (mimetypes.includes(files?.image?.mimetype) === false) {
+            return res.status(404).send({
+                error: true,
+                msg: 'Only the image file is acceptable',
+            })
+        }
+
+        const file = files.image;
+        const ext = path.extname(file.name);
+        const fileName = `${Date.now()}-${Math.round(Math.random() * 1E9)}${ext}`;
+        const uploadPath = path.join(process.cwd(), 'uploads', fileName);
+
+        // Ensure directory exists
+        const dir = path.dirname(uploadPath);
+        if (!fs.existsSync(dir)) {
+            fs.mkdirSync(dir, { recursive: true });
+        }
+
+        file.mv(uploadPath, (err) => {
+            if (err) {
+                return res.status(500).send({
+                    error: true,
+                    msg: "Failed to upload file locally"
+                });
+            }
+            return res.status(200).send({
+                error: false,
+                data: `/uploads/${fileName}`,
+                msg: 'Image uploaded successfully'
+            });
+        });
     } catch (e) {
         return res.status(500).send({
             error: true,
@@ -68,6 +121,72 @@ export const multipleImageUpload = async (req, res) => {
             data: images,
             msg: 'Images uploaded successfully'
         })
+    } catch (e) {
+        return res.status(500).send({
+            error: true,
+            msg: 'Internal Server Error'
+        })
+    }
+}
+
+// local multiple image upload
+export const localMultipleImageUpload = async (req, res) => {
+    try {
+        let { files } = req;
+        if (!files?.images) {
+            return res.status(400).send({
+                error: true,
+                msg: 'Images are required'
+            })
+        }
+        if (!Array.isArray(files?.images)) {
+            files.images = [files.images]
+        }
+        if (files?.images?.length === 0) {
+            return res.status(400).send({
+                error: true,
+                msg: 'At least one image is required'
+            })
+        }
+        let invalid = files?.images?.find((file: any) => !(['image/jpeg', 'image/png', 'image/jpg', 'image/webp', 'image/gif', 'image/svg+xml'].includes(file?.mimetype)))
+        if (!!invalid) {
+            return res.status(400).send({
+                error: true,
+                msg: 'Only image files are allowed'
+            })
+        }
+
+        const uploadedImages = [];
+        
+        const uploadPromises = files.images.map((file) => {
+            return new Promise((resolve, reject) => {
+                const ext = path.extname(file.name);
+                const fileName = `${Date.now()}-${Math.round(Math.random() * 1E9)}${ext}`;
+                const uploadPath = path.join(process.cwd(), 'uploads', fileName);
+
+                // Ensure directory exists
+                const dir = path.dirname(uploadPath);
+                if (!fs.existsSync(dir)) {
+                    fs.mkdirSync(dir, { recursive: true });
+                }
+
+                file.mv(uploadPath, (err) => {
+                    if (err) {
+                        reject(err);
+                    } else {
+                        resolve(`/uploads/${fileName}`);
+                    }
+                });
+            });
+        });
+
+        const urls = await Promise.all(uploadPromises);
+
+        return res.status(200).send({
+            error: false,
+            data: urls,
+            msg: 'Images uploaded successfully'
+        });
     } catch (e) {
         return res.status(500).send({
             error: true,

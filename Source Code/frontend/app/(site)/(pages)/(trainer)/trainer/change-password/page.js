@@ -56,8 +56,18 @@ const Page = () => {
           <Form.Item
             name="confirm_password"
             label={i18n?.t('Confirm Password')}
+            dependencies={['new_password']}
             rules={[
               { required: true, message: i18n?.t('Please re-type your confirm password') },
+              ({ getFieldValue }) => ({
+                validator(_, value) {
+                  const newPassword = getFieldValue('new_password');
+                  if (!value || value === newPassword) {
+                    return Promise.resolve();
+                  }
+                  return Promise.reject(new Error(i18n?.t('Passwords do not match')));
+                },
+              }),
             ]}
           >
             <Input.Password
@@ -67,7 +77,7 @@ const Page = () => {
           </Form.Item>
         </div>
         <div className="flex justify-end mt-6">
-          <Button type="Submit">
+          <Button type="submit">
             {i18n?.t('Save Change')}
           </Button>
         </div>

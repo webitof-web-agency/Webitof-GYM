@@ -20,6 +20,8 @@ import MultipleImageInput from '../../../../components/form/multiImage';
 import dayjs from 'dayjs';
 import { InfinitySpin } from 'react-loader-spinner';
 
+const fallbackLanguage = { code: 'en', name: 'English' };
+
 const page = () => {
     const i18n = useI18n();
     const [form] = Form.useForm();
@@ -31,10 +33,14 @@ const page = () => {
     const [selectedLang, setSelectedLang] = useState();
     const [loading2, setLoading2] = useState(false);
     const [formData, setFromData] = useState([]);
+    const availableLanguages =
+        Array.isArray(languages?.docs) && languages.docs.length > 0
+            ? languages.docs
+            : [fallbackLanguage];
 
     useEffect(() => {
-        setSelectedLang(langCode);
-    }, [langCode]);
+        setSelectedLang(langCode || availableLanguages[0]?.code || 'en');
+    }, [availableLanguages, langCode]);
 
     const columns = [
         {
@@ -122,7 +128,7 @@ const page = () => {
                 onDelete={delSubscription}
                 indexed
                 pagination
-                title='  '
+                title='Subscription Plan'
             />
             <Modal
                 destroyOnClose={true}
@@ -133,8 +139,9 @@ const page = () => {
                 footer={null}
             >
                 <div className='mb-4 mt-10 flex flex-wrap justify-start gap-3'>
-                    {languages?.docs?.map((l, index) => (
+                    {availableLanguages.map((l, index) => (
                         <button
+                            type='button'
                             onClick={() => setSelectedLang(l.code)}
                             className={`rounded-full px-3 py-1 text-sm font-medium transition-colors duration-200 ${l.code === selectedLang
                                 ? 'bg-[#5572fc] text-white'
@@ -166,7 +173,7 @@ const page = () => {
                             const multiLangFields = ['name', 'features'];
                             const formattedData = multiLangFields.reduce((acc, field) => {
                                 acc[field] = {};
-                                languages.docs.forEach((lang) => {
+                                availableLanguages.forEach((lang) => {
                                     if (values[field] && values[field][lang.code]) {
                                         acc[field][lang.code] = values[field][lang.code];
                                     }
@@ -201,7 +208,7 @@ const page = () => {
                             <InfinitySpin width='140' color='#5572fc' />
                         </div>
                     ) : (
-                        languages?.docs?.map((l, index) => (
+                        availableLanguages.map((l, index) => (
                             <div
                                 key={index}
                                 style={{ display: l.code === selectedLang ? 'block' : 'none' }}

@@ -50,7 +50,15 @@ const SendEmail = () => {
                     <h2 className='py-2 px-3 bg-[#E5E7EB] rounded mb-2'>Email's credentials will be collected from settings.</h2>
                     <div className='grid md:grid-cols-2 gap-4'>
                         <FormInput name={"individual_mail"} label={"To : Individual"} type={"email"} placeholder={"Enter Email Address"} />
-                        <FormSelect placeholder={"Select Group"} options={groups?.docs?.map((item) => ({ label: item?.name, value: item?._id }))} name={"to"} label={"To : Group"} />
+                        <FormSelect
+                            placeholder={"Select Group"}
+                            options={groups?.docs?.map((item) => ({
+                                label: typeof item?.name === 'string' ? item?.name : columnFormatter(item?.name),
+                                value: item?._id,
+                            }))}
+                            name={"to"}
+                            label={"To : Group"}
+                        />
                     </div>
                     <div className='flex items-center flex-wrap gap-4'>
                         <FormCheckbox label={"Subscribed User"} name={"subscriber"} />

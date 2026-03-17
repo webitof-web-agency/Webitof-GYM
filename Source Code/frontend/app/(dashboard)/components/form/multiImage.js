@@ -43,7 +43,11 @@ const Input = ({ value, onChange, listType, max, noWebp, pdf, video }) => {
       file.preview = await getBase64(file.originFileObj);
     }
 
-    setPreviewImage(file.url || file.preview);
+    let urlToPreview = file.url || file.preview;
+    if (urlToPreview?.startsWith('/uploads')) {
+        urlToPreview = `${process.env.backend_url}${urlToPreview.substring(1)}`;
+    }
+    setPreviewImage(urlToPreview);
     setPreviewVisible(true);
   };
 

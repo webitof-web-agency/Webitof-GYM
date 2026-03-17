@@ -8,16 +8,16 @@ import { useRouter } from 'next/navigation';
 import { useUser } from '../../app/contexts/user';
 import OTPInput from 'react-otp-input';
 import { useTimer } from 'use-timer';
-import { fetchAdminSettings, postRegister, sendOtp } from '../../app/helpers/backend';
+import { postRegister, sendOtp } from '../../app/helpers/backend';
 import PhoneNumberInput from '../form/phoneNumberInput';
 import { useI18n } from '../../app/providers/i18n';
-import { useFetch } from '../../app/helpers/hooks';
+import { useEnv } from '../../app/contexts/envContext';
 
 const SignUp = () => {
     const [form] = Form.useForm();
     const router = useRouter()
     const i18n = useI18n();
-    const [data] = useFetch(fetchAdminSettings);
+    const data = useEnv();
     const [loadingRequest, setLoadingRequest] = useState(true)
     const [value, setValue] = useState('user');
     const [otpModal, setOtpModal] = useState(false);

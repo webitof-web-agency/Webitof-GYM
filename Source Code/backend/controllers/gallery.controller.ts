@@ -1,5 +1,7 @@
 import { s3DeleteFiles } from "../utils/s3bucket"
 import Gallery from "../models/gallery.model"
+import fs from "fs"
+import path from "path"
 
 export const postGallery = async (req, res) => {
     try {
@@ -50,7 +52,14 @@ export const deleteGallery = async (req, res) => {
             })
         }
         if(!!data?.image) {
-            s3DeleteFiles([data?.image])
+            if (data.image.startsWith('/uploads')) {
+                const filePath = path.join(process.cwd(), data.image);
+                if (fs.existsSync(filePath)) {
+                    fs.unlinkSync(filePath);
+                }
+            } else {
+                s3DeleteFiles([data?.image])
+            }
         }
         await Gallery.findOneAndDelete({ _id: query._id })
         return res.status(200).send({

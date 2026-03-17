@@ -9,6 +9,7 @@ import { addNutrition, fetchMembers, fetchTrainerGroupList } from '../../../../.
 import { useI18n } from '../../../../../../providers/i18n';
 import FormSelect from '../../../../../../../components/form/select';
 import Button from '../../../../../../../components/common/button';
+import { columnFormatter } from '../../../../../../helpers/utils';
 
 
 const { Title } = Typography;
@@ -96,11 +97,8 @@ export default function NutritionSchedule() {
   const handleRadioChange = (e) => {
     form.resetFields();
     setSelectedRadio(e.target.value);
-    if (e.target.value === 1) {
-      setSelectedMembers([]);
-    } else {
-      setSelectedGroup(null);
-    }
+    setSelectedMembers([]);
+    setSelectedGroup(null);
   };
 
   return (
@@ -120,7 +118,7 @@ export default function NutritionSchedule() {
             name="group"
             label="Group"
             options={groupList?.docs?.map(group => ({
-              label: group?.name[i18n?.langCode],
+              label: columnFormatter(group?.name),
               value: group?._id,
             }))}
             placeholder="Select group"
@@ -133,10 +131,10 @@ export default function NutritionSchedule() {
                 name="members"
                 label="Members"
                 multi={true}
-                options={members?.docs[0]?.members?.map(m => ({
+                options={members?.docs?.[0]?.members?.map(m => ({
                   label: m?.name,
                   value: m?._id,
-                }))}
+                })) || []}
                 placeholder="Please select group first to add members"
                 className='!overflow-auto'
               />

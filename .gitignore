@@ -134,3 +134,32 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+
+# ----------------------------------------------------------------------------
+# Backend Specific Ignores
+# ----------------------------------------------------------------------------
+Source Code/backend/node_modules/
+Source Code/backend/dist/
+Source Code/backend/uploads/
+Source Code/backend/.env
+Source Code/backend/app.log
+Source Code/backend/.idea/
+
+# ----------------------------------------------------------------------------
+# Frontend Specific Ignores
+# ----------------------------------------------------------------------------
+Source Code/frontend/node_modules/
+Source Code/frontend/.next/
+Source Code/frontend/out/
+Source Code/frontend/build/
+Source Code/frontend/coverage/
+Source Code/frontend/.vercel/
+Source Code/frontend/.env*.local
+Source Code/frontend/*.tsbuildinfo
+Source Code/frontend/next-env.d.ts
+Source Code/frontend/.pnp*
+Source Code/frontend/.idea/
+Source Code/frontend/*.pem
+Source Code/frontend/.DS_Store
+Source Code/frontend/*-debug.log*
+Source Code/frontend/*-error.log*

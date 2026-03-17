@@ -28,9 +28,9 @@ const BlogDetails = ({ params }) => {
                 <hr />
                 <div className="container mx-auto block pb-10">
                     <div className="lg:pr-10 px-5">
-                        <div className="">
+                            <div className="">
                             <div className="w-full py-5">
-                                <Image width={1000} height={1000} className="w-full rounded-md h-[400px] object-cover" src={data?.image} alt="image" />
+                                <Image width={1000} height={1000} className="w-full rounded-md h-[400px] object-cover" src={data?.image || '/defaultimg.png'} alt="image" />
                             </div>
                             <div className="">
                                 <h1 className=" font-bold text-2xl py-2 font-montserrat text-[#2b2b2b]">{columnFormatter(data?.title)}</h1>

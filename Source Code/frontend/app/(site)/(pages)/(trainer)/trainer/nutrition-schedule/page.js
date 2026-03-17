@@ -8,11 +8,11 @@ import TrainerTable from "../../../../../../components/form/trainerTable";
 import dayjs from "dayjs";
 import { Avatar } from "antd";
 import Button from "../../../../../../components/common/button";
+import { columnFormatter } from "../../../../../helpers/utils";
 const page = () => {
   const router = useRouter();
   const [data, getData] = useFetch(fetchNutrition)
   const i18n = useI18n();
-  const { langCode } = useI18n();
 
   const columns = [
     {
@@ -28,7 +28,7 @@ const page = () => {
     {
       text: i18n?.t("Group"),
       dataField: "groups",
-      formatter: (_, d) => <span>{d?.group?.name[langCode] || "N/A"}</span>,
+      formatter: (_, d) => <span>{columnFormatter(d?.group?.name) || "N/A"}</span>,
     },
     {
       text: i18n?.t("Members"),

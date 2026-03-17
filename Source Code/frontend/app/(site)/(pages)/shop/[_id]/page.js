@@ -1,9 +1,9 @@
 'use client';
 import React, { useEffect, useState } from 'react';
+import dynamic from 'next/dynamic';
 import { Empty, message, Rate } from 'antd';
 import { BsCartPlus } from "react-icons/bs";
 import Link from 'next/link';
-import Review from '../../../../../components/shop/review';
 import BasicBar from '../../../../../components/common/basic-bar';
 import ShopCard from '../../../../../components/home1/shopCard';
 import { useFetch } from '../../../../helpers/hooks';
@@ -13,12 +13,12 @@ import { columnFormatter } from '../../../../helpers/utils';
 import { PiHeartLight } from 'react-icons/pi';
 import { useRouter } from 'next/navigation';
 import { useCurrency } from '../../../../contexts/site';
-import WriteReview from '../../../../../components/shop/writeReview';
-import { FacebookShareButton, TwitterShareButton, RedditShareButton, LinkedinShareButton } from 'react-share';
-import { FacebookIcon, TwitterIcon, RedditIcon, LinkedinIcon } from 'react-share';
+import { FaFacebookF, FaLinkedinIn, FaRedditAlien, FaTwitter } from 'react-icons/fa';
 import ProductImageSlider from '../../../../../components/common/imageSlider';
 import Button from '../../../../../components/common/button';
 
+const Review = dynamic(() => import('../../../../../components/shop/review'));
+const WriteReview = dynamic(() => import('../../../../../components/shop/writeReview'));
 
 const Wheyprotein = ({ params }) => {
     const i18n = useI18n()
@@ -51,6 +51,29 @@ const Wheyprotein = ({ params }) => {
     useEffect(() => {
         setUrl(window.location.href);
     }, []);
+
+    const shareLinks = [
+        {
+            key: 'facebook',
+            href: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`,
+            icon: <FaFacebookF />,
+        },
+        {
+            key: 'twitter',
+            href: `https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}`,
+            icon: <FaTwitter />,
+        },
+        {
+            key: 'reddit',
+            href: `https://www.reddit.com/submit?url=${encodeURIComponent(url)}`,
+            icon: <FaRedditAlien />,
+        },
+        {
+            key: 'linkedin',
+            href: `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`,
+            icon: <FaLinkedinIn />,
+        },
+    ];
 
     const submitWishlist = async (id) => {
         try {
@@ -142,18 +165,17 @@ const Wheyprotein = ({ params }) => {
                         <div className='mt-12 flex items-center space-x-3 md:space-x-5'>
                             <p className='text-[18px] font-medium text-gray-800'>{i18n?.t("Share")}:</p>
                             <div className="flex gap-2">
-                                <FacebookShareButton url={url}>
-                                    <FacebookIcon size={32} round />
-                                </FacebookShareButton>
-                                <TwitterShareButton url={url}>
-                                    <TwitterIcon size={32} round />
-                                </TwitterShareButton>
-                                <RedditShareButton url={url}>
-                                    <RedditIcon size={32} round />
-                                </RedditShareButton>
-                                <LinkedinShareButton url={url}>
-                                    <LinkedinIcon size={32} round />
-                                </LinkedinShareButton>
+                                {shareLinks.map((item) => (
+                                    <a
+                                        key={item.key}
+                                        href={item.href}
+                                        target="_blank"
+                                        rel="noreferrer"
+                                        className="flex h-8 w-8 items-center justify-center rounded-full bg-[#5572fc] text-white transition-colors hover:bg-[#3f5ae0]"
+                                    >
+                                        {item.icon}
+                                    </a>
+                                ))}
                             </div>
                         </div>
                     </div>
@@ -170,7 +192,7 @@ const Wheyprotein = ({ params }) => {
                             </button>
                         ))}
                     </div>
-                    <div className="mt-10">
+                        <div className="mt-10">
                         {activeTab === 'description' && <p dangerouslySetInnerHTML={{ __html: columnFormatter(data?.product?.description) }} className='description border border-[#D9D9D9] !text-[#2B2B2BCC] py-10 px-7 rounded bg-gray-50'>
                         </p>}
                         {activeTab === 'review' && <Review review={data?.reviews} />}
@@ -203,4 +225,3 @@ const Wheyprotein = ({ params }) => {
 };
 
 export default Wheyprotein;
-

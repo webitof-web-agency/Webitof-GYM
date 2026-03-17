@@ -26,7 +26,7 @@ const LanguageForm = ({ title, form }) => {
                             title !== "Add Languages" && <HiddenInput name="_id" />
                         }
                         <div className="md:w-1/2">
-                            <FormInput placeholder={("Enter Name")} name="name" label={("Name")} />
+                            <FormInput placeholder={("Enter Name")} name="name" label={("Name")} required />
                         </div>
                         <div className="md:w-1/2">
                             <FormInput placeholder={("Enter Code")} name="code" label={("Code")} required />
@@ -43,7 +43,7 @@ const LanguageForm = ({ title, form }) => {
                             />
                         </div>
                         <div className="md:w-1/2 multi">
-                            <FormSelect placeholder={("Select Status")} name="status" label={"Status"}
+                            <FormSelect placeholder={("Select Status")} name="active" label={"Status"}
                                 options={[
                                     { label: i18n?.t("Yes"), value: true },
                                     { label: i18n?.t("No"), value: false }

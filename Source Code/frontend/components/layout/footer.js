@@ -1,34 +1,35 @@
 'use client';
 import Image from 'next/image';
 import Link from 'next/link';
-import React from 'react';
+import React, { useState } from 'react';
 import { FaFacebook, FaLinkedin, FaPhoneAlt, FaEnvelope, FaYoutube } from 'react-icons/fa';
 import { FiPhoneCall } from 'react-icons/fi';
 import { IoHomeOutline } from 'react-icons/io5';
 import { LuMailCheck } from 'react-icons/lu';
-import { useFetch } from '../../app/helpers/hooks';
-import { fetchAdminSettings, postAdminNewsletter } from '../../app/helpers/backend';
-import { Form, message, Skeleton } from 'antd';
+import { postAdminNewsletter } from '../../app/helpers/backend';
 import { usePathname } from 'next/navigation';
 import { useI18n } from '../../app/providers/i18n';
 import { useCurrency } from '../../app/contexts/site';
+import { useEnv } from '../../app/contexts/envContext';
 
 const Footer = () => {
     const i18n = useI18n();
     const pathname = usePathname();
     const { findDefaultTheme } = useCurrency()
-
-    const [form] = Form.useForm();
-    const [data, getData, { loading }] = useFetch(fetchAdminSettings);
+    const data = useEnv();
+    const [submitState, setSubmitState] = useState({ type: '', message: '' });
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
     const handleSubmit = async (values) => {
+        setIsSubmitting(true);
+        setSubmitState({ type: '', message: '' });
         const res = await postAdminNewsletter(values);
         if (res?.error === true) {
-            message.error(res?.msg);
+            setSubmitState({ type: 'error', message: res?.msg || i18n?.t('Something went wrong') });
         } else {
-            message.success(res?.msg);
-            form.resetFields();
+            setSubmitState({ type: 'success', message: res?.msg || i18n?.t('Subscribed successfully') });
         }
+        setIsSubmitting(false);
     };
     const socialLinks = [
         { href: data?.youtube, icon: <FaYoutube size={20} /> },
@@ -62,20 +63,17 @@ const Footer = () => {
     return (
         <footer className={`${pathname === '/setting' ? "hidden" : ""} pb-10 lg:pt-32 pt-10 !bg-[#2C2C2C] ${findDefaultTheme?.name === 'home3' && pathname === "/" ? '' : 'mt-40'}`}>
             <div className='container font-poppins !text-white'>
-                {loading ? (
-                    <Skeleton active />
-                ) : (
+                {!data ? null : (
                     <div className='flex flex-col lg:flex-row lg:gap-10 2xl:gap-40'>
                         <div className='w-full lg:w-[33%]'>
-                            <Link href='/' className='flex items-center gap-2 text-[#5572fc] '>
+                            <Link href='/' className='flex items-center text-[#5572fc] '>
                                 <Image
-                                    src={data?.logo}
+                                    src={data?.logo || '/logo.png'}
                                     height={200}
-                                    width={300}
+                                    width={420}
                                     alt='logoImage'
-                                    className='h-[47px] w-[47px]'
+                                    className='h-[68px] w-auto max-w-[320px] object-contain'
                                 />
-                                <h1 className='uppercase font-nicoMoji text-[27px] leading-[43.2px] font-semibold '>{data?.title}</h1>
                             </Link>
                             <p className='mt-[30px] text-[16px] text-white lg:mt-[60px] line-clamp-3'>
                                 {data?.description}
@@ -149,12 +147,13 @@ const Footer = () => {
                 )}
                 <div className='mx-auto mt-10 sm:w-[80%] lg:w-[60%]'>
                     <form
-                        form={form}
                         onSubmit={(e) => {
                             e.preventDefault();
                             const email = e.target.email.value;
                             handleSubmit({ email });
-                            e.target.reset();
+                            if (!isSubmitting) {
+                                e.target.reset();
+                            }
                         }}
                     >
                         <input
@@ -167,10 +166,18 @@ const Footer = () => {
                             className='w-full border-b-2 border-[#D9D9D9] py-5  !bg-[#2C2C2C] focus:outline-none'
                         />
                         <div className='mx-auto mt-6 text-center'>
-                            <button className='mx-auto rounded bg-[#5572fc] px-8 py-4 text-[18px] font-medium text-white duration-300 hover:scale-105'>
-                                {i18n?.t('Subscribe')}
+                            <button
+                                className='mx-auto rounded bg-[#5572fc] px-8 py-4 text-[18px] font-medium text-white duration-300 hover:scale-105 disabled:cursor-not-allowed disabled:opacity-70'
+                                disabled={isSubmitting}
+                            >
+                                {isSubmitting ? i18n?.t('Submitting') : i18n?.t('Subscribe')}
                             </button>
                         </div>
+                        {submitState.message && (
+                            <p className={`mt-4 text-center text-sm ${submitState.type === 'error' ? 'text-red-300' : 'text-green-300'}`}>
+                                {submitState.message}
+                            </p>
+                        )}
                     </form>
                 </div>
             </div>

@@ -20,6 +20,8 @@ import MultipleImageInput from '../../../../components/form/multiImage';
 import PageTitle from '../../components/common/page-title';
 import dayjs from 'dayjs';
 
+const fallbackLanguage = { code: 'en', name: 'English' };
+
 const page = () => {
     const [form] = Form.useForm();
     const i18n = useI18n();
@@ -30,10 +32,14 @@ const page = () => {
     const [open, setOpen] = useState(false);
     const [selectedLang, setSelectedLang] = useState(langCode);
     const [formData, setFromData] = useState([]);
+    const availableLanguages =
+        Array.isArray(languages?.docs) && languages.docs.length > 0
+            ? languages.docs
+            : [fallbackLanguage];
 
     useEffect(() => {
-        setSelectedLang(langCode);
-    }, [langCode]);
+        setSelectedLang(langCode || availableLanguages[0]?.code || 'en');
+    }, [availableLanguages, langCode]);
 
     const columns = [
         {
@@ -73,7 +79,7 @@ const page = () => {
         const multiLangFields = ['name', 'facilities'];
         const formattedData = multiLangFields.reduce((acc, field) => {
             acc[field] = {};
-            languages.docs.forEach((lang) => {
+            availableLanguages.forEach((lang) => {
                 if (values[field] && values[field][lang.code]) {
                     acc[field][lang.code] = values[field][lang.code];
                 }
@@ -140,8 +146,9 @@ const page = () => {
                 footer={null}
             >
                 <div className='flex flex-wrap justify-start gap-3'>
-                    {languages?.docs?.map((l, index) => (
+                    {availableLanguages.map((l, index) => (
                         <button
+                            type='button'
                             onClick={() => setSelectedLang(l.code)}
                             className={`rounded-full px-3 py-1 text-sm font-medium transition-colors duration-200 ${
                                 l.code === selectedLang
@@ -155,7 +162,7 @@ const page = () => {
                     ))}
                 </div>
                 <Form form={form} layout='vertical' onFinish={onFinish} className='mt-5'>
-                    {languages?.docs.map((l, index) => (
+                    {availableLanguages.map((l, index) => (
                         <div
                             key={index}
                             style={{ display: l.code === selectedLang ? 'block' : 'none' }}

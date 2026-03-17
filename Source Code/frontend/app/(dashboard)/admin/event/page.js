@@ -12,18 +12,24 @@ import { fetchEvents, postEvents, postSingleImage, deleteEvents } from '../../..
 import { columnFormatter, noSelected } from '../../../helpers/utils';
 import { useI18n } from '../../../providers/i18n';
 
+const fallbackLanguage = { code: 'en', name: 'English' };
+
 const Page = () => {
     const [form] = Form.useForm();
     const i18n = useI18n();
     let { languages, langCode } = useI18n();
+    const availableLanguages =
+        Array.isArray(languages?.docs) && languages.docs.length > 0
+            ? languages.docs
+            : [fallbackLanguage];
     const [data, getData, { loading }] = useFetch(fetchEvents);
     const [open, setOpen] = useState(false);
     const [isEdit, setIsEdit] = useState(false);
     const [selectedLang, setSelectedLang] = useState();
 
     useEffect(() => {
-        setSelectedLang(langCode);
-    }, [langCode]);
+        setSelectedLang(langCode || availableLanguages[0]?.code || 'en');
+    }, [availableLanguages, langCode]);
     const onFinish = async (values) => {
         if (values?.image[0]?.originFileObj) {
             const image = values?.image[0]?.originFileObj;
@@ -35,7 +41,7 @@ const Page = () => {
         const multiLangFields = ['name', 'description'];
         const formattedData = multiLangFields.reduce((acc, field) => {
             acc[field] = {};
-            languages.docs.forEach((lang) => {
+            availableLanguages.forEach((lang) => {
                 if (values[field] && values[field][lang.code]) {
                     acc[field][lang.code] = values[field][lang.code];
                 }
@@ -97,6 +103,7 @@ const Page = () => {
                     <Button
                         onClick={() => {
                             form.resetFields();
+                            setSelectedLang(langCode || availableLanguages[0]?.code || 'en');
                             setOpen(true);
                             setIsEdit(false);
                         }}
@@ -119,6 +126,7 @@ const Page = () => {
                         name: values?.name,
                         status: values?.status,
                     });
+                    setSelectedLang(langCode || availableLanguages[0]?.code || 'en');
                     setOpen(true);
                     setIsEdit(true);
                 }}
@@ -133,9 +141,10 @@ const Page = () => {
                 title={isEdit ? i18n?.t('Edit Event') : i18n?.t('Add Event')}
                 open={open}
                 onCancel={() => setOpen(false)}
+                destroyOnClose={true}
             >
                 <div className='mt-2 flex flex-wrap justify-start gap-3'>
-                    {languages?.docs?.map((l, index) => (
+                    {availableLanguages.map((l, index) => (
                         <button
                             onClick={() => setSelectedLang(l.code)}
                             className={`rounded-full px-3 py-1 text-sm font-medium transition-colors duration-200 ${
@@ -150,7 +159,7 @@ const Page = () => {
                     ))}
                 </div>
                 <Form form={form} onFinish={onFinish} layout='vertical' className='mt-4'>
-                    {languages?.docs.map((l, index) => (
+                    {availableLanguages.map((l, index) => (
                         <div
                             key={index}
                             style={{ display: l.code === selectedLang ? 'block' : 'none' }}
@@ -160,22 +169,6 @@ const Page = () => {
                             <FormInput
                                 label='name'
                                 name={['name', l.code]}
-                                onBlur={(e) => {
-                                    if (formData?.length === 0) {
-                                        setFromData([
-                                            { lang: selectedLang, value: e.target.value },
-                                        ]);
-                                    } else {
-                                        const uniqueData = formData?.filter(
-                                            (data) => data?.lang !== selectedLang
-                                        );
-                                        const moreData = [
-                                            ...uniqueData,
-                                            { lang: selectedLang, value: e.target.value },
-                                        ];
-                                        setFromData(moreData);
-                                    }
-                                }}
                                 placeholder={'Enter Name'}
                                 required
                             />
@@ -210,22 +203,6 @@ const Page = () => {
                                     textArea={true}
                                     rows={7}
                                     name={['description', l.code]}
-                                    onBlur={(e) => {
-                                        if (formData?.length === 0) {
-                                            setFromData([
-                                                { lang: selectedLang, value: e.target.value },
-                                            ]);
-                                        } else {
-                                            const uniqueData = formData?.filter(
-                                                (data) => data?.lang !== selectedLang
-                                            );
-                                            const moreData = [
-                                                ...uniqueData,
-                                                { lang: selectedLang, value: e.target.value },
-                                            ];
-                                            setFromData(moreData);
-                                        }
-                                    }}
                                     required
                                     placeholder={'Enter Description'}
                                 />

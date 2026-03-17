@@ -28,14 +28,14 @@ const Pagination = ({ page, total, limit, totalPages, onPageChange, onSizeChange
             <ReactPaginate
                 breakLabel="..."
                 previousLabel={i18n?.t("Previous")}
-                disabledLinkClassName="text-gray-300"
-                previousLinkClassName="text-sm bg-[#003049] hover:bg-[#FF6400] transition-all ease-in  text-white font-semibold py-2 px-4 rounded-l"
-                nextLinkClassName="text-sm bg-[#003049] hover:bg-[#FF6400] transition-all ease-in text-white font-semibold py-2 px-4 rounded-r"
-                pageLinkClassName="text-sm bg-[#003049] hover:bg-[#FF6400] transition-all ease-in text-white font-semibold py-2 px-4"
+                disabledLinkClassName="dashboard-pagination-link dashboard-pagination-link-disabled"
+                previousLinkClassName="dashboard-pagination-link dashboard-pagination-edge"
+                nextLinkClassName="dashboard-pagination-link dashboard-pagination-edge"
+                pageLinkClassName="dashboard-pagination-link"
                 pageClassName="!mb-3 md:!mb-0"
-                activeLinkClassName="text-[#5572fc]"
+                activeLinkClassName="dashboard-pagination-link-active"
                 nextLabel={i18n?.t("Next")}
-                className="flex flex-wrap"
+                className="dashboard-pagination flex flex-wrap"
                 onPageChange={({ selected }) => onPageChange(selected + 1)}
                 pageRangeDisplayed={3}
                 pageCount={totalPages || 1}

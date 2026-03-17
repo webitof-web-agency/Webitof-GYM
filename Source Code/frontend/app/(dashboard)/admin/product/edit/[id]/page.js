@@ -8,6 +8,8 @@ import { useFetch } from "../../../../../helpers/hooks";
 import { allProductCategory, singleProductAdmin } from "../../../../../helpers/backend";
 import ProductForm from "../../add/productForm";
 
+const fallbackLanguage = { code: 'en', name: 'English' };
+
 const page = ({ params }) => {
     const [form] = Form.useForm();
     const router = useRouter()
@@ -18,14 +20,22 @@ const page = ({ params }) => {
     const [selectedLang, setSelectedLang] = useState();
     const [isVarient, setIsVarient] = useState(false);
     const [formData, setFromData] = useState([])
+    const availableLanguages =
+        Array.isArray(languages?.docs) && languages.docs.length > 0
+            ? languages.docs
+            : [fallbackLanguage];
 
     useEffect(() => {
-        setSelectedLang(langCode)
-    }, [langCode])
+        setSelectedLang(langCode || availableLanguages[0]?.code || 'en')
+    }, [availableLanguages, langCode])
 
     useEffect(() => {
         getData({ _id: params?.id })
     }, [params?.id])
+
+    useEffect(() => {
+        getCategory();
+    }, [])
 
     useEffect(() => {
         form.setFieldsValue({
@@ -71,8 +81,9 @@ const page = ({ params }) => {
             </button>
             <h1 className="text-2xl font-bold my-4">{i18n?.t('Edit Product')}</h1>
             <div className="flex justify-start flex-wrap gap-3">
-                {languages?.docs?.map((l, index) => (
+                {availableLanguages.map((l, index) => (
                     <button
+                        type="button"
                         onClick={() => setSelectedLang(l.code)}
                         className={`px-3 py-1 rounded-full text-sm font-medium transition-colors duration-200 ${l.code === selectedLang
                             ? 'bg-[#5572fc] text-white'
@@ -84,7 +95,7 @@ const page = ({ params }) => {
                     </button>
                 ))}
             </div>
-            <ProductForm isVarient={isVarient} setIsVarient={setIsVarient} category={category} data={data} languages={languages} langCode={langCode} selectedLang={selectedLang} setSelectedLang={setSelectedLang} form={form} formData={formData} setFromData={setFromData} i18n={i18n} router={router} productId={params.id} />
+            <ProductForm isVarient={isVarient} setIsVarient={setIsVarient} category={category} data={data} languages={{ ...(languages || {}), docs: availableLanguages }} langCode={langCode} selectedLang={selectedLang} setSelectedLang={setSelectedLang} form={form} formData={formData} setFromData={setFromData} i18n={i18n} router={router} productId={params.id} />
         </div>
     );
 };

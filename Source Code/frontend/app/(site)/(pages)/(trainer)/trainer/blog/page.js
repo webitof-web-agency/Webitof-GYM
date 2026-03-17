@@ -34,24 +34,26 @@ const page = () => {
         {
             text: i18n.t('Title'),
             dataField: 'title',
-            formatter: (title) => (
-                <span className=''>
-                    <Tooltip
-                        title={columnFormatter(title)?.length > 30 ? columnFormatter(title) : ''}
-                    >
-                        <span className='cursor-help'>
-                            {title[i18n?.langCode]?.length > 30
-                                ? columnFormatter(title)?.slice(0, 30) + '...'
-                                : columnFormatter(title)}
-                        </span>
-                    </Tooltip>
-                </span>
-            ),
+            formatter: (title) => {
+                const formattedTitle = columnFormatter(title);
+                return (
+                    <span className=''>
+                        <Tooltip title={formattedTitle?.length > 30 ? formattedTitle : ''}>
+                            <span className='cursor-help'>
+                                {formattedTitle?.length > 30 ? formattedTitle?.slice(0, 30) + '...' : formattedTitle}
+                            </span>
+                        </Tooltip>
+                    </span>
+                );
+            },
         },
         {
             text: i18n.t('Category'),
             dataField: 'category',
-            formatter: (_, d) => <span>{columnFormatter(d?.category?.name?.length > 20 ? d?.category?.name?.slice(0, 20) : d?.category?.name)}</span>,
+            formatter: (_, d) => {
+                const categoryName = columnFormatter(d?.category?.name);
+                return <span>{categoryName?.length > 20 ? categoryName?.slice(0, 20) + '...' : categoryName}</span>;
+            },
         },
         {
             text: i18n.t('Tags'),
@@ -59,7 +61,7 @@ const page = () => {
 
             formatter: (_, d) =>
                 d?.tags ? (
-                    <span>{d?.tags?.map((d) => columnFormatter(d?.name?.length > 30 ? d?.name?.slice(0, 30) : d?.name)).join(', ')}</span>
+                    <span>{d?.tags?.map((tag) => columnFormatter(tag?.name)).filter(Boolean).join(', ')}</span>
                 ) : (
                     <span className='text-red-500'>{i18n.t('-')}</span>
                 ),

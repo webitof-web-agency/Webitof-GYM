@@ -8,12 +8,12 @@ import { Form, message } from 'antd';
 import BasicBar from '../../../../components/common/basic-bar';
 import FormInput from '../../../../components/form/input';
 import Button from '../../../../components/common/button';
-import { fetchAdminSettings, postContactUs } from '../../../helpers/backend';
-import { useFetch } from '../../../helpers/hooks';
+import { postContactUs } from '../../../helpers/backend';
+import { useEnv } from '../../../contexts/envContext';
 import { useI18n } from '../../../providers/i18n';
 
 const Page = () => {
-    const [data, getData] = useFetch(fetchAdminSettings);
+    const data = useEnv();
     const i18n = useI18n();
     const [form] = Form.useForm();
 

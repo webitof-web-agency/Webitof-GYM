@@ -12,19 +12,25 @@ import { columnFormatter, noSelected } from '../../../helpers/utils';
 import PageTitle from '../../components/common/page-title';
 import dayjs from 'dayjs';
 
+const fallbackLanguage = { code: 'en', name: 'English' };
+
 const AdminFaq = () => {
     const i18n = useI18n()
     const [form] = Form.useForm();
     let { languages, langCode } = useI18n();
+    const availableLanguages =
+        Array.isArray(languages?.docs) && languages.docs.length > 0
+            ? languages.docs
+            : [fallbackLanguage];
     const [data, getData, { loading }] = useFetch(fetchFaq);
 
     const [open, setOpen] = useState(false);
     const [isEdit, setIsEdit] = useState(false);
-    const [selectedLang, setSelectedLang] = useState(langCode);
+    const [selectedLang, setSelectedLang] = useState('en');
 
     useEffect(() => {
-        setSelectedLang(langCode)
-    }, [langCode])
+        setSelectedLang(langCode || availableLanguages[0]?.code || 'en')
+    }, [availableLanguages, langCode])
 
     const columns = [
         {
@@ -68,6 +74,7 @@ const AdminFaq = () => {
                     <Button
                         onClick={() => {
                             form.resetFields();
+                            setSelectedLang(langCode || availableLanguages[0]?.code || 'en');
                             setOpen(true);
                             setIsEdit(false);
                         }}>
@@ -79,6 +86,7 @@ const AdminFaq = () => {
                     form.setFieldsValue({
                         ...values,
                     });
+                    setSelectedLang(langCode || availableLanguages[0]?.code || 'en');
                     setOpen(true);
                     setIsEdit(true);
                 }}
@@ -94,7 +102,7 @@ const AdminFaq = () => {
                 title={i18n?.t("Frequently Ask Question Details")}
                 footer={null}>
                 <div className="flex justify-start flex-wrap gap-3 mb-4 mt-4">
-                    {languages?.docs?.map((l, index) => (
+                    {availableLanguages.map((l, index) => (
                         <div
                             onClick={() => setSelectedLang(l.code)}
                             className={`px-3 py-1 rounded-full text-sm font-medium transition-colors duration-200 ${l.code === selectedLang
@@ -116,7 +124,7 @@ const AdminFaq = () => {
                         isEdit && <HiddenInput name="_id" />
                     }
 
-                    {languages?.docs?.map((l, index) => (
+                    {availableLanguages.map((l, index) => (
                         <div key={index} style={{ display: l.code === selectedLang ? 'block' : 'none' }}>
                             <FormInput
                                 name={['question', l.code]}

@@ -1,17 +1,19 @@
 'use client';
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import dynamic from "next/dynamic";
+import { usePathname, useRouter } from "next/navigation";
 import Footer from "../../../components/layout/footer";
 import Navbar from "../../../components/layout/header";
-import Preloader from "../../../components/common/preloader";
-import Scroll from "../../../components/common/scroll-bar";
-import CouponBar from "../../../components/layout/couponBar";
-import { useRouter } from "next/navigation";
 import axios from "axios";
 
+const Scroll = dynamic(() => import("../../../components/common/scroll-bar"), { ssr: false });
+const CouponBar = dynamic(() => import("../../../components/layout/couponBar"), { ssr: false });
+
 const Layout = ({ children }) => {
-    const [loading, setLoading] = useState(true);
-    const [animateOut, setAnimateOut] = useState(false);
     const router = useRouter();
+    const pathname = usePathname();
+    const hidePromoBar = pathname === '/signin' || pathname === '/signup' || pathname === '/setting';
+
     useEffect(() => {
       const checkEnvFile = async () => {
         try {
@@ -24,29 +26,17 @@ const Layout = ({ children }) => {
         }
       }
       checkEnvFile()
-    }, [])
-    useEffect(() => {
-      const timer = setTimeout(() => {
-        setAnimateOut(true);
-        setTimeout(() => {
-          setLoading(false);
-        }, 1000);
-      }, 50);
-  
-      return () => clearTimeout(timer);
-    }, []);
+    }, [router])
 
     return (
         <>
-       {loading ? <Preloader animateOut={animateOut} /> : (
         <>
-          <CouponBar/>
+          {!hidePromoBar && <CouponBar/>}
           <Navbar />
           {children}
           <Footer />
           <Scroll/>
         </>
-      )}
         </>
     );
 };

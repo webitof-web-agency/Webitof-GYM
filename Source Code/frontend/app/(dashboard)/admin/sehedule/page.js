@@ -11,21 +11,25 @@ import { columnFormatter, noSelected } from '../../../helpers/utils';
 import FormSelect from '../../components/form/select';
 import PageTitle from '../../components/common/page-title';
 
+const fallbackLanguage = { code: 'en', name: 'English' };
+
 const Sehedule = () => {
     const [form] = Form.useForm();
     const i18n = useI18n();
     let { lang, languages, langCode } = useI18n();
+    const availableLanguages =
+        Array.isArray(languages?.docs) && languages.docs.length > 0
+            ? languages.docs
+            : [fallbackLanguage];
     const [data, getData, { loading }] = useFetch(fetchAdminSheduleList);
     const [trainers] = useFetch(fetchTrainers);
     const [open, setOpen] = useState(false);
     const [isEdit, setIsEdit] = useState(false);
     const [selectedLang, setSelectedLang] = useState('en');
-    const [formData, setFromData] = useState([]);
 
     useEffect(() => {
-        const defaultLanguage = languages?.docs?.find((lang) => lang.code === 'en') ? 'en' : langCode;
-        setSelectedLang(defaultLanguage);
-    }, [languages, langCode]);
+        setSelectedLang(langCode || availableLanguages[0]?.code || 'en');
+    }, [availableLanguages, langCode]);
 
     const columns = [
         {
@@ -63,6 +67,7 @@ const Sehedule = () => {
                         className='!py-2'
                         onClick={() => {
                             form.resetFields();
+                            setSelectedLang(langCode || availableLanguages[0]?.code || 'en');
                             setOpen(true);
                             setIsEdit(false);
                         }}
@@ -76,6 +81,7 @@ const Sehedule = () => {
                         ...values,
                         trainer: values?.trainer?._id,
                     });
+                    setSelectedLang(langCode || availableLanguages[0]?.code || 'en');
                     setOpen(true);
                     setIsEdit(true);
                 }}
@@ -95,7 +101,7 @@ const Sehedule = () => {
                 destroyOnClose={true}
             >
                 <div className="flex justify-start flex-wrap gap-3">
-                    {languages?.docs?.map((l, index) => (
+                    {availableLanguages.map((l, index) => (
                         <button
                             onClick={() => {
                                 setSelectedLang(l.code);
@@ -117,7 +123,7 @@ const Sehedule = () => {
                         const multiLangFields = ['event'];
                         const formattedData = multiLangFields.reduce((acc, field) => {
                             acc[field] = {};
-                            languages?.docs?.forEach(lang => {
+                            availableLanguages.forEach((lang) => {
                                 if (values[field] && values[field][lang.code]) {
                                     acc[field][lang.code] = values[field][lang.code];
                                 }
@@ -193,7 +199,7 @@ const Sehedule = () => {
                             value: trainer?._id,
                         }))}
                     />
-                    {languages?.docs?.map((l, index) => (
+                    {availableLanguages.map((l, index) => (
                         <div key={index} style={{ display: l.code === selectedLang ? 'block' : 'none' }}>
                             <FormInput
                                 name={['event', l.code]}
@@ -201,15 +207,6 @@ const Sehedule = () => {
                                 placeholder={'Event'}
                                 key={index}
                                 required
-                                onBlur={(e) => {
-                                    if (formData?.length === 0) {
-                                        setFromData([{ lang: selectedLang, value: e.target.value }]);
-                                    } else {
-                                        const uniqueData = formData?.filter((data) => data?.lang !== selectedLang);
-                                        const moreData = [...uniqueData, { lang: selectedLang, value: e.target.value }];
-                                        setFromData(moreData);
-                                    }
-                                }}
                             />
                         </div>
                     ))}

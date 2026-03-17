@@ -16,24 +16,29 @@ const AddPaymentMethods = () => {
     return (
         <div>
             <PageTitle title="Add Payment Method" />
-            <PaymentMethodForm title={i18n?.t('Add Method')} form={form} selectedMethod={selectedMethod} setSelectedMethod={setSelectedMethod} />
+            <PaymentMethodForm
+                title={i18n?.t('Add Method')}
+                form={form}
+                selectedMethod={selectedMethod}
+                setSelectedMethod={setSelectedMethod}
+                isEdit={false}
+            />
         </div>
     );
 };
 
 export default AddPaymentMethods;
 
-export const PaymentMethodForm = ({ title, form, selectedMethod, setSelectedMethod }) => {
+export const PaymentMethodForm = ({ title, form, selectedMethod, setSelectedMethod, isEdit = false }) => {
     const { push } = useRouter()
     const i18n = useI18n()
 
     const handleFinish = async (values) => {
-        const config = (values.config);
+        const config = values.config;
         const payload = {
             ...values,
             config: config,
         }
-        console.log("🚀 ~ handleFinish ~ config:", config)
         const res = await postPaymentMethod(payload)
         if (res?.error === false) {
             message.success(res?.msg)
@@ -47,9 +52,7 @@ export const PaymentMethodForm = ({ title, form, selectedMethod, setSelectedMeth
             <Card>
                 <div className="body">
                     <Form form={form} layout="vertical" onFinish={handleFinish}>
-                        {
-                            title !== "Add Method" && <HiddenInput name="_id" />
-                        }
+                        {isEdit && <HiddenInput name="_id" />}
                         <div className="md:w-1/2">
                             <FormInput placeholder={i18n?.t('Enter Name')} name="name" label={"Name"} required />
                         </div>
@@ -125,10 +128,7 @@ export const PaymentMethodForm = ({ title, form, selectedMethod, setSelectedMeth
                                         valuePropName="checked"
                                         initialValue={false}
                                     >
-                                        <Checkbox
-                                            onChange={(e) => {
-                                                form.setFieldsValue({ ['config.is_live']: e.target.checked })
-                                            }}>
+                                        <Checkbox>
                                             {i18n.t("Is Live")}
                                         </Checkbox>
                                     </Form.Item>
@@ -145,7 +145,7 @@ export const PaymentMethodForm = ({ title, form, selectedMethod, setSelectedMeth
                             </>
                         }
                         <Button type='submit' className='mt-5'>
-                            {title === "Add Method" ? "Submit" : "Update"}
+                            {isEdit ? i18n?.t('Update') : i18n?.t('Submit')}
                         </Button>
                     </Form>
                 </div>

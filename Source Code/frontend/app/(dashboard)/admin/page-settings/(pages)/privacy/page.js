@@ -9,16 +9,22 @@ import Button from '../../../../../../components/common/button';
 import JodiEditor from '../../../../../../components/form/jodiEditor';
 import { noSelected } from '../../../../../helpers/utils';
 
+const fallbackLanguage = { code: 'en', name: 'English' };
+
 const PrivacyPage = ({ slug }) => {
     const [form] = Form.useForm();
     const i18n = useI18n();
     let { languages, langCode } = useI18n();
+    const availableLanguages =
+        Array.isArray(languages?.docs) && languages.docs.length > 0
+            ? languages.docs
+            : [fallbackLanguage];
     const [page, getPage] = useFetch(fetchSinglePage, {}, false);
-    const [selectedLang, setSelectedLang] = useState(langCode);
+    const [selectedLang, setSelectedLang] = useState('en');
 
     useEffect(() => {
-        setSelectedLang(langCode);
-    }, [langCode])
+        setSelectedLang(langCode || availableLanguages[0]?.code || 'en');
+    }, [availableLanguages, langCode])
 
     useEffect(() => {
         getPage({ slug: slug });
@@ -52,7 +58,7 @@ const PrivacyPage = ({ slug }) => {
         <div>
             <Card>
                 <div className="flex justify-start flex-wrap gap-3 mb-4 mt-4">
-                    {languages?.docs?.map((l, index) => (
+                    {availableLanguages.map((l, index) => (
                         <div
                             onClick={() => setSelectedLang(l.code)}
                             className={`px-3 py-1 rounded-full text-sm font-medium transition-colors duration-200 ${l.code === selectedLang
@@ -72,7 +78,7 @@ const PrivacyPage = ({ slug }) => {
                 >
                     <HiddenInput name="_id" />
                     <HiddenInput name="slug" />
-                    {languages?.docs?.map((l, index) => (
+                    {availableLanguages.map((l, index) => (
                         <div key={index} style={{ display: l.code === selectedLang ? 'block' : 'none' }}>
                             <JodiEditor
                                 name={['content', l.code]}

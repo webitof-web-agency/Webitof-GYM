@@ -9,10 +9,16 @@ import MultipleImageInput from '../../../../../../components/form/multiImage';
 import { noSelected } from '../../../../../helpers/utils';
 import Button from '../../../../../../components/common/button';
 
+const fallbackLanguage = { code: 'en', name: 'English' };
+
 const AboutPageSetting = ({ slug }) => {
     const [form] = Form.useForm();
     const i18n = useI18n();
     const { langCode, languages } = useI18n();
+    const availableLanguages =
+        Array.isArray(languages?.docs) && languages.docs.length > 0
+            ? languages.docs
+            : [fallbackLanguage];
     const [page, getPage] = useFetch(fetchSinglePage, {}, false);
     const [selectedLang, setSelectedLang] = useState();
     const [formValues, setFormValues] = useState({});
@@ -22,8 +28,21 @@ const AboutPageSetting = ({ slug }) => {
     }, [slug]);
 
     useEffect(() => {
-        setSelectedLang(langCode);
-    }, [langCode])
+        setSelectedLang(langCode || availableLanguages[0]?.code || 'en');
+    }, [availableLanguages, langCode])
+
+    const toUploadList = (value) => {
+        if (!value) return [];
+        if (Array.isArray(value)) {
+            return value
+                .map((v) => (typeof v === 'string' ? v : v?.url))
+                .filter(Boolean)
+                .map((url) => ({ url }));
+        }
+        if (typeof value === 'string') return [{ url: value }];
+        if (typeof value?.url === 'string') return [{ url: value.url }];
+        return [];
+    };
 
     useEffect(() => {
         if (page?._id) {
@@ -31,28 +50,15 @@ const AboutPageSetting = ({ slug }) => {
                 _id: page._id,
                 title: page.title,
                 slug: page.slug,
-                mission_image1: Array.isArray(page?.content?.about_page?.mission?.mission_image1)
-                    ? page.content?.about_page?.mission?.mission_image1?.map(image => ({ url: image.url }))
-                    : [{ url: page.content?.about_page?.mission?.mission_image1 }],
-                mission_image2: Array.isArray(page.content?.about_page?.mission?.mission_image2)
-                    ? page.content?.about_page?.mission?.mission_image2.map(image => ({ url: image.url }))
-                    : [{ url: page.content?.about_page?.mission?.mission_image2 }],
-                vision_image1: Array.isArray(page.content?.about_page?.vision?.vision_image1)
-                    ? page.content?.about_page?.vision?.vision_image1.map(image => ({ url: image.url }))
-                    : [{ url: page.content?.about_page?.vision?.vision_image1 }],
-                vision_image2: Array.isArray(page.content?.about_page?.vision?.vision_image2)
-                    ? page.content?.about_page?.vision?.vision_image2.map(image => ({ url: image.url }))
-                    : [{ url: page.content?.about_page?.vision?.vision_image2 }],
-                values_image1: Array.isArray(page.content?.about_page?.values?.values_image1)
-                    ? page.content?.about_page?.values?.values_image1.map(image => ({ url: image.url }))
-                    : [{ url: page.content?.about_page?.values?.values_image1 }],
-                values_image2: Array.isArray(page.content?.about_page?.values?.values_image2)
-                    ? page.content?.about_page?.values?.values_image2.map(image => ({ url: image.url }))
-                    : [{ url: page.content?.about_page?.values?.values_image2 }],
+                mission_image1: toUploadList(page?.content?.about_page?.mission?.mission_image1),
+                mission_image2: toUploadList(page?.content?.about_page?.mission?.mission_image2),
+                vision_image1: toUploadList(page?.content?.about_page?.vision?.vision_image1),
+                vision_image2: toUploadList(page?.content?.about_page?.vision?.vision_image2),
+                values_image1: toUploadList(page?.content?.about_page?.values?.values_image1),
+                values_image2: toUploadList(page?.content?.about_page?.values?.values_image2),
             };
 
-            if (Array.isArray(languages?.docs)) {
-                languages.docs.forEach(lang => {
+            availableLanguages.forEach((lang) => {
                     initialFormValues.about_page = initialFormValues.about_page || {};
                     initialFormValues.about_page.heading = initialFormValues.about_page.heading || {};
                     initialFormValues.about_page.heading[lang.code] = page.content?.about_page?.heading?.[lang.code] || '';
@@ -62,19 +68,16 @@ const AboutPageSetting = ({ slug }) => {
 
                     initialFormValues.about_page.mission = initialFormValues.about_page.mission || {};
                     initialFormValues.about_page.mission.text = initialFormValues.about_page.mission.text || {};
-                    initialFormValues.about_page.mission.text[lang.code] = page?.content?.about_page?.mission.text?.[lang.code] || {};
+                    initialFormValues.about_page.mission.text[lang.code] = page?.content?.about_page?.mission?.text?.[lang.code] || '';
 
-                    initialFormValues.about_page.vision = initialFormValues.about_page.mission || {};
+                    initialFormValues.about_page.vision = initialFormValues.about_page.vision || {};
                     initialFormValues.about_page.vision.text = initialFormValues.about_page.vision.text || {};
-                    initialFormValues.about_page.vision.text[lang.code] = page?.content?.about_page?.vision.text?.[lang.code] || {};
+                    initialFormValues.about_page.vision.text[lang.code] = page?.content?.about_page?.vision?.text?.[lang.code] || '';
 
-                    initialFormValues.about_page.values = initialFormValues.about_page.mission || {};
+                    initialFormValues.about_page.values = initialFormValues.about_page.values || {};
                     initialFormValues.about_page.values.text = initialFormValues.about_page.values.text || {};
-                    initialFormValues.about_page.values.text[lang.code] = page?.content?.about_page?.values.text?.[lang.code] || {};
-
-
-                });
-            }
+                    initialFormValues.about_page.values.text[lang.code] = page?.content?.about_page?.values?.text?.[lang.code] || '';
+            });
             setFormValues(initialFormValues);
             form.setFieldsValue(initialFormValues);
         }
@@ -92,7 +95,7 @@ const AboutPageSetting = ({ slug }) => {
             <Card>
                 <h6 className="text-secondary py-2 header_4">{i18n?.t('About Page')}</h6>
                 <div className="flex justify-start flex-wrap gap-3 mb-4 mt-4">
-                    {languages?.docs?.map((l, index) => (
+                    {availableLanguages.map((l, index) => (
                         <div
                             onClick={() => setSelectedLang(l.code)}
                             className={`px-3 py-1 rounded-full text-sm font-medium transition-colors duration-200 ${l.code === selectedLang
@@ -110,19 +113,25 @@ const AboutPageSetting = ({ slug }) => {
                     layout="vertical"
                     onValuesChange={handleValuesChange}
                     onFinish={async (values) => {
-                        const uploadImage = async (imageField, imageName) => {
-                            if (values?.[imageField]?.[0]?.originFileObj) {
-                                const image = { image: values[imageField][0].originFileObj, image_name: imageName };
+                        const resolveImageUrl = async (imageField, imageName) => {
+                            const list = values?.[imageField];
+                            const first = Array.isArray(list) ? list[0] : undefined;
+                            if (first?.originFileObj) {
+                                const image = { image: first.originFileObj, image_name: imageName };
                                 const { data } = await postSingleImage(image);
-                                values[imageField] = data;
+                                return data;
                             }
+                            if (typeof first?.url === 'string') return first.url;
+                            return '';
                         };
-                        await uploadImage('mission_image1', 'about_page');
-                        await uploadImage('mission_image2', 'about_page');
-                        await uploadImage('vision_image1', 'about_page');
-                        await uploadImage('vision_image2', 'about_page');
-                        await uploadImage('values_image1', 'about_page');
-                        await uploadImage('values_image2', 'about_page');
+
+                        const missionImage1Url = await resolveImageUrl('mission_image1', 'about_page');
+                        const missionImage2Url = await resolveImageUrl('mission_image2', 'about_page');
+                        const visionImage1Url = await resolveImageUrl('vision_image1', 'about_page');
+                        const visionImage2Url = await resolveImageUrl('vision_image2', 'about_page');
+                        const valuesImage1Url = await resolveImageUrl('values_image1', 'about_page');
+                        const valuesImage2Url = await resolveImageUrl('values_image2', 'about_page');
+
                         const formData = {
                             title: values?.title || 'About',
                             slug: values?.slug || page?.slug,
@@ -132,18 +141,18 @@ const AboutPageSetting = ({ slug }) => {
                                     description: values?.about_page?.description,
                                     mission: {
                                         text: values?.about_page?.mission?.text,
-                                        mission_image1: values.mission_image1 || '',
-                                        mission_image2: values.mission_image2 || '',
+                                        mission_image1: missionImage1Url,
+                                        mission_image2: missionImage2Url,
                                     },
                                     vision: {
                                         text: values?.about_page?.vision?.text,
-                                        vision_image1: values.vision_image1 || '',
-                                        vision_image2: values.vision_image2 || '',
+                                        vision_image1: visionImage1Url,
+                                        vision_image2: visionImage2Url,
                                     },
                                     values: {
                                         text: values?.about_page?.values?.text,
-                                        values_image1: values.values_image1 || '',
-                                        values_image2: values.values_image2 || '',
+                                        values_image1: valuesImage1Url,
+                                        values_image2: valuesImage2Url,
                                     },
                                 },
                             },
@@ -164,7 +173,7 @@ const AboutPageSetting = ({ slug }) => {
                     <HiddenInput name="slug" />
                     <HiddenInput name="_id" />
                     <div className="border p-3 rounded mt-5">
-                        {languages?.docs?.map((l, index) => (
+                        {availableLanguages.map((l, index) => (
                             <div key={index} style={{ display: l.code === selectedLang ? 'block' : 'none' }}>
                                 <h2 className='font-semibold text-lg mb-4 border-b'>{i18n?.t('About Page')}</h2>
                                 <label className="text-secondary">{i18n?.t('Heading')}</label>

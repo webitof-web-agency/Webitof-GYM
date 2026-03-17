@@ -1,24 +1,26 @@
 "use client"
-import { useEffect, useState } from "react";
-import { notification } from "antd";
+import { useCallback, useEffect, useRef, useState } from "react";
 import Swal from "sweetalert2";
+import { notifyError, notifySuccess } from "./notify";
 
 export const useFetch = (func, query = {}, load = true) => {
     const [data, setData] = useState();
     const [loading, setLoading] = useState(load)
     const [error, setError] = useState('')
     const [params, setParams] = useState(query)
-     useEffect(() => {
-        if (load) {
-            getData(params)
-        }
-    }, []);
+    const paramsRef = useRef(query);
+    const mountedRef = useRef(true);
 
-    const getData = (query) => {
+    const getData = useCallback((query = {}) => {
+        const nextParams = { ...paramsRef.current, ...query };
+        paramsRef.current = nextParams;
+        setParams(nextParams)
         setLoading(true)
         setError('')
-        setParams({ ...params, ...query })
-        func({ ...params, ...query }).then(({ error, data, msg }) => {
+        return func(nextParams).then(({ error, data, msg }) => {
+            if (!mountedRef.current) {
+                return;
+            }
             setLoading(false)
             if (error === false) {
                 setData(data)
@@ -27,9 +29,23 @@ export const useFetch = (func, query = {}, load = true) => {
                 setError(msg)
             }
         }).catch(e => {
-           
+            if (mountedRef.current) {
+                setLoading(false)
+                setError(e?.message || 'Something went wrong')
+            }
         })
-    }
+    }, [func, load]);
+
+    useEffect(() => {
+        mountedRef.current = true;
+        if (load) {
+            getData(paramsRef.current)
+        }
+        return () => {
+            mountedRef.current = false;
+        };
+    }, [getData, load]);
+
     const clear = () => setData(undefined)
     return [data, getData, { query: params, loading, error, clear }];
 }
@@ -41,10 +57,10 @@ export const useAction = async (func, data, reload, alert = true, successMsg) =>
             reload(d)
         }
         if (alert) {
-            notification.success({ message: successMsg || msg || 'Success' })
+            notifySuccess(successMsg || msg || 'Success')
         }
     } else {
-        notification.error({ message: msg || 'Something went wrong' })
+        notifyError(msg || 'Something went wrong')
     }
 }
 

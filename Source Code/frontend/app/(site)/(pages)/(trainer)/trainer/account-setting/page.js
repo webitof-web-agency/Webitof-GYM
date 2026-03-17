@@ -33,7 +33,7 @@ const AccountSettings = () => {
             url: user?.image,
           },
         ]
-        : '',
+        : [],
     });
   }, [user?._id]);
 
@@ -45,10 +45,16 @@ const AccountSettings = () => {
         form={form}
         layout="vertical"
         onFinish={async (values) => {
+          const skills = Array.isArray(values?.skills)
+            ? values.skills
+              .filter((skill) => skill?.name || skill?.level)
+              .map((skill) => ({ name: skill?.name, level: skill?.level }))
+            : [];
+
           let payload = {
             ...values,
             image: values?.image?.[0]?.originFileObj,
-            skills: JSON.stringify(values?.skills?.map((skill) => ({ name: skill?.name, level: skill?.level }))),
+            skills: JSON.stringify(skills),
             dob: values?.dob ? dayjs(values?.dob).format('YYYY-MM-DD') : null,
           };
 

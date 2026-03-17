@@ -28,7 +28,7 @@ const FitnessGroupsTable = ({ params }) => {
             <hr className='mb-4'/>
             <div className='w-full overflow-x-scroll hide-scrollbar '>
                 {
-                    data?.docs[0]?.members?.length > 0 ? <ListItem data={data} /> : <Empty />
+                    data?.docs?.[0]?.members?.length > 0 ? <ListItem data={data} /> : <Empty />
                 }
             </div>
         </div>

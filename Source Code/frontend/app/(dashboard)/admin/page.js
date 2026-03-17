@@ -1,4 +1,5 @@
 'use client';
+import dynamic from 'next/dynamic';
 import { useI18n } from '../../providers/i18n';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -7,24 +8,32 @@ import { fetchAdminDashboardData, fetchUser } from '../../helpers/backend';
 import { useFetch } from '../../helpers/hooks';
 import { FiUsers } from 'react-icons/fi';
 import { Card } from 'antd';
-import DonutChart from '../components/form/pieChartComponent';
 import { TbBellRingingFilled } from "react-icons/tb";
 import { BsCartPlusFill } from "react-icons/bs";
 import Table from '../components/form/table';
 import { columnFormatter, getStatusClass } from '../../helpers/utils';
 import { useRouter } from 'next/navigation';
-import MonthlyEarningsChart from '../components/common/adminChart';
 import { FaUsers } from "react-icons/fa";
 import { TbUsersGroup } from "react-icons/tb";
 import { LiaUsersSolid } from "react-icons/lia";
 import dayjs from 'dayjs';
+
+const MonthlyEarningsChart = dynamic(() => import('../components/common/adminChart'), {
+    ssr: false,
+    loading: () => <div className="h-[400px] animate-pulse rounded bg-gray-100" />,
+});
+
+const DonutChart = dynamic(() => import('../components/form/pieChartComponent'), {
+    ssr: false,
+    loading: () => <div className="h-[400px] animate-pulse rounded bg-gray-100" />,
+});
 
 const StatCard = ({ title, value, icon: Icon, className = '' }) => (
     <Card className=' bg-white p-4 !rounded-sm'>
         <div className='flex items-center justify-between'>
             <div>
                 <p className='text-sm text-gray-500'>{title}</p>
-                <p className='mt-2 text-2xl font-bold'>{value}</p>
+                <p className='mt-2 text-2xl font-bold'>{value ?? 0}</p>
             </div>
             <div className={`rounded-full p-3 ${className || 'bg-blue-500'}`}>
                 <Icon className='h-6 w-6 text-white' />

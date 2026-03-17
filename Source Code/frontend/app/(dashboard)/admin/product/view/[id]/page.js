@@ -5,7 +5,7 @@ import { FaArrowLeft } from 'react-icons/fa6';
 import { singleProductAdmin } from "../../../../../helpers/backend";
 import { useFetch } from '../../../../../helpers/hooks';
 import { DetailTable } from '../../../../components/form/table';
-import { columnFormatter, getStatusClass } from '../../../../../helpers/utils';
+import { getStatusClass } from '../../../../../helpers/utils';
 import { useI18n } from '../../../../../providers/i18n';
 import { useCurrency } from '../../../../../contexts/site';
 
@@ -14,6 +14,22 @@ const page = ({ params }) => {
     let { langCode } = useI18n();
     const [data, getData] = useFetch(singleProductAdmin, {}, false)
     const {currencySymbol} = useCurrency()
+    const resolveLocalizedValue = (value) => {
+        if (!value) {
+            return '-';
+        }
+
+        if (typeof value === 'string') {
+            return value;
+        }
+
+        return value?.[langCode] || value?.en || Object.values(value)?.[0] || '-';
+    };
+    const productTitle = resolveLocalizedValue(data?.product?.name);
+    const productDescription = resolveLocalizedValue(data?.product?.description);
+    const productShortDescription = resolveLocalizedValue(data?.product?.short_description);
+    const productCategory = resolveLocalizedValue(data?.product?.category?.name);
+
     useEffect(() => {
         getData({ _id: params?.id })
     }, [params?.id])
@@ -36,20 +52,27 @@ const page = ({ params }) => {
                                 {d?.is_active ? `${i18n?.t('Active')}` : `${i18n?.t('Inactive')}`}
                             </span>
                         },
-                        { text: 'Title', dataIndex: 'title', formatter: (_, d) => columnFormatter(d?.name)},
+                        { text: 'Title', dataIndex: 'title', formatter: (_, d) => resolveLocalizedValue(d?.name)},
                         { text: 'Price', dataIndex: 'price', formatter: (_, d) => currencySymbol +" "+d?.price},
                         { text: 'Quantity', dataIndex: 'quantity' },
-                        { text: 'Category', dataIndex: 'category', formatter: (_, d) => d?.category?.name[langCode] },
-                        { text: 'Short Description', dataIndex: 'short_description', formatter: (_, d) => d?.short_description[langCode] },
+                        { text: 'Category', dataIndex: 'category', formatter: (_, d) => resolveLocalizedValue(d?.category?.name) },
+                        { text: 'Short Description', dataIndex: 'short_description', formatter: (_, d) => resolveLocalizedValue(d?.short_description) },
                     ]}
                     data={data?.product} />
                 <div className='bg-white p-4' >
                     <h3 className="text-lg font-semibold mb-2">{i18n?.t("Thumbnail Images")}</h3>
-                    <Image src={data?.product?.thumbnail_image} alt={data?.name || "thumbnail"} className='!w-[120px] !h-[120px] object-fill' />
+                    <Image src={data?.product?.thumbnail_image} alt={productTitle || "thumbnail"} className='!w-[120px] !h-[120px] object-fill' />
                     <h3 className="text-lg font-semibold my-2 mt-3">{i18n?.t("Gallery Images")}</h3>
                     <div className='flex gap-2 items-center flex-wrap'>
                         {
-                            data?.product?.images?.map((d) => <Image src={d} alt={data?.product?.name || "thumbnail"} className='!w-[120px] !h-[120px] object-fill' />)
+                            data?.product?.images?.map((imageUrl, index) => (
+                                <Image
+                                    key={imageUrl || index}
+                                    src={imageUrl}
+                                    alt={productTitle || "thumbnail"}
+                                    className='!w-[120px] !h-[120px] object-fill'
+                                />
+                            ))
                         }
                     </div>
                 </div>
@@ -71,7 +94,7 @@ const page = ({ params }) => {
                                     {data?.product?.variants?.map((variant, index) => (
                                         <tr key={index} className='border-b'>
                                             <td className='px-4 py-2'>
-                                                {variant?.name[langCode]}
+                                                {resolveLocalizedValue(variant?.name)}
                                             </td>
                                             <td className='px-4 py-2'>
                                                 ${variant?.price}
@@ -93,7 +116,7 @@ const page = ({ params }) => {
                     </>) : (<div><h3 className="text-lg font-semibold my-2">{i18n?.t("No variants available")}</h3></div>)
                 }
                 <h3 className="text-lg font-semibold mb-2 mt-4">{i18n?.t("Product Details")}</h3>
-                <div dangerouslySetInnerHTML={{ __html: columnFormatter(data?.product?.description) }} style={{ whiteSpace: 'pre-line' }} />
+                <div dangerouslySetInnerHTML={{ __html: productDescription }} style={{ whiteSpace: 'pre-line' }} />
             </div>
         </div>
     );

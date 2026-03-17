@@ -4,7 +4,7 @@ import { useAction } from '../../../helpers/hooks';
 import { postEmailSettings } from '../../../helpers/backend';
 import Button from '../../../../components/common/button';
 import { Loader } from '../../../../components/common/loader';
-import HiddenInput from '../../components/form/input'
+import { HiddenInput } from '../../components/form/input'
 import { useI18n } from '../../../providers/i18n';
 
 

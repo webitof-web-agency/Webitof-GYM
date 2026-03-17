@@ -13,7 +13,7 @@ import { postMessage } from '../../../../../../../helpers/backend';
 
 const ListItem = ({ data }) => {
     const { push } = useRouter();
-    const members = data?.docs[0]?.members || [];
+    const members = data?.docs?.[0]?.members || [];
     const i18n = useI18n();
     const [form] = Form.useForm();
     const [open,setOpen] = useState(false)

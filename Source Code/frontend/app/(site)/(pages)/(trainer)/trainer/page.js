@@ -3,11 +3,12 @@ import React from 'react';
 import { FaUsers, FaBell } from 'react-icons/fa';
 import Image from 'next/image';
 import { FaPeopleGroup } from 'react-icons/fa6';
-import { fetchGroupList, fetchTrainerGroupList, fetchTrainerNotice } from '../../../../helpers/backend';
+import { fetchTrainerGroupList, fetchTrainerNotice } from '../../../../helpers/backend';
 import { useFetch } from '../../../../helpers/hooks';
 import TrainerTable from '../../../../../components/form/trainerTable';
 import { useI18n } from '../../../../providers/i18n';
 import { useRouter } from 'next/navigation';
+import { columnFormatter } from '../../../../helpers/utils';
 
 const TrainerDashboard = () => {
   const [data, getData] = useFetch(fetchTrainerGroupList)
@@ -23,7 +24,7 @@ const TrainerDashboard = () => {
     {
       text: i18n?.t("Group Name"),
       dataField: "name",
-      formatter: (_, d) => <span>{d?.name[i18n?.langCode]}</span>,
+      formatter: (_, d) => <span>{columnFormatter(d?.name)}</span>,
     },
     {
       text: i18n?.t("Group Members"),

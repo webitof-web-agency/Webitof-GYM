@@ -59,7 +59,7 @@ const NoticeCalendar = ({ _id = null }) => {
     }, [attendance?.docs]);
 
     const isWeekend = (date) => {
-        return setting?.weekend.includes(date.day());
+        return Array.isArray(setting?.weekend) && setting.weekend.includes(date.day());
     };
 
     const getAttendanceStatus = (date) => {

@@ -14,15 +14,21 @@ import mongoose from 'mongoose';
 import apiRoutes from './routes/api';
 import { decodeToken } from './middlewares/auth.middleware';
 import fs from 'fs';
+import path from 'path';
 import morgan from 'morgan';
 import logger from './utils/logger';
 import { socket } from './utils/socket';
 
 const PORT = process.env.PORT || 8080;
 const app = express();
+const isDatabaseReady = () => mongoose.connection.readyState === 1;
 
 app.use(compression());
-app.use(helmet());
+app.use(
+  helmet({
+    crossOriginResourcePolicy: false,
+  }),
+);
 app.use(express.json());
 app.use(
   express.urlencoded({
@@ -48,14 +54,7 @@ if (isEnvExist === false) {
   // server listening
   app.listen(PORT, () => console.log(`Server is listening on port : ${PORT}`));
 } else {
-  mongoose
-    .connect(process.env.DATABASE_URL)
-    .then(() => {
-      console.log('MongoDB Connected Successfully.');
-    })
-    .catch((err) => {
-      console.log('Database connection failed.', err);
-    });
+  mongoose.set('bufferCommands', false);
 
   const server = new Server(app);
 
@@ -103,7 +102,19 @@ if (isEnvExist === false) {
     );
     console.log('Morgan connected..');
   }
+
+  app.use((req, res, next) => {
+    if (!isDatabaseReady()) {
+      return res.status(503).send({
+        error: true,
+        msg: 'Database is not connected. Please check MongoDB and try again.',
+      });
+    }
+    next();
+  });
+
   app.use(decodeToken);
+  app.use('/uploads', express.static(path.join(process.cwd(), 'uploads')));
   app.use('/api', apiRoutes);
   app.get('*', (req, res) => {
     res.send('Welcome to Gymstick!');
@@ -116,7 +127,29 @@ if (isEnvExist === false) {
     cornEmail();
   });
 
-  server.listen(PORT, () => {
-    console.log(`App listening on port ${PORT}`);
+  const startServer = async () => {
+    try {
+      await mongoose.connect(process.env.DATABASE_URL, {
+        serverSelectionTimeoutMS: 5000,
+      });
+      console.log('MongoDB Connected Successfully.');
+
+      server.listen(PORT, () => {
+        console.log(`App listening on port ${PORT}`);
+      });
+    } catch (err) {
+      console.log('Database connection failed.', err);
+      process.exit(1);
+    }
+  };
+
+  mongoose.connection.on('disconnected', () => {
+    logger.error('MongoDB disconnected.');
   });
+
+  mongoose.connection.on('error', (error) => {
+    logger.error(`MongoDB error: ${error?.message || error}`);
+  });
+
+  startServer();
 }

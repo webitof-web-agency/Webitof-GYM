@@ -15,12 +15,17 @@ import JodiEditor from '../../../../components/form/jodiEditor';
 import MultipleImageInput from '../../../../components/form/multiImage';
 import dayjs from 'dayjs';
 
+const fallbackLanguage = { code: 'en', name: 'English' };
 
 const AdminBlogCreate = () => {
     const { push } = useRouter();
     const [form] = Form.useForm();
     const i18n = useI18n();
     const { languages, langCode } = useI18n();
+    const availableLanguages =
+        Array.isArray(languages?.docs) && languages.docs.length > 0
+            ? languages.docs
+            : [fallbackLanguage];
 
     const [data, getData, { loading }] = useFetch(fetchBlogsList);
     const [category, getCategory] = useFetch(blogCategoryList);
@@ -33,14 +38,16 @@ const AdminBlogCreate = () => {
 
     const handleEdit = (record) => {
         setEditData(record);
+        setSelectedLang(langCode || availableLanguages[0]?.code || 'en');
         setEdit(true);
     };
     useEffect(() => {
-        setSelectedLang(langCode)
-    }, [langCode])
+        setSelectedLang(langCode || availableLanguages[0]?.code || 'en')
+    }, [availableLanguages, langCode])
     const handleAddNew = () => {
         form.resetFields();
         setEditData(null);
+        setSelectedLang(langCode || availableLanguages[0]?.code || 'en');
         setEdit(true);
     };
 
@@ -91,7 +98,7 @@ const AdminBlogCreate = () => {
                 <span className=''>
                     <Tooltip title={columnFormatter(title)?.length > 30 ? columnFormatter(title) : ''}>
                         <span className='cursor-help'>
-                            {title[langCode]?.length > 30
+                            {title?.[langCode]?.length > 30
                                 ? columnFormatter(title)?.slice(0, 30) + '...'
                                 : columnFormatter(title)}
                         </span>
@@ -153,7 +160,7 @@ const AdminBlogCreate = () => {
         const multiLangFields = ['title', 'short_description', 'details'];
         const formattedData = multiLangFields.reduce((acc, field) => {
             acc[field] = {};
-            languages.docs.forEach((lang) => {
+            availableLanguages.forEach((lang) => {
                 if (values[field] && values[field][lang.code]) {
                     acc[field][lang.code] = values[field][lang.code];
                 }
@@ -204,10 +211,11 @@ const AdminBlogCreate = () => {
                 open={edit}
                 onCancel={() => setEdit(false)}
                 footer={null}
+                destroyOnClose={true}
             >
                 <div>
                     <div className='flex flex-wrap justify-start gap-3 mt-10'>
-                        {languages?.docs?.map((l, index) => (
+                        {availableLanguages.map((l, index) => (
                             <button
                                 onClick={() => setSelectedLang(l.code)}
                                 className={`rounded-full px-3 py-1 text-sm font-medium transition-colors duration-200 ${l.code === selectedLang
@@ -224,7 +232,7 @@ const AdminBlogCreate = () => {
                     <Form layout='vertical' form={form} onFinish={handleSubmit}>
                         <HiddenInput name='_id' />
                         <div className='mt-4'>
-                            {languages?.docs?.map((l, index) => (
+                            {availableLanguages.map((l, index) => (
                                 <div
                                     key={index}
                                     style={{ display: l.code === selectedLang ? 'block' : 'none' }}

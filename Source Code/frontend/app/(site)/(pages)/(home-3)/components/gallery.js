@@ -55,17 +55,24 @@ const Gallery = () => {
         <div className='container overflow-hidden 2xl:overflow-visible'>
             <BannerTitle home3={findDefaultTheme?.name==="home3" && pathName==="/" ? true : false} subtitle={i18n?.t("Gallery")} title={i18n?.t("All Gallery Photo")} className={'items-start'} />
             <div className='grid grid-cols-2 md:grid-cols-3 gap-6 mt-14 '>
-                {data?.docs?.map((image, index) => (
-                    <motion.div
-                        initial="hidden"
-                        whileInView="visible"
-                        variants={cardVariants}
-                        viewport={{ once: false, amount: 0.3 }}
-                        className="w-full">
-                        <ImageContainer key={index} imgSrc={image.image} alt={image.alt} />
-                    
-                     </motion.div>
-                ))}
+                {data?.docs?.map((image, index) => {
+                    let imgSrc = image.image;
+                    if (imgSrc?.startsWith('/uploads')) {
+                        imgSrc = `${process.env.backend_url}${imgSrc.substring(1)}`;
+                    }
+
+                    return (
+                        <motion.div
+                            key={index}
+                            initial="hidden"
+                            whileInView="visible"
+                            variants={cardVariants}
+                            viewport={{ once: false, amount: 0.3 }}
+                            className="w-full">
+                            <ImageContainer imgSrc={imgSrc} alt={image.alt || 'gallery image'} />
+                        </motion.div>
+                    );
+                })}
             </div>
             <Link href='/gallary' className='button mt-10 border-b w-fit mx-auto border-[#5572fc] text-[#5572fc] flex justify-center'>
                 {i18n?.t('View All')}

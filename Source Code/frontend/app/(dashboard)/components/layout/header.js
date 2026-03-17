@@ -1,182 +1,255 @@
-'use client'
-import { Badge, Dropdown, Popover, Select, Space, message as antMessage } from "antd";
-import { FaBars } from "react-icons/fa";
-import { FiLock, FiLogOut, FiUser } from "react-icons/fi";
-import { BiUser } from "react-icons/bi";
-import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
-import { useUser } from "../../../contexts/user"
-import Link from "next/link";
-import { ImExit } from "react-icons/im";
-import { useCurrency } from "../../../contexts/site";
-import { useI18n } from "../../../providers/i18n";
-import NotificationDropdown from "../common/notification";
-import { fetchAdminNotification } from "../../../helpers/backend";
-import { initializeSocket } from "../../../helpers/socket";
-import { IoMdNotifications } from "react-icons/io";
-import { useFetch } from "../../../helpers/hooks";
-import Image from "next/image";
+'use client';
+import { FaBars } from 'react-icons/fa';
+import { FiLock, FiLogOut, FiUser } from 'react-icons/fi';
+import { BiUser } from 'react-icons/bi';
+import { useRouter } from 'next/navigation';
+import { useEffect, useRef, useState } from 'react';
+import { useUser } from '../../../contexts/user';
+import Link from 'next/link';
+import { ImExit } from 'react-icons/im';
+import { useI18n } from '../../../providers/i18n';
+import NotificationDropdown from '../common/notification';
+import { fetchAdminNotification } from '../../../helpers/backend';
+import { initializeSocket } from '../../../helpers/socket';
+import { IoMdNotifications } from 'react-icons/io';
+import { useFetch } from '../../../helpers/hooks';
+import Image from 'next/image';
+import { notifyInfo, notifySuccess } from '../../../helpers/notify';
 
+const findPreferredLanguage = (items = []) => {
+    return (
+        items.find((language) => language?.code?.toLowerCase() === 'en') ||
+        items.find((language) => language?.name?.toLowerCase() === 'english') ||
+        items.find((language) => language?.default) ||
+        items[0]
+    );
+};
+
+const fallbackEnglishOption = {
+    _id: 'fallback-en',
+    code: 'en',
+    name: 'English',
+};
 
 const Header = () => {
-    const { user } = useUser()
-    const i18n = useI18n()
-    const router = useRouter()
-    const { currencies, changeCurrency, currency } = useCurrency();
+    const { user } = useUser();
+    const i18n = useI18n();
+    const router = useRouter();
     const [limit, setLimit] = useState(5);
-    const [notifications, getNotifications] = useFetch(fetchAdminNotification, { limit: limit })
+    const [notifications, getNotifications] = useFetch(fetchAdminNotification, { limit: limit });
+    const [isNotificationOpen, setIsNotificationOpen] = useState(false);
+    const [isProfileOpen, setIsProfileOpen] = useState(false);
+    const notificationRef = useRef(null);
+    const profileRef = useRef(null);
 
     const [defaultLang, setDefaultLang] = useState(null);
     const [selectedLangId, setSelectedLangId] = useState(null);
+    const loadedLanguageOptions = Array.isArray(i18n?.languages?.docs) ? i18n.languages.docs : [];
+    const languageOptions =
+        loadedLanguageOptions.length > 0 ? loadedLanguageOptions : [fallbackEnglishOption];
 
     useEffect(() => {
-        const socket = initializeSocket()
-        socket.on("newNotification", (message) => {
-            antMessage.info(message?.notification?.title)
-            getNotifications()
+        const socket = initializeSocket();
+        socket.on('newNotification', (message) => {
+            notifyInfo(message?.notification?.title);
+            getNotifications();
         });
         return () => {
-            socket.off("newNotification");
+            socket.off('newNotification');
         };
-    }, [])
+    }, []);
     useEffect(() => {
         let langId = localStorage.getItem('lang');
-        setSelectedLangId(langId);
-        if (langId) {
-            let findLang = i18n?.languages?.docs.find(lang => lang?._id === langId);
-            if (findLang) {
-                setDefaultLang(findLang?.name);
+        const matchedLanguage = languageOptions.find((lang) => lang?._id === langId);
+        const fallbackLanguage = findPreferredLanguage(languageOptions);
+        const nextLanguage = matchedLanguage || fallbackLanguage;
+
+        if (nextLanguage) {
+            setSelectedLangId(nextLanguage._id);
+            setDefaultLang(nextLanguage.name);
+            if (nextLanguage._id !== fallbackEnglishOption._id) {
+                localStorage.setItem('lang', nextLanguage._id);
+            }
+            if (nextLanguage._id !== fallbackEnglishOption._id && nextLanguage._id !== i18n?.lang) {
+                i18n?.changeLanguage(nextLanguage._id);
             }
         } else {
-            if (i18n?.languages?.docs?.length > 0) {
-                const defaultLanguage = i18n?.languages?.docs.find(lang => lang?.default);
-                setSelectedLangId(defaultLanguage?._id || i18n?.languages?.docs?.[0]?._id);
-                setDefaultLang(defaultLanguage?.name || i18n.languages.docs[0]?.name);
+            setSelectedLangId(null);
+            setDefaultLang(null);
+        }
+    }, [i18n, languageOptions]);
+
+    useEffect(() => {
+        const closeMenus = (event) => {
+            if (notificationRef.current && !notificationRef.current.contains(event.target)) {
+                setIsNotificationOpen(false);
             }
-        }
-        let currency = localStorage.getItem('currency');
-        if (currency) {
-            changeCurrency(currency);
-        } else {
-            changeCurrency(currencies[0]?.code);
-        }
-    }, [i18n?.languages?.docs]);
+            if (profileRef.current && !profileRef.current.contains(event.target)) {
+                setIsProfileOpen(false);
+            }
+        };
+
+        document.addEventListener('mousedown', closeMenus);
+        return () => document.removeEventListener('mousedown', closeMenus);
+    }, []);
+
     const selectedLangName =
         defaultLang ||
-        i18n?.languages?.docs?.find(lang => lang?._id === selectedLangId)?.name ||
-        i18n?.languages?.docs?.find(lang => lang?.default)?.name ||
-        i18n?.languages?.docs?.[0]?.name;
+        languageOptions.find((lang) => lang?._id === selectedLangId)?.name ||
+        findPreferredLanguage(languageOptions)?.name ||
+        languageOptions?.[0]?.name;
 
     const handleLogout = () => {
         try {
-            localStorage.removeItem('token')
-            antMessage.success('Logged out successfully')
-            window.location.href = '/signin'
-
+            localStorage.removeItem('token');
+            notifySuccess('Logged out successfully');
+            window.location.href = '/signin';
         } catch (error) {
-            console.log(error)
+            console.log(error);
         }
-    }
+    };
 
     const handleProfile = () => {
-        router.push('/admin/profile')
-    }
+        router.push('/admin/profile');
+    };
 
     const handleChangePassword = () => {
-        router.push('/admin/profile/change-password')
-    }
+        router.push('/admin/profile/change-password');
+    };
 
-    const items = [
-        {
-            label: i18n?.t('Profile'),
-            icon: <FiUser />,
-            key: '1',
-            onClick: handleProfile,
-        },
-        {
-            label: i18n?.t('Change Password'),
-            icon: <FiLock />,
-            key: '2',
-            onClick: handleChangePassword,
-        },
-        {
-            label: i18n?.t('Logout'),
-            icon: <FiLogOut />,
-            key: '3',
-            onClick: handleLogout,
-        }
-    ];
-    const findUnreadNotifications = notifications?.docs?.filter(notice => notice?.isRead === false);
+    const findUnreadNotifications = notifications?.docs?.filter(
+        (notice) => notice?.isRead === false
+    );
     return (
-        <header className="header z-10">
+        <header className='header z-10'>
             {
-                <div className="flex justify-between items-center h-full p-4">
-                    <div className="">
+                <div className='flex h-full items-center justify-between p-4'>
+                    <div className=''>
                         <FaBars
-                            className="md:hidden"
-                            role="button"
+                            className='md:hidden'
+                            role='button'
                             onClick={() => {
-                                window.document.querySelector('.sidebar').classList.toggle('open')
-                                window.document.querySelector('.sidebar-overlay').classList.toggle('open')
+                                window.document.querySelector('.sidebar').classList.toggle('open');
+                                window.document
+                                    .querySelector('.sidebar-overlay')
+                                    .classList.toggle('open');
                             }}
                         />
                     </div>
 
-                    <div className="flex items-center sm:gap-x-6 gap-x-3 notification-popover">
-                        <div className="flex items-center gap-3">
-                            <Image onClick={() => router.push('/admin/message')} src="/messageIcon.gif" width={40} height={40} alt="logo" className="cursor-pointer h-6 w-7 object-contain" />
-                            <Popover
-                                content={<NotificationDropdown setLimit={setLimit} limit={limit} notices={notifications} getNotifications={getNotifications} />}
-                                trigger="click"
-                                placement="bottomRight"
-                                overlayStyle={{ padding: 0 }} // Removes padding around the content
+                    <div className='notification-popover flex items-center gap-x-3 sm:gap-x-6'>
+                        <div className='flex items-center gap-3'>
+                            <button
+                                type='button'
+                                onClick={() => router.push('/admin/message')}
+                                className='admin-header-icon-button'
                             >
-                                <Badge count={findUnreadNotifications?.length || 0}>
-                                    <IoMdNotifications className="cursor-pointer" size={24} />
-                                </Badge>
-                            </Popover>
-                            <Link href="/" target="_blank" className="flex items-center gap-1 hover:text-[#5572fc]">
-                                <ImExit />
-                                <p className="whitespace-pre">{i18n?.t('Live Site')}</p>
-                            </Link>
+                                <Image
+                                    src='/messageIcon.gif'
+                                    width={40}
+                                    height={40}
+                                    alt='logo'
+                                    className='h-6 w-7 object-contain'
+                                />
+                            </button>
+                            <div className='relative' ref={notificationRef}>
+                                <button
+                                    type='button'
+                                    onClick={() => setIsNotificationOpen((open) => !open)}
+                                    className='admin-header-icon-button relative'
+                                >
+                                    <IoMdNotifications className='admin-header-icon' size={24} />
+                                    {(findUnreadNotifications?.length || 0) > 0 && (
+                                        <span className='absolute -right-2 -top-2 inline-flex min-w-5 items-center justify-center rounded-full bg-[#5572fc] px-1.5 text-[10px] font-semibold text-white'>
+                                            {findUnreadNotifications?.length || 0}
+                                        </span>
+                                    )}
+                                </button>
+                                {isNotificationOpen && (
+                                    <div className='absolute right-0 top-10 z-20 rounded-md bg-white shadow-lg ring-1 ring-black/5'>
+                                        <NotificationDropdown
+                                            setLimit={setLimit}
+                                            limit={limit}
+                                            notices={notifications}
+                                            getNotifications={getNotifications}
+                                        />
+                                    </div>
+                                )}
+                            </div>
                         </div>
 
                         <div>
-                            <Select
-                                value={selectedLangId}
-                                placeholder={selectedLangName}
-                                style={{ width: 100, color: 'black' }}
-                                bordered={false}
+                            <select
+                                value={selectedLangId || languageOptions?.[0]?._id || ''}
                                 onChange={(value) => {
-                                    i18n.changeLanguage(value);
-                                    localStorage.setItem('lang', value);
-                                    setSelectedLangId(value);
-                                    const nextLanguage = i18n?.languages?.docs?.find(lang => lang?._id === value);
+                                    const nextValue = value.target.value;
+                                    setSelectedLangId(nextValue);
+                                    const nextLanguage = languageOptions.find(
+                                        (lang) => lang?._id === nextValue
+                                    );
                                     setDefaultLang(nextLanguage?.name || selectedLangName);
+                                    if (nextValue !== fallbackEnglishOption._id) {
+                                        i18n.changeLanguage(nextValue);
+                                        localStorage.setItem('lang', nextValue);
+                                    }
                                 }}
-                                options={i18n?.languages?.docs?.map(lang => ({ value: lang?._id, label: lang?.name }))}
-                                className='inline-flex items-center justify-center textSelectWhite capitalize'
-                            />
+                                className='inline-flex items-center justify-center rounded border border-gray-200 bg-white px-3 py-2 text-sm capitalize text-black'
+                            >
+                                {languageOptions.map((lang) => (
+                                    <option key={lang?._id} value={lang?._id}>
+                                        {lang?.name}
+                                    </option>
+                                ))}
+                            </select>
                         </div>
 
-                        <Dropdown
-                            menu={{
-                                items,
-                            }}
-                        >
-                            <a className=" flex items-center">
-                                <Space className="">
-                                    {user && <span className="cursor-pointer hidden sm:block">{user?.name}</span>}
-                                    <BiUser className="cursor-pointer" size={20} />
-                                </Space>
-                            </a>
-                        </Dropdown>
+                        <div className='relative' ref={profileRef}>
+                            <button
+                                type='button'
+                                className='admin-header-profile-trigger flex items-center gap-2'
+                                onClick={() => setIsProfileOpen((open) => !open)}
+                            >
+                                {user && (
+                                    <span className='hidden cursor-pointer sm:block'>
+                                        {user?.name}
+                                    </span>
+                                )}
+                                <BiUser className='admin-header-icon' size={20} />
+                            </button>
+                            {isProfileOpen && (
+                                <div className='absolute right-0 top-10 z-20 min-w-52 rounded-md bg-white py-2 shadow-lg ring-1 ring-black/5'>
+                                    <button
+                                        type='button'
+                                        onClick={handleProfile}
+                                        className='flex w-full items-center gap-2 px-4 py-2 text-left text-sm hover:bg-gray-50'
+                                    >
+                                        <FiUser />
+                                        <span>{i18n?.t('Profile')}</span>
+                                    </button>
+                                    <button
+                                        type='button'
+                                        onClick={handleChangePassword}
+                                        className='flex w-full items-center gap-2 px-4 py-2 text-left text-sm hover:bg-gray-50'
+                                    >
+                                        <FiLock />
+                                        <span>{i18n?.t('Change Password')}</span>
+                                    </button>
+                                    <button
+                                        type='button'
+                                        onClick={handleLogout}
+                                        className='flex w-full items-center gap-2 px-4 py-2 text-left text-sm hover:bg-gray-50'
+                                    >
+                                        <FiLogOut />
+                                        <span>{i18n?.t('Logout')}</span>
+                                    </button>
+                                </div>
+                            )}
+                        </div>
                     </div>
                 </div>
             }
-
         </header>
-    )
-}
+    );
+};
 
-export default Header
+export default Header;

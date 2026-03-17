@@ -32,7 +32,6 @@ const Page = () => {
         data={data}
         indexed
         pagination
-        getData={getData}
         columns={columns}
         loading={loading}
         onReload={getData}

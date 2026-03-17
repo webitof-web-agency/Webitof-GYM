@@ -7,10 +7,10 @@ import { Empty, Pagination, Skeleton } from "antd";
 import { useI18n } from "../../../providers/i18n";
 import { motion } from 'framer-motion';
 import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { columnFormatter } from "../../../helpers/utils";
 
-const Page = () => {
+const BlogPageContent = () => {
   const param = useSearchParams();
   const category = param.get('category');
   const [categories, getCategory] = useFetch(blogCategoryList);
@@ -111,5 +111,11 @@ const Page = () => {
     </div>
   )
 };
+
+const Page = () => (
+  <Suspense fallback={<div className="container lg:mt-[140px] sm:mt-[100px] mt-[50px]"><Skeleton active /></div>}>
+    <BlogPageContent />
+  </Suspense>
+);
 
 export default Page;

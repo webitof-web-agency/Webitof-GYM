@@ -9,6 +9,7 @@ import { Form, Modal } from 'antd';
 import FormSelect from '../../../../../../components/form/select';
 import FormInput, { HiddenInput } from '../../../../../../components/form/input';
 import dayjs from 'dayjs';
+import { columnFormatter } from '../../../../../helpers/utils';
 
 const Notice = () => {
   const [data, getData] = useFetch(fetchTrainerNoticeList);
@@ -32,12 +33,12 @@ const Notice = () => {
     {
       text: i18n?.t("Content"),
       dataField: "content",
-      formatter: (_, d) => <span>{d?.content.length > 20 ? d?.content.substring(0, 20) + "..." : d?.content}</span>,
+      formatter: (_, d) => <span>{d?.content?.length > 20 ? d?.content.substring(0, 20) + "..." : (d?.content || "-")}</span>,
     },
     {
       text: i18n?.t("Group"),
       dataField: "group",
-      formatter: (_, d) => <span>{d?.group?.name[i18n?.langCode] || "-"}</span>,
+      formatter: (_, d) => <span>{columnFormatter(d?.group?.name) || "-"}</span>,
     },
   ];
 
@@ -109,7 +110,7 @@ const Notice = () => {
             placeholder={i18n?.t("Select group")}
             rules={[{ required: true, message: i18n?.t('Please select a group') }]}
             options={groupList?.docs?.map((group) => ({
-              label: group?.name[i18n?.langCode],
+              label: columnFormatter(group?.name),
               value: group?._id,
             }))}
           />

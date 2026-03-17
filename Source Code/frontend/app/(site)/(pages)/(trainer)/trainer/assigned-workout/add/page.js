@@ -9,7 +9,7 @@ import { useAction, useFetch } from '../../../../../../helpers/hooks';
 import { useI18n } from '../../../../../../providers/i18n';
 import Button from '../../../../../../../components/common/button';
 import dayjs from 'dayjs';
-import { noSelected } from '../../../../../../helpers/utils';
+import { columnFormatter, noSelected } from '../../../../../../helpers/utils';
 import { useRouter } from 'next/navigation';
 
 const Page = () => {
@@ -27,9 +27,14 @@ const Page = () => {
     const [form] = Form.useForm();
     const { push } = useRouter();
 
+    const availableLanguages =
+        Array.isArray(languages?.docs) && languages.docs.length
+            ? languages.docs
+            : [{ code: 'en', name: 'English' }];
+
     useEffect(() => {
-        setSelectedLang(langCode);
-    }, [langCode]);
+        setSelectedLang(langCode || availableLanguages?.[0]?.code || 'en');
+    }, [langCode, languages]);
 
 
 
@@ -37,7 +42,7 @@ const Page = () => {
         const multiLangFields = ['description'];
         const formattedData = multiLangFields.reduce((acc, field) => {
             acc[field] = {};
-            languages.docs.forEach((lang) => {
+            availableLanguages.forEach((lang) => {
                 if (values[field] && values[field][lang.code]) {
                     acc[field][lang.code] = values[field][lang.code];
                 }
@@ -119,7 +124,7 @@ const Page = () => {
                             label="Group"
                             options={groupList?.docs?.map(group =>
                             ({
-                                label: group?.name[i18n?.langCode],
+                                label: columnFormatter(group?.name),
                                 value: group?._id,
                             })
                             )}
@@ -132,10 +137,10 @@ const Page = () => {
                                     name="members"
                                     label="Members"
                                     multi={true}
-                                    options={userList?.docs[0]?.members?.map(m => ({
+                                    options={userList?.docs?.[0]?.members?.map(m => ({
                                         label: m?.name,
                                         value: m?._id,
-                                    }))}
+                                    })) || []}
                                     placeholder="Please select group first to add members"
                                     className='!overflow-auto'
 
@@ -167,7 +172,7 @@ const Page = () => {
                     <div className='relative mt-4 mb-14'>
                         <div className='flex gap-3 items-center z-50 absolute right-0'>
                             <div className='flex h-fit gap-3'>
-                                {languages?.docs?.map((l, index) => (
+                                {availableLanguages?.map((l, index) => (
                                     <div
                                         onClick={() => setSelectedLang(l.code)}
                                         className={`rounded-full cursor-pointer px-3 py-1 text-sm font-medium transition-colors duration-200 ${l.code === selectedLang
@@ -181,7 +186,7 @@ const Page = () => {
                                 ))}
                             </div>
                         </div>
-                        {languages?.docs.map((l, index) =>
+                        {availableLanguages?.map((l, index) =>
                         (
                             <div
                                 className='selector-width w-full space-y-6'
@@ -245,7 +250,7 @@ const Page = () => {
                                         {services?.docs?.map((d) => (
                                             <div className='flex items-center space-x-4 capitalize' key={d?._id}>
                                                 <Checkbox value={d?._id}></Checkbox>
-                                                <li>{d?.name[langCode]}</li>
+                                                <li>{columnFormatter(d?.name)}</li>
                                             </div>
                                         ))}
                                     </Checkbox.Group>

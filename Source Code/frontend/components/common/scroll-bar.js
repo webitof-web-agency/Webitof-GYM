@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { MdOutlineKeyboardArrowUp } from 'react-icons/md';
-import { motion } from 'framer-motion';
 
 const Scroll = () => {
     const [isVisible, setIsVisible] = useState(false);
@@ -45,22 +44,12 @@ const Scroll = () => {
     return (
         <div>
             {isVisible && (
-                <motion.button
+                <button
                     onClick={scrollToTop}
-                    className='fixed p-1 rounded-full bottom-5 right-5 bg-[#5572fc] shadow-lg text-white'
-                    initial={{ opacity: 1, y: 50 }}
-                    animate={{ opacity: 1, y: [0, -10, 0] }}
-                    transition={{
-                        duration: 1,
-                        repeat: Infinity,
-                        repeatType: 'loop',
-                        ease: 'easeInOut'
-                    }}
-                    whileHover={{ scale: 1.25 }}
-                    whileTap={{ scale: 0.9 }}
+                    className='fixed p-1 rounded-full bottom-5 right-5 bg-[#5572fc] shadow-lg text-white animate-bounce hover:scale-110 active:scale-95 transition-transform'
                 >
                     <MdOutlineKeyboardArrowUp size={30} />
-                </motion.button>
+                </button>
             )}
         </div>
     );

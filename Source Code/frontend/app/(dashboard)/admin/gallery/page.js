@@ -4,7 +4,7 @@ import dayjs from "dayjs";
 import { useState } from "react";
 import { Form, Modal } from "antd";
 import Button from "../../../../components/common/button";
-import { fetchAdminGallery, deleteGallery, postSingleImage, postGallery } from "../../../helpers/backend";
+import { fetchAdminGallery, deleteGallery, postLocalSingleImage, postGallery } from "../../../helpers/backend";
 import { useAction, useFetch } from "../../../helpers/hooks";
 import { useI18n } from "../../../providers/i18n";
 import Table, { TableImage } from "../../components/form/table";
@@ -31,9 +31,13 @@ const Page = () => {
     ]
 
     const onFinish = async (values) => {
+        if (!values?.image?.length) {
+            return;
+        }
+
         if (values?.image[0]?.originFileObj) {
             const image = values?.image[0]?.originFileObj;
-            const { data } = await postSingleImage({ image: image, image_name: 'gallery' });
+            const { data } = await postLocalSingleImage({ image: image, image_name: 'gallery' });
             values.image = data;
         } else {
             values.image = values?.image[0]?.url;
@@ -71,6 +75,7 @@ const Page = () => {
                 onCancel={() => setOpen(false)}
                 footer={null}
                 title={i18n?.t("Add Gallery")}
+                destroyOnClose={true}
             >
                 <Form
                     form={form}
@@ -81,6 +86,7 @@ const Page = () => {
                     <MultipleImageInput
                         name="image"
                         label={i18n?.t("Image")}
+                        required
                     />
                     <Button
                         type="submit"

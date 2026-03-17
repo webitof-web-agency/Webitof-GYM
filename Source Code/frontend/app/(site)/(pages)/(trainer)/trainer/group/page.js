@@ -6,6 +6,7 @@ import { fetchTrainerGroupList } from '../../../../../helpers/backend';
 import { useFetch } from '../../../../../helpers/hooks';
 import TrainerTable from '../../../../../../components/form/trainerTable';
 import { useRouter } from 'next/navigation';
+import { columnFormatter } from '../../../../../helpers/utils';
 
 
 const FitnessGroupsTable = () => {
@@ -21,7 +22,7 @@ const FitnessGroupsTable = () => {
     {
       text: i18n?.t("Group Name"),
       dataField: "name",
-      formatter: (_, d) => <span>{d?.name[i18n?.langCode]}</span>,
+      formatter: (_, d) => <span>{columnFormatter(d?.name)}</span>,
     },
     {
       text: i18n?.t("Group Members"),

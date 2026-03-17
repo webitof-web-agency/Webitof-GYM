@@ -10,6 +10,9 @@ const ImageTrim = ({ setImageFile, images = [], max = 1 }) => {
     };
     const onPreview = async (file) => {
         let src = file.url;
+        if (src?.startsWith('/uploads')) {
+            src = `${process.env.backend_url}${src.substring(1)}`;
+        }
         if (!src) {
             src = await new Promise((resolve) => {
                 const reader = new FileReader();

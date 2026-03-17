@@ -12,6 +12,8 @@ import { useI18n } from '../../../../providers/i18n';
 import { columnFormatter, noSelected } from '../../../../helpers/utils';
 import dayjs from 'dayjs';
 
+const fallbackLanguage = { code: 'en', name: 'English' };
+
 const BlogCategory = () => {
     const [form] = Form.useForm();
     const i18n = useI18n();
@@ -21,10 +23,14 @@ const BlogCategory = () => {
     const [selectedLang, setSelectedLang] = useState();
     const [open, setOpen] = useState(false);
     const [formData, setFromData] = useState([])
+    const availableLanguages =
+        Array.isArray(languages?.docs) && languages.docs.length > 0
+            ? languages.docs
+            : [fallbackLanguage];
 
     useEffect(() => {
-        setSelectedLang(langCode)
-    }, [langCode])
+        setSelectedLang(langCode || availableLanguages[0]?.code || 'en')
+    }, [availableLanguages, langCode])
 
     const columns = [
         {
@@ -40,11 +46,6 @@ const BlogCategory = () => {
     ];
 
     const handleSubmit = (values) => {
-        let formattedData = {};
-        for (let i = 0; i < values.length; i++) {
-            const ele = values[i];
-            formattedData[ele?.lang] = ele?.value
-        }
         return useAction(
             values?._id ? postCategory : postCategory,
             {
@@ -70,6 +71,7 @@ const BlogCategory = () => {
                     <Button
                         onClick={() => {
                             form.resetFields();
+                            setSelectedLang(langCode || availableLanguages[0]?.code || 'en');
                             setOpen(true);
                             setIsEdit(false);
                         }}
@@ -78,9 +80,11 @@ const BlogCategory = () => {
                     </Button>
                 }
                 onEdit={(values) => {
+                    form.resetFields();
                     form.setFieldsValue({
                         ...values,
                     });
+                    setSelectedLang(langCode || availableLanguages[0]?.code || 'en');
                     setOpen(true);
                     setIsEdit(true);
                 }}
@@ -97,7 +101,7 @@ const BlogCategory = () => {
                 destroyOnClose={true}
             >
                 <div className="flex justify-start flex-wrap gap-3">
-                    {languages?.docs?.map((l, index) => (
+                    {availableLanguages.map((l, index) => (
                         <button
                             onClick={() => setSelectedLang(l.code)}
                             className={`px-3 py-1 rounded-full text-sm font-medium transition-colors duration-200 ${l.code === selectedLang
@@ -117,7 +121,7 @@ const BlogCategory = () => {
                     className='mt-5'
                 >
                     {isEdit && <HiddenInput name="_id" />}
-                    {languages?.docs.map((l, index) => (
+                    {availableLanguages.map((l, index) => (
                         <div key={index} style={{ display: l.code === selectedLang ? 'block' : 'none' }}>
                             <FormInput
                                 name={['name', l.code]}

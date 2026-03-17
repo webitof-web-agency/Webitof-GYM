@@ -11,6 +11,8 @@ import { delTag, fetchTagsList, postTag } from '../../../../helpers/backend';
 import { columnFormatter, noSelected } from '../../../../helpers/utils';
 import dayjs from 'dayjs';
 
+const fallbackLanguage = { code: 'en', name: 'English' };
+
 const BlogTags = () => {
     const i18n = useI18n();
     const [form] = Form.useForm();
@@ -19,11 +21,14 @@ const BlogTags = () => {
     const [isEdit, setIsEdit] = useState(false);
     const [selectedLang, setSelectedLang] = useState();
     const [open, setOpen] = useState(false);
-    const [formData, setFromData] = useState([])
+    const availableLanguages =
+        Array.isArray(languages?.docs) && languages.docs.length > 0
+            ? languages.docs
+            : [fallbackLanguage];
 
     useEffect(() => {
-        setSelectedLang(langCode)
-    }, [langCode])
+        setSelectedLang(langCode || availableLanguages[0]?.code || 'en')
+    }, [availableLanguages, langCode])
 
     const columns = [
         {
@@ -39,11 +44,12 @@ const BlogTags = () => {
     ];
 
     const handleSubmit = (values) => {
-        let formattedData = {};
-        for (let i = 0; i < formData.length; i++) {
-            const ele = formData[i];
-            formattedData[ele?.lang] = ele?.value
-        }
+        const formattedData = {};
+        availableLanguages.forEach((lang) => {
+            const v = values?.name?.[lang.code];
+            if (v) formattedData[lang.code] = v;
+        });
+
         return useAction(
             values?._id ? postTag : postTag,
             {
@@ -69,6 +75,7 @@ const BlogTags = () => {
                     <Button
                         onClick={() => {
                             form.resetFields();
+                            setSelectedLang(langCode || availableLanguages[0]?.code || 'en');
                             setOpen(true);
                             setIsEdit(false);
                         }}
@@ -77,10 +84,11 @@ const BlogTags = () => {
                     </Button>
                 }
                 onEdit={(values) => {
+                    form.resetFields();
                     form.setFieldsValue({
                         ...values,
-                        values: values?.name[langCode],
                     });
+                    setSelectedLang(langCode || availableLanguages[0]?.code || 'en');
                     setOpen(true);
                     setIsEdit(true);
                 }}
@@ -93,9 +101,10 @@ const BlogTags = () => {
                 onCancel={() => setOpen(false)}
                 title={i18n.t(isEdit ? "Edit Blog Tag" : "Add Blog Tags")}
                 footer={null}
+                destroyOnClose={true}
             >
                 <div className="flex justify-start flex-wrap gap-3">
-                    {languages?.docs?.map((l, index) => (
+                    {availableLanguages.map((l, index) => (
                         <button
                             onClick={() => setSelectedLang(l.code)}
                             className={`px-3 py-1 rounded-full text-sm font-medium transition-colors duration-200 ${l.code === selectedLang
@@ -118,22 +127,13 @@ const BlogTags = () => {
                         isEdit && <HiddenInput name="_id" />
                     }
                     <div className="mt-4">
-                        {languages?.docs?.map((l, index) => (
+                        {availableLanguages.map((l, index) => (
                             <div key={index} style={{ display: l.code === selectedLang ? 'block' : 'none' }}>
                                 <FormInput
                                     name={['name', l.code]}
                                     label={i18n?.t("Name")}
                                     key={index}
                                     required={true}
-                                    onBlur={(e) => {
-                                        if (formData?.length === 0) {
-                                            setFromData([{ lang: selectedLang, value: e.target.value }])
-                                        } else {
-                                            const uniqueData = formData?.filter((data) => data?.lang !== selectedLang)
-                                            const moreData = [...uniqueData, { lang: selectedLang, value: e.target.value }]
-                                            setFromData(moreData)
-                                        }
-                                    }}
                                     placeholder={"Enter Tag Name"}
                                     className="mt-2.5"
                                 />

@@ -15,6 +15,11 @@ import { noSelected } from "../../../../helpers/utils";
 
 const ProductForm = ({ isVarient, setIsVarient, category, languages, selectedLang, setSelectedLang, formData, setFromData, i18n, router, form }) => {
     const [loading, setLoading] = useState(false);
+    const availableLanguages =
+        Array.isArray(languages?.docs) && languages.docs.length > 0
+            ? languages.docs
+            : [{ code: 'en', name: 'English' }];
+
     const handleFinish = async (values) => {
         setLoading(true);
         const imgArray = [];
@@ -92,7 +97,7 @@ const ProductForm = ({ isVarient, setIsVarient, category, languages, selectedLan
 
     return (
         <Form form={form} layout="vertical" onFinish={handleFinish} className="mt-2">
-            {languages?.docs?.map((l, index) => (
+            {availableLanguages.map((l, index) => (
                 <div key={index} style={{ display: l.code === selectedLang ? "block" : "none" }}>
                     <HiddenInput name={'_id'} />
                     <FormInput
@@ -141,7 +146,7 @@ const ProductForm = ({ isVarient, setIsVarient, category, languages, selectedLan
                                 <>
                                     {fields.map(({ name }, index) => (
                                         <div key={index} className="grid grid-cols-1 md:grid-cols-12 gap-4 items-center">
-                                            {languages?.docs?.map((l, langIndex) => (
+                                            {availableLanguages.map((l, langIndex) => (
                                                 <div className="col-span-5" key={langIndex} style={{ display: l.code === selectedLang ? 'block' : 'none' }}>
                                                     <FormInput placeholder={`Enter Name`} name={[name, 'name', l.code]} label={'Name'} />
                                                 </div>

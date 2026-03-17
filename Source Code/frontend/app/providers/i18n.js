@@ -2,7 +2,7 @@
 
 import { createContext, useContext, useEffect, useState } from "react";
 import { useFetch } from "../helpers/hooks";
-import { fetchPublicLanguages, fetchTranslations } from "../helpers/backend";
+import { fetchLanguages, fetchPublicLanguages, fetchTranslations } from "../helpers/backend";
 
 
 const I18nContext = createContext({
@@ -15,31 +15,82 @@ const I18nContext = createContext({
   langCode: null,
 });
 
+const findPreferredLanguage = (items = []) => {
+  return items.find((language) => language?.code?.toLowerCase() === 'en')
+    || items.find((language) => language?.name?.toLowerCase() === 'english')
+    || items.find((language) => language?.default)
+    || items[0];
+};
+
 export const I18nProvider = ({ children }) => {
-  const [languages] = useFetch(fetchPublicLanguages);
+  const [publicLanguages] = useFetch(fetchPublicLanguages);
+  const [adminLanguages] = useFetch(fetchLanguages, { limit: 100 }, false);
   const [translations, setTranslations] = useState({});
   const [lang, setLang] = useState(null);
-  const [defaultLang, setDefaultLang] = useState(null);
   const [langCode, setLangCode] = useState(null);
   const [isRtl, setIsRtl] = useState('ltr');
   const [isClient, setIsClient] = useState(false);
+  const [languages, setLanguages] = useState(null);
 
   useEffect(() => {
     setIsClient(true);
   }, []);
 
   useEffect(() => {
+    const publicDocs = Array.isArray(publicLanguages?.docs)
+      ? publicLanguages.docs
+      : Array.isArray(publicLanguages)
+        ? publicLanguages
+        : [];
+    const adminDocs = Array.isArray(adminLanguages?.docs)
+      ? adminLanguages.docs
+      : Array.isArray(adminLanguages)
+        ? adminLanguages
+        : [];
+
+    if (publicDocs.length > 0) {
+      setLanguages({
+        ...(publicLanguages || {}),
+        docs: publicDocs,
+      });
+      return;
+    }
+
+    if (adminDocs.length > 0) {
+      setLanguages({
+        ...(adminLanguages || {}),
+        docs: adminDocs,
+      });
+      return;
+    }
+
+    setLanguages(null);
+  }, [adminLanguages, publicLanguages]);
+
+  useEffect(() => {
+    if (isClient && localStorage.getItem('token')) {
+      adminLanguages === undefined && fetchLanguages({ limit: 100 }).then(({ error, data }) => {
+        if (!error && Array.isArray(data?.docs) && data.docs.length > 0) {
+          setLanguages({
+            ...data,
+            docs: data.docs,
+          });
+        }
+      }).catch(() => {});
+    }
+  }, [adminLanguages, isClient]);
+
+  useEffect(() => {
     if (isClient) { 
       const storedLang = localStorage.getItem('lang');
       if (storedLang) {
         setLang(storedLang);
-      } else if (languages && languages?.docs?.length > 0) {
-        const defaultLang = languages?.docs?.find(lang => lang.default);
-        if (defaultLang) {
-          setDefaultLang(defaultLang);
-          setLang(defaultLang._id);
-          setIsRtl(defaultLang.rtl ? 'rtl' : 'ltr');
-          localStorage.setItem('lang', defaultLang._id);
+      } else if (languages?.docs?.length > 0) {
+        const initialLang = findPreferredLanguage(languages.docs);
+        if (initialLang) {
+          setLang(initialLang._id);
+          setIsRtl(initialLang.rtl ? 'rtl' : 'ltr');
+          localStorage.setItem('lang', initialLang._id);
         }
       }
     }
@@ -55,7 +106,7 @@ export const I18nProvider = ({ children }) => {
         }
       });
 
-      const selectedLang = languages?.docs?.find(l => l._id === lang);
+      const selectedLang = languages?.docs?.find(l => l._id === lang) || findPreferredLanguage(languages?.docs || []);
       setLangCode(selectedLang?.code || null);
       setIsRtl(selectedLang?.rtl ? 'rtl' : 'ltr');
     }

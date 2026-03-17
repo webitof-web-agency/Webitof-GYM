@@ -1,7 +1,8 @@
 "use client";
+import dynamic from "next/dynamic";
 import { BiCalendarEvent, BiCategory, BiCreditCard } from "react-icons/bi";
-import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { usePathname, useRouter } from "next/navigation";
+import { useEffect, useMemo } from "react";
 import { LuContact, LuGalleryHorizontal } from "react-icons/lu";
 import { FaServicestack } from "react-icons/fa";
 import { GrSchedulePlay } from "react-icons/gr";
@@ -10,55 +11,47 @@ import { CiShoppingTag } from "react-icons/ci";
 import { PiContactlessPaymentFill, PiNewspaperClippingBold, PiQuotesThin, PiReadCvLogo } from "react-icons/pi"
 import { FaBarcode, FaCopy, FaFeatherPointed, FaLanguage, FaQuestion, FaUsers, FaWrench } from "react-icons/fa6";
 import { MdCategory, MdCurrencyPound, MdEmail, MdEmojiEvents, MdGroups2, MdManageHistory, MdOutlineInsertPageBreak, MdOutlineMarkEmailUnread, MdOutlinePriceChange, MdOutlineSpaceDashboard } from "react-icons/md";
-import UserContext from "../../contexts/user";
-import Sidebar from "../components/layout/sideBar";
-import Header from "../components/layout/header";
-import { fetchUser } from "../../helpers/backend";
+import { useUser } from "../../contexts/user";
 import { IoSettingsOutline } from "react-icons/io5";
 import { MdAttachEmail } from "react-icons/md";
 import { InfinitySpin } from "react-loader-spinner";
 import { SiAmazonsimpleemailservice } from "react-icons/si";
 
+const Sidebar = dynamic(() => import("../components/layout/sideBar"));
+const Header = dynamic(() => import("../components/layout/header"));
+
 const Layout = ({ children }) => {
     const router = useRouter();
-    const [user, setUser] = useState(null)
+    const pathname = usePathname();
+    const { user, userLoaded } = useUser();
     const push = router.push;
-    const { pathname } = router;
-    const menu = getMenu(user, push, pathname)
+    const menu = useMemo(() => getMenu(user, push, pathname), [user, pathname, push]);
 
     useEffect(() => {
-        fetchUser().then(({ error, data }) => {
-            if (error === false && data?.role === "admin" || data?.role === "employee") {
-                setUser(data);
-            } else {
-                router.push("/signin");
-            }
-        });
-    }, []);
+        if (!userLoaded) {
+            return;
+        }
 
-    if (!user) {
+        if (user?.role !== "admin" && user?.role !== "employee") {
+            router.replace("/signin");
+        }
+    }, [router, user?.role, userLoaded]);
+
+    if (!userLoaded || (user?.role !== "admin" && user?.role !== "employee")) {
         return (
-            <>
-                <div className="flex justify-center items-center h-screen ">
-                    <InfinitySpin width='140' color='#5572fc' />
-                </div>
-            </>
+            <div className="flex justify-center items-center h-screen ">
+                <InfinitySpin width='140' color='#5572fc' />
+            </div>
         );
     }
 
     return (
         <div className="min-h-screen bg-gray-100">
-            {!!user && (
-                <>
-                    <UserContext.Provider value={user}>
-                        <Sidebar title="Gymstick" menu={menu} />
-                        <Header title="Gymstick" />
-                        <div className="content">
-                            <div className="p-4">{children}</div>
-                        </div>
-                    </UserContext.Provider>
-                </>
-            )}
+            <Sidebar title="Gymstick" menu={menu} />
+            <Header title="Gymstick" />
+            <div className="content">
+                <div className="p-4">{children}</div>
+            </div>
         </div>
     );
 };

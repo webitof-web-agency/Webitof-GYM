@@ -51,7 +51,6 @@ export const getTrainerDashboard = async (req, res) => {
 
 export const getAdminDashboard = async (req, res) => {
   try {
-    // Retrieve the authenticated user's ID
     const user = res.locals.user._id;
 
     if (!user) {
@@ -61,7 +60,6 @@ export const getAdminDashboard = async (req, res) => {
       });
     }
 
-    // Fetch counts for various entities
     const [
       totalUsers,
       totalTrainers,
@@ -78,7 +76,6 @@ export const getAdminDashboard = async (req, res) => {
       UserSubscription.countDocuments({ active: true }),
     ]);
 
-    // Fetch top-selling products
     const topProducts = await Order.aggregate([
       { $unwind: "$items" },
       {
@@ -103,19 +100,12 @@ export const getAdminDashboard = async (req, res) => {
           thumbnail_image: "$productDetails.thumbnail_image",
           price: "$productDetails.price",
           totalSold: 1,
-          salePercentage: {
-            $multiply: [
-              { $divide: ["$totalSold", { $sum: "$totalSold" }] },
-              100,
-            ],
-          },
         },
       },
       { $sort: { totalSold: -1 } },
       { $limit: 10 },
     ]);
 
-    // Fetch latest trainers, members, and orders
     const topTrainers = await User.find({ role: "trainer" })
       .sort({ createdAt: 1 })
       .limit(6)
@@ -133,7 +123,6 @@ export const getAdminDashboard = async (req, res) => {
       .limit(6)
       .select("uid _id createdAt payment");
 
-    // Fetch sales data
     const salesData = await Order.aggregate([
       { $unwind: "$items" },
       {
@@ -144,7 +133,6 @@ export const getAdminDashboard = async (req, res) => {
       },
     ]);
 
-    // Total sales and product data
     const totalSaleCount = salesData.reduce(
       (total, sale) => total + sale.totalOrderedQuantity,
       0
@@ -164,8 +152,8 @@ export const getAdminDashboard = async (req, res) => {
         },
       },
     ]);
+    const totalExistingQuantity = totalExistsQuantity?.[0]?.totalQuantity || 0;
 
-    // Monthly earnings analytics
     const currentYear = new Date().getFullYear();
     const monthlyEarnings = await Promise.all(
       Array.from({ length: 12 }, async (_, month) => {
@@ -199,7 +187,6 @@ export const getAdminDashboard = async (req, res) => {
       })
     );
 
-    // Send response
     return res.status(200).json({
       error: false,
       msg: "Successfully fetched dashboard data",
@@ -216,9 +203,8 @@ export const getAdminDashboard = async (req, res) => {
         latestOrders,
         latestSubscriptionHistory,
         salesData: {
-          existingProduct: totalExistsQuantity[0].totalQuantity,
-          totalProduct:
-            totalSaleCount + totalExistsQuantity[0].totalQuantity,
+          existingProduct: totalExistingQuantity,
+          totalProduct: totalSaleCount + totalExistingQuantity,
           soldProduct: totalSaleCount,
         },
         monthlyEarnings,

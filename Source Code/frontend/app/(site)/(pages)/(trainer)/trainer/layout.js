@@ -11,12 +11,12 @@ import { HiOutlineLogout, HiOutlineMenu } from "react-icons/hi";
 import Image from "next/image";
 import { RxCross1 } from "react-icons/rx";
 import { usePathname, useRouter } from "next/navigation";
-import { Drawer, message } from "antd";
 import { PiPasswordBold } from "react-icons/pi";
 import { FaAngleRight } from "react-icons/fa";
 import { useUser } from "../../../../contexts/user";
 import { FaBloggerB } from "react-icons/fa6";
 import { useI18n } from "../../../../providers/i18n";
+import { notifySuccess } from "../../../../helpers/notify";
 
 
 
@@ -88,9 +88,10 @@ const menuItems = [
 ];
 
 export default function Layout({ children }) {
-  const { getUser, user, setActive } = useUser()
+  const { getUser, user, userLoaded, setActive } = useUser()
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [currentName, setCurrentName] = useState("");
+  const [isReady, setIsReady] = useState(false);
   const router = useRouter();
   const i18n = useI18n();
 
@@ -107,10 +108,24 @@ export default function Layout({ children }) {
     } else {
       setCurrentName(i18n?.t("Trainer Dashboard"));
     }
-  }, [pathname]);
-  if (!user?._id || user?.role !== "trainer") {
-    return router.push("/signin");
-  } 
+  }, [pathname, i18n]);
+
+  useEffect(() => {
+    if (!userLoaded) {
+      return;
+    }
+
+    if (!user?._id || user?.role !== "trainer") {
+      router.replace("/signin");
+      return;
+    }
+
+    setIsReady(true);
+  }, [router, user, userLoaded]);
+
+  if (!isReady) {
+    return null;
+  }
 
   return (
     <>
@@ -136,68 +151,68 @@ export default function Layout({ children }) {
             onClick={toggleDrawer}
           />
         </div>
-
-        <Drawer
-          title={false}
-          placement="left"
-          closable={false}
-          onClose={toggleDrawer}
-          open={drawerOpen}
-          width={286}
-        >
-          <div className="flex justify-end items-end ">
-            <RxCross1 onClick={toggleDrawer} className="text-2xl" />
-
-          </div>
-          <div className="flex flex-col justify-center  ">
-            <div className="relative border  flex justify-center h-[150px] lg:h-[200px] w-[150px] lg:w-[200px] rounded-full mx-auto">
-              <Image
-                src={user?.image ? user?.image : "/defaultimg.jpg"}
-                alt="Profile"
-                width={1000}
-                height={1000}
-                className="h-[150px] lg:h-[200px] w-[150px] lg:w-[200px] rounded-full object-fill"
-              />
+        {drawerOpen && (
+          <>
+            <button
+              type="button"
+              onClick={toggleDrawer}
+              className="fixed inset-0 z-40 bg-black/50 lg:hidden"
+            />
+            <div className="fixed left-0 top-0 z-50 h-full w-[286px] overflow-y-auto bg-white p-6 shadow-xl lg:hidden">
+              <div className="flex justify-end items-end ">
+                <RxCross1 onClick={toggleDrawer} className="text-2xl" />
+              </div>
+              <div className="flex flex-col justify-center">
+                <div className="relative border flex justify-center h-[150px] lg:h-[200px] w-[150px] lg:w-[200px] rounded-full mx-auto">
+                  <Image
+                    src={user?.image ? user?.image : "/defaultimg.jpg"}
+                    alt="Profile"
+                    width={1000}
+                    height={1000}
+                    className="h-[150px] lg:h-[200px] w-[150px] lg:w-[200px] rounded-full object-fill"
+                  />
+                </div>
+                <h2 className="text-center font-medium leading-[27px] text-[18px] font-poppins text-textMain mt-6 capitalize">
+                  {user?.name}
+                </h2>
+              </div>
+              <nav>
+                <ul className="space-y-4">
+                  {menuItems.map((item) => (
+                    <li key={item.id}>
+                      <Link
+                        href={item.href}
+                        className={`flex items-center p-[8px] sm:p-[18px] border rounded transition-colors duration-200 ${pathname === item.href
+                          ? "bg-[#5572fc] text-white"
+                          : "text-textMain hover:bg-[#5572fc] hover:text-white"
+                          }`}
+                        onClick={() => setDrawerOpen(false)}
+                      >
+                        <span className="text-lg sm:text-2xl mr-2">{item.icon}</span>
+                        <span className="text-base font-poppins">{i18n?.t(item.name)}</span>
+                      </Link>
+                    </li>
+                  ))}
+                  <li>
+                    <button
+                      onClick={() => {
+                        localStorage.removeItem('token')
+                        notifySuccess('Sign out successfully')
+                        router.push('/signin')
+                        getUser()
+                        setActive('Sign Out')
+                      }}
+                      className="flex items-center p-[8px] w-full sm:p-[18px] border rounded transition-colors duration-200"
+                    >
+                      <span className="text-lg sm:text-2xl mr-2"><HiOutlineLogout /></span>
+                      <span className="text-base font-poppins">{i18n?.t('Sign Out')}</span>
+                    </button>
+                  </li>
+                </ul>
+              </nav>
             </div>
-            <h2 className="text-center font-medium leading-[27px] text-[18px] font-poppins text-textMain mt-6 capitalize">
-              {user?.name}
-            </h2>
-          </div>
-          <nav>
-            <ul className="space-y-4">
-              {menuItems.map((item) => (
-                <li key={item.id}>
-                  <Link
-                    href={item.href}
-                    className={`flex items-center p-[8px] sm:p-[18px] border rounded transition-colors duration-200 ${pathname === item.href
-                      ? "bg-[#5572fc] text-white"
-                      : "text-textMain hover:bg-[#5572fc] hover:text-white"
-                      }`}
-                  >
-                    <span className="text-lg sm:text-2xl mr-2">{item.icon}</span>
-                    <span className="text-base font-poppins">{i18n?.t(item.name)}</span>
-                  </Link>
-                </li>
-              ))}
-              <li >
-                <button
-                  onClick={() => {
-                    localStorage.removeItem('token')
-                    message.success(('Sign out successfully'))
-                    router.push('/signin')
-                    getUser()
-                    setActive('Sign Out')
-                  }}
-                  className={`flex items-center p-[8px] w-full sm:p-[18px] border rounded transition-colors duration-200 
-                    `}
-                >
-                  <span className="text-lg sm:text-2xl mr-2"><HiOutlineLogout /></span>
-                  <span className="text-base font-poppins">{i18n?.t('Sign Out')}</span>
-                </button>
-              </li>
-            </ul>
-          </nav>
-        </Drawer>
+          </>
+        )}
 
         <div className="hidden lg:block lg:w-[424px] lg:mb-0 mb-6 w-full h-fit bg-white p-4 sm:p-8 border rounded">
           <div className="mb-8">
@@ -235,7 +250,7 @@ export default function Layout({ children }) {
                 <button
                   onClick={() => {
                     localStorage.removeItem('token')
-                    message.success(('Sign out successfully'))
+                    notifySuccess('Sign out successfully')
                     router.push('/signin')
                     getUser()
                     setActive('Sign Out')

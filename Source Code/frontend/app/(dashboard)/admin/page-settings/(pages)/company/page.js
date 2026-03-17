@@ -1,7 +1,7 @@
 "use client";
 import { Card, Form, message } from 'antd';
 import React, { useEffect } from 'react';
-import { fetchSinglePage, postMultipleImage, postPage } from '../../../../../helpers/backend';
+import { fetchSinglePage, postLocalMultipleImage, postPage } from '../../../../../helpers/backend';
 import { useI18n } from '../../../../../providers/i18n';
 import { useFetch } from '../../../../../helpers/hooks';
 import { HiddenInput } from '../../../../../../components/form/input';
@@ -23,8 +23,8 @@ const CompanyDetails = ({ slug }) => {
                 title: page.title,
                 slug: page.slug,
                 images: Array.isArray(page?.content?.company_details?.images)
-                    ? page?.content?.company_details?.images?.map(image => ({ url: image }))
-                    : [{ url: page?.content?.company_details?.images }],
+                    ? page.content.company_details.images.filter(Boolean).map((image) => ({ url: image }))
+                    : (page?.content?.company_details?.images ? [{ url: page.content.company_details.images }] : []),
 
             };
             form.setFieldsValue(initialFormValues);
@@ -32,10 +32,19 @@ const CompanyDetails = ({ slug }) => {
     }, [page]);
 
     const handleUploadImages = async (imageFiles, imageName) => {
-        const img = imageFiles?.map((image) => image.originFileObj);
-        const images = { images: img, image_name: imageName };
-        const { data } = await postMultipleImage(images);
-        return data;
+        const list = Array.isArray(imageFiles) ? imageFiles : [];
+        const existingUrls = list
+            .filter((i) => typeof i?.url === 'string' && !i?.originFileObj)
+            .map((i) => i.url);
+        const newFiles = list
+            .filter((i) => i?.originFileObj)
+            .map((i) => i.originFileObj);
+
+        if (newFiles.length === 0) return existingUrls;
+
+        const images = { images: newFiles, image_name: imageName };
+        const { data } = await postLocalMultipleImage(images);
+        return [...existingUrls, ...(data || [])];
 
     };
 

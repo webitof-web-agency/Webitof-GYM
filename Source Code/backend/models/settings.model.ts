@@ -14,6 +14,23 @@ const schema = new Schema({
     youtube: String,
     ai_key: String,
     footer_text: String,
+    storage: {
+        provider: {
+            type: String,
+            enum: ['local', 's3'],
+            default: 'local',
+        },
+        local: {
+            base_url: String,
+        },
+        s3: {
+            access_key_id: String,
+            secret_access_key: String,
+            region: String,
+            bucket_name: String,
+            base_path: String,
+        },
+    },
 })
 
 const Settings = model('settings', schema);

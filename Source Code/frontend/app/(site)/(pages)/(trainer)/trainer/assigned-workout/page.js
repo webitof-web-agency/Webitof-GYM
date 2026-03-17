@@ -29,7 +29,7 @@ const AssignedWorkout = () => {
     {
       text: i18n?.t("Group"),
       dataField: "groups",
-      formatter: (_, d) => <span>{d?.group?.name[i18n?.langCode] || "-"}</span>,
+      formatter: (_, d) => <span>{columnFormatter(d?.group?.name) || "-"}</span>,
     },
     {
       text: i18n?.t("Members"),

@@ -10,6 +10,7 @@ import { useI18n } from '../../../../../../../providers/i18n';
 import FormSelect from '../../../../../../../../components/form/select';
 import Button from '../../../../../../../../components/common/button';
 import { HiddenInput } from '../../../../../../../../components/form/input';
+import { columnFormatter } from '../../../../../../../helpers/utils';
 
 const { Title } = Typography;
 
@@ -42,14 +43,23 @@ const Edit = ({ params }) => {
 
   useEffect(() => {
     if (data) {
+      const memberIds = Array.isArray(data?.members)
+        ? data.members.map((m) => m?._id ?? m).filter(Boolean)
+        : [];
+      const hasMembers = memberIds.length > 0;
+
       form.setFieldsValue({
         _id: data?._id,
-        members: data?.members || [],
+        members: memberIds,
         start_date: dayjs(data?.start_date),
         end_date: dayjs(data?.end_date),
         group: data?.group?._id,
       });
-      getMembers({ _id: data?.group?._id });
+      setSelectedRadio(hasMembers ? 2 : 1);
+      setSelectedGroup(data?.group?._id || null);
+      if (data?.group?._id) {
+        getMembers({ _id: data?.group?._id });
+      }
       setSelectedDays(data?.selected_days?.map((day) => day ) || []);
       setSelectedMeals(data?.nutrition || []);
       setSelectedTypes(data?.nutrition?.map(meal => meal.type) || []);
@@ -125,6 +135,8 @@ const Edit = ({ params }) => {
     setSelectedRadio(e.target.value);
     if (e.target.value === 1) {
       setSelectedMembers([]);
+      form.setFieldsValue({ members: [] });
+      setSelectedGroup(form.getFieldValue('group') || null);
     } else {
       setSelectedGroup(null);
     }
@@ -148,7 +160,7 @@ const Edit = ({ params }) => {
             name="group"
             label="Group"
             options={groupList?.docs?.map(group => ({
-              label: group?.name[i18n?.langCode],
+              label: columnFormatter(group?.name),
               value: group?._id,
             })) || []}
             placeholder="Select group"
@@ -161,7 +173,7 @@ const Edit = ({ params }) => {
               name="members"
               label="Members"
               multi={true}
-              options={members?.docs[0]?.members?.map(m => ({
+              options={members?.docs?.[0]?.members?.map(m => ({
                 label: m?.name,
                 value: m?._id,
               })) || []}
@@ -198,12 +210,11 @@ const Edit = ({ params }) => {
               <Checkbox.Group
                 name="selected_days"
                 value={selectedDays}
-                defaultValue={selectedDays}
                 onChange={(checkedValues) => setSelectedDays(checkedValues || [])}
               >
                 {["saturday", "sunday", "monday", "tuesday", "wednesday", "thursday", "friday"].map((day) => (
                   <div key={day} className="flex items-center mb-2">
-                    <Checkbox value={day} checked={selectedDays} />
+                    <Checkbox value={day} />
                     <span className="ml-2 capitalize">{i18n?.t(day)}</span>
                   </div>
                 ))}

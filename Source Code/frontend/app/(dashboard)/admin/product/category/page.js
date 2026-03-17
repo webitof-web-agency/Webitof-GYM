@@ -11,6 +11,9 @@ import { columnFormatter, noSelected } from '../../../../helpers/utils';
 import FormInput, { HiddenInput } from '../../../../../components/form/input';
 import { useI18n } from '../../../../providers/i18n';
 import dayjs from 'dayjs';
+
+const fallbackLanguage = { code: 'en', name: 'English' };
+
 const page = () => {
     const [form] = Form.useForm();
     const i18n = useI18n()
@@ -21,10 +24,14 @@ const page = () => {
     const [isEdit, setIsEdit] = useState(false);
     const [selectedLang, setSelectedLang] = useState();
     const [formData, setFromData] = useState([])
+    const availableLanguages =
+        Array.isArray(languages?.docs) && languages.docs.length > 0
+            ? languages.docs
+            : [fallbackLanguage];
 
     useEffect(() => {
-        setSelectedLang(langCode)
-    }, [langCode])
+        setSelectedLang(langCode || availableLanguages[0]?.code || 'en')
+    }, [availableLanguages, langCode])
 
     const columns = [
         {
@@ -78,8 +85,9 @@ const page = () => {
                 destroyOnClose={true}
             >
                 <div className="flex justify-start flex-wrap gap-3">
-                    {languages?.docs?.map((l, index) => (
+                    {availableLanguages.map((l, index) => (
                         <button
+                            type="button"
                             onClick={() => setSelectedLang(l.code)}
                             className={`px-3 py-1 rounded-full text-sm font-medium transition-colors duration-200 ${l.code === selectedLang
                                 ? 'bg-[#5572fc] text-white'
@@ -98,7 +106,7 @@ const page = () => {
                         const multiLangFields = ['name'];
                         const formattedData = multiLangFields.reduce((acc, field) => {
                             acc[field] = {};
-                            languages?.docs?.forEach(lang => {
+                            availableLanguages.forEach(lang => {
                                 if (values[field] && values[field][lang.code]) {
                                     acc[field][lang.code] = values[field][lang.code];
                                 }
@@ -122,7 +130,7 @@ const page = () => {
                     {isEdit && <HiddenInput name="_id" />}
 
                     {
-                        languages?.docs?.map((l, index) => (
+                        availableLanguages.map((l, index) => (
                             <div key={index} style={{ display: l.code === selectedLang ? 'block' : 'none' }}>
                                 <FormInput
                                     name={['name', l.code]}

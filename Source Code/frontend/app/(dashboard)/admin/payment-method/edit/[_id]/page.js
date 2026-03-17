@@ -15,18 +15,24 @@ const EditPaymentMethod = ({ params }) => {
     const [selectedMethod, setSelectedMethod] = useState('');
 
     useEffect(() => {
-        getData({ _id: params?._id });
-        if (data) {
-            form.setFieldsValue({
-                ...data
-            });
-            setSelectedMethod(data?.type)
-        }
-    }, [data?._id]);
+        if (params?._id) getData({ _id: params._id });
+    }, [params?._id]);
+
+    useEffect(() => {
+        if (!data) return;
+        form.setFieldsValue({ ...data });
+        setSelectedMethod(data?.type || '');
+    }, [data]);
     return (
         <div>
             <PageTitle title="Edit Payment Method" />
-            <PaymentMethodForm title={i18n?.t('Edit Method')} form={form} selectedMethod={selectedMethod} setSelectedMethod={setSelectedMethod} />
+            <PaymentMethodForm
+                title={i18n?.t('Edit Method')}
+                form={form}
+                selectedMethod={selectedMethod}
+                setSelectedMethod={setSelectedMethod}
+                isEdit={true}
+            />
         </div>
     );
 };

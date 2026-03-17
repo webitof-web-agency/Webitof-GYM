@@ -1,23 +1,14 @@
-'use client'
 import '../styles/global.scss';
 import I18nProvider from './providers/i18n';
 import Providers from './providers/userProvider';
 import SiteProvider from './contexts/site';
-import { useFetch } from './helpers/hooks';
-import { fetchAdminSettings } from './helpers/backend';
 
 export default function RootLayout({ children }) {
-    const [setting] = useFetch(fetchAdminSettings);
-    const metadata = {
-        title:`${setting?.title || 'webitofgym'}`,
-        description: "Manage your gym with webitofgym",
-    };
-
     return (
         <html lang='en' suppressHydrationWarning>
             <head>
-                <title>{metadata.title}</title>
-                <meta name="description" content={metadata.description} />
+                <title>Gymstick</title>
+                <meta name="description" content="Manage your gym with Gymstick" />
             </head>
             <I18nProvider>
                 <SiteProvider>
