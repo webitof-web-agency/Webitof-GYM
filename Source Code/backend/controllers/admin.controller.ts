@@ -86,7 +86,7 @@ export const createAdminAndEnv = async (req, res, next) => {
             name: "home4",
             isDefault: false
         })
-        await fs.writeFile(path.join(__dirname, '../.env'), envValues, { flag: "wx" });
+        await fs.writeFile(path.join(process.cwd(), '.env'), envValues, { flag: "wx" });
         return res.status(200).json({
             status: true,
             env: true

@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(ls -la \"e:/Projects/WorkWebitof/Webitof gym/Source Code/backend/.env\"*)",
+      "Bash(grep -r bcrypt 'e:/Projects/WorkWebitof/Webitof gym/Source Code/backend' --include=*.ts)",
+      "Bash(grep -r seed 'e:/Projects/WorkWebitof/Webitof gym/Source Code/backend' --include=*.ts)",
+      "Bash(npx ts-node:*)"
+    ]
+  }
+}

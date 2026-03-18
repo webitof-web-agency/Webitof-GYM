@@ -67,7 +67,7 @@ export const addProduct = async (req, res) => {
             });
         }
 
-        const newProduct = await Product(body)
+        const newProduct = await new Product(body)
 
         await newProduct.save();
 

@@ -18,6 +18,8 @@ export const sendUserEmailGeneral = async (data) => {
                 pass: settings?.sendgrid?.password,
             },
         });
+        // @ts-ignore
+        from_email = settings?.sendgrid?.sender_email; 
 
         // @ts-ignore
     } else if (settings?.default === 'gmail') {
@@ -33,7 +35,7 @@ export const sendUserEmailGeneral = async (data) => {
             },
         });
         // @ts-ignore
-        from_email = settings?.email?.gmail?.auth_email
+        from_email = settings?.gmail?.auth_email
     }
 
     // config for end user

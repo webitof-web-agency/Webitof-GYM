@@ -19,6 +19,7 @@ export const sendMarketingEmail = async (data) => {
             },
         });
         // @ts-ignore
+        from_email = settings?.email?.sendgrid?.sender_email;
     } else if (settings?.email?.default === 'gmail') {
         transporter = nodemailer.createTransport({
             secure: false,

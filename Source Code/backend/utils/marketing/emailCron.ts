@@ -10,7 +10,7 @@ dotenv.config();
 export const cornEmail = async () => {
     let allMails = await MarketingMail.find({status: 'scheduled'}).populate("group")
     if (allMails) {
-        allMails.map(async data => {
+        await Promise.all(allMails.map(async data => {
             const serverTime = new Date();
             // Set your scheduled time
             const temp_time = String(data.scheduled_date)
@@ -38,7 +38,7 @@ export const cornEmail = async () => {
                 }
             }
 
-        })
+        }))
     }
 };
 

@@ -1,7 +1,8 @@
 import { Server } from "socket.io";
 import jwt from 'jsonwebtoken'
 
-const secret = process.env.SECRET
+const secret = process.env.SECRET;
+if (!secret) throw new Error('SECRET environment variable is required');
 
 export const socket = httpServer => {
     let io = new Server(httpServer, {

@@ -40,7 +40,7 @@ const nextConfig = {
         ignoreDuringBuilds: true,
     },
     experimental: {
-        optimizePackageImports: ['antd', 'react-icons'],
+        optimizePackageImports: ['antd', 'react-icons', 'recharts', 'framer-motion', 'lucide-react', '@ant-design/icons'],
     },
     images: {
         remotePatterns,
