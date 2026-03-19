@@ -163,15 +163,25 @@ const ProductForm = ({ isVarient, setIsVarient, category, languages, selectedLan
                                                 </Form.Item>
                                             </div>
                                             {fields.length > 1 && (
-                                                <div>
-                                                    <FaMinusCircle className="text-red-600 text-xl" onClick={() => remove(index)} />
-                                                </div>
+                                                <button
+                                                    type="button"
+                                                    aria-label={i18n?.t('Remove field') || 'Remove field'}
+                                                    className="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-600 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
+                                                    onClick={() => remove(index)}
+                                                >
+                                                    <FaMinusCircle className="text-red-600 text-xl" />
+                                                </button>
                                             )}
                                         </div>
                                     ))}
-                                    <div className="bg-slate-500 text-white flex items-center justify-start gap-2 px-3 py-2 ml-auto rounded-full w-fit cursor-pointer" onClick={() => add()}>
+                                    <button
+                                        type="button"
+                                        aria-label={i18n?.t('Add field') || 'Add field'}
+                                        className="bg-slate-500 text-white flex items-center justify-start gap-2 px-3 py-2 ml-auto rounded-full w-fit cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
+                                        onClick={() => add()}
+                                    >
                                         <FaPlusCircle /> {i18n?.t("Add field")}
-                                    </div>
+                                    </button>
                                 </>
                             )}
                         </Form.List>

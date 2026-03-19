@@ -109,23 +109,28 @@ const AccountSettings = () => {
                         <FormInput className="" type="number" name={[name, 'level']} label={i18n?.t('Level')} />
                       </div>
                       {fields.length > 1 && (
-                        <div onClick={() => {
-                          remove(index)
-                        }} className=' group w-[30px] flex items-center relative top-[14px] '>
-                          <Button className='border rounded-full w-[40px] h-[35px] '>
+                        <Button
+                          type="button"
+                          aria-label={i18n?.t('Remove field') || 'Remove field'}
+                          onClick={() => {
+                            remove(index)
+                          }}
+                          className='group w-[30px] flex items-center relative top-[14px] border rounded-full w-[40px] h-[35px] '
+                        >
                             <RiDeleteBin6Line className="text-[#5572fc] group-hover:text-white duration-500 text-xl relative -top-[1px] right-[8px] " />
-                          </Button>
-                        </div>
+                        </Button>
                       )}
                     </div>
                   ))}
                   {
-                    fields.length < 4 && <div
+                    fields.length < 4 && <Button
+                      type="button"
+                      aria-label={i18n?.t('Add field') || 'Add field'}
                       className="bg-slate-500 text-white flex items-center justify-start gap-2 px-3 py-2 ml-auto rounded-full w-fit cursor-pointer"
                       onClick={() => add()}
                     >
                       <FaPlusCircle /> {i18n?.t("Add field")}
-                    </div>
+                    </Button>
                   }
                 </>
               )}

@@ -31,9 +31,14 @@ const CouponBar = () => {
             >
               <h1 className="text-sm sm:text-base font-semibold">
                 {i18n?.t("Collect Your Exclusive Coupon Here!")}{" "}
-                <span  onClick={() => setModal(true)} className="font-bold cursor-pointer text-yellow-100 hover:underline transition-colors duration-200">
+                <button
+                  type="button"
+                  onClick={() => setModal(true)}
+                  aria-label={i18n?.t("Get coupons now") || "Get coupons now"}
+                  className="font-bold text-yellow-100 hover:underline transition-colors duration-200"
+                >
                   {i18n?.t("Get Now")}
-                </span>
+                </button>
               </h1>
             </div>
 
@@ -49,12 +54,15 @@ const CouponBar = () => {
                   coupon?.map((item, i) =>
                     isExpired(item) ? null : (
                       <div
-                        onClick={() => handleCopyCoupon(item?._id)}
-                        key={i}
+                        key={item?._id || i}
                         className="relative rounded-[10px] cursor-pointer w-full md:h-[120px]"
                       >
-
-                        <div className="relative flex w-full h-full md:gap-10 gap-3 items-center  bg-orange-500 text-white rounded ">
+                        <button
+                          type="button"
+                          onClick={() => handleCopyCoupon(item?._id)}
+                          aria-label={`${i18n?.t("Copy coupon code") || "Copy coupon code"} ${item?.code}`}
+                          className="relative flex w-full h-full md:gap-10 gap-3 items-center bg-orange-500 text-white rounded text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5572fc] focus-visible:ring-offset-2 focus-visible:ring-offset-white"
+                        >
                           <div className="md:w-[200px] w-[100px] py-4 md:py-0 h-full flex flex-col items-center justify-center text-center border-r-4 border-dotted relative">
                             <h2 className="md:text-base text-sm font-semibold text-white/60">
                               {dayjs(item?.expire_at).format("MMM")}
@@ -81,7 +89,7 @@ const CouponBar = () => {
                               Code: {item?.code}
                             </h2>
                           </div>
-                        </div>
+                        </button>
                         {isExpired(item) && (
                           <h1 className="absolute top-2 right-2 px-2 py-1 font-medium text-red-500 bg-red-100 rounded shadow">
                             {i18n?.t("Expired")}

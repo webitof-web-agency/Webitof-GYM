@@ -16,10 +16,12 @@ const BmiForm = ({ onFinish, form, pathName, i18n, isHome3 }) => {
                             ]}
                         >
                             <input
-                                placeholder={i18n?.t('Weight (kg)')}
+                                name="weight"
+                                autoComplete="off"
+                                placeholder={i18n?.t('Weight in kg, e.g. 70…')}
                                 type='number'
                                 onInput={(e) => e.target.value = e.target.value.replace(/[^0-9]/g, '')}
-                                className={`w-full rounded border px-4 py-[18px] outline-none ${pathName?.name === 'home3' && isHome3 ? 'border-gray-100 bg-black text-white' : 'bg-white text-textMain'}`}
+                                className={`w-full rounded border px-4 py-[18px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5572fc] focus-visible:ring-offset-2 ${pathName?.name === 'home3' && isHome3 ? 'border-gray-100 bg-black text-white focus-visible:ring-offset-black' : 'bg-white text-textMain focus-visible:ring-offset-white'}`}
                             />
                         </Form.Item>
                     </div>
@@ -32,10 +34,12 @@ const BmiForm = ({ onFinish, form, pathName, i18n, isHome3 }) => {
                             ]}
                         >
                             <input
-                                placeholder={i18n?.t('Height (cm)')}
+                                name="height"
+                                autoComplete="off"
+                                placeholder={i18n?.t('Height in cm, e.g. 175…')}
                                 type='number'
                                 onInput={(e) => e.target.value = e.target.value.replace(/[^0-9]/g, '')}
-                                className={`w-full rounded border px-4 py-[18px] outline-none ${pathName?.name === 'home3' && isHome3 ? 'border-gray-100 bg-black text-white' : 'bg-white text-textMain'}`}
+                                className={`w-full rounded border px-4 py-[18px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5572fc] focus-visible:ring-offset-2 ${pathName?.name === 'home3' && isHome3 ? 'border-gray-100 bg-black text-white focus-visible:ring-offset-black' : 'bg-white text-textMain focus-visible:ring-offset-white'}`}
                             />
                         </Form.Item>
                     </div>
@@ -47,10 +51,12 @@ const BmiForm = ({ onFinish, form, pathName, i18n, isHome3 }) => {
                             ]}
                         >
                             <input
-                                placeholder={i18n?.t('Age')}
+                                name="age"
+                                autoComplete="off"
+                                placeholder={i18n?.t('Age, e.g. 28…')}
                                 type='number'
                                 onInput={(e) => e.target.value = e.target.value.replace(/[^0-9]/g, '')}
-                                className={`w-full rounded border px-4 py-[18px] outline-none ${pathName?.name === 'home3' && isHome3 ? 'border-gray-100 bg-black text-white' : 'bg-white text-textMain'}`}
+                                className={`w-full rounded border px-4 py-[18px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5572fc] focus-visible:ring-offset-2 ${pathName?.name === 'home3' && isHome3 ? 'border-gray-100 bg-black text-white focus-visible:ring-offset-black' : 'bg-white text-textMain focus-visible:ring-offset-white'}`}
                             />
                         </Form.Item>
                     </div>
@@ -63,7 +69,9 @@ const BmiForm = ({ onFinish, form, pathName, i18n, isHome3 }) => {
                             ]}
                         >
                             <select
-                                className={`w-full rounded border px-4 py-[18px] outline-none ${pathName?.name === 'home3' && isHome3 ? 'border-gray-100 bg-black text-white' : 'bg-white text-textMain'}`}
+                                name="gender"
+                                aria-label={i18n?.t('Gender') || 'Gender'}
+                                className={`w-full rounded border px-4 py-[18px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5572fc] focus-visible:ring-offset-2 ${pathName?.name === 'home3' && isHome3 ? 'border-gray-100 bg-black text-white focus-visible:ring-offset-black' : 'bg-white text-textMain focus-visible:ring-offset-white'}`}
                             >
                                 <option value='Male'>{i18n?.t('Male')}</option>
                                 <option value='Female'>{i18n?.t('Female')}</option>
@@ -81,7 +89,9 @@ const BmiForm = ({ onFinish, form, pathName, i18n, isHome3 }) => {
                         ]}
                     >
                         <select
-                            className={`w-full rounded border px-4 py-[18px] outline-none ${pathName?.name === 'home3' && isHome3 ? 'border-gray-100 bg-black text-white' : 'bg-white text-textMain'}`}
+                            name="activity"
+                            aria-label={i18n?.t('Activity level') || 'Activity level'}
+                            className={`w-full rounded border px-4 py-[18px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5572fc] focus-visible:ring-offset-2 ${pathName?.name === 'home3' && isHome3 ? 'border-gray-100 bg-black text-white focus-visible:ring-offset-black' : 'bg-white text-textMain focus-visible:ring-offset-white'}`}
                         >
                             <option value='Little to no exercise'>
                                 {i18n?.t('Little to no exercise')}

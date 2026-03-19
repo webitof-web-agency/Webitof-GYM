@@ -6,8 +6,10 @@ const Button = ({
   onClick,
   className = '',
   type = 'button',
-  loadingText = 'Loading...',
-  pathName
+  loadingText = 'Loading…',
+  skipDemo,
+  pathName,
+  ...props
 }) => {
   const [isLoading, setIsLoading] = useState(false);
   const pathname = usePathname()
@@ -30,6 +32,7 @@ const Button = ({
       className={`border-2 border-[#5572fc]  text-textMain !font-poppins md:px-4 h-fit py-[14px] px-4 whitespace-pre rounded transition-colors !font-medium duration-300 ease-in-out sm:text-base capitalize text-sm 
         ${isLoading ? 'bg-gray-400 cursor-not-allowed' : 'hover:bg-[#5572fc] hover:text-white active:scale-[0.98]'} ${pathName === 'home3' && pathname==="/" ? 'hover:bg-[#5572fc] text-white' : ''} ${className}`}
       disabled={isLoading}
+      {...props}
     >
       {isLoading ? loadingText : children}
     </button>

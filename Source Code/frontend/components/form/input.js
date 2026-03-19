@@ -9,6 +9,10 @@ const FormInput = ({
     const i18n = useI18n();
     const [passwordVisible, setPasswordVisible] = useState(false);
     const [inputValue, setInputValue] = useState(initialValue || '');
+    const nameValue = name ? String(name) : undefined;
+    const autoCompleteValue = type === 'password'
+        ? (nameValue && (nameValue.toLowerCase().includes('new') || nameValue.toLowerCase().includes('confirm')) ? 'new-password' : 'current-password')
+        : (isEmail ? 'email' : (nameValue || 'off'));
 
     useEffect(() => {
         setInputValue(initialValue);
@@ -33,7 +37,15 @@ const FormInput = ({
 
     let input;
     if (textArea) {
-        input = <textarea placeholder={i18n?.t(placeholder)} className="form-input" rows={rows} />;
+        input = (
+            <textarea
+                name={nameValue}
+                placeholder={i18n?.t(placeholder)}
+                className="form-input"
+                rows={rows}
+                autoComplete={autoCompleteValue}
+            />
+        );
     } else if (type === 'date') {
         input = <DatePicker />;
     } else if (type === 'password') {
@@ -42,18 +54,23 @@ const FormInput = ({
                 <input
                     className="form-input pr-10"
                     type={passwordVisible ? 'text' : 'password'}
+                    name={nameValue}
                     value={inputValue}
                     onChange={handlePasswordChange}
                     onBlur={handleBlur}
                     placeholder={i18n?.t(placeholder)}
                     readOnly={readOnly}
+                    autoComplete={autoCompleteValue}
                 />
-                <span
-                    className="absolute right-2 top-1/2 transform -translate-y-1/2 cursor-pointer text-gray-500"
+                <button
+                    type="button"
+                    aria-label={passwordVisible ? (i18n?.t('Hide password') || 'Hide password') : (i18n?.t('Show password') || 'Show password')}
+                    aria-pressed={passwordVisible}
+                    className="absolute right-2 top-1/2 -translate-y-1/2 cursor-pointer text-gray-500"
                     onClick={() => setPasswordVisible(!passwordVisible)}
                 >
                     {passwordVisible ? <IoEye className='text-white text-lg' /> : <IoEyeOff className='text-white text-lg' />}
-                </span>
+                </button>
             </div>
         );
     } else {
@@ -61,14 +78,16 @@ const FormInput = ({
             <input
                 className="form-input"
                 type={type}
+                name={nameValue}
                 value={inputValue}
                 onChange={(e) => {
                     setInputValue(e.target.value);
                     if (onChange) onChange(e);
                 }}
-                onBlur={onBlur}
+                onBlur={handleBlur}
                 placeholder={i18n?.t(placeholder)}
                 readOnly={readOnly}
+                autoComplete={autoCompleteValue}
             />
         );
     }

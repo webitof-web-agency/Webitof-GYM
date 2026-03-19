@@ -13,6 +13,8 @@ import SSLCommerzPayment from 'sslcommerz-lts'
 import Razorpay from "razorpay";
 import Mollie from '@mollie/api-client';
 import Notification from "../../models/notification.model";
+import axios from "axios";
+import crypto from "crypto";
 
 export const postOrder = async (req, res) => {
     try {        
@@ -385,6 +387,7 @@ export const postOrder = async (req, res) => {
                     amount: amountInPaise,
                     currency: body.currency || 'INR',  
                     description: "Order Payment",
+                    reference_id: uid,
                     customer: {
                         name: user.name || 'Guest',   
                         email: user.email,
@@ -621,27 +624,48 @@ export const paypalPaymentSuccess = async (req, res) => {
             });
         }
 
-        order.payment.status = 'completed';
-        order.status = 'accepted';
+        const execute_payment_json = {
+            payer_id: payerId,
+            transactions: [
+                {
+                    amount: {
+                        currency: order.payment.currency || 'USD',
+                        total: order.payment.amount.toFixed(2),
+                    },
+                },
+            ],
+        };
 
-        await order.save();
-        if(order){
-            const notification = await Notification.create({
-                title: "New Product Order Placed", 
-                message: `A new product order has been placed.`,
-                isRead: false,
-                data: {
-                    type: "order",
-                    orderId: order._id
-                }
-           });
-           res.locals.io.emit('newNotification', { notification: notification });
-        }
+        paypal.payment.execute(paymentId, execute_payment_json, async (error, payment) => {
+            if (error || payment?.state !== 'approved') {
+                return res.status(400).json({
+                    error: true,
+                    msg: 'Invalid payment status',
+                });
+            }
 
-        return res.status(200).json({
-            error: false,
-            msg: 'Payment successful',
-            data: order
+            order.payment.status = 'completed';
+            order.status = 'accepted';
+
+            await order.save();
+            if (order) {
+                const notification = await Notification.create({
+                    title: "New Product Order Placed",
+                    message: `A new product order has been placed.`,
+                    isRead: false,
+                    data: {
+                        type: "order",
+                        orderId: order._id
+                    }
+                });
+                res.locals.io.emit('newNotification', { notification: notification });
+            }
+
+            return res.status(200).json({
+                error: false,
+                msg: 'Payment successful',
+                data: order
+            });
         });
 
     } catch (error) {
@@ -1179,8 +1203,22 @@ export const sslCommerzPaymentSuccess = async (req, res) => {
 // razorpay payment success
 export const razorpayPaymentSuccess = async (req, res) => {
     try {
-        const { session_id, razorpay_payment_id, razorpay_signature } = req.query;
-        if (!razorpay_payment_id || !razorpay_signature) {
+        const {
+            session_id,
+            razorpay_payment_id,
+            razorpay_signature,
+            razorpay_payment_link_id,
+            razorpay_payment_link_reference_id,
+            razorpay_payment_link_status,
+        } = req.query;
+        if (
+            !session_id ||
+            !razorpay_payment_id ||
+            !razorpay_signature ||
+            !razorpay_payment_link_id ||
+            !razorpay_payment_link_reference_id ||
+            !razorpay_payment_link_status
+        ) {
             return res.status(400).send({
                 error: true,
                 msg: 'Invalid payment details'
@@ -1199,6 +1237,12 @@ export const razorpayPaymentSuccess = async (req, res) => {
                 msg: 'Payment already completed'
             });
         }
+        if (razorpay_payment_link_reference_id !== session_id) {
+            return res.status(400).send({
+                error: true,
+                msg: 'Payment reference mismatch'
+            });
+        }
         // Retrieve Razorpay configuration details
         let razorpayConfig = await PaymentMethod.findOne({ type: 'razorpay' });
 
@@ -1213,6 +1257,23 @@ export const razorpayPaymentSuccess = async (req, res) => {
             key_id: razorpayConfig.config.clientId,
             key_secret: razorpayConfig.config.clientSecret
         });
+
+        const expectedSignature = crypto
+            .createHmac('sha256', razorpayConfig.config.clientSecret)
+            .update([
+                razorpay_payment_link_id,
+                razorpay_payment_link_reference_id,
+                razorpay_payment_link_status,
+                razorpay_payment_id,
+            ].join('|'))
+            .digest('hex');
+
+        if (expectedSignature !== razorpay_signature) {
+            return res.status(400).send({
+                error: true,
+                msg: 'Invalid payment signature'
+            });
+        }
 
         const paymentIntent = await razorpayClient.payments.fetch(razorpay_payment_id);
 
@@ -1277,7 +1338,24 @@ export const molliePaymentSuccess = async (req, res) => {
                 msg: 'Payment already completed'
             });
         }
-        
+
+        let mollieConfig = await PaymentMethod.findOne({ type: 'mollie' });
+        if (!mollieConfig) {
+            return res.status(400).send({
+                error: true,
+                msg: 'Mollie configuration not found for this user',
+            });
+        }
+
+        const mollie = Mollie({ apiKey: mollieConfig.config.clientId });
+        const payment = await mollie.payments.get(order.payment.transaction_id);
+        if (payment.status !== 'paid') {
+            return res.status(400).json({
+                error: true,
+                msg: 'Invalid payment status',
+            });
+        }
+
         order.payment.status = 'completed';
         order.status = 'accepted';
         await order.save();

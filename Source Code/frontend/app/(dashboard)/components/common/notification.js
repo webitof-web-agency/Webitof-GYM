@@ -45,12 +45,13 @@ const NotificationDropdown = ({ isOpen = true, notices, getNotifications, setLim
                         {i18n?.t("Notifications")}
                     </h4>
                     <button
+                        type="button"
                         onClick={() => {
                             useAction(readAllMarkAdminNotification, {}, () => {
                                 getNotifications();
                             });
                         }}
-                        className="text-xs hover:underline"
+                        className="text-xs hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5572fc] focus-visible:ring-offset-2 focus-visible:ring-offset-white"
                         style={{ color: "#5572fc" }}
                     >
                         {i18n?.t("Mark all as read")}
@@ -94,14 +95,22 @@ const NotificationDropdown = ({ isOpen = true, notices, getNotifications, setLim
                                 <p className="text-xs text-gray-600 line-clamp-2">{notification?.message}</p>
                                 <p className="text-xs text-gray-400 mt-1 flex items-center gap-2 justify-between">
                                     <span>{dayjs(notification?.createdAt)?.fromNow()}</span>
-                                    <span onClick={() => {
-                                        notification?.isRead ? null : useAction(readAdminNotification, { _id: notification?._id }, () => {
-                                            getNotifications();
-                                        });
-                                    }} className="font-semibold hover:underline cursor-pointer">{notification?.isRead ? i18n?.t("Marked as read") : i18n?.t("Mark as read")}</span>
+                                    <button
+                                        type="button"
+                                        onClick={() => {
+                                            notification?.isRead ? null : useAction(readAdminNotification, { _id: notification?._id }, () => {
+                                                getNotifications();
+                                            });
+                                        }}
+                                        className="font-semibold hover:underline cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5572fc] focus-visible:ring-offset-2 focus-visible:ring-offset-white"
+                                    >
+                                        {notification?.isRead ? i18n?.t("Marked as read") : i18n?.t("Mark as read")}
+                                    </button>
                                 </p>
                             </div>
                             <button
+                                type="button"
+                                aria-label={i18n?.t("Delete notification") || "Delete notification"}
                                 className="absolute top-2 right-2 text-gray-400 hover:text-red-500"
                                 onClick={(e) => {
                                     e.stopPropagation();

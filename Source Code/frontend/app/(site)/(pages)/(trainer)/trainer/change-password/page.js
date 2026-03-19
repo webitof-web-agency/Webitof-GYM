@@ -38,7 +38,8 @@ const Page = () => {
           >
             <Input.Password
               placeholder={i18n?.t('Old Password *')}
-              className=" w-full px-2 sm:px-2 py-2 sm:py-[15px] border !border-gray-300 !outline-none rounded-md "
+              autoComplete="current-password"
+              className=" w-full px-2 sm:px-2 py-2 sm:py-[15px] border !border-gray-300 rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5572fc] focus-visible:ring-offset-2 focus-visible:ring-offset-white"
             />
           </Form.Item>
           <Form.Item
@@ -50,7 +51,8 @@ const Page = () => {
           >
             <Input.Password
               placeholder={i18n?.t('New Password *')}
-              className=" w-full px-2 sm:px-2 py-2 sm:py-[15px] border border-gray-300 rounded-md "
+              autoComplete="new-password"
+              className=" w-full px-2 sm:px-2 py-2 sm:py-[15px] border border-gray-300 rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5572fc] focus-visible:ring-offset-2 focus-visible:ring-offset-white"
             />
           </Form.Item>
           <Form.Item
@@ -72,7 +74,8 @@ const Page = () => {
           >
             <Input.Password
               placeholder={i18n?.t('Retype Confirm Password *')}
-              className=" w-full px-2 sm:px-2 py-2 sm:py-[15px] border border-gray-300 rounded-md "
+              autoComplete="new-password"
+              className=" w-full px-2 sm:px-2 py-2 sm:py-[15px] border border-gray-300 rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5572fc] focus-visible:ring-offset-2 focus-visible:ring-offset-white"
             />
           </Form.Item>
         </div>

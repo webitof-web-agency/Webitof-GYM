@@ -61,7 +61,9 @@ const BlogPageContent = () => {
           <motion.select
             onChange={handleCategoryChange}
             value={selectedCategory}
-            className="text-base cursor-pointer w-full h-fit md:w-fit pl-4 pr-8 py-2 outline-none rounded-md appearance-none outline-primary transition-all duration-300"
+            name="blog-category"
+            aria-label={i18n?.t('Blog category') || 'Blog category'}
+            className="text-base cursor-pointer w-full h-fit md:w-fit pl-4 pr-8 py-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5572fc] focus-visible:ring-offset-2 focus-visible:ring-offset-white rounded-md appearance-none transition-all duration-300"
           >
             <option value="">{i18n?.t('All Categories')}</option>
             {categories?.docs?.map(category => (

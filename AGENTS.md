@@ -179,3 +179,41 @@ These activate automatically based on task — no need to mention them explicitl
 3. **Check library docs** — use Context7 for any framework-specific code
 4. **Build incrementally** — show me what you built, get confirmation, then continue
 5. **Never assume** — if something is unclear about requirements, ask one focused question
+
+## When My Prompt is Vague
+
+If my request is missing key details (which file, which component,
+which endpoint, what data), don't guess — ask me ONE focused question
+before starting. Example:
+
+Me: "add authentication"
+You: "Which part — the login route, the JWT middleware,
+the React login form, or all three?"
+
+Me: "make it look better"  
+You: "Which screen or component? And what specifically —
+spacing, colors, layout, or overall style?"
+
+One question only. Then proceed once I answer.
+
+## Planning & Token Efficiency
+
+Before starting ANY task:
+
+1. State what you understood from my request in 2-3 lines
+2. List what you plan to do (max 5 bullet points)
+3. Ask ONE question if anything is unclear
+4. Wait for my confirmation before writing code
+
+If my prompt is vague, ask ONE focused question before proceeding:
+
+- "build auth" → "Which part — login route, JWT middleware, or React form?"
+- "make it look better" → "Which screen, and what — spacing, colors, or layout?"
+- "fix the bug" → "Which file and what error are you seeing?"
+
+Keep responses focused:
+
+- Don't show code for files I didn't ask about
+- Don't refactor things I didn't mention
+- Don't add features I didn't request
+- One task at a time — confirm before moving to the next

@@ -46,9 +46,25 @@ const Page = () => {
         {
             dataField: '_id', text: 'Reply Message', formatter: (_id, data) => (
                 data?.status === false ?
-                    <span className='inline-block bg-[#2C9FAF] p-[4px] rounded-[3px] text-white cursor-pointer' onClick={() => editHandleAction(_id)} title="Reply the email"><FaReplyAll /></span>
+                    <button
+                        type="button"
+                        aria-label="Reply the email"
+                        title="Reply the email"
+                        className='inline-block bg-[#2C9FAF] p-[4px] rounded-[3px] text-white cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2C9FAF] focus-visible:ring-offset-2 focus-visible:ring-offset-white'
+                        onClick={() => editHandleAction(_id)}
+                    >
+                        <FaReplyAll />
+                    </button>
                     :
-                    <span className='inline-block bg-green-700 p-[4px] rounded-[3px] text-white cursor-pointer' onClick={() => editHandleAction(_id)} title="View Details"><FaEye /></span>
+                    <button
+                        type="button"
+                        aria-label="View details"
+                        title="View Details"
+                        className='inline-block bg-green-700 p-[4px] rounded-[3px] text-white cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-700 focus-visible:ring-offset-2 focus-visible:ring-offset-white'
+                        onClick={() => editHandleAction(_id)}
+                    >
+                        <FaEye />
+                    </button>
             )
         }
     ]

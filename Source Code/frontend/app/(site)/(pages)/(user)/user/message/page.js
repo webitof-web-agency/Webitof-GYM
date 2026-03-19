@@ -104,11 +104,13 @@ export default function MedicalChat() {
             <div className="px-6 py-4 border-b bg-white">
                 <input
                     type="text"
-                    placeholder="Search chats..."
+                    name="chat-search"
+                    autoComplete="off"
+                    placeholder="Search chats, e.g. John…"
                     onChange={(e) => {
                         getUsers({ search: e.target.value })
                     }}
-                    className="w-full px-4 py-2 border rounded-lg text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-primary focus:border-[#5572fc]"
+                    className="w-full px-4 py-2 border rounded-lg text-sm text-gray-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:border-[#5572fc]"
                 />
             </div>
 
@@ -366,29 +368,35 @@ export default function MedicalChat() {
             >
                 <input
                     required
+                    name="message"
                     type="text"
-                    placeholder="Write a message..."
-                    className="flex-1 px-4 py-2 text-gray-700 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent placeholder-gray-400"
+                    autoComplete="off"
+                    placeholder="Write a message, e.g. I need help with..."
+                    aria-label="Message"
+                    className="flex-1 px-4 py-2 text-gray-700 border border-gray-300 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:border-transparent placeholder-gray-400"
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
                 />
                 <button
                     type="button"
                     onClick={() => setImageModal(!imageModal)}
-                    className="flex items-center justify-center sm:w-10 sm:h-10 sm:bg-gray-100 hover:bg-gray-200 text-[#5572fc] rounded-lg focus:outline-none"
+                    aria-label="Add image"
+                    className="flex items-center justify-center sm:w-10 sm:h-10 sm:bg-gray-100 hover:bg-gray-200 text-[#5572fc] rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5572fc] focus-visible:ring-offset-2 focus-visible:ring-offset-white"
                 >
                     <FaRegImages className="md:text-xl text-base" />
                 </button>
                 <button
                     type="button"
                     onClick={() => { setImageModal(!pdfUpload); setPdfUpload(!pdfUpload) }}
-                    className="flex items-center justify-center sm:w-10 sm:h-10 sm:bg-gray-100 hover:bg-gray-200 text-[#5572fc] rounded-lg focus:outline-none"
+                    aria-label="Attach file"
+                    className="flex items-center justify-center sm:w-10 sm:h-10 sm:bg-gray-100 hover:bg-gray-200 text-[#5572fc] rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5572fc] focus-visible:ring-offset-2 focus-visible:ring-offset-white"
                 >
                     <FiPaperclip className="md:text-xl text-base" />
                 </button>
                 <button
                     type="submit"
-                    className="flex items-center justify-center sm:w-10 sm:h-10 sm:bg-[#5572fc] sm:text-white text-[#5572fc] rounded-lg hover:bg-[#5572fc]-dark focus:outline-none"
+                    aria-label="Send message"
+                    className="flex items-center justify-center sm:w-10 sm:h-10 sm:bg-[#5572fc] sm:text-white text-[#5572fc] rounded-lg hover:bg-[#5572fc]-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5572fc] focus-visible:ring-offset-2 focus-visible:ring-offset-white"
                 >
                     <FiSend className="md:text-xl text-lg" />
                 </button>

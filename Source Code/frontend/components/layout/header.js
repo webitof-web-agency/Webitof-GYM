@@ -290,6 +290,8 @@ const Navbar = () => {
             src={setting?.logo || '/logo.png'}
             alt="logoImage"
             className="h-[47px] w-auto max-w-[220px] object-contain"
+            width={220}
+            height={47}
             onError={(event) => {
               event.currentTarget.src = '/logo.png';
             }}
@@ -303,7 +305,12 @@ const Navbar = () => {
 
           <div className="hidden items-center gap-6 text-white lg:flex">
             <div className="relative" ref={preferencesRef}>
-              <button type="button" onClick={() => setPreferencesOpen((prev) => !prev)}>
+              <button
+                type="button"
+                aria-label={i18n?.t('Language preferences') || 'Language preferences'}
+                className="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/80 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0f172a]"
+                onClick={() => setPreferencesOpen((prev) => !prev)}
+              >
                 <MdOutlineLanguage size={24} className="cursor-pointer" />
               </button>
               {preferencesOpen && renderPreferencesPanel()}
@@ -312,7 +319,8 @@ const Navbar = () => {
             {user?.role && user.role !== 'admin' && user.role !== 'trainer' && (
               <button
                 type="button"
-                className="relative cursor-pointer"
+                aria-label={i18n?.t('Cart') || 'Cart'}
+                className="relative cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/80 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0f172a]"
                 onClick={() => router.push('/cart')}
               >
                 <FiShoppingCart size={24} className="text-white" />
@@ -324,7 +332,14 @@ const Navbar = () => {
 
             {user?.role === 'user' || user?.role === 'trainer' || user?.role === 'admin' ? (
               <div className="relative" ref={userMenuRef}>
-                <button type="button" className="flex items-center" onClick={() => setUserMenuOpen((prev) => !prev)}>
+                <button
+                  type="button"
+                  aria-label={i18n?.t('User menu') || 'User menu'}
+                  aria-haspopup="menu"
+                  aria-expanded={userMenuOpen}
+                  className="flex items-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/80 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0f172a]"
+                  onClick={() => setUserMenuOpen((prev) => !prev)}
+                >
                   {user?.image ? (
                     <Image
                       className="h-[35px] w-[35px] cursor-pointer rounded-full md:h-[40px] md:w-[40px]"
@@ -356,7 +371,12 @@ const Navbar = () => {
 
           <div className="flex items-center md:gap-6 gap-3 text-white lg:hidden">
             <div className="relative" ref={preferencesRef}>
-              <button type="button" onClick={() => setPreferencesOpen((prev) => !prev)}>
+              <button
+                type="button"
+                aria-label={i18n?.t('Language preferences') || 'Language preferences'}
+                className="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/80 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0f172a]"
+                onClick={() => setPreferencesOpen((prev) => !prev)}
+              >
                 <MdOutlineLanguage size={24} className="cursor-pointer" />
               </button>
               {preferencesOpen && renderPreferencesPanel()}
@@ -365,7 +385,8 @@ const Navbar = () => {
             {user?.role && user.role !== 'admin' && user.role !== 'trainer' && (
               <button
                 type="button"
-                className="relative cursor-pointer"
+                aria-label={i18n?.t('Cart') || 'Cart'}
+                className="relative cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/80 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0f172a]"
                 onClick={() => router.push('/cart')}
               >
                 <FiShoppingCart size={24} className="text-white" />
@@ -377,7 +398,14 @@ const Navbar = () => {
 
             {user?.role === 'user' || user?.role === 'trainer' || user?.role === 'admin' ? (
               <div className="relative" ref={userMenuRef}>
-                <button type="button" className="flex items-center" onClick={() => setUserMenuOpen((prev) => !prev)}>
+                <button
+                  type="button"
+                  aria-label={i18n?.t('User menu') || 'User menu'}
+                  aria-haspopup="menu"
+                  aria-expanded={userMenuOpen}
+                  className="flex items-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/80 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0f172a]"
+                  onClick={() => setUserMenuOpen((prev) => !prev)}
+                >
                   {user?.image ? (
                     <Image
                       className="h-[30px] w-[30px] cursor-pointer rounded-full xl:h-[50px] xl:w-[50px]"
@@ -406,7 +434,14 @@ const Navbar = () => {
               </Link>
             )}
 
-            <button onClick={() => setIsOpen((prev) => !prev)} className="text-white focus:outline-none">
+            <button
+              type="button"
+              aria-label={isOpen ? i18n?.t('Close menu') || 'Close menu' : i18n?.t('Open menu') || 'Open menu'}
+              aria-expanded={isOpen}
+              aria-controls="mobile-nav"
+              onClick={() => setIsOpen((prev) => !prev)}
+              className="text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/80 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0f172a]"
+            >
               {isOpen ? <IoMdCloseCircle size={25} /> : <GiHamburgerMenu size={25} />}
             </button>
           </div>
@@ -414,7 +449,10 @@ const Navbar = () => {
       </div>
 
       {isOpen && (
-        <div className="absolute left-0 top-[79px] flex w-full flex-col space-y-4 bg-textMain px-4 pb-5 pt-10 text-[18px] font-medium text-white lg:top-[110px] xl:hidden">
+        <div
+          id="mobile-nav"
+          className="absolute left-0 top-[79px] flex w-full flex-col space-y-4 bg-textMain px-4 pb-5 pt-10 text-[18px] font-medium text-white lg:top-[110px] xl:hidden"
+        >
           {renderNavLinks(true)}
         </div>
       )}

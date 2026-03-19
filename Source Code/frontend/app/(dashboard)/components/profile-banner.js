@@ -9,27 +9,20 @@ import { useI18n } from '../../providers/i18n';
 const ProfileBanner = ({ tab, setTab, info_link, pass_link }) => {
     const i18n = useI18n()
     const path = usePathname()
-    const pathSplit = path.split('/')
-    const pathName = pathSplit[pathSplit.length - 1]
-    setTab(pathName)
     return (
         <div className=' p-4 flex justify-center '>
             <div className='mt-5 mb-5 flex gap-10'>
-                <Link href={info_link}>
-                    <div onClick={() => setTab('profile')} className='group flex cursor-pointer items-center gap-x-4'>
+                <Link href={info_link} onClick={() => setTab('profile')} className='group flex cursor-pointer items-center gap-x-4'>
                         <div className={` group-hover:bg-[#5572fc] group-hover:text-white ${tab === 'profile' && 'bg-[#5572fc] text-white'} w-fit rounded-full text-[#5572fc] p-3 shadow-[0px_0px_20px_0px_#0000001A]`}>
                             <HiOutlineIdentification size={36} />
                         </div>
                         <p className={`text-base font-medium text-content_tertiary group-hover:text-[#5572fc] ${tab === 'profile' && '!text-[#5572fc]'}`}>{i18n?.t('Basic Information')}</p>
-                    </div>
                 </Link>
-                <Link href={pass_link}>
-                    <div onClick={() => setTab('change-password')} className='group flex cursor-pointer items-center gap-x-4'>
+                <Link href={pass_link} onClick={() => setTab('change-password')} className='group flex cursor-pointer items-center gap-x-4'>
                         <div className={` group-hover:bg-[#5572fc] group-hover:text-white ${tab === 'change-password' && 'bg-[#5572fc] text-white'} w-fit rounded-full text-[#5572fc] p-3 shadow-[0px_0px_20px_0px_#0000001A]`}>
                             <RiLockPasswordLine size={36} />
                         </div>
                         <p className={`text-base font-medium text-content_tertiary group-hover:text-[#5572fc] ${tab === 'change-password' && '!text-[#5572fc]'}`}>{i18n?.t('Change Password')}</p>
-                    </div>
                 </Link>
             </div>
         </div>

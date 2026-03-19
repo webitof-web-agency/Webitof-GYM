@@ -116,7 +116,13 @@ const SignIn = () => {
                                     ]}
                                 />
                                 <div className='description !text-white mt-3 md:mt-0'>
-                                    <div onClick={() => setForget(true)} className='!text-white cursor-pointer description underline font-poppins'>{i18n?.t('Forgot Password?')}</div>
+                                    <button
+                                        type="button"
+                                        onClick={() => setForget(true)}
+                                        className='!text-white cursor-pointer description underline font-poppins'
+                                    >
+                                        {i18n?.t('Forgot Password?')}
+                                    </button>
                                 </div>
                                 <button
                                     type="submit"
@@ -234,7 +240,8 @@ const SignIn = () => {
                             <p className="dark:text-White_Colo capitalize mt-6 mb-2 md:text-sm text-xs font-poppins">
                                 {i18n?.t(`Didn't receive the code?`)} {
                                     time === 0 ?
-                                        <span
+                                        <button
+                                            type="button"
                                             className="text-[#5572fc] cursor-pointer"
                                             onClick={async () => {
                                                 const { error, msg } = await sendOtp({ email: email, action: 'forgot_password' });
@@ -242,11 +249,10 @@ const SignIn = () => {
                                                 message.success(msg)
                                                 reset()
                                                 start()
-
                                             }}
                                         >
                                             {i18n?.t("Resend")}
-                                        </span>
+                                        </button>
                                         :
                                         <span className="text-[#5572fc]">
                                             {(`resend in`)} {time} {('s')}

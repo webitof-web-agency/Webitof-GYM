@@ -32,11 +32,11 @@ const Footer = () => {
         setIsSubmitting(false);
     };
     const socialLinks = [
-        { href: data?.youtube, icon: <FaYoutube size={20} /> },
-        { href: data?.facebook, icon: <FaFacebook size={20} /> },
-        { href: `mailto:${data?.email}`, icon: <FaEnvelope size={20} /> },
-        { href: `tel:${data?.phone}`, icon: <FaPhoneAlt size={20} /> },
-        { href: data?.linkedin, icon: <FaLinkedin size={20} /> },
+        { href: data?.youtube, icon: <FaYoutube size={20} />, label: i18n?.t('YouTube') || 'YouTube' },
+        { href: data?.facebook, icon: <FaFacebook size={20} />, label: i18n?.t('Facebook') || 'Facebook' },
+        { href: `mailto:${data?.email}`, icon: <FaEnvelope size={20} />, label: i18n?.t('Email') || 'Email' },
+        { href: `tel:${data?.phone}`, icon: <FaPhoneAlt size={20} />, label: i18n?.t('Phone') || 'Phone' },
+        { href: data?.linkedin, icon: <FaLinkedin size={20} />, label: i18n?.t('LinkedIn') || 'LinkedIn' },
     ];
 
     const quickLinks = [
@@ -84,6 +84,8 @@ const Footer = () => {
                                         key={index}
                                         href={link.href || '#'}
                                         target={link.href ? '_blank' : '_self'}
+                                        rel={link.href ? 'noopener noreferrer' : undefined}
+                                        aria-label={link.label}
                                         className='text-white hover:text-[#5572fc]'
                                     >
                                         {link.icon}
@@ -156,21 +158,27 @@ const Footer = () => {
                             }
                         }}
                     >
+                        <label htmlFor="footer-email" className="sr-only">
+                            {i18n?.t('Email') || 'Email'}
+                        </label>
                         <input
+                            id="footer-email"
                             type='email'
                             name='email'
-                            placeholder={i18n?.t('Your Email')}
+                            autoComplete="email"
+                            placeholder={`${i18n?.t('Your Email') || 'Your Email'} (name@example.com)…`}
                             required
                             onInvalid={(e) => e.target.setCustomValidity(i18n?.t('Please enter a valid email address'))}
                             onInput={(e) => e.target.setCustomValidity('')}
-                            className='w-full border-b-2 border-[#D9D9D9] py-5  !bg-[#2C2C2C] focus:outline-none'
+                            className='w-full border-b-2 border-[#D9D9D9] py-5 !bg-[#2C2C2C] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5572fc] focus-visible:ring-offset-2 focus-visible:ring-offset-[#2C2C2C]'
                         />
                         <div className='mx-auto mt-6 text-center'>
                             <button
+                                type="submit"
                                 className='mx-auto rounded bg-[#5572fc] px-8 py-4 text-[18px] font-medium text-white duration-300 hover:scale-105 disabled:cursor-not-allowed disabled:opacity-70'
                                 disabled={isSubmitting}
                             >
-                                {isSubmitting ? i18n?.t('Submitting') : i18n?.t('Subscribe')}
+                                {isSubmitting ? i18n?.t('Submitting…') || 'Submitting…' : i18n?.t('Subscribe')}
                             </button>
                         </div>
                         {submitState.message && (

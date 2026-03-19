@@ -68,7 +68,13 @@ const Joining = () => {
                                     name="name"
                                     rules={[{ required: true, message: i18n?.t("Please Provide Your First Name") }]}
                                 >
-                                    <input placeholder={i18n?.t('Enter First Name')} type="text" className={`w-full px-4 py-[18px] border outline-none rounded ${findDefaultTheme?.name === "home3" && pathName=== "/" ? "bg-black border-gray-100 text-white" : " bg-white text-textMain"}`} />
+                                    <input
+                                        name="name"
+                                        autoComplete="given-name"
+                                        placeholder={i18n?.t('Enter first name, e.g. John…')}
+                                        type="text"
+                                        className={`w-full px-4 py-[18px] border rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5572fc] focus-visible:ring-offset-2 ${findDefaultTheme?.name === "home3" && pathName=== "/" ? "bg-black border-gray-100 text-white focus-visible:ring-offset-black" : " bg-white text-textMain focus-visible:ring-offset-white"}`}
+                                    />
                                 </Form.Item>
                             </div>
                             <div className=" ">
@@ -77,7 +83,13 @@ const Joining = () => {
                                     name="subject"
                                     rules={[{ required: true, message: i18n?.t("Please Provide Your Last Name") }]}
                                 >
-                                    <input placeholder={i18n?.t('Enter Last Name')} type="text" className={`w-full px-4 py-[18px] border outline-none rounded ${findDefaultTheme?.name === "home3" && pathName=== "/"  ? "bg-black border-gray-100 text-white" : " bg-white text-textMain"}`} />
+                                    <input
+                                        name="subject"
+                                        autoComplete="family-name"
+                                        placeholder={i18n?.t('Enter last name, e.g. Smith…')}
+                                        type="text"
+                                        className={`w-full px-4 py-[18px] border rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5572fc] focus-visible:ring-offset-2 ${findDefaultTheme?.name === "home3" && pathName=== "/"  ? "bg-black border-gray-100 text-white focus-visible:ring-offset-black" : " bg-white text-textMain focus-visible:ring-offset-white"}`}
+                                    />
                                 </Form.Item>
                             </div>
                         </div>
@@ -88,7 +100,13 @@ const Joining = () => {
                                     name="email"
                                     rules={[{ required: true, message: i18n?.t("Please Provide Your Email") }]}
                                 >
-                                    <input placeholder={i18n?.t('Enter Email')} type="email" className={`w-full px-4 py-[18px] border outline-none rounded ${findDefaultTheme?.name === "home3" && pathName=== "/"  ? "bg-black border-gray-100 text-white" : " bg-white text-textMain"}`} />
+                                    <input
+                                        name="email"
+                                        autoComplete="email"
+                                        placeholder={i18n?.t('Enter email, e.g. name@example.com…')}
+                                        type="email"
+                                        className={`w-full px-4 py-[18px] border rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5572fc] focus-visible:ring-offset-2 ${findDefaultTheme?.name === "home3" && pathName=== "/"  ? "bg-black border-gray-100 text-white focus-visible:ring-offset-black" : " bg-white text-textMain focus-visible:ring-offset-white"}`}
+                                    />
                                 </Form.Item>
                             </div>
                             <div className=" ">
@@ -97,7 +115,14 @@ const Joining = () => {
                                     name="phone"
                                     rules={[{ required: true, message: i18n?.t("Please Provide Your Phone Number") }]}
                                 >
-                                    <input placeholder={i18n?.t('Enter Phone Number')} type="number" className={`w-full px-4 py-[18px] border outline-none rounded ${findDefaultTheme?.name === "home3" && pathName=== "/"  ? "bg-black border-gray-100 text-white" : " bg-white text-textMain"}`} />
+                                    <input
+                                        name="phone"
+                                        autoComplete="tel"
+                                        inputMode="tel"
+                                        placeholder={i18n?.t('Enter phone number, e.g. 5551234567…')}
+                                        type="tel"
+                                        className={`w-full px-4 py-[18px] border rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5572fc] focus-visible:ring-offset-2 ${findDefaultTheme?.name === "home3" && pathName=== "/"  ? "bg-black border-gray-100 text-white focus-visible:ring-offset-black" : " bg-white text-textMain focus-visible:ring-offset-white"}`}
+                                    />
                                 </Form.Item>
                             </div>
                         </div>
@@ -107,7 +132,13 @@ const Joining = () => {
                                 name="message"
                                 rules={[{ required: true, message: i18n?.t("Please Provide Your Massage") }]}
                             >
-                                <textarea placeholder={i18n?.t('Enter Massage')} type="text" className={`w-full px-4 py-[18px] border outline-none rounded ${findDefaultTheme?.name === "home3" && pathName=== "/"  ? "bg-black border-gray-100 text-white" : " bg-white text-textMain"}`} rows={5} />
+                                <textarea
+                                    name="message"
+                                    autoComplete="off"
+                                    placeholder={i18n?.t('Enter your message, e.g. I’d like to join…')}
+                                    className={`w-full px-4 py-[18px] border rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5572fc] focus-visible:ring-offset-2 ${findDefaultTheme?.name === "home3" && pathName=== "/"  ? "bg-black border-gray-100 text-white focus-visible:ring-offset-black" : " bg-white text-textMain focus-visible:ring-offset-white"}`}
+                                    rows={5}
+                                />
                             </Form.Item>
                         </div>
 

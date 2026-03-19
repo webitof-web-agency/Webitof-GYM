@@ -780,7 +780,7 @@
  }
 
  .translate_button{
-  @apply bg-gradient-to-r from-[#5572fc] rounded-full to-orange-500 hover:from-[#d46321] hover:to-orange-600 text-white font-medium py-1 px-3  shadow-lg hover:shadow-xl transform transition-transform duration-200 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-opacity-50
+  @apply bg-gradient-to-r from-[#5572fc] rounded-full to-orange-500 hover:from-[#d46321] hover:to-orange-600 text-white font-medium py-1 px-3  shadow-lg hover:shadow-xl transform transition-transform duration-200 hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-opacity-50
  }
 
 .navlang{
@@ -952,7 +952,7 @@ text-align: center;
 
 
  .translate_button{
-  @apply bg-gradient-to-r from-[#5572fc] rounded-full to-orange-500 hover:from-[#d46321] hover:to-orange-600 text-white font-medium py-1 px-3  shadow-lg hover:shadow-xl transform transition-transform duration-200 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-opacity-50
+  @apply bg-gradient-to-r from-[#5572fc] rounded-full to-orange-500 hover:from-[#d46321] hover:to-orange-600 text-white font-medium py-1 px-3  shadow-lg hover:shadow-xl transform transition-transform duration-200 hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-opacity-50
  }
 
 @media screen and (min-width: 459px) and (max-width: 767px) {
