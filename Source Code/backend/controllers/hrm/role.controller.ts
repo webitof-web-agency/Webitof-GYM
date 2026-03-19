@@ -116,8 +116,9 @@ export const postPermissions = async (req, res) => {
         let userCheck = await User.findById(user._id, 'permission role').populate('permission', ['permissions']);
         let admin = userCheck?.role === 'admin';
         if (!admin) {
-            for (let p of body.permissions) {
-                if (!havePermission(p, user?.permission)) {
+            const allowedPermissions = userCheck?.permission?.permissions || [];
+            for (let p of body.permissions || []) {
+                if (!allowedPermissions.includes(p)) {
                     return res.status(401).send({
                         error: true,
                         msg: 'Unauthorized permissions found'

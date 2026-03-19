@@ -10,9 +10,9 @@ import { Theme } from '../models/theme.model';
 
 // ─── Admin credentials (change before running in production) ─────────────────
 const ADMIN = {
-    name:     'Admin',
-    email:    'admin@gymstick.com',
-    phone:    '0000000000',
+    name: 'Admin',
+    email: 'admin@gymstick.com',
+    phone: '0000000000',
     password: 'Admin@123',
 };
 // ─────────────────────────────────────────────────────────────────────────────
@@ -39,10 +39,10 @@ async function seed() {
 
     const admin = await User.create({
         uid,
-        name:     ADMIN.name,
-        email:    ADMIN.email,
-        phone:    ADMIN.phone,
-        role:     'admin',
+        name: ADMIN.name,
+        email: ADMIN.email,
+        phone: ADMIN.phone,
+        role: 'admin',
         password: hashedPassword,
     });
     console.log(`✓ Admin created → ${admin.email}  (uid: ${admin.uid})`);

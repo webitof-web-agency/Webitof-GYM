@@ -8,12 +8,12 @@ import { getOrDelRoleValidator, postRoleValidator } from '../../../middlewares/h
 
 const roleRoutes = Router();
 
-roleRoutes.get('/list', isAdminOrEmployee, employeePermission("roles_view"), getRoles)
-roleRoutes.post('/', isAdminOrEmployee, employeePermission("roles_create"), postRoleValidator, postRole)
-roleRoutes.get('/', isAdminOrEmployee, employeePermission("roles_view"), getOrDelRoleValidator, getRole)
-roleRoutes.delete('/', isAdminOrEmployee, employeePermission("roles_delete"), getOrDelRoleValidator, deleteRole)
+roleRoutes.get('/list', isAdminOrEmployee, employeePermission("roles_view_view"), getRoles)
+roleRoutes.post('/', isAdminOrEmployee, employeePermission("roles_view_create"), postRoleValidator, postRole)
+roleRoutes.get('/', isAdminOrEmployee, employeePermission("roles_view_view"), getOrDelRoleValidator, getRole)
+roleRoutes.delete('/', isAdminOrEmployee, employeePermission("roles_view_delete"), getOrDelRoleValidator, deleteRole)
 
-roleRoutes.post('/permissions', isAdminOrEmployee, employeePermission("roles_create"), postPermissions)
+roleRoutes.post('/permissions', isAdminOrEmployee, employeePermission("roles_view_edit"), postPermissions)
 roleRoutes.get('/permissions',  getPermissions)
 
 export default roleRoutes;
