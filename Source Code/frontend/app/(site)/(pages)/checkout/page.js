@@ -217,7 +217,9 @@ const Page = () => {
                                         </div>
                                         
                                     </div>
-                                    <button className='process-button'>{i18n?.t('Place Order')}</button>
+                                    <button type="submit" className='process-button'>
+                                        {i18n?.t('Place Order')}
+                                    </button>
                                 </div>
                             </div>
                         </Form>

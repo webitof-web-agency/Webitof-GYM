@@ -1,5 +1,5 @@
 "use client"
-import { Tabs, Form } from 'antd';
+import { Tabs } from 'antd';
 import React, { useEffect, useState } from 'react';
 import GmailEmailProvider from './gmail';
 import PageTitle from '../../components/common/page-title';
@@ -13,12 +13,6 @@ const EmailSettings = () => {
     const i18n = useI18n()
     const [settings, getSettings, { loading }] = useFetch(fetchEmailSettings)
     const [checkedValue, setCheckedValue] = useState(false);
-
-    useEffect(() => {
-        if (settings?._id) {
-            form.resetFields();
-        }
-    }, [settings])
 
     return (
         <>

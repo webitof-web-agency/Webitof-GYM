@@ -15,10 +15,38 @@ import Mollie from '@mollie/api-client';
 import Notification from "../../models/notification.model";
 import axios from "axios";
 import crypto from "crypto";
+import mongoose from "mongoose";
 
 export const postOrder = async (req, res) => {
-    try {        
+    try {
         const { body } = req;
+        console.log('postOrder request:', {
+            userId: res.locals?.user?._id,
+            method: body?.method,
+            currency: body?.currency,
+            itemsCount: Array.isArray(body?.items) ? body.items.length : 0,
+            subtotal: body?.subtotal,
+            langCode: body?.langCode,
+            discount_coupon: body?.discount_coupon
+        });
+        if (!Array.isArray(body.items) || body.items.length === 0) {
+            return res.status(400).json({
+                error: true,
+                msg: 'Order items are required'
+            });
+        }
+        if (!body.currency) {
+            return res.status(400).json({
+                error: true,
+                msg: 'Currency is required'
+            });
+        }
+        if (!body.method) {
+            return res.status(400).json({
+                error: true,
+                msg: 'Payment method is required'
+            });
+        }
         const currency = await Currency.findOne({
             code: body.currency
         });
@@ -29,8 +57,8 @@ export const postOrder = async (req, res) => {
         }
 
         let user = await User.findOne({ _id: res.locals.user._id });
-        if(user){
-            if(user?.role==='employee' || user?.role==='trainer' || user?.role==='admin'){
+        if (user) {
+            if (user?.role === 'employee' || user?.role === 'trainer' || user?.role === 'admin') {
                 return res.status(400).json({
                     error: true,
                     message: 'You are not allowed to place order'
@@ -44,14 +72,19 @@ export const postOrder = async (req, res) => {
         }
 
         let total_amount = 0;
-        const items = await Promise.all(body.items.map(async (item) => {
+        const items = await Promise.all(body.items.map(async (item, index) => {
+            if (!item?.productId || !mongoose.Types.ObjectId.isValid(item.productId)) {
+                throw new Error(`Invalid productId at index ${index}`);
+            }
             const product = await Product.findById(item.productId);
             if (!product) {
                 throw new Error(`Product not found: ${item.productId}`);
             }
 
             // Get product name based on langCode
-            const productName = product.name.get(body.langCode);
+            const productName = typeof product?.name?.get === 'function'
+                ? product.name.get(body.langCode)
+                : product.name;
             let price = product.price;
             let variant;
             if (item.variantId) {
@@ -67,14 +100,14 @@ export const postOrder = async (req, res) => {
             return {
                 productId: item.productId,
                 variantId: item.variantId,
-                price: price*currency?.rate,
+                price: price * currency?.rate,
                 quantity: item.quantity,
-                total:total*currency?.rate,
+                total: total * currency?.rate,
                 productName
             };
         }));
-        
-        
+
+
         let uid = await generateUid('O-', Product);
         let discount_amount = 0;
         if (!!body?.discount_coupon) {
@@ -82,9 +115,9 @@ export const postOrder = async (req, res) => {
                 sub_total: total_amount,
                 code: body?.discount_coupon
             }, req, res, true);
-           
+
             discount_amount = +data?.saved_money;
-            if ((+body?.subtotal) !== (+(data?.current_subtotal*currency?.rate))) {
+            if ((+body?.subtotal) !== (+(data?.current_subtotal * currency?.rate))) {
                 return res.status(404).json({
                     error: true,
                     msg: data?.msg ? data?.msg : "Wrong Input, please check price, quantity or subtotal",
@@ -93,7 +126,7 @@ export const postOrder = async (req, res) => {
                 })
             }
         } else {
-            if ((+body?.subtotal) !== (total_amount*currency?.rate)) {
+            if ((+body?.subtotal) !== (total_amount * currency?.rate)) {
                 return res.status(404).json({
                     error: true,
                     msg: "Wrong Input, please check price, quantity or subtotal"
@@ -146,6 +179,12 @@ export const postOrder = async (req, res) => {
                         msg: 'Stripe configuration not found for this user',
                     });
                 }
+                if (!stripeConfig?.config?.clientSecret) {
+                    return res.status(400).send({
+                        error: true,
+                        msg: 'Stripe configuration is missing client secret',
+                    });
+                }
                 const stripeClient = new Stripe(stripeConfig?.config?.clientSecret);
 
                 const amountInCents = Math.round(orderData.payment.amount * 100);
@@ -159,7 +198,9 @@ export const postOrder = async (req, res) => {
                         price_data: {
                             currency: body.currency,
                             product_data: {
-                                name: product.name.get(body.langCode),
+                                name: typeof product?.name?.get === 'function'
+                                    ? product.name.get(body.langCode)
+                                    : product.name,
                             },
                             unit_amount: amountInCents,
                         },
@@ -214,6 +255,12 @@ export const postOrder = async (req, res) => {
                     return res.status(400).send({
                         error: true,
                         msg: 'PayPal configuration not found for this user',
+                    });
+                }
+                if (!paypalConfig?.config?.clientId || !paypalConfig?.config?.clientSecret) {
+                    return res.status(400).send({
+                        error: true,
+                        msg: 'PayPal configuration is missing client credentials',
                     });
                 }
 
@@ -308,6 +355,12 @@ export const postOrder = async (req, res) => {
                 const store_id = sslCommerzConfig?.config?.clientId;
                 const store_passwd = sslCommerzConfig?.config?.clientSecret;
                 const is_live = sslCommerzConfig?.config?.is_live
+                if (!store_id || !store_passwd) {
+                    return res.status(400).send({
+                        error: true,
+                        msg: 'SSLCommerz configuration is missing store credentials',
+                    });
+                }
 
                 const sslcz = new SSLCommerzPayment(store_id, store_passwd, is_live);
 
@@ -369,7 +422,7 @@ export const postOrder = async (req, res) => {
         }
         if (body.method === 'razorpay') {
             try {
-                const body = req.body;                
+                const body = req.body;
                 const razorpayConfig = await PaymentMethod.findOne({ type: 'razorpay' });
                 if (!razorpayConfig) {
                     return res.status(400).json({
@@ -377,29 +430,41 @@ export const postOrder = async (req, res) => {
                         msg: 'Razorpay configuration not found for this user',
                     });
                 }
-        
+                if (!razorpayConfig?.config?.clientId || !razorpayConfig?.config?.clientSecret) {
+                    return res.status(400).json({
+                        error: true,
+                        msg: 'Razorpay configuration is missing credentials',
+                    });
+                }
+                if ((body.currency || '').toUpperCase() !== 'INR') {
+                    return res.status(400).json({
+                        error: true,
+                        msg: 'Razorpay only supports INR currency',
+                    });
+                }
                 const razorpay = new Razorpay({
                     key_id: razorpayConfig.config.clientId,
                     key_secret: razorpayConfig.config.clientSecret
-                });        
-                const amountInPaise = orderData.subTotal * 100; 
+                });
+                const frontendBaseUrl = (process.env.FRONTEND_URL || 'http://localhost:3000').replace(/\/$/, '');
+                const amountInPaise = orderData.subTotal * 100;
                 const linkData = {
                     amount: amountInPaise,
-                    currency: body.currency || 'INR',  
+                    currency: body.currency || 'INR',
                     description: "Order Payment",
                     reference_id: uid,
                     customer: {
-                        name: user.name || 'Guest',   
+                        name: user.name || 'Guest',
                         email: user.email,
-                        contact: user.phone || "+999999999999", 
+                        contact: user.phone || "+999999999999",
                     },
-                    callback_url: `${process.env.FRONTEND_URL}/payment/razorpay/success?session_id=${uid}`,
+                    callback_url: `${frontendBaseUrl}/payment/razorpay/success?session_id=${uid}`,
                     callback_method: 'get',
                 };
-        
-        
+
+
                 const link = await razorpay.paymentLink.create(linkData);
-        
+
                 const order = new Order(orderData);
                 order.payment.transaction_id = uid;
                 await order.save();
@@ -410,16 +475,17 @@ export const postOrder = async (req, res) => {
                 return res.status(200).json({
                     error: false,
                     msg: 'Order created successfully. Please complete the payment.',
-                    data: link.short_url, 
+                    data: link.short_url,
                 });
-            } catch (error) {        
+            } catch (error) {
+                console.error('Razorpay error:', error?.response?.data || error);
                 return res.status(500).json({
                     error: true,
                     msg: error.message || "Internal Server Error"
                 });
             }
         }
-        if(body.method === 'mollie') {
+        if (body.method === 'mollie') {
             try {
                 let mollieConfig = await PaymentMethod.findOne({ type: 'mollie' });
 
@@ -427,6 +493,12 @@ export const postOrder = async (req, res) => {
                     return res.status(400).send({
                         error: true,
                         msg: 'Mollie configuration not found for this user',
+                    });
+                }
+                if (!mollieConfig?.config?.clientId) {
+                    return res.status(400).send({
+                        error: true,
+                        msg: 'Mollie configuration is missing API key',
                     });
                 }
                 const formattedPrice = orderData.payment.amount.toFixed(2);
@@ -445,14 +517,14 @@ export const postOrder = async (req, res) => {
                 })
                 const order = await Order.create(
                     {
-                   ...orderData,
-                    payment: {
-                        method: 'mollie',
-                        status: 'pending',
-                        transaction_id: payment.id,
-                        amount: total_amount - discount_amount,
-                   }
-                })
+                        ...orderData,
+                        payment: {
+                            method: 'mollie',
+                            status: 'pending',
+                            transaction_id: payment.id,
+                            amount: total_amount - discount_amount,
+                        }
+                    })
                 const cart = await Cart.findOne({ user: user._id });
                 if (cart) {
                     await Cart.findOneAndDelete({ _id: cart._id });
@@ -463,8 +535,8 @@ export const postOrder = async (req, res) => {
                     msg: 'Order created successfully. Please complete the payment.',
                     data: payment.getCheckoutUrl()
                 });
-                
-            }catch (error) {
+
+            } catch (error) {
                 return res.status(500).json({
                     error: true,
                     msg: error.message || "Internal Server Error"
@@ -472,9 +544,10 @@ export const postOrder = async (req, res) => {
             }
         }
     } catch (error) {
+        console.error('postOrder error:', error?.response?.data || error);
         return res.status(500).json({
             error: true,
-            msg: error.message
+            msg: error.message || 'Internal Server Error'
         });
     }
 };
@@ -513,7 +586,7 @@ export const stripePaymentSuccess = async (req, res) => {
                 message: 'Order not found'
             });
         }
-        if(order.payment.status === 'completed'){
+        if (order.payment.status === 'completed') {
             return res.status(200).json({
                 error: false,
                 msg: 'Payment already completed',
@@ -532,17 +605,17 @@ export const stripePaymentSuccess = async (req, res) => {
             });
         }
         await order.save();
-        if(order){
+        if (order) {
             const notification = await Notification.create({
-                title: "New Product Order Placed", 
+                title: "New Product Order Placed",
                 message: `A new product order has been placed.`,
                 isRead: false,
                 data: {
                     type: "order",
                     orderId: order._id
                 }
-           });
-           res.locals.io.emit('newNotification', { notification: notification });
+            });
+            res.locals.io.emit('newNotification', { notification: notification });
         }
         return res.status(200).json({
             error: false,
@@ -616,7 +689,7 @@ export const paypalPaymentSuccess = async (req, res) => {
                 message: 'Order not found'
             });
         }
-        if(order.payment.status === 'completed'){
+        if (order.payment.status === 'completed') {
             return res.status(200).json({
                 error: false,
                 msg: 'Payment already completed',
@@ -1156,7 +1229,7 @@ export const sslCommerzPaymentSuccess = async (req, res) => {
                 msg: 'Order not found for this payment',
             });
         }
-        if(order.payment.status === 'completed'){
+        if (order.payment.status === 'completed') {
             return res.status(200).json({
                 error: false,
                 msg: 'Payment already completed',
@@ -1177,17 +1250,17 @@ export const sslCommerzPaymentSuccess = async (req, res) => {
         }
 
         await order.save();
-        if(order){
+        if (order) {
             const notification = await Notification.create({
-                title: "New Product Order Placed", 
+                title: "New Product Order Placed",
                 message: `A new product order has been placed.`,
                 isRead: false,
                 data: {
                     type: "order",
                     orderId: order._id
                 }
-           });
-           res.locals.io.emit('newNotification', { notification: notification });
+            });
+            res.locals.io.emit('newNotification', { notification: notification });
         }
         const redirect_url = `${process.env.FRONTEND_URL}/payment/sslcommerz/success?session_id=${order.uid}`
         return res.redirect(redirect_url);
@@ -1231,7 +1304,7 @@ export const razorpayPaymentSuccess = async (req, res) => {
                 msg: 'Order not found for this payment'
             });
         }
-        if(order.payment.status === 'completed'){
+        if (order.payment.status === 'completed') {
             return res.status(400).send({
                 error: true,
                 msg: 'Payment already completed'
@@ -1280,7 +1353,7 @@ export const razorpayPaymentSuccess = async (req, res) => {
         if (paymentIntent.status !== 'captured') {
             return res.status(400).send(`Invalid payment status`);
         }
-        if(order.payment.status === 'completed'){
+        if (order.payment.status === 'completed') {
             return res.status(200).json({
                 error: false,
                 msg: 'Payment already completed',
@@ -1290,17 +1363,17 @@ export const razorpayPaymentSuccess = async (req, res) => {
         order.payment.status = 'completed';
         order.status = 'accepted';
         await order.save();
-        if(order){
+        if (order) {
             const notification = await Notification.create({
-                title: "New Product Order Placed", 
+                title: "New Product Order Placed",
                 message: `A new product order has been placed.`,
                 isRead: false,
                 data: {
                     type: "order",
                     orderId: order._id
                 }
-           });
-           res.locals.io.emit('newNotification', { notification: notification });
+            });
+            res.locals.io.emit('newNotification', { notification: notification });
         }
         return res.status(200).json({
             error: false,
@@ -1332,7 +1405,7 @@ export const molliePaymentSuccess = async (req, res) => {
                 message: 'Order not found'
             });
         }
-        if(order.payment.status === 'completed'){
+        if (order.payment.status === 'completed') {
             return res.status(400).send({
                 error: true,
                 msg: 'Payment already completed'
@@ -1359,17 +1432,17 @@ export const molliePaymentSuccess = async (req, res) => {
         order.payment.status = 'completed';
         order.status = 'accepted';
         await order.save();
-        if(order){
+        if (order) {
             const notification = await Notification.create({
-                title: "New Product Order Placed", 
+                title: "New Product Order Placed",
                 message: `A new product order has been placed.`,
                 isRead: false,
                 data: {
                     type: "order",
                     orderId: order._id
                 }
-           });
-           res.locals.io.emit('newNotification', { notification: notification });
+            });
+            res.locals.io.emit('newNotification', { notification: notification });
         }
         return res.status(200).json({
             error: false,

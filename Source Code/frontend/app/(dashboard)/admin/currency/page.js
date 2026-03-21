@@ -14,12 +14,14 @@ import {
 } from '../../../helpers/backend';
 import FormSelect from '../../../../components/form/select';
 import dayjs from 'dayjs';
+import { useCurrency } from '../../../contexts/site';
 
 
 const Currency = () => {
     const [form] = Form.useForm();
     const i18n = useI18n();
     const [data, getData, { loading }] = useFetch(fetchCurrency);
+    const { changeCurrency } = useCurrency();
     
     const [open, setOpen] = useState(false);
     const [isEdit, setIsEdit] = useState(false);
@@ -47,7 +49,13 @@ const Currency = () => {
                         await useActionConfirm(
                             postCurrency,
                             { _id: d._id, default: e },
-                            () => getData(),
+                            () => {
+                                if (e === true) {
+                                    localStorage.removeItem('currency');
+                                    changeCurrency(d?.code);
+                                }
+                                getData();
+                            },
                             i18n?.t('Are you sure you want to change default status?'),
                             'Yes, Change'
                         );
@@ -65,7 +73,6 @@ const Currency = () => {
                 data={data}
                 loading={loading}
                 onReload={getData}
-                pagination
                 action={
                     <Button
                         onClick={() => {

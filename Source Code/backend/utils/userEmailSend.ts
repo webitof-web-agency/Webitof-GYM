@@ -19,7 +19,7 @@ export const sendUserEmailGeneral = async (data) => {
             },
         });
         // @ts-ignore
-        from_email = settings?.sendgrid?.sender_email; 
+        from_email = settings?.sendgrid?.sender_email;
 
         // @ts-ignore
     } else if (settings?.default === 'gmail') {
@@ -36,6 +36,24 @@ export const sendUserEmailGeneral = async (data) => {
         });
         // @ts-ignore
         from_email = settings?.gmail?.auth_email
+    }
+    // @ts-ignore
+    else if (settings?.default === 'other') {
+        transporter = nodemailer.createTransport({
+            host: settings?.other?.host,
+            port: Number(settings?.other?.port || 587),
+            secure: false,
+            auth: {
+                user: settings?.other?.address,
+                pass: settings?.other?.password,
+            },
+        });
+        // @ts-ignore
+        from_email = settings?.other?.address;
+    }
+
+    if (!transporter || !from_email) {
+        throw new Error('Mail settings are not configured properly.');
     }
 
     // config for end user

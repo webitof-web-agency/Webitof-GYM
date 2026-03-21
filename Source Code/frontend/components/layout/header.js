@@ -13,9 +13,11 @@ import { useUser } from '../../app/contexts/user';
 import { useI18n } from '../../app/providers/i18n';
 import { useCurrency } from '../../app/contexts/site';
 import { useEnv } from '../../app/contexts/envContext';
+import Cookies from 'js-cookie';
+import { notifySuccess } from '../../app/helpers/notify';
 
 const Navbar = () => {
-  const { getUser, user, setActive } = useUser();
+  const { getUser, user, setActive, setUser } = useUser();
   const i18n = useI18n();
   const router = useRouter();
   const setting = useEnv();
@@ -29,8 +31,10 @@ const Navbar = () => {
   const [userMenuOpen, setUserMenuOpen] = useState(false);
 
   const moreRef = useRef(null);
-  const preferencesRef = useRef(null);
-  const userMenuRef = useRef(null);
+  const preferencesRefDesktop = useRef(null);
+  const preferencesRefMobile = useRef(null);
+  const userMenuRefDesktop = useRef(null);
+  const userMenuRefMobile = useRef(null);
 
   const links = useMemo(
     () => [
@@ -84,10 +88,17 @@ const Navbar = () => {
       if (moreRef.current && !moreRef.current.contains(event.target)) {
         setMoreOpen(false);
       }
-      if (preferencesRef.current && !preferencesRef.current.contains(event.target)) {
+      const clickedInsidePreferences =
+        preferencesRefDesktop.current?.contains(event.target) ||
+        preferencesRefMobile.current?.contains(event.target);
+      const clickedInsideUserMenu =
+        userMenuRefDesktop.current?.contains(event.target) ||
+        userMenuRefMobile.current?.contains(event.target);
+
+      if (!clickedInsidePreferences) {
         setPreferencesOpen(false);
       }
-      if (userMenuRef.current && !userMenuRef.current.contains(event.target)) {
+      if (!clickedInsideUserMenu) {
         setUserMenuOpen(false);
       }
     };
@@ -115,11 +126,21 @@ const Navbar = () => {
   };
 
   const handleLogout = async () => {
-    localStorage.removeItem('token');
+    try {
+      localStorage.removeItem('token');
+      sessionStorage.removeItem('token');
+      Cookies.remove('token');
+      Cookies.remove('auth');
+      Cookies.remove('access_token');
+    } catch (error) {
+      console.log(error);
+    }
+    setUser({});
+    notifySuccess('Sign out successfully');
     await getUser();
     setActive('Sign Out');
     setUserMenuOpen(false);
-    router.push('/signin');
+    router.replace('/signin');
   };
 
   const handleLinkClick = (path) => {
@@ -304,7 +325,7 @@ const Navbar = () => {
           </div>
 
           <div className="hidden items-center gap-6 text-white lg:flex">
-            <div className="relative" ref={preferencesRef}>
+            <div className="relative" ref={preferencesRefDesktop}>
               <button
                 type="button"
                 aria-label={i18n?.t('Language preferences') || 'Language preferences'}
@@ -331,7 +352,7 @@ const Navbar = () => {
             )}
 
             {user?.role === 'user' || user?.role === 'trainer' || user?.role === 'admin' ? (
-              <div className="relative" ref={userMenuRef}>
+              <div className="relative" ref={userMenuRefDesktop}>
                 <button
                   type="button"
                   aria-label={i18n?.t('User menu') || 'User menu'}
@@ -370,7 +391,7 @@ const Navbar = () => {
           </div>
 
           <div className="flex items-center md:gap-6 gap-3 text-white lg:hidden">
-            <div className="relative" ref={preferencesRef}>
+            <div className="relative" ref={preferencesRefMobile}>
               <button
                 type="button"
                 aria-label={i18n?.t('Language preferences') || 'Language preferences'}
@@ -397,7 +418,7 @@ const Navbar = () => {
             )}
 
             {user?.role === 'user' || user?.role === 'trainer' || user?.role === 'admin' ? (
-              <div className="relative" ref={userMenuRef}>
+              <div className="relative" ref={userMenuRefMobile}>
                 <button
                   type="button"
                   aria-label={i18n?.t('User menu') || 'User menu'}
