@@ -8,7 +8,7 @@ import { useI18n } from '../../app/providers/i18n';
 const PhoneNumberInput = ({ name, label, required = false, initialValue = '', rules = [], dependencies = [], isEmail, readOnly, onChange, placeholder }) => {
     const i18n = useI18n()
     let initRules = [
-        { required: required, message: `Please provide ${label?.toLowerCase() || 'a value'}` },
+        { required: required, message: `Please provide ${typeof label === 'string' ? label.toLowerCase() : 'a valid phone number'}` },
         () => ({
             validator(_, value) {
                 if (value && !isValidPhoneNumber(value)) {

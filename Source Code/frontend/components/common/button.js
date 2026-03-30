@@ -29,8 +29,7 @@ const Button = ({
     <button
       type={type}
       onClick={handleClick}
-      className={`border-2 border-[#5572fc]  text-textMain !font-poppins md:px-4 h-fit py-[14px] px-4 whitespace-pre rounded transition-colors !font-medium duration-300 ease-in-out sm:text-base capitalize text-sm 
-        ${isLoading ? 'bg-gray-400 cursor-not-allowed' : 'hover:bg-[#5572fc] hover:text-white active:scale-[0.98]'} ${pathName === 'home3' && pathname==="/" ? 'hover:bg-[#5572fc] text-white' : ''} ${className}`}
+      className={`inline-flex items-center justify-center border-2 whitespace-pre transition-all duration-300 ease-in-out md:px-6 py-[10px] px-5 sm:text-[14px] text-[14px] font-semibold rounded-xl h-fit active:scale-[0.98] ${isLoading ? 'bg-gray-300 border-gray-300 text-gray-500 cursor-not-allowed shadow-none' : 'bg-[#5572fc] border-[#5572fc] text-white hover:bg-[#4660e5] hover:border-[#4660e5] hover:shadow-lg hover:shadow-[#5572fc]/25 shadow-md shadow-[#5572fc]/10'} ${pathName === 'home3' && pathname==="/" ? 'brightness-110' : ''} ${className}`}
       disabled={isLoading}
       {...props}
     >

@@ -3,272 +3,336 @@ import dynamic from 'next/dynamic';
 import { useI18n } from '../../providers/i18n';
 import Image from 'next/image';
 import Link from 'next/link';
-import { FaArrowRightLong } from 'react-icons/fa6';
 import { fetchAdminDashboardData, fetchUser } from '../../helpers/backend';
 import { useFetch } from '../../helpers/hooks';
-import { FiUsers } from 'react-icons/fi';
-import { Card } from 'antd';
+import { FiUsers, FiShoppingCart, FiArrowRight, FiTrendingUp, FiBox, FiEye } from 'react-icons/fi';
 import { TbBellRingingFilled } from "react-icons/tb";
 import { BsCartPlusFill } from "react-icons/bs";
 import Table from '../components/form/table';
 import { columnFormatter, getStatusClass } from '../../helpers/utils';
 import { useRouter } from 'next/navigation';
-import { FaUsers } from "react-icons/fa";
+import { FaUsers, FaDumbbell } from "react-icons/fa";
 import { TbUsersGroup } from "react-icons/tb";
 import { LiaUsersSolid } from "react-icons/lia";
 import dayjs from 'dayjs';
 
 const MonthlyEarningsChart = dynamic(() => import('../components/common/adminChart'), {
     ssr: false,
-    loading: () => <div className="h-[400px] animate-pulse rounded bg-gray-100" />,
+    loading: () => <div className="h-[300px] animate-pulse rounded-xl bg-slate-100" />,
 });
 
 const DonutChart = dynamic(() => import('../components/form/pieChartComponent'), {
     ssr: false,
-    loading: () => <div className="h-[400px] animate-pulse rounded bg-gray-100" />,
+    loading: () => <div className="h-[300px] animate-pulse rounded-xl bg-slate-100" />,
 });
 
-const StatCard = ({ title, value, icon: Icon, className = '' }) => (
-    <Card className=' bg-white p-4 !rounded-sm'>
-        <div className='flex items-center justify-between'>
+// ── Stat Card ────────────────────────────────────────────────────────────────
+const StatCard = ({ title, value, icon: Icon, gradient, accent }) => (
+    <div className={`relative overflow-hidden bg-white rounded-xl border border-slate-100/80 shadow-sm p-5 group hover:shadow-md transition-all`}>
+        <div className={`absolute inset-0 opacity-[0.03] ${gradient}`} />
+        <div className="flex items-start justify-between">
             <div>
-                <p className='text-sm text-gray-500'>{title}</p>
-                <p className='mt-2 text-2xl font-bold'>{value ?? 0}</p>
+                <p className="text-[11px] font-bold text-gray-400 uppercase tracking-widest mb-2">{title}</p>
+                <p className="text-3xl font-extrabold text-gray-800 leading-none">{(value ?? 0).toLocaleString()}</p>
             </div>
-            <div className={`rounded-full p-3 ${className || 'bg-blue-500'}`}>
-                <Icon className='h-6 w-6 text-white' />
+            <div className={`w-11 h-11 rounded-xl flex items-center justify-center shrink-0 ${accent}`}>
+                <Icon className="h-5 w-5 text-white" />
             </div>
         </div>
-    </Card>
+        <div className={`mt-4 h-1 rounded-full opacity-20 ${gradient}`} />
+    </div>
 );
+
 const page = () => {
-    const [user] = useFetch(fetchUser)
-    const router = useRouter()
+    const [user] = useFetch(fetchUser);
+    const router = useRouter();
     const [data] = useFetch(fetchAdminDashboardData);
     const i18n = useI18n();
 
+    const userInitials = user?.name?.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2) || 'A';
+
+    const statCards = [
+        { title: i18n?.t('Total Users'), value: data?.totalUsers, icon: FiUsers, gradient: 'bg-blue-500', accent: 'bg-blue-500' },
+        { title: i18n?.t('Total Trainers'), value: data?.totalTrainers, icon: FaDumbbell, gradient: 'bg-emerald-500', accent: 'bg-emerald-500' },
+        { title: i18n?.t('Total Employees'), value: data?.totalEmployee, icon: LiaUsersSolid, gradient: 'bg-amber-500', accent: 'bg-amber-500' },
+        { title: i18n?.t('Total Groups'), value: data?.totalGroups, icon: TbUsersGroup, gradient: 'bg-purple-500', accent: 'bg-purple-500' },
+        { title: i18n?.t('Total Orders'), value: data?.totalOrders, icon: BsCartPlusFill, gradient: 'bg-[#5572fc]', accent: 'bg-[#5572fc]' },
+        { title: i18n?.t('Active Subscriptions'), value: data?.totalPaidSubscription, icon: TbBellRingingFilled, gradient: 'bg-lime-500', accent: 'bg-lime-500' },
+    ];
+
     const columns = [
         {
-            text: "Order Id",
+            text: "Order ID",
             dataField: "uid",
-            formatter: (_, d) => <span>{d?.uid}</span>,
+            formatter: (_, d) => (
+                <span className="font-mono text-[11px] font-bold text-[#5572fc] bg-[#5572fc]/5 px-2 py-1 rounded">
+                    #{d?.uid}
+                </span>
+            ),
         },
         {
             text: "Date",
             dataField: "date",
-            formatter: (_, d) => <span>{dayjs(d?.createdAt).format('MMM DD , YYYY')}</span>,
+            formatter: (_, d) => (
+                <span className="text-[11px] text-gray-500 font-medium">
+                    {dayjs(d?.createdAt).format('DD MMM YYYY')}
+                </span>
+            ),
         },
         {
             text: "Total",
             dataField: "total",
-            formatter: (_, d) => <span>{d?.subTotal}</span>,
+            formatter: (_, d) => (
+                <span className="font-bold text-emerald-600 text-sm font-mono">
+                    {d?.subTotal}
+                </span>
+            ),
         },
         {
             text: "Payment Status",
             dataField: "status",
-            formatter: (_, d) => <span className={`${getStatusClass(d?.payment?.status)}`}>{d?.payment?.status}</span>,
+            formatter: (_, d) => (
+                <span className={`text-[10px] font-bold uppercase px-2.5 py-1 rounded border ${getStatusClass(d?.payment?.status)}`}>
+                    {d?.payment?.status}
+                </span>
+            ),
         },
         {
-            text: "Payment Method",
+            text: "Method",
             dataField: "event",
-            formatter: (_, d) => (d?.payment?.method),
+            formatter: (_, d) => (
+                <span className="text-[11px] text-gray-600 font-semibold capitalize">
+                    {d?.payment?.method}
+                </span>
+            ),
         },
     ];
+
     return (
-        <div>
-            <div className='flex 2xl:flex-row flex-col gap-3'>
-                <div className='w-full rounded-sm bg-white 2xl:w-2/5'>
-                    <div>
-                        <div className='relative flex h-[200px] justify-between rounded bg-[#5572fc] bg-opacity-10 p-4'>
-                            <div className='flex flex-col gap-3'>
-                                <h5 className='text-base font-bold text-[#5572fc]'>Welcome Back !</h5>
-                                <p className='text-opacity-1 text-sm text-[#5572fc]'>
-                                    Gymstick Dashboard
-                                </p>
-                            </div>
-                            <Image
-                                alt='admin'
-                                src='/admin_profile.png'
-                                className='absolute bottom-0 right-0 h-[180px] w-[400px] object-cover'
-                                width={400}
-                                height={200}
-                            />
+        <div className="max-w-[1600px] mx-auto space-y-5 animate-fade-in pb-10">
+
+            {/* ── Top Row: Welcome Card + Stats ─────────────────────────── */}
+            <div className="flex 2xl:flex-row flex-col gap-5">
+
+                {/* Welcome Card */}
+                <div className="2xl:w-[380px] w-full shrink-0 bg-white rounded-xl border border-slate-100/80 shadow-sm overflow-hidden">
+                    {/* Hero Banner */}
+                    <div className="relative h-36 bg-gradient-to-br from-[#5572fc] to-[#7c93ff] overflow-hidden">
+                        <div className="absolute inset-0 opacity-10" style={{ backgroundImage: 'radial-gradient(circle at 20% 50%, white 1px, transparent 1px)', backgroundSize: '22px 22px' }} />
+                        <div className="absolute top-5 left-5">
+                            <p className="text-white/70 text-[11px] font-bold tracking-widest uppercase">Admin Portal</p>
+                            <h2 className="text-white text-xl font-extrabold mt-1 leading-tight">Welcome Back! 👋</h2>
+                            <p className="text-white/80 text-[12px] font-medium mt-1">GymStick Dashboard</p>
                         </div>
-                        <div className='flex gap-[50px] p-4'>
-                            <div className='w-1/3'>
-                                <Image
-                                    src={user?.image}
-                                    alt='user'
-                                    width={50}
-                                    height={50}
-                                    className='mt-[-50px] h-[50px] w-[50px] rounded-full object-cover'
-                                />
-                                <div className='mt-2 flex flex-col gap-1'>
-                                    <p className='text-sm font-bold text-textMain'>{user?.name}</p>
-                                    <p className='text-xs text-textBody capitalize'>{user?.role}</p>
+                        <Image
+                            alt="admin banner"
+                            src="/admin_profile.png"
+                            className="absolute bottom-0 right-0 h-[130px] w-[200px] object-cover opacity-90"
+                            width={200}
+                            height={130}
+                        />
+                    </div>
+
+                    {/* Profile Area */}
+                    <div className="px-5 pt-4 pb-5">
+                        <div className="flex items-center gap-4">
+                            <div className="relative -mt-10">
+                                {user?.image ? (
+                                    <Image src={user?.image} alt="admin avatar" width={56} height={56}
+                                        className="w-14 h-14 rounded-xl border-4 border-white shadow-md object-cover" />
+                                ) : (
+                                    <div className="w-14 h-14 rounded-xl border-4 border-white shadow-md bg-gradient-to-br from-[#5572fc] to-[#7c93ff] flex items-center justify-center text-white text-lg font-black">
+                                        {userInitials}
+                                    </div>
+                                )}
+                            </div>
+                            <div className="flex-1 pt-1">
+                                <p className="text-[14px] font-extrabold text-gray-800 leading-tight">{user?.name}</p>
+                                <p className="text-[10px] text-gray-400 font-semibold uppercase tracking-widest capitalize">{user?.role}</p>
+                            </div>
+                            <Link
+                                href="/admin/profile"
+                                className="flex items-center gap-1.5 px-3 py-2 rounded-lg bg-[#5572fc] text-white text-[11px] font-bold hover:bg-[#4461eb] transition-colors shadow-md shadow-[#5572fc]/25 shrink-0"
+                            >
+                                Profile <FiArrowRight size={12} />
+                            </Link>
+                        </div>
+
+                        {/* Quick stat row */}
+                        <div className="grid grid-cols-3 gap-2 mt-5 pt-4 border-t border-slate-100">
+                            {[
+                                { label: 'Members', value: data?.totalUsers ?? 0 },
+                                { label: 'Orders', value: data?.totalOrders ?? 0 },
+                                { label: 'Trainers', value: data?.totalTrainers ?? 0 },
+                            ].map(({ label, value }) => (
+                                <div key={label} className="text-center">
+                                    <p className="text-base font-extrabold text-gray-800">{value.toLocaleString()}</p>
+                                    <p className="text-[10px] text-gray-400 font-semibold">{label}</p>
                                 </div>
-                            </div>
-                            <div className='flex w-2/3 flex-col justify-end gap-2'>
-                                <Link
-                                    href='/admin/profile'
-                                    className='flex w-fit cursor-pointer items-center gap-2 rounded bg-[#5572fc] px-[8px] py-[4px] text-xs text-white'
-                                >
-                                    View Profile <FaArrowRightLong />
-                                </Link>
-                            </div>
+                            ))}
                         </div>
                     </div>
                 </div>
-                <div className='grid w-full xl:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-2 2xl:w-3/5'>
-                    <StatCard
-                        title={i18n?.t('Total Users')}
-                        value={data?.totalUsers}
-                        icon={FiUsers}
-                        className='bg-blue-500 text-white'
-                    />
-                    <StatCard
-                        title={i18n?.t('Total Trainers')}
-                        value={data?.totalTrainers}
-                        icon={FaUsers}
-                        className='bg-green-500 text-white'
-                    />
-                    <StatCard
-                        title={i18n?.t('Total Employees')}
-                        value={data?.totalEmployee}
-                        icon={LiaUsersSolid}
-                        className='bg-amber-500 text-white'
-                    />
-                    <StatCard
-                        title={i18n?.t('Total Groups')}
-                        value={data?.totalGroups}
-                        icon={TbUsersGroup}
-                        className='bg-purple-500 text-white'
-                    />
 
-                    <StatCard
-                        title={i18n?.t('Total Orders')}
-                        value={data?.totalOrders}
-                        icon={BsCartPlusFill}
-                        className='bg-[#5572fc] text-white'
-                    />
-                    <StatCard
-                        title={i18n?.t('Total Active Subscriptions')}
-                        value={data?.totalPaidSubscription}
-                        icon={TbBellRingingFilled}
-                        className='bg-lime-500 text-white'
-                    />
+                {/* Stat Cards Grid */}
+                <div className="grid w-full xl:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-4">
+                    {statCards.map((card) => (
+                        <StatCard key={card.title} {...card} />
+                    ))}
                 </div>
             </div>
-            <div className='flex xl:flex-row flex-col gap-3'>
-                <div className='mt-3 2xl:w-3/5 xl:w-1/2 bg-white p-4'>
+
+            {/* ── Charts Row ────────────────────────────────────────────── */}
+            <div className="flex xl:flex-row flex-col gap-5">
+                <div className="xl:flex-[3] bg-white rounded-xl border border-slate-100/80 shadow-sm p-5">
+                    <div className="flex items-center gap-2 mb-4">
+                        <div className="w-7 h-7 rounded-lg bg-[#5572fc]/10 text-[#5572fc] flex items-center justify-center">
+                            <FiTrendingUp size={15} />
+                        </div>
+                        <h3 className="text-sm font-extrabold text-gray-800">Monthly Revenue</h3>
+                    </div>
                     <MonthlyEarningsChart data={data?.monthlyEarnings} />
                 </div>
 
-                <div className='mt-3 2xl:w-2/5 xl:w-1/2 bg-white p-4'>
-                    <h3 className='mb-8 text-base font-bold text-textMain'>Sales Analytics</h3>
+                <div className="xl:flex-[2] bg-white rounded-xl border border-slate-100/80 shadow-sm p-5">
+                    <div className="flex items-center gap-2 mb-4">
+                        <div className="w-7 h-7 rounded-lg bg-purple-50 text-purple-600 flex items-center justify-center">
+                            <FiShoppingCart size={15} />
+                        </div>
+                        <h3 className="text-sm font-extrabold text-gray-800">Sales Analytics</h3>
+                    </div>
                     <DonutChart data={data?.salesData} />
                 </div>
             </div>
-            <div className='my-3 grid 2xl:grid-cols-3 xl:grid-cols-2 grid-cols-1 gap-3'>
-                <div className='w-full bg-white p-4 '>
-                    <h3 className='mb-8 text-base font-bold text-textMain'>Top Selling Products</h3>
-                    <div className='flex flex-col gap-3  overflow-auto custom-scroll'>
-                        {
-                            data?.topProducts?.map((product, index) => (
-                                <div key={product._id} className='flex items-center justify-between  rounded border p-3'>
-                                    <div className='flex items-center gap-2'>
-                                        <Image
-                                            alt='Image'
-                                            src={product?.thumbnail_image}
-                                            className='h-[50px] w-[50px] rounded'
-                                            height={50}
-                                            width={50}
-                                        />
-                                        <div className='flex flex-col gap-3'>
-                                            <Link href={`/admin/product/view/${product?._id}`} className='text-sm font-bold text-textMain hover:underline line-clamp-1'>{columnFormatter(product?.name)}</Link>
-                                            <div className='flex items-center gap-3'>
-                                                <p className='text-opacity-1 text-xs text-textBody'>${product?.price}</p>
+
+            {/* ── Quick Lists Row ───────────────────────────────────────── */}
+            <div className="grid 2xl:grid-cols-3 xl:grid-cols-2 grid-cols-1 gap-5">
+
+                {/* Top Products */}
+                <div className="bg-white rounded-xl border border-slate-100/80 shadow-sm overflow-hidden">
+                    <div className="px-5 py-4 border-b border-slate-100 flex items-center gap-2 bg-slate-50/50">
+                        <div className="w-7 h-7 rounded-lg bg-orange-50 text-orange-500 flex items-center justify-center shrink-0">
+                            <FiBox size={14} />
+                        </div>
+                        <h3 className="text-[13px] font-extrabold text-gray-800">Top Selling Products</h3>
+                    </div>
+                    <div className="divide-y divide-slate-50">
+                        {data?.topProducts?.map((product, index) => (
+                            <div key={product._id} className="flex items-center gap-3 px-5 py-3.5 hover:bg-slate-50/50 transition-colors">
+                                <div className="w-10 h-10 rounded-lg overflow-hidden border border-slate-100 shrink-0">
+                                    <Image alt="product" src={product?.thumbnail_image} className="object-cover w-full h-full" height={40} width={40} />
+                                </div>
+                                <div className="flex-1 min-w-0">
+                                    <Link href={`/admin/product/view/${product?._id}`} className="text-[12px] font-bold text-gray-800 hover:text-[#5572fc] transition-colors line-clamp-1">
+                                        {columnFormatter(product?.name)}
+                                    </Link>
+                                    <p className="text-[11px] text-emerald-600 font-bold">${product?.price}</p>
+                                </div>
+                                <div className="text-right shrink-0">
+                                    <p className="text-[13px] font-extrabold text-gray-800">{product?.totalSold}</p>
+                                    <p className="text-[10px] text-gray-400 font-medium">sold</p>
+                                </div>
+                            </div>
+                        ))}
+                        {!data?.topProducts?.length && (
+                            <div className="px-5 py-8 text-center text-gray-400 text-xs font-medium">No data yet</div>
+                        )}
+                    </div>
+                </div>
+
+                {/* Top Trainers */}
+                <div className="bg-white rounded-xl border border-slate-100/80 shadow-sm overflow-hidden">
+                    <div className="px-5 py-4 border-b border-slate-100 flex items-center gap-2 bg-slate-50/50">
+                        <div className="w-7 h-7 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0">
+                            <FaDumbbell size={13} />
+                        </div>
+                        <h3 className="text-[13px] font-extrabold text-gray-800">Top Trainers</h3>
+                    </div>
+                    <div className="divide-y divide-slate-50">
+                        {data?.topTrainers?.map((trainer, index) => {
+                            const trainerInitials = trainer?.name?.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
+                            return (
+                                <div key={trainer._id} className="flex items-center gap-3 px-5 py-3.5 hover:bg-slate-50/50 transition-colors">
+                                    <div className="w-10 h-10 rounded-xl overflow-hidden shrink-0">
+                                        {trainer?.image ? (
+                                            <Image src={trainer?.image} alt="trainer" className="object-cover w-full h-full" height={40} width={40} />
+                                        ) : (
+                                            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-400 to-emerald-600 flex items-center justify-center text-white text-xs font-black">
+                                                {trainerInitials}
                                             </div>
-                                        </div>
+                                        )}
                                     </div>
-                                    <div className="flex gap-3 items-center">
-                                        <div className='flex flex-col gap-3'>
-                                            <p className='text-opacity-1 text-xs text-textBody'>Sales</p>
-                                            <p className=' text-sm font-bold text-textBody'>{product?.totalSold}</p>
-                                        </div>
+                                    <div className="flex-1 min-w-0">
+                                        <p className="text-[12px] font-bold text-gray-800 line-clamp-1">{trainer?.name}</p>
+                                        <p className="text-[10px] text-emerald-600 font-bold uppercase tracking-wide capitalize">{trainer?.role}</p>
                                     </div>
-                                </div>
-                            ))
-                        }
-
-
-                    </div>
-                </div>
-                <div className='w-full bg-white p-4 '>
-                    <h3 className='mb-8 text-base font-bold text-textMain'>Top Trainers</h3>
-                    <div className='flex flex-col gap-3  overflow-auto custom-scroll'>
-                        {
-                            data?.topTrainers?.map((trainer, index) => (
-                                <div key={trainer._id} className='flex items-center justify-between rounded border p-3'>
-                                    <div className='flex items-center gap-2'>
-                                        <Image
-                                            src={trainer?.image}
-                                            alt='Image'
-                                            className='h-[50px] w-[50px] rounded-full'
-                                            height={50}
-                                            width={50}
-                                        />
-                                        <div className='flex flex-col gap-1'>
-                                            <p className='text-sm font-bold text-textMain'>{trainer?.name}</p>
-                                            <p className='text-opacity-1 text-xs text-textBody capitalize'>{trainer?.role}</p>
-                                        </div>
-                                    </div>
-                                    <Link href={`/admin/trainers`} className='flex w-fit cursor-pointer items-center gap-2 rounded bg-[#5572fc] px-[8px] py-[4px] text-xs text-white'>
-                                        View
+                                    <Link href="/admin/trainers"
+                                        className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-[10px] font-bold bg-[#5572fc]/5 text-[#5572fc] hover:bg-[#5572fc] hover:text-white transition-all shrink-0">
+                                        <FiEye size={11} /> View
                                     </Link>
                                 </div>
-                            ))
-                        }
-
-
+                            );
+                        })}
+                        {!data?.topTrainers?.length && (
+                            <div className="px-5 py-8 text-center text-gray-400 text-xs font-medium">No trainers yet</div>
+                        )}
                     </div>
                 </div>
-                <div className='w-full bg-white p-4 '>
-                    <h3 className='mb-8 text-base font-bold text-textMain'>Active Members</h3>
-                    <div className='flex flex-col gap-3  overflow-auto custom-scroll'>
-                        {
-                            data?.activeMembers?.map((member, index) => (
-                                <div className='flex items-center justify-between rounded border p-3'>
-                                    <div className='flex items-center gap-2'>
-                                        <Image
-                                            src={member?.image}
-                                            alt='Image'
-                                            className='h-[50px] w-[50px] rounded-full'
-                                            height={50}
-                                            width={50}
-                                        />
-                                        <div className='flex flex-col gap-1'>
-                                            <p className='text-sm font-bold text-textMain'>{member?.name}</p>
-                                            <p className='text-opacity-1 text-xs text-textBody'>Member</p>
-                                        </div>
+
+                {/* Active Members */}
+                <div className="bg-white rounded-xl border border-slate-100/80 shadow-sm overflow-hidden">
+                    <div className="px-5 py-4 border-b border-slate-100 flex items-center gap-2 bg-slate-50/50">
+                        <div className="w-7 h-7 rounded-lg bg-blue-50 text-blue-500 flex items-center justify-center shrink-0">
+                            <FiUsers size={14} />
+                        </div>
+                        <h3 className="text-[13px] font-extrabold text-gray-800">Active Members</h3>
+                    </div>
+                    <div className="divide-y divide-slate-50">
+                        {data?.activeMembers?.map((member, index) => {
+                            const memberInitials = member?.name?.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
+                            return (
+                                <div key={index} className="flex items-center gap-3 px-5 py-3.5 hover:bg-slate-50/50 transition-colors">
+                                    <div className="w-10 h-10 rounded-xl overflow-hidden shrink-0">
+                                        {member?.image ? (
+                                            <Image src={member?.image} alt="member" className="object-cover w-full h-full" height={40} width={40} />
+                                        ) : (
+                                            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#5572fc] to-[#7c93ff] flex items-center justify-center text-white text-xs font-black">
+                                                {memberInitials}
+                                            </div>
+                                        )}
                                     </div>
-                                    <Link href={`/admin/users/view/${member?._id}`} className='flex w-fit cursor-pointer items-center gap-2 rounded bg-[#5572fc] px-[8px] py-[4px] text-xs text-white'>
-                                        View
+                                    <div className="flex-1 min-w-0">
+                                        <p className="text-[12px] font-bold text-gray-800 line-clamp-1">{member?.name}</p>
+                                        <p className="text-[10px] text-[#5572fc] font-bold uppercase tracking-wide">Member</p>
+                                    </div>
+                                    <Link href={`/admin/users/view/${member?._id}`}
+                                        className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-[10px] font-bold bg-[#5572fc]/5 text-[#5572fc] hover:bg-[#5572fc] hover:text-white transition-all shrink-0">
+                                        <FiEye size={11} /> View
                                     </Link>
                                 </div>
-                            ))
-                        }
-
+                            );
+                        })}
+                        {!data?.activeMembers?.length && (
+                            <div className="px-5 py-8 text-center text-gray-400 text-xs font-medium">No active members</div>
+                        )}
                     </div>
                 </div>
             </div>
-            <div className="p-3 bg-white">
+
+            {/* ── Latest Transactions ───────────────────────────────────── */}
+            <div className="bg-white rounded-xl border border-slate-100/80 shadow-sm overflow-hidden">
+                <div className="px-5 py-4 border-b border-slate-100 flex items-center gap-2 bg-slate-50/50">
+                    <div className="w-7 h-7 rounded-lg bg-[#5572fc]/10 text-[#5572fc] flex items-center justify-center shrink-0">
+                        <FiShoppingCart size={14} />
+                    </div>
+                    <h3 className="text-[13px] font-extrabold text-gray-800">Latest Transactions</h3>
+                </div>
                 <Table
                     columns={columns}
                     data={data?.latestOrders}
-                    title={i18n.t("Latest Transactions")}
                     indexed
-                    onView={(value) => { router.push(`/admin/order/view/${value?._id}`) }}
+                    shadow={false}
+                    onView={(value) => router.push(`/admin/order/view/${value?._id}`)}
                 />
             </div>
         </div>

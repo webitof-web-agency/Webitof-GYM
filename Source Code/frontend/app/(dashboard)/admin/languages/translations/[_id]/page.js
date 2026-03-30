@@ -3,11 +3,14 @@ import React, { useEffect } from 'react';
 import { fetchLanguage, fetchTranslations, postLanguage } from '../../../../../helpers/backend';
 import { useAction, useFetch } from '../../../../../helpers/hooks';
 import { Card, Form } from 'antd';
+import { useRouter } from 'next/navigation';
+import { FiArrowLeft } from 'react-icons/fi';
 import { HiddenInput } from '../../../../../../components/form/input';
 import Button from '../../../../../../components/common/button';
 import PageTitle from '../../../../components/common/page-title';
 
 const Translations = ({ params }) => {
+    const { push } = useRouter();
     const [translations, getTranslations] = useFetch(fetchTranslations, {}, false)
     const [data, getData] = useFetch(fetchLanguage, {}, false);
 
@@ -970,55 +973,77 @@ const Translations = ({ params }) => {
         })
     }
     return (
-        <>
-            <PageTitle title="Translations" />
-            <Card>
-                <div className="card">
-                    <div className="body">
-                        <Form form={form} layout="vertical" onFinish={handleSubmit}>
-                            <table className="w-full">
-                                <thead className='bg-slate-300'>
-                                    <tr>
-                                        <th className="px-4 py-2 text-start">English</th>
-                                        <th className="px-4 py-2">
-                                            {data?.name}
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody className=''>
-                                    {keys?.map((key, index) => (
-                                        <tr key={index} className='w-full'>
-                                            <th className="bg-white pt-3 px-4 py-2 flex justify-start">{key?.name}</th>
-                                            <td key={index} className="px-4 py-2">
-                                                <HiddenInput
-                                                    name={[params._id, key.name, 'type']}
-                                                    initialValue={key.type}
-                                                />
-                                                <Form.Item
-                                                    className="mb-0 w-full"
-                                                    initialValue=""
-                                                    name={[params._id, key.name, 'value']}>
-                                                    <input
-                                                        className="w-full border-gray-300 rounded-md"
-                                                        style={{
-                                                            border: '1px solid #ddd',
-                                                            padding: '5px 5px'
-                                                        }}
-                                                    />
-                                                </Form.Item>
-                                            </td>
-                                        </tr>
-                                    ))}
-                                </tbody>
-                            </table>
-                            <Button type='submit'> Submit </Button>
-                        </Form>
+        <div className="max-w-[1200px] mx-auto space-y-4 animate-fade-in pb-10">
+            <div className="flex items-center justify-between mb-2">
+                <div className="flex items-start gap-4">
+                    <button 
+                        type="button"
+                        onClick={() => push('/admin/languages')} 
+                        className="w-9 h-9 flex items-center justify-center rounded-xl bg-white border border-slate-200 text-gray-500 hover:bg-slate-50 hover:text-gray-800 transition-colors shadow-sm shrink-0 mt-0.5"
+                    >
+                        <FiArrowLeft size={18} />
+                    </button>
+                    <div className="flex flex-col">
+                        <PageTitle title={`Translation Engine: ${data?.name || 'Localizing'}`} className="!mb-0 !pb-0" />
+                        <span className="text-[11px] text-gray-500 font-medium">Map internal platform English strings directly to destination locale dictionaries</span>
                     </div>
                 </div>
+            </div>
 
-            </Card>
+            <div className="bg-white rounded-xl shadow-[0_2px_10px_-4px_rgba(0,0,0,0.05)] border border-slate-100/80 overflow-hidden">
+                 <div className="px-6 py-4 border-b border-slate-100 bg-[#5572fc]/5 flex items-center justify-between">
+                     <div className="flex items-center gap-3">
+                         <div className="w-8 h-8 rounded-lg bg-white border border-[#5572fc]/20 text-[#5572fc] flex items-center justify-center text-lg">
+                             {data?.flag || '🌐'}
+                         </div>
+                         <div>
+                             <h3 className="text-sm font-bold text-gray-800 leading-tight tracking-wide">{data?.name} Editor</h3>
+                             <p className="text-[10px] text-gray-500 font-medium uppercase tracking-widest">{keys?.length} System Strings Discovered</p>
+                         </div>
+                     </div>
+                 </div>
+                 
+                 <Form form={form} layout="vertical" onFinish={handleSubmit}>
+                     <div className="w-full relative shadow-inner overflow-hidden">
+                         {/* Sticky Header Layer */}
+                         <div className="grid grid-cols-2 bg-slate-100 border-b border-slate-200 font-bold text-[11px] text-gray-600 uppercase tracking-widest sticky top-0 z-10">
+                              <div className="px-6 py-4 border-r border-slate-200">Origin String (English)</div>
+                              <div className="px-6 py-4">Destination String ({data?.name})</div>
+                         </div>
+                         
+                         {/* Virtualized/Scrollable body */}
+                         <div className="flex flex-col max-h-[70vh] overflow-y-auto w-full custom-scroll relative">
+                             {keys?.map((key, index) => (
+                                 <div key={index} className="grid grid-cols-2 group hover:bg-slate-50 transition-colors border-b border-slate-100/60 last:border-b-0 w-full">
+                                     <div className="px-6 py-4 border-r border-slate-100 flex items-center justify-start text-[13px] text-gray-700 font-medium">
+                                          {key?.name}
+                                     </div>
+                                     <div className="px-6 py-3 flex items-center">
+                                         <HiddenInput name={[params._id, key.name, 'type']} initialValue={key.type} />
+                                         <Form.Item
+                                             className="mb-0 w-full"
+                                             initialValue=""
+                                             name={[params._id, key.name, 'value']}
+                                         >
+                                             <input
+                                                 className="w-full flex h-10 rounded-lg border border-slate-200 bg-white px-3 py-2 text-[13px] font-medium placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-[#5572fc]/20 focus:border-[#5572fc] transition-all shadow-sm"
+                                                 placeholder={`Enter ${data?.name} translation...`}
+                                             />
+                                         </Form.Item>
+                                     </div>
+                                 </div>
+                             ))}
+                         </div>
+                     </div>
 
-        </>
+                     <div className="p-5 border-t border-slate-100 bg-slate-50/50 flex justify-end">
+                         <Button type='submit' className="!px-6 !py-2 flex items-center gap-1.5 shadow-md shadow-[#5572fc]/20 !font-semibold !rounded-lg !text-xs transition-all tracking-wide">
+                             Deploy Dictionaries
+                         </Button>
+                     </div>
+                 </Form>
+            </div>
+        </div>
     );
 };
 

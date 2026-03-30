@@ -1,6 +1,6 @@
 "use client";
 
-import { Form,Modal } from 'antd';
+import { Form, Modal } from 'antd';
 import React, { useEffect, useState } from 'react';
 import PageTitle from '../../../components/common/page-title';
 import Table from '../../../components/form/table';
@@ -11,6 +11,7 @@ import { blogCategoryList, delCategory, postCategory } from '../../../../helpers
 import { useI18n } from '../../../../providers/i18n';
 import { columnFormatter, noSelected } from '../../../../helpers/utils';
 import dayjs from 'dayjs';
+import { FiPlus, FiCalendar, FiFolder, FiEdit2 } from 'react-icons/fi';
 
 const fallbackLanguage = { code: 'en', name: 'English' };
 
@@ -34,15 +35,27 @@ const BlogCategory = () => {
 
     const columns = [
         {
-            text: 'Created At',
-            dataField: 'createdAt',
-            formatter: (_, d) => <div>{dayjs(d?.createdAt).format('MMM DD , YYYY')}</div>,
+            text: 'Category Info',
+            dataField: "name",
+            formatter: (value) => (
+                <div className="flex items-center gap-2.5">
+                    <div className="w-8 h-8 rounded-lg bg-indigo-50 text-indigo-500 flex items-center justify-center flex-shrink-0 border border-indigo-100/50">
+                        <FiFolder size={15} />
+                    </div>
+                    <span className="text-xs font-bold text-gray-800 capitalize">{columnFormatter(value)}</span>
+                </div>
+            )
         },
         {
-            text: "Name",
-            dataField: "name",
-            formatter: (value) => columnFormatter(value),
-        },
+            text: 'Date Added',
+            dataField: 'createdAt',
+            formatter: (_, d) => (
+                <span className="text-[10px] text-gray-600 bg-slate-50 px-2.5 py-1 rounded-md border border-slate-200 inline-flex items-center gap-1.5 font-medium whitespace-nowrap">
+                    <FiCalendar className="text-gray-400" size={10} />
+                    {dayjs(d?.createdAt).format('DD MMM YYYY')}
+                </span>
+            ),
+        }
     ];
 
     const handleSubmit = (values) => {
@@ -60,72 +73,93 @@ const BlogCategory = () => {
     };
 
     return (
-        <div>
-            <PageTitle title="Blog Categories" />
-            <Table
-                columns={columns}
-                data={data}
-                loading={loading}
-                onReload={getData}
-                action={
-                    <Button
-                        onClick={() => {
-                            form.resetFields();
-                            setSelectedLang(langCode || availableLanguages[0]?.code || 'en');
-                            setOpen(true);
-                            setIsEdit(false);
-                        }}
-                    >
-                        {i18n.t("Add Category")}
-                    </Button>
-                }
-                onEdit={(values) => {
-                    form.resetFields();
-                    form.setFieldsValue({
-                        ...values,
-                    });
-                    setSelectedLang(langCode || availableLanguages[0]?.code || 'en');
-                    setOpen(true);
-                    setIsEdit(true);
-                }}
-                onDelete={delCategory}
-                indexed
-                pagination
-                langCode={langCode}
-            />
+        <div className="max-w-[1600px] mx-auto space-y-4 animate-fade-in relative z-0">
+            <div className="mb-2">
+                <PageTitle title={i18n.t("Blog Categories")} />
+            </div>
+
+            <div className="bg-white rounded-xl shadow-sm border border-slate-100/80">
+                <Table
+                    columns={columns}
+                    data={data}
+                    loading={loading}
+                    onReload={getData}
+                    action={
+                        <Button
+                            onClick={() => {
+                                form.resetFields();
+                                setSelectedLang(langCode || availableLanguages[0]?.code || 'en');
+                                setOpen(true);
+                                setIsEdit(false);
+                            }}
+                            className="flex items-center gap-1.5 !px-4 shadow-md shadow-[#5572fc]/20 hover:shadow-lg hover:shadow-[#5572fc]/30 transition-all !h-8 !py-0 !rounded-lg block !w-auto !text-xs whitespace-nowrap"
+                        >
+                            <FiPlus size={14} /> {i18n.t("Add Category")}
+                        </Button>
+                    }
+                    onEdit={(values) => {
+                        form.resetFields();
+                        form.setFieldsValue({
+                            ...values,
+                        });
+                        setSelectedLang(langCode || availableLanguages[0]?.code || 'en');
+                        setOpen(true);
+                        setIsEdit(true);
+                    }}
+                    onDelete={delCategory}
+                    indexed
+                    pagination
+                    langCode={langCode}
+                    shadow={false}
+                />
+            </div>
+
             <Modal
                 open={open}
                 onCancel={() => setOpen(false)}
-                title={i18n.t(isEdit ? "Edit Category" : "Add Category")}
+                title={
+                    <div className="flex items-center gap-2.5 pb-2.5 border-b border-gray-100">
+                        <div className="w-8 h-8 rounded-lg bg-indigo-50 text-indigo-500 flex items-center justify-center">
+                            {isEdit ? <FiEdit2 size={15} /> : <FiFolder size={15} />}
+                        </div>
+                        <span className="text-base font-bold text-gray-800 leading-tight">
+                            {i18n.t(isEdit ? "Edit Category" : "Add Category")}
+                        </span>
+                    </div>
+                }
                 footer={null}
                 destroyOnClose={true}
+                className="custom-modal rounded-xl"
+                styles={{ content: { padding: '20px' } }}
             >
-                <div className="flex justify-start flex-wrap gap-3">
+                <div className="flex justify-start flex-wrap gap-2 mt-2 mb-4">
                     {availableLanguages.map((l, index) => (
                         <button
                             onClick={() => setSelectedLang(l.code)}
-                            className={`px-3 py-1 rounded-full text-sm font-medium transition-colors duration-200 ${l.code === selectedLang
-                                ? 'bg-[#5572fc] text-white'
-                                : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-                                }`}
+                            className={`px-3 py-1 rounded-md text-[10px] font-bold tracking-wide transition-all border ${
+                                l.code === selectedLang
+                                ? 'bg-indigo-50 text-indigo-600 border-indigo-200'
+                                : 'bg-transparent text-gray-500 border-gray-200 hover:bg-slate-50 hover:text-gray-800'
+                            }`}
                             key={index}
                         >
                             {l.name}
                         </button>
                     ))}
                 </div>
+                
                 <Form
                     form={form}
                     layout="vertical"
                     onFinish={handleSubmit}
-                    className='mt-5'
+                    className='mt-3 space-y-0'
                 >
                     {isEdit && <HiddenInput name="_id" />}
                     {availableLanguages.map((l, index) => (
                         <div key={index} style={{ display: l.code === selectedLang ? 'block' : 'none' }}>
                             <FormInput
                                 name={['name', l.code]}
-                                label={('Name')}
+                                label={<span className="text-xs font-bold text-gray-700">Category Name</span>}
                                 placeholder={i18n.t('Enter Name')}
                                 key={index}
                                 required
@@ -141,7 +175,20 @@ const BlogCategory = () => {
                             />
                         </div>
                     ))}
-                    <Button type='submit' onClick={() => noSelected({ form, setSelectedLang })} className="mt-2.5">{i18n.t("Submit")}</Button>
+                    
+                    <div className="flex justify-end gap-2 pt-3 mt-4 border-t border-gray-100">
+                         <Button 
+                            type="button" 
+                            onClick={() => { setOpen(false); form.resetFields(); }}
+                            className="!bg-white !text-gray-600 !border-gray-200 hover:!bg-gray-50 !py-1.5 !px-4 !font-semibold !rounded-lg !text-xs"
+                         >
+                            Cancel
+                         </Button>
+                         <Button type='submit' onClick={() => noSelected({ form, setSelectedLang })} className='!px-5 !py-1.5 flex items-center gap-1.5 shadow-md shadow-[#5572fc]/20 !font-semibold !rounded-lg !text-xs transition-all'>
+                            {isEdit ? <FiEdit2 size={13} /> : <FiPlus size={13} />}
+                            {i18n.t(isEdit ? "Save Changes" : "Create Category")}
+                         </Button>
+                    </div>
                 </Form>
             </Modal>
         </div>

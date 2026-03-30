@@ -2,14 +2,15 @@
 import React, { useState } from 'react';
 import dayjs from 'dayjs';
 import PageTitle from '../../components/common/page-title';
-import Table, { TableImage } from '../../components/form/table';
+import Table from '../../components/form/table';
 import { useFetch } from '../../../helpers/hooks';
 import { fetchAttendanceAdmin, todayAttendanceAdmin } from '../../../helpers/backend';
 import { useI18n } from '../../../providers/i18n';
-import { getStatusClass } from '../../../helpers/utils';
-import { Modal, Tabs } from 'antd';
+import { Modal } from 'antd';
 import AttendanceTable from './attendanceTable';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
+import { FiCalendar, FiClock, FiLogIn, FiLogOut, FiUsers, FiExternalLink, FiX, FiMail, FiPhone } from 'react-icons/fi';
 
 const page = () => {
     const i18n = useI18n();
@@ -21,132 +22,231 @@ const page = () => {
     const [details, setDetails] = useState(null);
     const router = useRouter();
 
+    const getStatusTheme = (status) => {
+        if (status === "present") return { bg: "bg-emerald-50", text: "text-emerald-600", border: "border-emerald-100", label: "In Time" };
+        if (status === "late") return { bg: "bg-orange-50", text: "text-orange-600", border: "border-orange-100", label: "Late" };
+        return { bg: "bg-rose-50", text: "text-rose-600", border: "border-rose-100", label: status || "Unknown" };
+    };
+
     const columns = [
         {
-            text: 'Created At',
+            text: 'Employee Identity',
+            dataField: 'name',
+            formatter: (_, d) => (
+                <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 rounded-full border border-gray-100 shadow-sm overflow-hidden flex-shrink-0 bg-slate-50 flex items-center justify-center font-bold text-slate-400 text-[10px] uppercase">
+                        {d?.employee?.image ? (
+                            <Image src={d?.employee?.image} alt={d?.employee?.name} width={32} height={32} className="w-full h-full object-cover" />
+                        ) : (
+                            d?.employee?.name?.substring(0, 2)
+                        )}
+                    </div>
+                    <div className="flex flex-col gap-0.5">
+                        <span className="font-bold text-gray-800 text-xs capitalize leading-tight">{d?.employee?.name}</span>
+                        <span className="text-[9px] font-semibold text-gray-400 truncate max-w-[120px]">
+                            {d?.employee?.email || 'No Email'}
+                        </span>
+                    </div>
+                </div>
+            )
+        },
+        {
+            text: 'Date',
             dataField: 'createdAt',
-            formatter: (_, d) => <div>{dayjs(d?.createdAt).format('MMM DD , YYYY')}</div>,
+            formatter: (_, d) => (
+                <span className="text-[10px] text-gray-600 bg-slate-50 px-2.5 py-1 rounded-md border border-slate-200 inline-flex items-center gap-1.5 font-medium whitespace-nowrap">
+                    <FiCalendar className="text-gray-400" size={10} />
+                    {dayjs(d?.createdAt).format('DD MMM YYYY')}
+                </span>
+            ),
         },
         {
-            text: "Photo",
-            dataField: "image",
-            formatter: (_, d) => <TableImage url={d?.employee?.image ? d?.employee?.image : "/defaultimg.jpg"} />,
-        },
-        {
-            text: "Employee Name",
-            dataField: "name",
-            formatter: (_, d) => d?.employee?.name,
-        },
-        {
-            text: "Check In",
+            text: "Time Activity",
             dataField: "clockIn",
-            formatter: (_, d) => d?.clockIn ? dayjs(d?.clockIn).format('hh:mm A') : "-",
-        },
-        {
-            text: "Check Out",
-            dataField: "clockOut",
-            formatter: (_, d) => d?.clockOut ? dayjs(d?.clockOut).format('hh:mm A') : "-",
+            formatter: (_, d) => (
+                <div className="flex flex-col gap-1.5">
+                    <div className="flex items-center gap-1.5 min-w-[100px]">
+                        <div className="w-4 h-4 rounded flex items-center justify-center bg-emerald-50 text-emerald-500"><FiLogIn size={9}/></div>
+                        <span className="text-[10px] font-bold text-gray-700">{d?.clockIn ? dayjs(d?.clockIn).format('hh:mm A') : "—"}</span>
+                    </div>
+                    <div className="flex items-center gap-1.5 min-w-[100px]">
+                        <div className="w-4 h-4 rounded flex items-center justify-center bg-slate-50 text-gray-500 border border-slate-200"><FiLogOut size={9}/></div>
+                        <span className="text-[10px] font-bold text-gray-700">{d?.clockOut ? dayjs(d?.clockOut).format('hh:mm A') : "—"}</span>
+                    </div>
+                </div>
+            )
         },
         {
             text: "Total Hours",
             dataField: "totalHours",
-            formatter: (_, d) => d?.totalHours ? d?.totalHours : "-",
+            formatter: (_, d) => (
+                <span className="text-[10px] font-bold text-purple-600 bg-purple-50 px-2 py-1 rounded-md border border-purple-100 inline-flex items-center gap-1 whitespace-nowrap">
+                    <FiClock size={10} />
+                    {d?.totalHours ? `${d?.totalHours} hrs` : "—"}
+                </span>
+            ),
         },
         {
             text: "Status",
             dataField: "status",
-            formatter: (value) => <span className={value === "present" ? getStatusClass('active') : value === "late" ? getStatusClass('pending') : getStatusClass('rejected')}>{value === "present" ? "In Time" : value}</span>,
+            formatter: (value) => {
+                const theme = getStatusTheme(value);
+                return (
+                    <span className={`inline-flex items-center justify-center px-2 py-0.5 rounded-md text-[9px] font-bold border uppercase tracking-widest whitespace-nowrap ${theme.bg} ${theme.text} ${theme.border}`}>
+                        {theme.label}
+                    </span>
+                )
+            },
         }
     ];
 
-    const items = [
-        {
-            key: 'all',
-            label: 'All',
-            children: <AttendanceTable data={todayData} />,
-        },
-        {
-            key: 'present',
-            label: 'In Time',
-            children: <AttendanceTable data={todayData} />,
-        },
-        {
-            key: 'late',
-            label: 'Late',
-            children: <AttendanceTable data={todayData} />,
-        },
+    const tabOptions = [
+        { id: 'all', label: 'All Records' },
+        { id: 'present', label: 'In Time' },
+        { id: 'late', label: 'Late Arrival' },
     ];
 
     return (
-        <div>
-            <PageTitle title="Attendance" />
-            <div className='flex xl:flex-row flex-col-reverse xl:gap-6 gap-4'>
-                <div className='2xl:w-8/12 xl:w-4/6 w-full'>
-                    <Table
-                        columns={columns}
-                        data={data}
-                        loading={loading}
-                        onReload={getData}
-                        indexed
-                        pagination
-                        langCode={langCode}
-                        onView={(value) => { setDetails(value); setOpen(true) }}
-                    />
+        <div className="max-w-[1600px] mx-auto space-y-4 animate-fade-in relative">
+            <div className="mb-2">
+                <PageTitle title={i18n.t("Attendance Register")} />
+            </div>
+            
+            <div className='flex xl:flex-row flex-col-reverse xl:gap-5 gap-4'>
+                <div className='flex-1 xl:w-[calc(100%-350px)] min-w-0'>
+                    <div className="bg-white rounded-xl shadow-sm border border-slate-100/80 overflow-hidden">
+                        <Table
+                            columns={columns}
+                            data={data}
+                            loading={loading}
+                            onReload={getData}
+                            indexed
+                            pagination
+                            shadow={false}
+                            langCode={langCode}
+                            onView={(value) => { setDetails(value); setOpen(true) }}
+                        />
+                    </div>
                 </div>
-                <div className='2xl:w-4/12 xl:w-2/6 w-full bg-white p-4'>
-                    <h3 className='text-lg font-semibold pb-3 pt-2 text-[#003049]'>{i18n?.t("Today's Attendance")} ({dayjs().format('MMM D, YYYY')})</h3>
-                    <Tabs defaultActiveKey={selectedTab} items={items} onChange={(key) => getTodayData({ status: key })} />
+
+                <div className='xl:w-[350px] shrink-0'>
+                    <div className='bg-white rounded-xl shadow-sm border border-slate-100/80 p-5 sticky top-4'>
+                        <div className="flex items-center justify-between pb-4 mb-4 border-b border-slate-100">
+                            <div className="flex items-center gap-2">
+                                <div className="w-8 h-8 rounded-lg bg-[#5572fc]/10 text-[#5572fc] flex items-center justify-center">
+                                    <FiUsers size={14} />
+                                </div>
+                                <div>
+                                    <h3 className='text-sm font-bold text-gray-800 leading-tight'>{i18n?.t("Today's Pulse")}</h3>
+                                    <span className="text-[10px] text-gray-400">{dayjs().format('MMMM D, YYYY')}</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="flex gap-1 bg-slate-50 p-1 rounded-lg border border-slate-100 mb-4">
+                            {tabOptions.map((tab) => (
+                                <button
+                                    key={tab.id}
+                                    onClick={() => { setSelectedTab(tab.id); getTodayData({ status: tab.id }); }}
+                                    className={`flex-1 text-[10px] font-bold py-1.5 rounded-md transition-all ${
+                                        selectedTab === tab.id
+                                            ? 'bg-white shadow-sm text-[#5572fc]'
+                                            : 'text-gray-500 hover:text-gray-700'
+                                    }`}
+                                >
+                                    {tab.label}
+                                </button>
+                            ))}
+                        </div>
+
+                        <div className="max-h-[500px] overflow-y-auto hide-scrollbar -mx-2 px-2">
+                           <AttendanceTable data={todayData} />
+                        </div>
+                    </div>
                 </div>
             </div>
+
             <Modal
                 open={open}
                 onCancel={() => { setOpen(false); setDetails(null) }}
                 footer={null}
-                width={600}
-                title={`${i18n?.t("Attendance Details")} (${dayjs(details?.createdAt).format('MMM D, YYYY')})`}
+                width={500}
+                centered
+                closeIcon={<div className="bg-black/20 hover:bg-black/40 p-1 rounded backdrop-blur-sm transition-all text-white absolute top-3 right-3"><FiX size={14}/></div>}
+                styles={{ content: { padding: 0, overflow: 'hidden', borderRadius: '16px' } }}
                 destroyOnClose
             >
                 {details && (
-                    <div className="p-4">
-                        <div className="flex items-center gap-4 mb-4">
-                            <img
-                                src={details?.employee?.image || "/defaultimg.jpg"}
-                                alt="Employee"
-                                className="w-16 h-16 rounded-full border border-gray-300"
-                            />
-                            <div>
-                                <h3 className="text-lg font-semibold">{details?.employee?.name}</h3>
-                                <p className="text-gray-600">{details?.employee?.email}</p>
-                                <p className="text-gray-600">{details?.employee?.phone}</p>
+                    <div className='w-full bg-slate-50 relative pb-5 rounded-2xl overflow-hidden'>
+                        <div className="h-24 w-full bg-gradient-to-br from-[#5572fc] to-[#7f93ff] relative">
+                             <div className="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] mix-blend-overlay"></div>
+                        </div>
+                        
+                        <div className='absolute top-10 left-1/2 -translate-x-1/2 z-10'>
+                            <div className="p-1 bg-slate-50 rounded-full shadow-sm">
+                                <div className="w-[70px] h-[70px] rounded-full overflow-hidden border-[3px] border-white bg-slate-100 flex items-center justify-center font-bold text-slate-400 text-lg uppercase">
+                                     {details?.employee?.image ? (
+                                        <Image src={details.employee.image} alt="Employee" width={70} height={70} className="w-full h-full object-cover" />
+                                     ) : (
+                                        details?.employee?.name?.substring(0, 2)
+                                     )}
+                                </div>
                             </div>
                         </div>
 
-                        <div className="grid grid-cols-2 gap-4">
-                            <div className="p-3 border rounded">
-                                <span className="text-gray-500 text-sm">Check In</span>
-                                <p className="text-lg font-medium">{dayjs(details?.clockIn).format("hh:mm A")}</p>
+                        <div className='mt-12 px-5 flex flex-col items-center text-center'>
+                            <h2 className="text-xl font-bold text-gray-800 tracking-tight">{details?.employee?.name}</h2>
+                            <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mt-0.5">
+                                {dayjs(details?.createdAt).format('MMMM D, YYYY')}
+                            </p>
+
+                            <div className="w-full grid grid-cols-2 gap-3 mt-6">
+                                <div className="bg-white border border-slate-100 rounded-xl p-3 flex flex-col items-center">
+                                    <div className="w-6 h-6 rounded-full bg-emerald-50 text-emerald-500 mb-1 flex items-center justify-center"><FiLogIn size={11}/></div>
+                                    <span className="text-[10px] text-gray-400 font-bold tracking-wide uppercase">Punched In</span>
+                                    <span className="text-sm font-bold text-gray-800">{details?.clockIn ? dayjs(details?.clockIn).format("hh:mm A") : "—"}</span>
+                                </div>
+                                <div className="bg-white border border-slate-100 rounded-xl p-3 flex flex-col items-center">
+                                    <div className="w-6 h-6 rounded-full bg-slate-50 border border-slate-200 text-gray-400 mb-1 flex items-center justify-center"><FiLogOut size={11}/></div>
+                                    <span className="text-[10px] text-gray-400 font-bold tracking-wide uppercase">Punched Out</span>
+                                    <span className="text-sm font-bold text-gray-800">{details?.clockOut ? dayjs(details?.clockOut).format("hh:mm A") : "—"}</span>
+                                </div>
+                                <div className="bg-white border border-slate-100 rounded-xl p-3 col-span-2 flex items-center justify-between">
+                                    <div className="flex items-center gap-2">
+                                        <div className="w-8 h-8 rounded bg-purple-50 text-purple-600 flex items-center justify-center"><FiClock size={14}/></div>
+                                        <div className="flex flex-col text-left">
+                                            <span className="text-[10px] font-bold text-gray-400 tracking-wide uppercase">Total Time Logged</span>
+                                            <span className="text-base font-black text-gray-800">{details?.totalHours || "—"}</span>
+                                        </div>
+                                    </div>
+                                    <div className="flex flex-col text-right">
+                                        <span className="text-[10px] font-bold text-gray-400 tracking-wide uppercase">Session Status</span>
+                                        <span className={`text-xs font-bold uppercase ${getStatusTheme(details?.status).text}`}>
+                                            {getStatusTheme(details?.status).label}
+                                        </span>
+                                    </div>
+                                </div>
                             </div>
-                            <div className="p-3 border rounded">
-                                <span className="text-gray-500 text-sm">Check Out</span>
-                                <p className="text-lg font-medium">{details?.clockOut ? dayjs(details?.clockOut).format("hh:mm A") : "-"}</p>
-                            </div>
-                            <div className="p-3 border rounded">
-                                <span className="text-gray-500 text-sm">Total Hours</span>
-                                <p className="text-lg font-medium">{details?.totalHours || "-"}</p>
-                            </div>
-                            <div className="p-3 border rounded">
-                                <span className="text-gray-500 text-sm block">Status </span>
-                                <p
-                                    className={details?.status === "present" ? getStatusClass('active') : details?.status === "late" ? getStatusClass('pending') : getStatusClass('rejected')}
+                            
+                            <div className="w-full bg-white border border-slate-100 rounded-xl p-3 mt-3">
+                                <div className="flex items-center justify-between pb-2 border-b border-slate-50 mb-2">
+                                     <div className="flex items-center gap-1.5 text-[10px] font-bold text-gray-500">
+                                         <FiPhone size={10} className="text-gray-400"/> {details?.employee?.phone || 'No Phone'}
+                                     </div>
+                                     <div className="flex items-center gap-1.5 text-[10px] font-bold text-gray-500">
+                                         <FiMail size={10} className="text-gray-400"/> {details?.employee?.email || 'No Email'}
+                                     </div>
+                                </div>
+                                <button 
+                                    className="w-full bg-[#5572fc]/5 hover:bg-[#5572fc]/10 text-[#5572fc] border border-[#5572fc]/20 flex items-center justify-center gap-2 py-2 rounded-lg text-[11px] font-bold transition-all" 
+                                    onClick={() => router.push(`/admin/attendance/${details?.employee?._id}`)}
                                 >
-                                    {details?.status === "present" ? "In Time" : details?.status}
-                                </p>
+                                    <FiExternalLink size={12}/> View Deep Access Logs
+                                </button>
                             </div>
                         </div>
-                        <button className="bg-[#5572fc] text-white mt-4 px-3 py-1 rounded mx-auto" onClick={() => router.push(`/admin/attendance/${details?.employee?._id}`)}>More Details</button>
                     </div>
                 )}
-
             </Modal>
         </div>
     );

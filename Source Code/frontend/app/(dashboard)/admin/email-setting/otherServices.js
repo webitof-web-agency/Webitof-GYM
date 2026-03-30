@@ -7,7 +7,7 @@ import { postEmailSettings } from '../../../helpers/backend';
 import Button from '../../../../components/common/button';
 import { Loader } from '../../../../components/common/loader';
 import { useI18n } from '../../../providers/i18n';
-
+import { FiServer, FiMail, FiLock, FiSave, FiCheckCircle } from 'react-icons/fi';
 
 const OtherProviderManageEmail = ({ settings, getSettings, loading, setCheckedValue }) => {
     const i18n = useI18n();
@@ -27,7 +27,6 @@ const OtherProviderManageEmail = ({ settings, getSettings, loading, setCheckedVa
                     provider_name: settings?.other?.provider_name
                 }
             });
-
             if (settings?.default === 'others') {
                 setDefaultEmail('others');
                 form.setFieldsValue({ default: 'others' });
@@ -39,7 +38,6 @@ const OtherProviderManageEmail = ({ settings, getSettings, loading, setCheckedVa
             }
         }
     }, [settings]);
-
 
     const onFinish = async (values) => {
         const postData = {
@@ -64,137 +62,74 @@ const OtherProviderManageEmail = ({ settings, getSettings, loading, setCheckedVa
                 password: settings?.gmail?.password,
                 service_provider: settings?.gmail?.service_provider
             }
-        }
-        return useAction(postEmailSettings, { ...postData }, () => {
-            getSettings();
-        })
+        };
+        return useAction(postEmailSettings, { ...postData }, () => getSettings());
     };
 
     if (loading) {
-        return <div className='flex justify-center items-center h-[300px]'>
-            <Loader />
-        </div>
+        return <div className='flex justify-center items-center h-[280px]'><Loader /></div>;
     }
 
-
     return (
-        <div className='pt-0'>
-            <Form
-                form={form}
-                onFinish={onFinish}
-                autoComplete="off"
-                layout='vertical'
-            >
-                <div className='p-3'>
-                    <p className="text-[16px] mb-6 border-b-[1px] border-b-[#21ec5e]">
-                        {i18n?.t('Other Provider')}
-                    </p>
-                    <div className='hidden'>
+        <Form form={form} onFinish={onFinish} autoComplete="off" layout='vertical'>
+            <HiddenInput name="_id" />
 
-                        <HiddenInput name="_id" />
-                    </div>
+            <div className="flex items-center gap-2 mb-5 pb-4 border-b border-slate-100">
+                <div className="w-8 h-8 rounded-lg bg-purple-50 text-purple-500 border border-purple-100/50 flex items-center justify-center">
+                    <FiServer size={15} />
+                </div>
+                <div>
+                    <h3 className="text-sm font-bold text-gray-800 leading-tight">Other SMTP Provider</h3>
+                    <p className="text-[10px] text-gray-400">Configure any custom SMTP mail service provider</p>
+                </div>
+            </div>
 
-                    <Form.Item
-                        name={['other', 'host']}
-                        label={i18n?.t('Email Host')}
-                        rules={[
-                            {
-                                required: true,
-                                message: ("Please input email host!"),
-                            },
-                        ]}
-                        className='mt-1'
-                    >
-                        <Input placeholder={i18n?.t('Please input email host')} />
-                    </Form.Item>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <Form.Item name={['other', 'host']} label={<span className="text-xs font-bold text-gray-600 flex items-center gap-1"><FiServer size={11} className="text-gray-400"/> {i18n?.t('Email Host')}</span>} rules={[{ required: true, message: 'Please input email host!' }]} className="!mb-0">
+                    <Input placeholder="e.g. smtp.mailprovider.com" className="!rounded-lg !text-sm" />
+                </Form.Item>
+                <Form.Item name={['other', 'port']} label={<span className="text-xs font-bold text-gray-600 flex items-center gap-1"><FiServer size={11} className="text-gray-400"/> {i18n?.t('Email Port')}</span>} rules={[{ required: true, message: 'Please input email port!' }]} className="!mb-0">
+                    <Input placeholder="e.g. 465 or 587" className="!rounded-lg !text-sm" />
+                </Form.Item>
+                <Form.Item name={['other', 'address']} label={<span className="text-xs font-bold text-gray-600 flex items-center gap-1"><FiMail size={11} className="text-gray-400"/> {i18n?.t('Email Address')}</span>} rules={[{ required: true, message: 'Please input email address!' }]} className="!mb-0">
+                    <Input placeholder="e.g. noreply@yourdomain.com" className="!rounded-lg !text-sm" />
+                </Form.Item>
+                <Form.Item name={['other', 'password']} label={<span className="text-xs font-bold text-gray-600 flex items-center gap-1"><FiLock size={11} className="text-gray-400"/> {i18n?.t('Email Password')}</span>} rules={[{ required: true, message: 'Please input email password!' }]} className="!mb-0">
+                    <Input.Password placeholder="••••••••" className="!rounded-lg !text-sm" />
+                </Form.Item>
+                <Form.Item name={['other', 'provider_name']} label={<span className="text-xs font-bold text-gray-600 flex items-center gap-1"><FiServer size={11} className="text-gray-400"/> {i18n?.t('Service Provider')}</span>} rules={[{ required: true, message: 'Please input service provider!' }]} className="!mb-0 md:col-span-2">
+                    <Select placeholder="Select or type your provider" allowClear className="!rounded-lg">
+                        <Option value="gmail">{i18n?.t('Gmail')}</Option>
+                        <Option value="sendgrid">{i18n?.t('SendGrid')}</Option>
+                        <Option value="other">{i18n?.t('Other')}</Option>
+                    </Select>
+                </Form.Item>
+            </div>
 
-                    <Form.Item
-                        name={['other', 'port']}
-                        label={("Email Port")}
-                        rules={[
-                            {
-                                required: true,
-                                message: ("Please input email port!"),
-                            },
-                        ]}
-                        className='mt-1'
-                    >
-                        <Input placeholder={i18n?.t('Please input email port')} />
-                    </Form.Item>
-
-                    <Form.Item
-                        name={['other', 'address']}
-                        label={("Email Address")}
-                        rules={[
-                            {
-                                required: true,
-                                message: ("Please input email address!"),
-                            },
-                        ]}
-                        className='mt-1'
-                    >
-                        <Input placeholder={i18n?.t('Please input email address')} />
-                    </Form.Item>
-
-                    <Form.Item
-                        name={['other', 'password']}
-                        label={("Email Password")}
-                        rules={[
-                            {
-                                required: true,
-                                message: ("Please input email password!"),
-                            },
-                        ]}
-                        className='mt-1'
-                    >
-                        <Input placeholder={i18n?.t('Please input email password')} type='password' />
-                    </Form.Item>
-
-                    <Form.Item
-                        name={['other', 'provider_name']}
-                        label={("Service Provider")}
-                        rules={[
-                            {
-                                required: true,
-                                message: ("Please input service provider!"),
-                            },
-                        ]}
-                        className='mt-1'
-                    >
-                        <Select
-                            placeholder={i18n?.t('Please input service provider')}
-                            allowClear
-                        >
-                            <Option value="gmail">{i18n?.t('Gmail')}</Option>
-                            <Option value="sendgrid">{i18n?.t('SendGrid')}</Option>
-                            <Option value="other">{i18n?.t('Other')}</Option>
-                        </Select>
-                    </Form.Item>
-
-                    <Form.Item
-                        name='default'
-                        label={("Set Default")}
-                        className='mt-1'
-                    >
-                        <Switch
-                            checked={defaultEmail === 'others'}
-                            onChange={(checked) => {
-                                setDefaultEmail(checked ? 'others' : '')
-                            }}
-                            className={defaultEmail === 'others' ? 'bg-[#5572fc] mt-1' : 'bg-blue-500 mt-1'}
-                            checkedChildren={<span className="text-white">{i18n?.t('On')}</span>}
-                            unCheckedChildren={<span className="text-white">{i18n?.t('Off')}</span>}
-                        />
-                    </Form.Item>
-                    <div className='relative'>
-                        <Button type='submit' className="mt-2.5">{i18n?.t('Submit')}</Button>
+            <div className="flex items-center justify-between bg-slate-50 border border-slate-100 rounded-xl px-4 py-3 mt-5">
+                <div className="flex items-center gap-2">
+                    <FiCheckCircle size={14} className={defaultEmail === 'others' ? 'text-emerald-500' : 'text-gray-300'} />
+                    <div>
+                        <span className="text-xs font-bold text-gray-700">{i18n?.t('Set as Default Provider')}</span>
+                        <p className="text-[10px] text-gray-400">Emails will be sent via this provider when enabled</p>
                     </div>
                 </div>
-            </Form>
+                <Form.Item name='default' className="!mb-0">
+                    <Switch
+                        checked={defaultEmail === 'others'}
+                        onChange={(checked) => setDefaultEmail(checked ? 'others' : '')}
+                        className={defaultEmail === 'others' ? '!bg-[#5572fc]' : '!bg-gray-300'}
+                    />
+                </Form.Item>
+            </div>
 
-        </div>
+            <div className="flex justify-end mt-5 pt-4 border-t border-slate-100">
+                <Button type='submit' className="flex items-center gap-1.5 !px-6 !py-2 shadow-md shadow-[#5572fc]/20 !rounded-lg !text-xs !font-bold">
+                    <FiSave size={13} /> {i18n?.t('Save Configuration')}
+                </Button>
+            </div>
+        </Form>
     );
 };
-
 
 export default OtherProviderManageEmail;

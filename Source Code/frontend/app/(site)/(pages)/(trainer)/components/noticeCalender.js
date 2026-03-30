@@ -21,7 +21,7 @@ const { Option } = Select;
 
 dayjs.extend(duration);
 
-const NoticeCalendar = ({ _id = null }) => {
+const NoticeCalendar = ({ _id = null, isAdmin = false }) => {
     const [setting] = useFetch(fetchAttendanceSettings)
     const [attendanceData, setAttendanceData] = useState([]);
     const [selectedYear, setSelectedYear] = useState(dayjs().year());
@@ -183,8 +183,8 @@ const NoticeCalendar = ({ _id = null }) => {
         );
     }
     return (
-        <div className='-mx-6 md:-mx-10 lg:-mx-12 flex flex-col mb-[-24px] md:mb-[-40px] lg:mb-[-48px]'>
-            <div className='mb-2 flex flex-col sm:flex-row items-center justify-between gap-4 px-6 md:px-10 lg:px-12'>
+        <div className={isAdmin ? 'flex flex-col w-full' : '-mx-6 md:-mx-10 lg:-mx-12 flex flex-col mb-[-24px] md:mb-[-40px] lg:mb-[-48px]'}>
+            <div className={`mb-2 flex flex-col sm:flex-row items-center justify-between gap-4 ${isAdmin ? 'px-2' : 'px-6 md:px-10 lg:px-12'}`}>
                 <div className='flex items-center space-x-4'>
                     <Select
                         defaultValue={selectedYear}
@@ -223,12 +223,14 @@ const NoticeCalendar = ({ _id = null }) => {
                                     ? 'Clock Out'
                                     : 'Clock In'}
                             </button>
-                        ) : <button
-                            className='rounded bg-[#5572fc] px-4 py-2 text-sm font-semibold text-white'
-                            onClick={() => router.back()}
-                        >
-                            Back
-                        </button>
+                        ) : !isAdmin && (
+                            <button
+                                className='rounded bg-[#5572fc] px-4 py-2 text-sm font-semibold text-white'
+                                onClick={() => router.back()}
+                            >
+                                Back
+                            </button>
+                        )
 
                     }
                 </div>

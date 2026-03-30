@@ -12,6 +12,7 @@ import FormDatePicker from '../../../../components/form/date_picker';
 import FormSelect from '../../../../components/form/select';
 import PageTitle from '../../components/common/page-title';
 import { useCurrency } from '../../../contexts/site';
+import { FiPlus, FiEdit2, FiTag, FiCalendar, FiPercent, FiShield } from 'react-icons/fi';
 
 const Page = () => {
     const i18n = useI18n();
@@ -20,60 +21,87 @@ const Page = () => {
     const {currencySymbol} = useCurrency()
     const [edit, setEdit] = useState(false);
     const [open, setOpen] = useState(false);
+    
     const columns = [
         {
-            text: 'Created At',
-            dataField: 'createdAt',
-            formatter: (_, d) => <div>{dayjs(d?.createdAt).format('MMM DD , YYYY')}</div>,
-        },
-        {
-            text: 'Name',
+            text: 'Coupon Details',
             dataField: 'name',
-            formatter: (_, d) => <div>{d?.name}</div>,
+            formatter: (_, d) => (
+                <div className="flex items-center gap-2 flex-wrap">
+                    <span className="font-bold text-gray-800 text-sm capitalize">{d?.name}</span>
+                    <span className="font-mono font-bold text-[#5572fc] text-[10px] bg-[#5572fc]/10 px-2 py-0.5 rounded tracking-widest uppercase flex-shrink-0">
+                        {d?.code}
+                    </span>
+                </div>
+            ),
         },
         {
-            text: 'code',
-            dataField: 'code',
-            formatter: (_, d) => <div>{d?.code}</div>,
-        },
-        {
-            text: 'discount',
+            text: 'Discount Value',
             dataField: 'discount',
-            formatter: (_, d) => <div>{d?.discount}</div>,
+            formatter: (_, d) => (
+                <div className="flex items-center gap-2">
+                    <span className="text-lg font-bold text-gray-800">
+                        {d?.type === 'percentage' ? `${d?.discount}%` : `${currencySymbol}${d?.discount}`}
+                    </span>
+                    <span className={`inline-flex items-center gap-1 rounded-md px-2 py-0.5 text-[9px] font-bold uppercase border ${
+                        d?.type === 'percentage'
+                            ? 'bg-purple-50 text-purple-600 border-purple-100/50'
+                            : 'bg-blue-50 text-blue-600 border-blue-100/50'
+                    }`}>
+                        {d?.type === 'percentage' ? <FiPercent size={8} /> : null}
+                        {d?.type}
+                    </span>
+                </div>
+            ),
         },
         {
-            text: 'type',
-            dataField: 'type',
-            formatter: (_, d) => <div>{d?.type}</div>,
+            text: 'Rules',
+            dataField: 'rules',
+            formatter: (_, d) => (
+                <div className="flex flex-col gap-1.5">
+                    <div className="text-[10px] font-medium text-gray-500 flex items-center gap-1">
+                        <span className="font-bold text-gray-400 w-[60px] flex-shrink-0">Min. Order</span>
+                        <span className="bg-slate-50 border border-slate-100 rounded px-1.5 font-bold text-gray-700">{currencySymbol}{d?.minimum_order_amount}</span>
+                    </div>
+                    <div className="text-[10px] font-medium text-gray-500 flex items-center gap-1">
+                        <span className="font-bold text-gray-400 w-[60px] flex-shrink-0">Uses/User</span>
+                        <span className="bg-slate-50 border border-slate-100 rounded px-1.5 font-bold text-gray-700">{d?.usage_limit_per_user}x</span>
+                    </div>
+                </div>
+            ),
         },
         {
-            text: 'usage limit per user',
-            dataField: 'usage_limit_per_user',
-            formatter: (_, d) => <div>{d?.usage_limit_per_user}</div>,
-        },
-        {
-            text: 'minimum order amount',
-            dataField: 'minimum_order_amount',
-            formatter: (_, d) => <div>{currencySymbol}{d?.minimum_order_amount}</div>,
-        },
-        {
-            text: 'expire at',
+            text: 'Expiry Date',
             dataField: 'expire_at',
-            formatter: (_, d) => <div>{dayjs(d?.expire_at).format('YYYY-MM-DD')}</div>,
+            formatter: (_, d) => {
+                const expired = dayjs(d?.expire_at).isBefore(dayjs());
+                return (
+                    <span className={`text-[10px] px-2.5 py-1 rounded-md border inline-flex items-center gap-1.5 font-medium whitespace-nowrap ${
+                        expired
+                            ? 'bg-rose-50 text-rose-500 border-rose-100/50'
+                            : 'bg-slate-50 text-gray-600 border-slate-200'
+                    }`}>
+                        <FiCalendar size={10} className={expired ? 'text-rose-400' : 'text-gray-400'} />
+                        {dayjs(d?.expire_at).format('DD MMM YYYY')}
+                    </span>
+                );
+            },
         },
         {
             text: 'Status',
             dataField: 'status',
             formatter: (_, d) => (
-                <Switch
-                    checkedChildren={i18n?.t('Active')}
-                    unCheckedChildren={i18n?.t('Inactive')}
-                    checked={d?.status}
-                    onChange={async (e) => {
-                        await useAction(postCupon, { _id: d._id, status: e }, () => getData());
-                    }}
-                    className='bg-gray-500'
-                />
+                <div className="flex items-center justify-between bg-slate-50 border border-slate-100 rounded-lg p-1.5 px-2.5 w-fit gap-3">
+                    <span className="text-[10px] font-bold text-gray-600 uppercase tracking-wide">{d?.status ? 'ACTIVE' : 'INACTIVE'}</span>
+                    <Switch
+                        size="small"
+                        checked={d?.status}
+                        onChange={async (e) => {
+                            await useAction(postCupon, { _id: d._id, status: e }, () => getData());
+                        }}
+                        className="!m-0"
+                    />
+                </div>
             ),
         },
     ];
@@ -96,116 +124,171 @@ const Page = () => {
             getData();
         });
     };
-    return (
-        <div>
-            <PageTitle title={'Coupon List'} />
-            <Table
-                action={
-                    <Button
-                        onClick={() => {
-                            form.resetFields();
-                            setOpen(true);
-                        }}
-                    >
-                        {i18n?.t('Add Cupon')}
-                    </Button>
-                }
-                onEdit={(values) => {
-                    setTimeout(() => {
-                        form.setFieldsValue({
-                            ...values,
-                            _id: values?._id,
-                            expire_at: dayjs(values?.expire_at),
-                            status: values?.status === 'Active' || values?.status === true,
-                            name: values?.name,
-                            code: values?.code,
-                            discount: values?.discount,
-                            type: values?.type,
-                            usage_limit_per_user: values?.usage_limit_per_user,
-                            minimum_order_amount: values?.minimum_order_amount,
-                        });
-                    }, 0);
 
-                    setEdit(true);
-                    setOpen(true);
-                }}
-                data={data}
-                columns={columns}
-                indexed
-                pagination
-                onReload={getData}
-                loading={loading}
-                onDelete={delCupon}
-            />
+    return (
+        <div className="max-w-[1600px] mx-auto space-y-3 animate-fade-in relative">
+            <div className="mb-4">
+                <PageTitle title="Coupon Management" />
+            </div>
+
+            <div className="bg-white rounded-xl shadow-sm border border-slate-100/80">
+                <Table
+                    action={
+                        <Button
+                            onClick={() => {
+                                form.resetFields();
+                                setEdit(false);
+                                setOpen(true);
+                            }}
+                            className="flex items-center gap-1.5 !px-4 shadow-md shadow-[#5572fc]/20 hover:shadow-lg hover:shadow-[#5572fc]/30 transition-all !h-8 !py-0 !rounded-lg block !w-auto !text-xs whitespace-nowrap"
+                        >
+                            <FiPlus size={14} />
+                            {i18n?.t('Add Coupon')}
+                        </Button>
+                    }
+                    onEdit={(values) => {
+                        setTimeout(() => {
+                            form.setFieldsValue({
+                                ...values,
+                                _id: values?._id,
+                                expire_at: dayjs(values?.expire_at),
+                                status: values?.status === 'Active' || values?.status === true,
+                                name: values?.name,
+                                code: values?.code,
+                                discount: values?.discount,
+                                type: values?.type,
+                                usage_limit_per_user: values?.usage_limit_per_user,
+                                minimum_order_amount: values?.minimum_order_amount,
+                            });
+                        }, 0);
+                        setEdit(true);
+                        setOpen(true);
+                    }}
+                    data={data}
+                    columns={columns}
+                    indexed
+                    pagination
+                    onReload={getData}
+                    loading={loading}
+                    onDelete={delCupon}
+                />
+            </div>
 
             <Modal
-                open={open}
-                onCancel={() => setOpen(false)}
-                title={edit ? i18n?.t('Edit Coupon') : i18n?.t('Add Coupon')}
-                footer={null}
                 destroyOnClose
-                width={700}
+                width={580}
+                title={
+                    <div className="flex items-center gap-2.5 pb-2.5 border-b border-gray-100">
+                        <div className="w-8 h-8 rounded-lg bg-[#5572fc]/10 text-[#5572fc] flex items-center justify-center">
+                            {edit ? <FiEdit2 size={15} /> : <FiTag size={15} />}
+                        </div>
+                        <div>
+                            <span className="text-base font-bold text-gray-800 block leading-tight">
+                                {edit ? i18n?.t('Edit Coupon') : i18n?.t('Add New Coupon')}
+                            </span>
+                        </div>
+                    </div>
+                }
+                open={open}
+                onCancel={() => { setOpen(false); form.resetFields(); }}
+                footer={null}
+                className="custom-modal rounded-xl"
+                styles={{ content: { padding: '20px' } }}
             >
-                <Form layout='vertical' form={form} onFinish={handleSubmit}>
+                <Form layout='vertical' form={form} onFinish={handleSubmit} className="mt-3 space-y-0">
                     {edit && <HiddenInput name='_id' />}
-                    <div className='grid grid-cols-2 gap-4'>
+
+                    {/* Identity Row */}
+                    <div className="grid grid-cols-2 gap-x-4 gap-y-0">
                         <FormInput
-                            placeholder={'Enter name '}
+                            placeholder="e.g. Summer Sale"
                             name='name'
-                            label={i18n?.t('Name')}
-                            required={true}
+                            label={i18n?.t('Coupon Name')}
+                            required
                         />
                         <FormInput
-                            placeholder={'Enter code '}
+                            placeholder="e.g. SUMMER20"
                             name='code'
-                            label={i18n?.t('Code')}
-                            required={true}
+                            label={i18n?.t('Coupon Code')}
+                            required
                         />
+                    </div>
+
+                    {/* Discount Row */}
+                    <div className="grid grid-cols-2 gap-x-4 gap-y-0">
                         <FormInput
-                            placeholder={'Enter discount '}
+                            placeholder="e.g. 20"
                             name='discount'
                             type='number'
-                            label={i18n?.t('Discount')}
-                            required={true}
+                            label={i18n?.t('Discount Value')}
+                            required
                         />
                         <FormSelect
-                            placeholder={'Enter type '}
+                            placeholder="Select type"
                             name='type'
-                            type='number'
-                            label={i18n?.t('Type')}
-                            required={true}
+                            label={i18n?.t('Discount Type')}
+                            required
                             options={[
-                                { label: i18n?.t('Percentage'), value: 'percentage' },
-                                { label: i18n?.t('Flat'), value: 'flat' },
+                                { label: i18n?.t('Percentage (%)'), value: 'percentage' },
+                                { label: i18n?.t('Flat Amount'), value: 'flat' },
                             ]}
                         />
+                    </div>
+
+                    {/* Limits Row */}
+                    <div className="grid grid-cols-2 gap-x-4 gap-y-0">
                         <FormInput
-                            placeholder={'Enter usage limit per user '}
+                            placeholder="e.g. 3"
                             name='usage_limit_per_user'
                             type='number'
-                            label={i18n?.t('Usage limit per user')}
-                            required={true}
+                            label={i18n?.t('Usage Limit / User')}
+                            required
                         />
                         <FormInput
-                            placeholder={'Enter minimum order amount '}
+                            placeholder="e.g. 500"
                             name='minimum_order_amount'
                             type='number'
-                            label={i18n?.t('Minimum order amount')}
-                            required={true}
+                            label={i18n?.t('Min. Order Amount')}
+                            required
                         />
-                        <FormDatePicker
-                            placeholder={'Enter expire at '}
-                            name='expire_at'
-                            label={i18n?.t('Expire at')}
-                            required={true}
-                        />
-                        <Form.Item name='status' label={'Status'} valuePropName='checked'>
-                            <Switch className='!rounded-full bg-[#505d69] text-black' />
-                        </Form.Item>
                     </div>
-                    <Button className='mt-5' type='submit'>
-                        {i18n?.t('Submit')}
-                    </Button>
+
+                    {/* Expiry + Status Row */}
+                    <div className="grid grid-cols-2 gap-x-4 gap-y-0">
+                        <FormDatePicker
+                            placeholder="Pick expiry date"
+                            name='expire_at'
+                            label={i18n?.t('Expiry Date')}
+                            required
+                        />
+                        <div className="bg-slate-50/50 border border-slate-100 rounded-xl px-4 py-3 flex items-center justify-between mt-[30px] mb-6 h-[40px]">
+                            <div className="flex items-center gap-2">
+                                <FiShield size={14} className="text-gray-400" />
+                                <span className="text-xs font-bold text-gray-600">{i18n?.t('Active Status')}</span>
+                            </div>
+                            <Form.Item name='status' valuePropName='checked' className="!mb-0">
+                                <Switch size="small" />
+                            </Form.Item>
+                        </div>
+                    </div>
+
+                    {/* Actions */}
+                    <div className="flex justify-end gap-2 mt-2 pt-3 border-t border-gray-100">
+                        <Button
+                            type="button"
+                            onClick={() => { setOpen(false); form.resetFields(); }}
+                            className="!bg-white !text-gray-600 !border-gray-200 hover:!bg-gray-50 !py-1.5 !px-4 !font-semibold !rounded-lg !text-xs"
+                        >
+                            Cancel
+                        </Button>
+                        <Button
+                            type='submit'
+                            className='!px-5 !py-1.5 flex items-center gap-1.5 shadow-md shadow-[#5572fc]/20 hover:shadow-lg !font-semibold !rounded-lg !text-xs transition-all'
+                        >
+                            {edit ? <FiEdit2 size={13} /> : <FiPlus size={13} />}
+                            {edit ? i18n?.t('Save Changes') : i18n?.t('Create Coupon')}
+                        </Button>
+                    </div>
                 </Form>
             </Modal>
         </div>

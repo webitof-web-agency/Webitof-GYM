@@ -7,6 +7,7 @@ import { useI18n } from "../../../../../providers/i18n";
 import { useFetch } from "../../../../../helpers/hooks";
 import { allProductCategory, singleProductAdmin } from "../../../../../helpers/backend";
 import ProductForm from "../../add/productForm";
+import { FiGlobe } from "react-icons/fi";
 
 const fallbackLanguage = { code: 'en', name: 'English' };
 
@@ -20,10 +21,10 @@ const page = ({ params }) => {
     const [selectedLang, setSelectedLang] = useState();
     const [isVarient, setIsVarient] = useState(false);
     const [formData, setFromData] = useState([])
-    const availableLanguages =
-        Array.isArray(languages?.docs) && languages.docs.length > 0
-            ? languages.docs
-            : [fallbackLanguage];
+    
+    const availableLanguages = Array.isArray(languages?.docs) && languages.docs.length > 0
+        ? languages.docs
+        : [fallbackLanguage];
 
     useEffect(() => {
         setSelectedLang(langCode || availableLanguages[0]?.code || 'en')
@@ -31,13 +32,15 @@ const page = ({ params }) => {
 
     useEffect(() => {
         getData({ _id: params?.id })
-    }, [params?.id])
+    }, [params?.id, getData])
 
     useEffect(() => {
         getCategory();
-    }, [])
+    }, [getCategory])
 
     useEffect(() => {
+        if (!data?.product) return;
+        
         form.setFieldsValue({
             name: data?.product?.name,
             short_description: data?.product?.short_description,
@@ -71,31 +74,58 @@ const page = ({ params }) => {
         if (data?.product?.variants?.length > 0) {
             setIsVarient(true)
         }
-    }, [data])
+    }, [data, form])
 
     return (
-        <div className="px-4 flex flex-col gap-4">
-            <button className="bg-[#5572fc] px-3 py-1 flex items-center gap-1 text-white rounded  w-fit"
-                title="Back" onClick={() => window.history.back()}>
-                <FaArrowLeft /> {i18n?.t('Back')}
-            </button>
-            <h1 className="text-2xl font-bold my-4">{i18n?.t('Edit Product')}</h1>
-            <div className="flex justify-start flex-wrap gap-3">
-                {availableLanguages.map((l, index) => (
-                    <button
-                        type="button"
-                        onClick={() => setSelectedLang(l.code)}
-                        className={`px-3 py-1 rounded-full text-sm font-medium transition-colors duration-200 ${l.code === selectedLang
-                            ? 'bg-[#5572fc] text-white'
-                            : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-                            }`}
-                        key={index}
+        <div className="max-w-[1200px] mx-auto pb-10 animate-fade-in relative px-4 sm:px-0">
+            <div className="flex justify-between items-center mb-6 pt-2">
+                <div className="flex items-center gap-4">
+                    <button 
+                        onClick={() => router.back()}
+                        className="flex flex-shrink-0 items-center justify-center w-8 h-8 bg-white border border-slate-200 rounded-lg shadow-sm text-gray-500 hover:text-[#5572fc] hover:border-[#5572fc] transition-all"
                     >
-                        {l.name}
+                        <FaArrowLeft size={14} />
                     </button>
-                ))}
+                    <h1 className="text-xl font-bold text-gray-800 tracking-tight leading-none relative top-[1px]">{i18n?.t('Edit Product Structure')}</h1>
+                </div>
+
+                {availableLanguages.length > 1 && (
+                    <div className='flex items-center justify-start gap-2 bg-white p-1.5 rounded-xl shadow-sm border border-slate-100 overflow-x-auto'>
+                        <div className="pl-2 pr-1 text-slate-400"><FiGlobe size={14} /></div>
+                        {availableLanguages.map((l, index) => (
+                            <button
+                                type="button"
+                                onClick={() => setSelectedLang(l.code)}
+                                className={`rounded-lg px-4 py-1.5 text-xs font-bold transition-all duration-300 flex-shrink-0 ${
+                                    l.code === selectedLang
+                                        ? 'bg-slate-50 text-[#5572fc] shadow-inner border border-slate-200'
+                                        : 'text-gray-500 hover:bg-slate-50 hover:text-gray-700'
+                                }`}
+                                key={index}
+                            >
+                                {l.name}
+                            </button>
+                        ))}
+                    </div>
+                )}
             </div>
-            <ProductForm isVarient={isVarient} setIsVarient={setIsVarient} category={category} data={data} languages={{ ...(languages || {}), docs: availableLanguages }} langCode={langCode} selectedLang={selectedLang} setSelectedLang={setSelectedLang} form={form} formData={formData} setFromData={setFromData} i18n={i18n} router={router} productId={params.id} />
+
+            <ProductForm 
+                isVarient={isVarient} 
+                setIsVarient={setIsVarient} 
+                category={category} 
+                data={data} 
+                languages={{ ...(languages || {}), docs: availableLanguages }} 
+                langCode={langCode} 
+                selectedLang={selectedLang} 
+                setSelectedLang={setSelectedLang} 
+                form={form} 
+                formData={formData} 
+                setFromData={setFromData} 
+                i18n={i18n} 
+                router={router} 
+                productId={params.id} 
+            />
         </div>
     );
 };

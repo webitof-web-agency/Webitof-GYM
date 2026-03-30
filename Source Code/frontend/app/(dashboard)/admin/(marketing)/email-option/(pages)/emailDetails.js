@@ -1,6 +1,7 @@
 import { Modal, Button } from 'antd';
 import dayjs from 'dayjs';
 import React, { useState } from 'react';
+import { FiMail, FiUsers, FiClock, FiCheck, FiFileText, FiX } from 'react-icons/fi';
 
 const EmailDetails = ({ open, setOpen, details }) => {
     const [showAllRecipients, setShowAllRecipients] = useState(false);
@@ -10,49 +11,110 @@ const EmailDetails = ({ open, setOpen, details }) => {
         <Modal
             open={open}
             onCancel={() => setOpen(false)}
-            width={800}
-            title={
-                <span className='text-lg flex items-center gap-2'>
-                    <span>Email Details</span>
-                    <span className='text-sm mt-[3px]'>
-                        ({dayjs(details?.createdAt).format('MMM D, YYYY h:mm A')})
-                    </span>
-                </span>
-            }
+            width={700}
             footer={null}
-        >
-            <div className="w-full bg-white rounded-lg mt-5 mb-5">
-                <div className="mb-2">
-                    <span className="font-bold">From:</span> {details?.from}
-                </div>
-
-                <div className="mb-2">
-                    <span className="font-bold">To:</span>
-                    <div 
-                        className={`overflow-y-auto hide-scrollbar ${showAllRecipients ? 'h-[200px]' : 'h-fit'} transition-all duration-300`}
-                    >
-                        <ul className="list-disc pl-6">
-                            {details?.to && (showAllRecipients ? details?.to : details?.to.slice(0, maxRecipientsToShow)).map((recipient, index) => (
-                                <li key={index}>{recipient}</li>
-                            ))}
-                        </ul>
+            destroyOnClose
+            title={
+                <div className="flex items-center gap-2.5 pb-2.5 border-b border-gray-100">
+                    <div className="w-8 h-8 rounded-lg bg-[#5572fc]/10 text-[#5572fc] flex items-center justify-center">
+                        <FiMail size={15} />
                     </div>
-                    {details?.to?.length > maxRecipientsToShow && (
-                        <Button 
-                            type="link" 
-                            onClick={() => setShowAllRecipients(!showAllRecipients)}
-                        >
-                            {showAllRecipients ? 'See Less' : 'See More'}
-                        </Button>
-                    )}
+                    <div>
+                        <span className="text-base font-bold text-gray-800 block leading-tight">
+                            Email Campaign Details
+                        </span>
+                        <span className="text-[10px] text-gray-500 font-medium">View the broadcast summary</span>
+                    </div>
+                </div>
+            }
+            className="custom-modal rounded-xl"
+            styles={{ content: { padding: '20px' } }}
+        >
+            <div className="space-y-4 mt-3">
+                {/* Meta Header */}
+                <div className="grid grid-cols-2 gap-4">
+                    <div className="bg-slate-50/50 border border-slate-100 rounded-xl p-3 flex items-start flex-col gap-1">
+                        <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest flex items-center gap-1">
+                            <FiClock size={10} /> Date Sent
+                        </span>
+                        <span className="text-xs font-bold text-gray-800">
+                            {dayjs(details?.createdAt).format('DD MMM YYYY, hh:mm A')}
+                        </span>
+                    </div>
+                    <div className="bg-slate-50/50 border border-slate-100 rounded-xl p-3 flex items-start flex-col gap-1">
+                        <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest flex items-center gap-1">
+                            <FiUsers size={10} /> Sender Detail
+                        </span>
+                        <span className="text-xs font-bold text-[#5572fc]">
+                            {details?.from || 'Default Sender Address'}
+                        </span>
+                    </div>
                 </div>
 
-                <div className="my-4">
-                    <span className="font-bold">Subject:</span> {details?.subject}
+                {/* Audience Selection */}
+                <div className="border border-slate-100 rounded-xl overflow-hidden shadow-sm">
+                    <div className="bg-slate-50 px-4 py-2 border-b border-slate-100 flex items-center gap-1.5">
+                        <FiUsers size={12} className="text-gray-400" />
+                        <span className="text-[10px] font-bold text-gray-600 uppercase tracking-widest">Recipient Audience List</span>
+                    </div>
+                    <div className="p-4 bg-white">
+                        <div className={`overflow-y-auto hide-scrollbar ${showAllRecipients ? 'max-h-[160px]' : 'h-fit'} transition-all duration-300`}>
+                            <ul className="grid grid-cols-1 sm:grid-cols-2 gap-y-2 gap-x-4">
+                                {details?.to && (showAllRecipients ? details.to : details.to.slice(0, maxRecipientsToShow)).map((recipient, index) => (
+                                    <li key={index} className="flex items-center gap-2 text-xs text-gray-600 font-medium">
+                                        <div className="w-4 h-4 rounded-full bg-emerald-50 text-emerald-500 flex items-center justify-center flex-shrink-0">
+                                            <FiCheck size={8} />
+                                        </div>
+                                        <span className="truncate">{recipient}</span>
+                                    </li>
+                                ))}
+                            </ul>
+                            {!details?.to?.length && (
+                                <p className="text-xs text-gray-400 italic">No direct email targets selected.</p>
+                            )}
+                        </div>
+                        {details?.to?.length > maxRecipientsToShow && (
+                            <div className="mt-3 pt-3 border-t border-slate-50 flex justify-center">
+                                <button 
+                                    className="text-[10px] font-bold text-[#5572fc] hover:text-[#5572fc]/80 uppercase tracking-wide bg-[#5572fc]/10 px-3 py-1 rounded"
+                                    onClick={() => setShowAllRecipients(!showAllRecipients)}
+                                >
+                                    {showAllRecipients ? 'Collapse Target List' : `View ${details.to.length - maxRecipientsToShow} More Target Emails`}
+                                </button>
+                            </div>
+                        )}
+                    </div>
                 </div>
-                <div className="mt-4 p-4 border rounded bg-gray-50">
-                    <span className="font-bold">Content:</span>
-                    <div className="mt-2" dangerouslySetInnerHTML={{ __html: details?.content }} />
+
+                {/* Content Body */}
+                <div className="border border-slate-100 rounded-xl overflow-hidden shadow-sm">
+                    <div className="bg-slate-50 px-4 py-2 border-b border-slate-100 flex items-center gap-1.5">
+                        <FiFileText size={12} className="text-gray-400" />
+                        <span className="text-[10px] font-bold text-gray-600 uppercase tracking-widest">Email Message</span>
+                    </div>
+                    <div className="bg-white p-4">
+                        <div className="mb-4 pb-3 border-b border-slate-100">
+                            <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest block mb-1">Subject Line</span>
+                            <span className="text-sm font-bold text-gray-800 leading-snug">{details?.subject || 'No Subject Provided'}</span>
+                        </div>
+                        <div>
+                            <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest block mb-2">HTML Content Block</span>
+                            <div 
+                                className="bg-slate-50/50 border border-slate-100 rounded-lg p-5 text-sm text-gray-700 min-h-[120px] max-h-[250px] overflow-y-auto prose prose-sm max-w-none shadow-inner" 
+                                dangerouslySetInnerHTML={{ __html: details?.content }} 
+                            />
+                        </div>
+                    </div>
+                </div>
+
+                {/* Actions */}
+                <div className="flex justify-end mt-4 pt-3 border-t border-gray-100">
+                    <button
+                        onClick={() => setOpen(false)}
+                        className="flex items-center gap-1.5 text-xs font-bold text-gray-500 bg-slate-50 hover:bg-slate-100 border border-slate-200 px-6 py-2 rounded-lg transition-colors"
+                    >
+                        <FiX size={13} /> Close Window
+                    </button>
                 </div>
             </div>
         </Modal>

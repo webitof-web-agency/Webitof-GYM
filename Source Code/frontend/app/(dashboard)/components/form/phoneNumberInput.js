@@ -6,7 +6,7 @@ import 'react-phone-number-input/style.css'
 
 const PhoneNumberInput = ({ name, label, required = false, initialValue = '', rules = [], dependencies = [], isEmail, readOnly, onChange, placeholder }) => {
     let initRules = [
-        { required: required, message: `Please provide ${label?.toLowerCase() || 'a value'}` },
+        { required: required, message: `Please provide ${typeof label === 'string' ? label.toLowerCase() : 'a valid phone number'}` },
         () => ({
             validator(_, value) {
                 if (value && !isValidPhoneNumber(value)) {
