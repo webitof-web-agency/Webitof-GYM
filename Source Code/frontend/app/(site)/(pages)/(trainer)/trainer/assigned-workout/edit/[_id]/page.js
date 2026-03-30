@@ -124,13 +124,12 @@ const Page = ({ params }) => {
     };
 
     return (
-        <div>
+        <div className="bg-white">
             <div className=''>
-                <div className='flex justify-between'>
-                    <h3 className='profileHeading' >{i18n?.t("Edit Workout")}</h3>
-                    <Button onClick={() => push('/trainer/assigned-workout')} className='!h-fit !py-1'>{i18n?.t("Back")}</Button>
+                <div className='flex justify-between items-center mb-6'>
+                    <h3 className='text-xl font-bold text-slate-800 tracking-tight' >{i18n?.t("Edit Workout")}</h3>
+                    <Button onClick={() => push('/trainer/assigned-workout')} type="button" className='!h-fit !py-2.5 !px-6 rounded-xl shadow-sm'>{i18n?.t("Back")}</Button>
                 </div>
-                <hr />
                 <Form form={form} layout='horizontal' onFinish={onFinish}>
                     <div className="w-full sm:flex gap-6 my-4">
                         <Radio.Group onChange={handleRadioChange} value={selectedRadio}>

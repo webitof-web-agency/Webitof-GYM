@@ -1,10 +1,32 @@
-import React from 'react';
-import { SwiperSlide, Swiper } from 'swiper/react';
-import { Autoplay, Pagination } from 'swiper/modules';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Button from '../../../../../components/common/button';
 
 const HeroSwiper = ({ i18n, data }) => {
+    const [SwiperComponents, setSwiperComponents] = useState(null);
+    const [SwiperModules, setSwiperModules] = useState(null);
+
+    useEffect(() => {
+        let mounted = true;
+        Promise.all([import('swiper/react'), import('swiper/modules')]).then(([react, modules]) => {
+            if (!mounted) {
+                return;
+            }
+            setSwiperComponents({ Swiper: react.Swiper, SwiperSlide: react.SwiperSlide });
+            setSwiperModules({ Pagination: modules.Pagination, Autoplay: modules.Autoplay });
+        });
+        return () => {
+            mounted = false;
+        };
+    }, []);
+
+    if (!SwiperComponents || !SwiperModules) {
+        return <div className="h-[240px] sm:h-[300px] lg:h-[360px] rounded bg-gray-100 animate-pulse" />;
+    }
+
+    const { Swiper, SwiperSlide } = SwiperComponents;
+    const { Autoplay, Pagination } = SwiperModules;
+
     return (
         <Swiper
             spaceBetween={30}

@@ -34,30 +34,51 @@ const TrainerDashboard = () => {
 
   ];
   return (
-    <>
-      <div className="">
-        <div className="grid grid-cols-1 sm:grid-cols-2  gap-4 mb-8">
-          <div className=" bg-white group p-6 rounded-lg  shadow-lg">
-            <div className="flex gap-6 items-center">
-              <div className="p-2 rounded-full bg-[#5572fc] "><FaPeopleGroup className="text-4xl text-white " /></div>
-              <h2 className="text-[18px]  text-textMain font-semibold">{i18n?.t("Groups")}</h2>
-            </div>
-            <div className="flex justify-end md:mt-[18px]">
-              <p className="text-[28px] font-semibold leading-[42px]  text-textMain">{data?.docs?.length || 0}</p>
-            </div>
+    <div className="w-full">
+      {/* Stat Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+        {/* Groups Card */}
+        <div className="relative overflow-hidden bg-gradient-to-br from-[#5572fc] to-indigo-600 rounded-2xl p-6 shadow-md transition-all duration-300 hover:shadow-lg hover:-translate-y-1 group">
+          <div className="absolute -right-4 -bottom-4 opacity-10 group-hover:scale-110 group-hover:rotate-6 transition-transform duration-500">
+            <FaPeopleGroup className="text-9xl text-white" />
           </div>
-          <div className=" bg-white group p-6 rounded-lg  shadow-lg">
-            <div className="flex gap-6 items-center">
-              <div className="p-2 rounded-full bg-[#5572fc] "><FaBell className="text-4xl text-white " /></div>
-              <h2 className="text-[18px] e text-textMain font-semibold">{i18n?.t("Notice")}</h2>
+          <div className="relative z-10 flex items-start justify-between">
+            <div>
+              <p className="text-white/80 font-medium text-sm mb-1 uppercase tracking-wider">{i18n?.t("Total Groups")}</p>
+              <h3 className="text-white font-bold text-4xl drop-shadow-sm">{data?.docs?.length || 0}</h3>
             </div>
-            <div className="flex justify-end md:mt-[18px]">
-              <p className="text-[28px] font-semibold leading-[42px]  text-textMain">{notice?.docs?.length || 0}</p>
+            <div className="p-3 bg-white/20 rounded-xl backdrop-blur-md shadow-inner text-white">
+              <FaPeopleGroup className="text-3xl" />
             </div>
           </div>
         </div>
-        <div className="bg-white  rounded-lg shadow-lg w-full">
-          <h2 className="text-lg font-semibold bg-[#5572fc] text-white p-4 rounded-t-lg">{i18n?.t("Group List")}</h2>
+
+        {/* Notice Card */}
+        <div className="relative overflow-hidden bg-gradient-to-br from-emerald-500 to-teal-500 rounded-2xl p-6 shadow-md transition-all duration-300 hover:shadow-lg hover:-translate-y-1 group">
+          <div className="absolute -right-4 -bottom-4 opacity-10 group-hover:scale-110 group-hover:-rotate-6 transition-transform duration-500">
+            <FaBell className="text-9xl text-white" />
+          </div>
+          <div className="relative z-10 flex items-start justify-between">
+            <div>
+              <p className="text-white/80 font-medium text-sm mb-1 uppercase tracking-wider">{i18n?.t("Recent Notices")}</p>
+              <h3 className="text-white font-bold text-4xl drop-shadow-sm">{notice?.docs?.length || 0}</h3>
+            </div>
+            <div className="p-3 bg-white/20 rounded-xl backdrop-blur-md shadow-inner text-white">
+              <FaBell className="text-3xl" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Table Section */}
+      <div className="bg-slate-50/50 rounded-2xl border border-slate-200/60 overflow-hidden">
+        <div className="p-5 sm:p-6 border-b border-slate-200/80 bg-white">
+          <h2 className="text-lg font-bold text-slate-800 flex items-center gap-2">
+            <span className="w-1.5 h-6 bg-[#5572fc] rounded-full inline-block"></span>
+            {i18n?.t("Group List")}
+          </h2>
+        </div>
+        <div className="p-4 sm:p-6 bg-white">
           <TrainerTable
             data={data}
             columns={columns}
@@ -68,7 +89,7 @@ const TrainerDashboard = () => {
           />
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

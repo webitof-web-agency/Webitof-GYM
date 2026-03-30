@@ -1,11 +1,19 @@
 "use client"
 
-import { Editor } from "react-draft-wysiwyg";
+import dynamic from "next/dynamic";
 import { EditorState, convertToRaw, ContentState } from 'draft-js';
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import draftToHtml from 'draftjs-to-html';
 import htmlToDraft from 'html-to-draftjs';
 import { useEffect, useState } from "react";
+
+const Editor = dynamic(
+    () => import("react-draft-wysiwyg").then((mod) => mod.Editor),
+    {
+        ssr: false,
+        loading: () => <div className="h-20 rounded bg-gray-100 animate-pulse" />,
+    }
+);
 
 const DraftEditor = ({ value, onChange }) => {
     const [editorState, setEditorState] = useState(EditorState.createEmpty())

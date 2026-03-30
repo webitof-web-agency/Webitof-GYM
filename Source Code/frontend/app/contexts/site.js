@@ -17,40 +17,54 @@ const SiteProvider = ({ children }) => {
     const findDefaultTheme = allThemes?.find((theme) => theme?.isDefault === true);
 
     useEffect(() => {
-        fetchCurrency().then(({ data }) => {
-            const isDefault = data?.find(c => c.default === true);
+        const run = () => {
+            fetchCurrency().then(({ data }) => {
+                const isDefault = data?.find(c => c.default === true);
 
-            if (Array.isArray(data)) {
-                setCurrencies(data);
+                if (Array.isArray(data)) {
+                    setCurrencies(data);
 
-                const savedCurrency = localStorage.getItem('currency') || isDefault?.code;
+                    const savedCurrency = localStorage.getItem('currency') || isDefault?.code;
 
-                const defaultCurrency = data.find(c => c.code === savedCurrency);
+                    const defaultCurrency = data.find(c => c.code === savedCurrency);
 
-                if (defaultCurrency) {
-                    setCurrency(defaultCurrency.code);
-                    setCurrencySymbol(defaultCurrency.symbol);
-                    setCurrencyRate(defaultCurrency.rate);
-                    localStorage.setItem('currency', defaultCurrency.code);
+                    if (defaultCurrency) {
+                        setCurrency(defaultCurrency.code);
+                        setCurrencySymbol(defaultCurrency.symbol);
+                        setCurrencyRate(defaultCurrency.rate);
+                        localStorage.setItem('currency', defaultCurrency.code);
+                    }
+                } else {
+                    console.error("Unexpected data format:", data);
+                    setCurrencies([]);
                 }
-            } else {
-                console.error("Unexpected data format:", data);
+            }).catch(error => {
+                console.error("Error fetching currencies:", error);
                 setCurrencies([]);
-            }
-        }).catch(error => {
-            console.error("Error fetching currencies:", error);
-            setCurrencies([]);
-        });
+            });
+        };
+        if (typeof window !== "undefined" && "requestIdleCallback" in window) {
+            window.requestIdleCallback(run);
+        } else {
+            setTimeout(run, 1);
+        }
     }, []);
 
     useEffect(() => {
-        fetchTheme().then(({ error, data }) => {
-            if (!error) {
-                setAllThemes(Array.isArray(data) ? data : []);
-            }
-        }).catch(() => {
-            setAllThemes([]);
-        });
+        const run = () => {
+            fetchTheme().then(({ error, data }) => {
+                if (!error) {
+                    setAllThemes(Array.isArray(data) ? data : []);
+                }
+            }).catch(() => {
+                setAllThemes([]);
+            });
+        };
+        if (typeof window !== "undefined" && "requestIdleCallback" in window) {
+            window.requestIdleCallback(run);
+        } else {
+            setTimeout(run, 1);
+        }
     }, []);
 
     const getCartItems = async (query = {}) => {
@@ -70,9 +84,20 @@ const SiteProvider = ({ children }) => {
     };
 
     useEffect(() => {
-        getCartItems().catch(() => {
-            setCartItems(undefined);
-        });
+        const run = () => {
+            if (!localStorage.getItem('token')) {
+                setCartItems(undefined);
+                return;
+            }
+            getCartItems().catch(() => {
+                setCartItems(undefined);
+            });
+        };
+        if (typeof window !== "undefined" && "requestIdleCallback" in window) {
+            window.requestIdleCallback(run);
+        } else {
+            setTimeout(run, 1);
+        }
     }, []);
 
     const changeCurrency = (code) => {

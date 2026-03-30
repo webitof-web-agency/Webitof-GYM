@@ -20,12 +20,11 @@ const FitnessGroupsTable = ({ params }) => {
     }, [params?._id])
 
     return (
-        <div className="w-full overflow-x-auto">
-            <div className='flex justify-between'>
-                <h3 className='profileHeading' >{i18n?.t("view group member")}</h3>
-                <Button onClick={() => router.back()} className='!h-fit !py-1'>{i18n?.t("Back")}</Button>
+        <div className="bg-white w-full overflow-x-auto">
+            <div className='flex justify-between items-center mb-6'>
+                <h3 className='text-xl font-bold text-slate-800 tracking-tight' >{i18n?.t("View Group Member")}</h3>
+                <Button onClick={() => router.back()} type="button" className='!h-fit !py-2.5 !px-6 rounded-xl shadow-sm'>{i18n?.t("Back")}</Button>
             </div>
-            <hr className='mb-4'/>
             <div className='w-full overflow-x-scroll hide-scrollbar '>
                 {
                     data?.docs?.[0]?.members?.length > 0 ? <ListItem data={data} /> : <Empty />

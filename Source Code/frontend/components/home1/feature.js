@@ -1,7 +1,5 @@
 'use client';
-import React from 'react';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Pagination, Autoplay } from 'swiper/modules';
+import React, { useEffect, useState } from 'react';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
@@ -15,10 +13,42 @@ import { useI18n } from '../../app/providers/i18n';
 const Features = () => {
   const [data] = useFetch(fetchFeatures);
   const i18n = useI18n();
+  const [SwiperComponents, setSwiperComponents] = useState(null);
+  const [SwiperModules, setSwiperModules] = useState(null);
   const slideVariants = {
     hidden: { opacity: 0, y: 50 },
     visible: { opacity: 1, y: 0 },
   };
+
+  useEffect(() => {
+    let mounted = true;
+    Promise.all([import('swiper/react'), import('swiper/modules')]).then(([react, modules]) => {
+      if (!mounted) {
+        return;
+      }
+      setSwiperComponents({ Swiper: react.Swiper, SwiperSlide: react.SwiperSlide });
+      setSwiperModules({ Pagination: modules.Pagination, Autoplay: modules.Autoplay });
+    });
+    return () => {
+      mounted = false;
+    };
+  }, []);
+
+  if (!SwiperComponents || !SwiperModules) {
+    return (
+      <div className='relative max-w-[1320px] px-4 md:px-0 mx-auto lg:my-[120px] my-[60px] overflow-x-hidden'>
+        <BannerTitle className={"items-center"} title={i18n?.t('why choose us ?')} subtitle={i18n?.t('Features')} />
+        <div className='grid gap-6 mt-10 md:grid-cols-2 lg:grid-cols-4'>
+          {[0, 1, 2, 3].map((i) => (
+            <div key={i} className="h-40 rounded bg-gray-100 animate-pulse" />
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  const { Swiper, SwiperSlide } = SwiperComponents;
+  const { Pagination, Autoplay } = SwiperModules;
 
   return (
     <div className='relative max-w-[1320px] px-4 md:px-0 mx-auto lg:my-[120px] my-[60px] overflow-x-hidden'>

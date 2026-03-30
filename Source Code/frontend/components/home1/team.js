@@ -1,7 +1,6 @@
 'use client';
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from 'react-icons/md';
-import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
@@ -17,8 +16,22 @@ const Team = () => {
     const i18n = useI18n();
     const [data, getData] = useFetch(fetchTrainerList, { limit: 10 });
     const {findDefaultTheme} = useCurrency()
+    const [SwiperComponents, setSwiperComponents] = useState(null);
 
     const swiperRef = useRef(null);
+    useEffect(() => {
+        let mounted = true;
+        import('swiper/react').then((react) => {
+            if (!mounted) {
+                return;
+            }
+            setSwiperComponents({ Swiper: react.Swiper, SwiperSlide: react.SwiperSlide });
+        });
+        return () => {
+            mounted = false;
+        };
+    }, []);
+
     useEffect(() => {
         if (swiperRef.current && swiperRef.current.swiper) {
             swiperRef.current.swiper.update();
@@ -39,6 +52,21 @@ const Team = () => {
         hidden: { opacity: 0, y: 50 },
         visible: { opacity: 1, y: 0 },
     };
+
+    if (!SwiperComponents) {
+        return (
+            <div className='container h-fit overflow-x-hidden'>
+                <div className='grid gap-6 md:grid-cols-2 lg:grid-cols-3'>
+                    {[0, 1, 2].map((i) => (
+                        <div key={i} className="h-48 rounded bg-gray-100 animate-pulse" />
+                    ))}
+                </div>
+            </div>
+        );
+    }
+
+    const { Swiper, SwiperSlide } = SwiperComponents;
+
     return (
         <div className='container h-fit overflow-x-hidden'>
             <div className='flex justify-between items-center '>

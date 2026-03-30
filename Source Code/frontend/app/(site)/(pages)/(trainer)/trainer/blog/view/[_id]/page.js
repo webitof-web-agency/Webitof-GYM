@@ -19,13 +19,11 @@ const BlogDetails = ({ params }) => {
     }, [params?._id])
 
     return (
-        <div>
-            <section className="border rounded-md p-4 bg-white shadow-md">
-            <div className='flex justify-between'>
-                <h3 className='profileHeading' >{i18n?.t("Blog Details")}</h3>
-                <Button onClick={() => push('/trainer/blog')} className='!h-fit !py-1'>{i18n?.t("Back")}</Button>
+        <div className="bg-white">
+            <div className='flex justify-between items-center mb-6'>
+                <h3 className='text-xl font-bold text-slate-800 tracking-tight'>{i18n?.t("Blog Details")}</h3>
+                <Button onClick={() => push('/trainer/blog')} type="button" className='!h-fit !py-2.5 !px-6 rounded-xl shadow-sm'>{i18n?.t("Back")}</Button>
             </div>
-                <hr />
                 <div className="container mx-auto block pb-10">
                     <div className="lg:pr-10 px-5">
                             <div className="">
@@ -58,7 +56,6 @@ const BlogDetails = ({ params }) => {
                         </div>
                     </div>
                 </div>
-            </section>
         </div>
     );
 };

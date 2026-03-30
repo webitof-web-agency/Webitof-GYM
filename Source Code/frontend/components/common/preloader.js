@@ -1,7 +1,10 @@
+"use client";
 import React from 'react';
-import Lottie from 'lottie-react';
+import dynamic from 'next/dynamic';
 import animationData from '../../public/xx.json'; 
 import animationData2 from '../../public/yoga.json'; 
+
+const Lottie = dynamic(() => import('lottie-react'), { ssr: false });
 
 const Preloader = ({ animateOut }) => {
   return (

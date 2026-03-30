@@ -57,14 +57,10 @@ const page = () => {
         setOpen(true)
     }
     return (
-        <div className="px-4 py-8 overflow-x-auto">
-            <div>
-                <div className='flex gap-2 justify-between items-center mb-4'>
-                    <h1 className='profileHeading'>{i18n?.t("Fitness History")}</h1>
-                    <Link href={"/bmi-calculator"} className='bg-[#5572fc] text-white p-2 rounded'>{i18n?.t("Check Fitness")}</Link>
-                </div>
+        <div className="bg-white">
+            <div className='flex justify-end mb-6'>
+                <Link href={"/bmi-calculator"} className='!h-fit !py-2.5 !px-6 bg-[#5572fc] hover:bg-indigo-600 transition-all text-white font-medium rounded-xl shadow-sm hover:-translate-y-0.5 inline-block'>{i18n?.t("Check Fitness")}</Link>
             </div>
-            <hr className='mb-4 ' />
             <div className='hide-scrollbar'>
                 <TrainerTable
                     columns={columns}

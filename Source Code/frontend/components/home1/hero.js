@@ -9,7 +9,7 @@ import { useI18n } from '../../app/providers/i18n';
 const Hero = ({ data }) => {
     const i18n = useI18n();
 
-    const heading = data?.heading[i18n.langCode] || '';
+    const heading = data?.heading?.[i18n?.langCode] || '';
     const words = heading.split(' ');
 
     const firstThreeWords = words.slice(0, 3).join(' ');
@@ -72,7 +72,7 @@ const Hero = ({ data }) => {
                                 variants={fadeUpVariant}
                                 viewport={{ once: false, amount: 0.3 }}
                             >
-                                {data?.description[i18n.langCode]}
+                                {data?.description?.[i18n?.langCode] || ''}
                             </motion.p>
 
                             <div className='mt-10 flex items-center gap-2 md:gap-10 xl:mt-[56px]'>

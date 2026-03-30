@@ -52,20 +52,19 @@ const page = () => {
 
   ];
   return (
-    <div className="">
-      <div className='flex justify-between'>
-        <h3 className='profileHeading'>{i18n?.t("Nutrition Schedule")}</h3>
+    <div className="bg-white">
+      <div className='flex justify-end mb-6'>
         <Button
           onClick={() => router.push('/trainer/nutrition-schedule/add-nutrition')}
-          type="submit"
-          className="!py-3 !h-fit  flex items-center gap-[10px]"
+          type="button"
+          className="!py-2.5 !px-6 !h-fit flex items-center gap-[10px] rounded-xl shadow-sm text-[14.5px] font-medium transition-transform hover:-translate-y-0.5"
         >
-          <RiAddCircleLine />
+          <RiAddCircleLine className="text-lg" />
           {i18n?.t("Add Nutrition")}
         </Button>
       </div>
-      <hr className='mb-4' />
       
+
       <div className="w-full overflow-x-auto">
         <TrainerTable
           data={data}

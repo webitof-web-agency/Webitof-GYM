@@ -74,9 +74,7 @@ const NutritionPageContent = () => {
     ];
 
     return (
-        <div>
-            <h1 className='profileHeading'>{i18n?.t('Nutrition Schedule')}</h1>
-            <hr className='mb-4' />
+        <div className="bg-white">
 
             <TrainerTable
                 data={data}

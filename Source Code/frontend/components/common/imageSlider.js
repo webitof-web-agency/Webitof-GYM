@@ -1,17 +1,48 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/thumbs";
-import { Thumbs } from "swiper/modules";
 import Image from "next/image";
 
 const ProductImageSlider = ({ thumbnail_image, images = [] }) => {
+  const [SwiperComponents, setSwiperComponents] = useState(null);
+  const [ThumbsModule, setThumbsModule] = useState(null);
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
   const [mainImage, setMainImage] = useState(thumbnail_image);
-useEffect(() => {
-    setMainImage(thumbnail_image)
-},[thumbnail_image])
+  useEffect(() => {
+    let mounted = true;
+    Promise.all([import("swiper/react"), import("swiper/modules")]).then(([react, modules]) => {
+      if (!mounted) {
+        return;
+      }
+      setSwiperComponents({ Swiper: react.Swiper, SwiperSlide: react.SwiperSlide });
+      setThumbsModule(modules.Thumbs);
+    });
+    return () => {
+      mounted = false;
+    };
+  }, []);
+
+  useEffect(() => {
+    setMainImage(thumbnail_image);
+  }, [thumbnail_image]);
+
+  if (!SwiperComponents || !ThumbsModule) {
+    return (
+      <div className="w-full flex flex-col items-center">
+        <div className="w-full flex justify-center mb-4">
+          <div className="rounded-lg lg:h-[450px] h-[300px] w-full max-w-[500px] bg-gray-100 animate-pulse" />
+        </div>
+        <div className="w-full max-w-md grid grid-cols-4 gap-2">
+          {[0, 1, 2, 3].map((i) => (
+            <div key={i} className="h-[80px] rounded-md bg-gray-100 animate-pulse" />
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  const { Swiper, SwiperSlide } = SwiperComponents;
   return (
     <div className="w-full flex flex-col items-center">
       <div className="w-full flex justify-center mb-4">
@@ -24,7 +55,7 @@ useEffect(() => {
         />
       </div>
       <Swiper
-        modules={[Thumbs]}
+        modules={[ThumbsModule]}
         watchSlidesProgress
         onSwiper={setThumbsSwiper}
         spaceBetween={10}

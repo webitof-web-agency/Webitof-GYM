@@ -15,13 +15,12 @@ const Details = ({ params }) => {
         getData({ _id: params?._id });
     }, [params?._id]);
     return (
-        <div className='w-full'>
-            <div className='flex justify-between'>
-                <h3 className='profileHeading' >{i18n?.t("View nutrition schedule")}</h3>
-                <Button onClick={() => push('/trainer/nutrition-schedule')} className='!h-fit !py-1'>{i18n?.t("Back")}</Button>
+        <div className='bg-white w-full'>
+            <div className='flex justify-between items-center mb-6'>
+                <h2 className='text-xl font-bold text-slate-800 tracking-tight' >{i18n?.t("View nutrition schedule")}</h2>
+                <Button onClick={() => push('/trainer/nutrition-schedule')} type="button" className='!h-fit !py-2.5 !px-6 rounded-xl shadow-sm'>{i18n?.t("Back")}</Button>
             </div>
-            <hr className='mb-4'/>
-            <div className='w-[684px] md:w-full overflow-x-scroll mt-5'>
+            <div className='w-[684px] md:w-full overflow-x-scroll mt-5 pb-8'>
                 <div className='grid grid-cols-5 w-full px-5 bg-[#5572fc] text-white font-medium text-base py-4 '>
                     <p className='whitespace-pre text-center'>{i18n?.t('Day Name')}</p>
                     <p className='whitespace-pre text-center'>{i18n?.t('Type')}</p>

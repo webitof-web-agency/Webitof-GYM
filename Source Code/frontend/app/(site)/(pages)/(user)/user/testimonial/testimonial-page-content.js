@@ -47,17 +47,12 @@ const TestimonialPageContent = () => {
   };
 
   return (
-    <>
-      <div>
-        <div className='flex justify-between gap-4'>
-          <h2 className="profileHeading">{i18n?.t("Testimonial")}</h2>
-          <Button onClick={() => setOpen(true)} type="submit" className=" !h-fit !py-2">
-            {i18n?.t("Add")}
-          </Button>
-        </div>
-        <hr className='mb-4' />
+    <div className="bg-white">
+      <div className='flex justify-end mb-6'>
+        <Button onClick={() => setOpen(true)} type="button" className="!h-fit !py-2.5 !px-6 rounded-xl shadow-sm text-[14.5px] font-medium transition-transform hover:-translate-y-0.5">
+          {i18n?.t("Add Testimonial")}
+        </Button>
       </div>
-      <hr />
       <TrainerTable
         data={data}
         columns={columns}
@@ -91,7 +86,7 @@ const TestimonialPageContent = () => {
           </div>
         </Form>
       </Modal>
-    </>
+    </div>
   )
 }
 

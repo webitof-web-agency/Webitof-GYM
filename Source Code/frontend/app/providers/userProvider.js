@@ -13,17 +13,29 @@ const Providers = ({ children }) => {
     const [settings, setSettings] = useState();
 
     useEffect(() => {
-        getUser();
-    }, [])
+        const run = () => getUser();
+        if (typeof window !== "undefined" && "requestIdleCallback" in window) {
+            window.requestIdleCallback(run);
+        } else {
+            setTimeout(run, 1);
+        }
+    }, []);
 
     useEffect(() => {
-        fetchSiteSettings().then(({ data, error }) => {
-            if (!error) {
-                setSettings(data);
-            }
-        }).catch(() => {
-            setSettings(undefined);
-        });
+        const run = () => {
+            fetchSiteSettings().then(({ data, error }) => {
+                if (!error) {
+                    setSettings(data);
+                }
+            }).catch(() => {
+                setSettings(undefined);
+            });
+        };
+        if (typeof window !== "undefined" && "requestIdleCallback" in window) {
+            window.requestIdleCallback(run);
+        } else {
+            setTimeout(run, 1);
+        }
     }, []);
 
     const getUser = async () => {

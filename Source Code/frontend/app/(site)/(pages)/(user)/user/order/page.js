@@ -60,27 +60,22 @@ const OrderPage = () => {
     };
 
     return (
-        <>
-            <div className="px-4 py-8 overflow-x-auto">
-                <div>
-                    <div className='flex gap-2 justify-between items-center mb-4'>
-                        <h1 className='profileHeading'>{i18n?.t("Order History")}</h1>
-                        <div>
-                            <Select
-                                allowClear
-                                placeholder={i18n?.t("Filter Status") || "Status"}
-                                style={{ minWidth: 150 }}
-                                onClear={() => getData({ status: undefined })}
-                                onChange={value => getData({ status: value })}>
-                                <Select.Option value={undefined}>{i18n?.t("All") || "All"}</Select.Option>
-                                <Select.Option value={'pending'}>{i18n?.t("Pending") || "Pending"}</Select.Option>
-                                <Select.Option value={'accepted'}>{i18n?.t("Accepted") || "Accepted" }</Select.Option>
-                                <Select.Option value={'cancel'}>{i18n?.t("Cancel") || "Cancel"}</Select.Option>
-                                <Select.Option value={'completed'}>{i18n?.t("Completed") || "Completed"}</Select.Option>
-                            </Select>
-                        </div>
-                    </div>
-                    <hr className='mb-4 ' />
+        <div className="bg-white">
+            <div className="overflow-x-auto">
+                <div className='flex justify-end mb-6'>
+                    <Select
+                        allowClear
+                        placeholder={i18n?.t("Filter Status") || "Status"}
+                        style={{ minWidth: 150 }}
+                        onClear={() => getData({ status: undefined })}
+                        onChange={value => getData({ status: value })}>
+                        <Select.Option value={undefined}>{i18n?.t("All") || "All"}</Select.Option>
+                        <Select.Option value={'pending'}>{i18n?.t("Pending") || "Pending"}</Select.Option>
+                        <Select.Option value={'accepted'}>{i18n?.t("Accepted") || "Accepted" }</Select.Option>
+                        <Select.Option value={'cancel'}>{i18n?.t("Cancel") || "Cancel"}</Select.Option>
+                        <Select.Option value={'completed'}>{i18n?.t("Completed") || "Completed"}</Select.Option>
+                    </Select>
+                </div>
                     <TrainerTable
                         columns={columns}
                         data={data}
@@ -92,9 +87,8 @@ const OrderPage = () => {
                         langCode={langCode}
                         noHeader={true}
                     />
-                </div>
             </div>
-        </>
+        </div>
     );
 };
 

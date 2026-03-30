@@ -898,10 +898,8 @@ export const orderDetails = async (req, res) => {
 
         const transformedItems = await Promise.all(order.items.map(async (item) => {
             let variantData = null;
-
-            // If the variant exists, fetch the variant details from the product
-            if (item.variantId) {
-                const product = await Product.findById(item.productId._id).lean();
+            const product = item.productId;
+            if (item.variantId && product?.variants) {
                 variantData = product.variants.find(v => v._id.toString() === item.variantId.toString());
             }
 
@@ -984,10 +982,8 @@ export const adminOrderList = async (req, res) => {
         const cleanedDocs = await Promise.all(orders.docs.map(async (order) => {
             const transformedItems = await Promise.all(order.items.map(async (item) => {
                 let variantData = null;
-
-                // If the variant exists, fetch the variant details from the product
-                if (item.variantId) {
-                    const product = await Product.findById(item.productId._id).lean();
+                const product = item.productId;
+                if (item.variantId && product?.variants) {
                     variantData = product.variants.find(v => v._id.toString() === item.variantId.toString());
                 }
 
@@ -1055,7 +1051,7 @@ export const adminOrderDetails = async (req, res) => {
         const order = await Order.findOne({ _id: _id })
             .populate({
                 path: 'items.productId',
-                // select: 'name short_description thumbnail_image category variants',
+                select: 'name short_description thumbnail_image category variants location city zip_code is_active price',
                 populate: {
                     path: 'category',
                     select: 'name -_id'
@@ -1076,10 +1072,8 @@ export const adminOrderDetails = async (req, res) => {
 
         const transformedItems = await Promise.all(order.items.map(async (item) => {
             let variantData = null;
-
-            // If the variant exists, fetch the variant details from the product
-            if (item.variantId) {
-                const product = await Product.findById(item.productId._id).lean();
+            const product = item.productId;
+            if (item.variantId && product?.variants) {
                 variantData = product.variants.find(v => v._id.toString() === item.variantId.toString());
             }
 

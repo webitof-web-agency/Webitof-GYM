@@ -183,8 +183,8 @@ const NoticeCalendar = ({ _id = null }) => {
         );
     }
     return (
-        <div className='overflow-x-auto rounded-xl bg-white p-4 shadow-lg'>
-            <div className='mb-4 flex items-center justify-between'>
+        <div className='-mx-6 md:-mx-10 lg:-mx-12 flex flex-col mb-[-24px] md:mb-[-40px] lg:mb-[-48px]'>
+            <div className='mb-2 flex flex-col sm:flex-row items-center justify-between gap-4 px-6 md:px-10 lg:px-12'>
                 <div className='flex items-center space-x-4'>
                     <Select
                         defaultValue={selectedYear}
@@ -233,23 +233,38 @@ const NoticeCalendar = ({ _id = null }) => {
                     }
                 </div>
             </div>
-            <div className='overflow-x-auto'>
+            <div className='overflow-x-auto min-w-full'>
+                <style>{`
+                    .compact-calendar .ant-picker-calendar-date, 
+                    .compact-calendar .ant-picker-cell-inner {
+                        height: 80px !important;
+                        padding: 4px !important;
+                        margin: 0 !important;
+                    }
+                    .compact-calendar .ant-picker-cell {
+                        padding: 0 !important;
+                    }
+                    .compact-calendar .ant-picker-calendar-date-value {
+                        padding: 0 !important;
+                        text-align: center;
+                    }
+                `}</style>
                 <Calendar
                     value={dayjs(`${selectedYear}-${selectedMonth}`)}
                     dateCellRender={dateCellRender}
                     headerRender={({ value }) => {
                         return (
-                            <div className='flex items-center justify-between rounded-t-xl px-4 py-2'>
+                            <div className='flex items-center justify-between rounded-t-xl px-4 py-2 border-b'>
                                 <span className='text-lg font-bold '>
                                     {dayjs(value).format('MMMM YYYY')}
                                 </span>
                                 <div>
-                                    <button className='text-sm font-semibold'>Today</button>
+                                    <button className='text-sm font-semibold text-slate-600 hover:text-slate-800 transition-colors'>Today</button>
                                 </div>
                             </div>
                         );
                     }}
-                    className='mt-4 rounded-xl'
+                    className='mt-4 rounded-xl compact-calendar border border-slate-100 shadow-sm'
                     mode='month'
                 />
             </div>

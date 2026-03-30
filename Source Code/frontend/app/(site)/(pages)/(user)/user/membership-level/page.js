@@ -24,11 +24,9 @@ const Page = () => {
     const i18n = useI18n();
 
     return (
-        <>
-            <h1 className='profileHeading'>{i18n?.t('Membership Level')}</h1>
-            <hr />
-            <h2 className='mt-4 text-[18px] font-medium uppercase sm:mt-[40px]'>{i18n?.t('Current')}</h2>
-            <div className='mt-2 space-y-2 sm:mt-[23px] sm:space-y-6'>
+        <div className="bg-white w-full max-w-4xl mx-auto">
+            <h2 className='text-[18px] font-bold text-slate-800 uppercase tracking-tight'>{i18n?.t('Current')}</h2>
+            <div className='mt-6 space-y-3 sm:space-y-5'>
                 {user?.activeSubscription ? (
                     <>
                         <SubscriptionRow 
@@ -67,7 +65,7 @@ const Page = () => {
                     </div>
                 )}
             </div>
-        </>
+        </div>
     );
 };
 

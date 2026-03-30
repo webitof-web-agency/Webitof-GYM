@@ -70,17 +70,16 @@ const Notice = () => {
   };
 
   return (
-    <div className="">
-      <div className='flex justify-between'>
-        <h3 className='profileHeading'>{i18n?.t("Notice List")}</h3>
+    <div className="bg-white">
+      <div className='flex justify-end mb-6'>
         <Button
           onClick={() => openModal()}
-          className="!h-fit !py-2"
+          type="button"
+          className="!py-2.5 !px-6 !h-fit rounded-xl shadow-sm text-[14.5px] font-medium transition-transform hover:-translate-y-0.5"
         >
           {i18n?.t("Add Notice")}
         </Button>
       </div>
-      <hr className='mb-4' />
       <div className="w-full overflow-x-auto">
         <TrainerTable
           data={data}

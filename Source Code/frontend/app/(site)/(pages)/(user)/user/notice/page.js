@@ -64,9 +64,7 @@ const Page = () => {
     ];
 
     return (
-        <div>
-            <h1 className='profileHeading'>{i18n?.t('Notice List')}</h1>
-            <hr className='mb-4' />
+        <div className="bg-white">
             <TrainerTable
                 data={data}
                 columns={columns}

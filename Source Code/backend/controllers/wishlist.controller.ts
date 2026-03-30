@@ -124,8 +124,10 @@ export const getWishlist = async (req, res) => {
             const transformedProducts = await Promise.all(item.products.map(async (prod) => {
                 let variantData = null;
                 if (prod.variant) {
-                    const product = await Product.findById(prod.product._id).lean();
-                    variantData = product.variants.find(v => v._id.toString() === prod.variant.toString());
+                    const product = prod.product;
+                    if (product?.variants) {
+                        variantData = product.variants.find(v => v._id.toString() === prod.variant.toString());
+                    }
                 }
 
                 return {

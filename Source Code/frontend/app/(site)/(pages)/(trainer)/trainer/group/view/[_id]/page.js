@@ -26,12 +26,11 @@ const page = ({ params }) => {
 
    
     return (
-        <div className='font-poppins'>
-            <div className='flex justify-between'>
-                <h3 className='profileHeading' >{i18n?.t("Member profile")}</h3>
-                <Button onClick={() => router.back()} className='!h-fit !py-1'>{i18n?.t("Back")}</Button>
+        <div className='font-poppins bg-white w-full'>
+            <div className='flex justify-between items-center mb-6'>
+                <h3 className='text-xl font-bold text-slate-800 tracking-tight' >{i18n?.t("Member Profile")}</h3>
+                <Button onClick={() => router.back()} type="button" className='!h-fit !py-2.5 !px-6 rounded-xl shadow-sm'>{i18n?.t("Back")}</Button>
             </div>
-            <hr />
 
             {
                 data?.member?._id ? <>

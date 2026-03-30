@@ -1,6 +1,5 @@
 'use client';
 import React, { useEffect, useRef, useState } from 'react';
-import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
@@ -16,6 +15,7 @@ import { useCurrency } from '../../app/contexts/site';
 const Testimonial = () => {
     const swiperRef = useRef(null);
     const [currentSlide, setCurrentSlide] = useState(0);
+    const [SwiperComponents, setSwiperComponents] = useState(null);
     const [data] = useFetch(allTestimonial);
     const {findDefaultTheme} = useCurrency()
 
@@ -24,6 +24,19 @@ const Testimonial = () => {
     const handleSlideChange = (swiper) => {
         setCurrentSlide(swiper.snapIndex);    
     };
+    useEffect(() => {
+        let mounted = true;
+        import('swiper/react').then((react) => {
+            if (!mounted) {
+                return;
+            }
+            setSwiperComponents({ Swiper: react.Swiper, SwiperSlide: react.SwiperSlide });
+        });
+        return () => {
+            mounted = false;
+        };
+    }, []);
+
     useEffect(() => {
         if (swiperRef.current && swiperRef.current.swiper) {
             swiperRef.current.swiper.update();
@@ -51,6 +64,19 @@ const Testimonial = () => {
         hidden: { opacity: 0, x: 50 },
         visible: { opacity: 1, x: 0 },
     };
+
+    if (!SwiperComponents) {
+        return (
+            <div className='container my-[60px] lg:my-[120px] overflow-x-hidden'>
+                <div className='grid gap-6 lg:grid-cols-2'>
+                    <div className='h-64 rounded bg-gray-100 animate-pulse' />
+                    <div className='h-64 rounded bg-gray-100 animate-pulse' />
+                </div>
+            </div>
+        );
+    }
+
+    const { Swiper, SwiperSlide } = SwiperComponents;
 
     return (
         <div className='container my-[60px] lg:my-[120px] overflow-x-hidden'>

@@ -17,12 +17,11 @@ const Details = ({ params }) => {
         getData({ _id: params?._id });
     }, [params?._id]);
     return (
-        <div className='w-full'>
-            <div className='flex justify-between'>
-                <h3 className='profileHeading' >{i18n?.t("View workout schedule")}</h3>
-                <Button onClick={() => push('/trainer/assigned-workout')} className='!h-fit !py-1'>{i18n?.t("Back")}</Button>
+        <div className='bg-white w-full'>
+            <div className='flex justify-between items-center mb-6'>
+                <h3 className='text-xl font-bold text-slate-800 tracking-tight' >{i18n?.t("View workout schedule")}</h3>
+                <Button onClick={() => push('/trainer/assigned-workout')} type="button" className='!h-fit !py-2.5 !px-6 rounded-xl shadow-sm'>{i18n?.t("Back")}</Button>
             </div>
-            <hr />
             <div className='w-[684px] md:w-full lg:w-[684px] xl:w-full overflow-x-scroll hide-scrollbar mt-4'>
                 <div className='grid grid-cols-5 w-full px-5 bg-[#5572fc] text-white font-medium text-base py-4 '>
                     <p className='whitespace-pre text-center capitalize'>{i18n?.t("Day Name")}</p>

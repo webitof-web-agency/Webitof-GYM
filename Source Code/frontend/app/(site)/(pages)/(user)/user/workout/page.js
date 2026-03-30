@@ -47,11 +47,7 @@ const Page = () => {
         },
     ];
     return (
-        <div>
-            <h1 className='profileHeading'>
-                {i18n?.t('Workout')}
-            </h1>
-            <hr className='mb-4' />
+        <div className="bg-white">
 
             <TrainerTable
                 data={data}
@@ -66,15 +62,12 @@ const Page = () => {
             />
             <Modal
                 width={800}    
-                title={<h1 className='profileHeading'>
-                    {i18n?.t('Workout List')}
-                </h1>}
+                title={<h2 className='text-lg font-bold text-slate-800'>{i18n?.t('Workout List')}</h2>}
                 open={edit}
                 onCancel={() => setEdit(false)}
                 footer={null}
                 maskClosable={false}
             >
-                <hr className='mb-4' />
                 <div className='grid grid-cols-2 border rounded'>
                     <div className='border-r '>
                         <div className='w-full bg-[#5572fc] text-white py-3 text-[xl] px-[20px] rounded-s font-medium font-montserrat'>{i18n?.t('Day')}</div>

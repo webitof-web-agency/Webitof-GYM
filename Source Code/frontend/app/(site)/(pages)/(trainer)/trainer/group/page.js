@@ -34,9 +34,7 @@ const FitnessGroupsTable = () => {
   ];
 
   return (
-    <div className="w-full overflow-x-auto">
-      <h1 className="profileHeading ">{i18n?.t("Group List")}</h1>
-      <hr className='mb-4' />
+    <div className="bg-white w-full overflow-x-auto">
       <TrainerTable
         data={data}
         columns={columns}

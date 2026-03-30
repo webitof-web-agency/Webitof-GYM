@@ -9,9 +9,7 @@ const Page = () => {
   const i18n = useI18n();
 
   return (
-    <div>
-      <h1 className="profileHeading ">{i18n.t("Change Password")}</h1>
-      <hr className="mb-4" />
+    <div className="bg-white w-full max-w-3xl">
       <Form layout="vertical" form={form}
         onFinish={async (values) => {
           const { error, msg } = await postChangePassword(values)

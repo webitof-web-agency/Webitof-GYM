@@ -32,12 +32,11 @@ const FitnessGroupsTable = ({ params }) => {
     };
 
     return (
-        <div className="w-full overflow-x-auto">
-            <div className="flex justify-between border-b mb-5 pb-5">
-                <h1 className="profileHeading">{i18n?.t("View Assign Trainers")}</h1>
-                <hr className='mb-4' />
+        <div className="bg-white w-full overflow-x-auto">
+            <div className="flex justify-between items-center mb-6">
+                <h2 className='text-xl font-bold text-slate-800 tracking-tight'>{i18n?.t("View Assign Trainers")}</h2>
                 {
-                    data?._id && <Button onClick={handleGroupToggle} className="md:block hidden !h-fit !py-3">
+                    data?._id && <Button onClick={handleGroupToggle} type="button" className="md:block hidden !h-fit !py-2.5 !px-6 !bg-red-500 hover:!bg-red-600 border-none text-white rounded-xl shadow-sm transition-transform hover:-translate-y-0.5 font-medium">
                         {i18n?.t('Leave Group')}
                     </Button>
                 }
@@ -60,7 +59,9 @@ const FitnessGroupsTable = ({ params }) => {
                 </div>
 
             </div>
-            <h2 className="profileHeading my-10">{i18n?.t("Group Members")}</h2>
+            <div className="mt-10 mb-6 border-b border-slate-200/80 pb-4">
+                 <h2 className='text-xl font-bold text-slate-800 tracking-tight'>{i18n?.t("Group Members")}</h2>
+            </div>
             <div className="xl:w-full gap-5 sm:w-full w-[686px] lg:w-[689px] overflow-x-auto hide-scrollbar">
                 <div>
                     <div className='flex justify-between py-4 border-b items-center bg-gray-100 font-semibold text-gray-700 text-center'>
@@ -79,7 +80,7 @@ const FitnessGroupsTable = ({ params }) => {
             </div>
             <div className='py-3'>
             {
-                data?._id && <Button onClick={handleGroupToggle} className="md:hidden !h-fit !py-1 mt-2">
+                data?._id && <Button onClick={handleGroupToggle} type="button" className="md:hidden !h-fit !py-2.5 !px-6 !bg-red-500 hover:!bg-red-600 text-white rounded-xl w-full border-none shadow-sm mt-4 font-medium">
                     {i18n?.t('Leave Group')}
                 </Button>
             }

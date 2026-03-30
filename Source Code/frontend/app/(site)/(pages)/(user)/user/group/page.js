@@ -31,9 +31,7 @@ const FitnessGroupsTable = () => {
   ];
 
   return (
-    <div className="w-full overflow-x-auto">
-      <h1 className="profileHeading">{i18n?.t("My Groups")}</h1>
-      <hr className='mb-4'/>
+    <div className="bg-white w-full overflow-x-auto">
       {data?.docs?.length === 0 ? (
         <Empty description="No Data Found" className='mt-12' />
       ) : (

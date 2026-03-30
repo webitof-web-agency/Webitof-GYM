@@ -69,14 +69,21 @@ export const I18nProvider = ({ children }) => {
 
   useEffect(() => {
     if (isClient && localStorage.getItem('token')) {
-      adminLanguages === undefined && fetchLanguages({ limit: 100 }).then(({ error, data }) => {
-        if (!error && Array.isArray(data?.docs) && data.docs.length > 0) {
-          setLanguages({
-            ...data,
-            docs: data.docs,
-          });
-        }
-      }).catch(() => {});
+      const run = () => {
+        adminLanguages === undefined && fetchLanguages({ limit: 100 }).then(({ error, data }) => {
+          if (!error && Array.isArray(data?.docs) && data.docs.length > 0) {
+            setLanguages({
+              ...data,
+              docs: data.docs,
+            });
+          }
+        }).catch(() => {});
+      };
+      if ("requestIdleCallback" in window) {
+        window.requestIdleCallback(run);
+      } else {
+        setTimeout(run, 1);
+      }
     }
   }, [adminLanguages, isClient]);
 
