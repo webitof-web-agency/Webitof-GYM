@@ -35,7 +35,14 @@ app.use(
     extended: true,
   }),
 );
-app.use(cors());
+app.use(cors({
+  origin: [
+    process.env.FRONTEND_URL,
+    'https://webitof-gym.vercel.app',
+    'http://localhost:3000',
+  ],
+  credentials: true,
+}));
 
 // const isEnvExist = fs.existsSync('./.env');
 const isEnvExist = !!process.env.DATABASE_URL;    // because of deploying backend on Railway
