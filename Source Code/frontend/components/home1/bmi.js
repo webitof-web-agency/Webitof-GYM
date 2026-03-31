@@ -87,94 +87,69 @@ const FitnessCalculator = () => {
         position: 'absolute',
     };
 
+    const bmiRows = [
+        { range: i18n?.t('Below 18.5'), status: i18n?.t('Underweight'), color: 'bg-blue-50 text-blue-600', dot: 'bg-blue-400' },
+        { range: i18n?.t('18.5 – 24.9'), status: i18n?.t('Healthy'), color: 'bg-emerald-50 text-emerald-600', dot: 'bg-emerald-400' },
+        { range: i18n?.t('25.0 – 29.9'), status: i18n?.t('Overweight'), color: 'bg-amber-50 text-amber-600', dot: 'bg-amber-400' },
+        { range: i18n?.t('30.0+'), status: i18n?.t('Obese'), color: 'bg-red-50 text-red-500', dot: 'bg-red-400' },
+    ];
+
     return (
-        <section className='container overflow-x-hidden '>
-            <div className='lg:grid grid-cols-1 lg:gap-20 gap-10 lg:grid-cols-2 flex flex-col-reverse'>
-                <motion.div
-                    // initial='hidden'
-                    // whileInView='visible'
-                    // viewport={{ amount: 0.3 }}
-                    // variants={leftToRightVariant}
-                    // transition={{ duration: 0.6, ease: 'easeOut' }}
-                    className={`mt-0 h-fit rounded-lg border px-5 lg:my-8 ${findDefaultTheme?.name === 'home3' && pathName === "/" ? '!bg-black' : '!bg-white'}`}
-                >
-                    <div>
-                        <h1
-                            className={`blogtittle my-5 md:my-10 ${findDefaultTheme?.name === 'home3' && pathName === "/" ? 'text-white' : 'text-textMain'}`}
-                        >
-                            {i18n?.t('BMI & Fitness Chart')}
-                        </h1>
+        <section className='container overflow-x-hidden'>
+            <div className='lg:grid grid-cols-1 lg:gap-14 gap-10 lg:grid-cols-2 flex flex-col-reverse'>
+
+                {/* Left — BMI chart card */}
+                <div className='rounded-2xl overflow-hidden border border-slate-100 shadow-[0_4px_30px_-8px_rgba(0,0,0,0.08)] flex flex-col'>
+                    {/* Gradient header */}
+                    <div className='bg-gradient-to-r from-[#3a52c4] to-[#5572fc] px-6 py-5'>
+                        <p className='text-[11px] font-black text-white/60 uppercase tracking-widest mb-1'>{i18n?.t('Reference Chart')}</p>
+                        <h3 className='text-xl font-extrabold text-white'>{i18n?.t('BMI & Fitness Chart')}</h3>
                     </div>
-                    <div>
-                        <table className='w-full border-collapse'>
-                            <thead className=''>
-                                <tr className='!rounded-lg border p-4 font-poppins'>
-                                    <th
-                                        className={`fetureHeading border-r px-4 py-[23.5px] text-left ${findDefaultTheme?.name === 'home3' && pathName === "/" ? 'text-white' : 'text-textMain'}`}
-                                    >
-                                        {i18n?.t('BMI')}
-                                    </th>
-                                    <th
-                                        className={`fetureHeading px-4 py-[23.5px] text-left ${findDefaultTheme?.name === 'home3' && pathName === "/" ? 'text-white' : 'text-textMain'}`}
-                                    >
-                                        {i18n?.t('Category')}
-                                    </th>
+
+                    {/* Table */}
+                    <div className='flex-1 p-4'>
+                        <table className='w-full'>
+                            <thead>
+                                <tr className='text-[11px] font-black text-gray-400 uppercase tracking-widest'>
+                                    <th className='text-left px-3 py-2'>{i18n?.t('BMI Range')}</th>
+                                    <th className='text-left px-3 py-2'>{i18n?.t('Category')}</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                {[
-                                    {
-                                        range: i18n?.t('Below 18.5'),
-                                        status: i18n?.t('Underweight'),
-                                    },
-                                    { range: i18n?.t('18.5 - 24.9'), status: i18n?.t('Healthy') },
-                                    {
-                                        range: i18n?.t('25.0 - 29.9'),
-                                        status: i18n?.t('Overweight'),
-                                    },
-                                    { range: i18n?.t('30.0 - Above'), status: i18n?.t('Obese') },
-                                ].map(({ range, status }, idx) => (
-                                    <tr
-                                        key={idx}
-                                        className={`border font-poppins ${findDefaultTheme?.name === 'home3' && pathName === "/" ? 'text-white' : 'text-textMain'}`}
-                                    >
-                                        <td className='border-r px-4 py-[20.5px]'>{range}</td>
-                                        <td className='px-4 py-[20.5px]'>{status}</td>
+                            <tbody className='divide-y divide-slate-50'>
+                                {bmiRows.map(({ range, status, color, dot }, idx) => (
+                                    <tr key={idx} className='group'>
+                                        <td className='px-3 py-3.5 text-[13px] font-bold text-gray-700 font-mono'>{range}</td>
+                                        <td className='px-3 py-3.5'>
+                                            <span className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-[11px] font-bold ${color}`}>
+                                                <span className={`h-1.5 w-1.5 rounded-full ${dot}`} />
+                                                {status}
+                                            </span>
+                                        </td>
                                     </tr>
                                 ))}
                             </tbody>
                         </table>
                     </div>
-                    <h3
-                        className={`my-10 font-poppins capitalize ${findDefaultTheme?.name === 'home3' && pathName === "/" ? 'text-white' : 'text-textMain'}`}
-                    >
-                        <span className='font-semibold !text-[#5572fc]'>{i18n?.t('BMR')}</span>{' '}
-                        {i18n?.t('metabolic rate')} /{' '}
-                        <span className='font-semibold !text-[#5572fc]'>{i18n?.t('BMI')} </span>
-                        {i18n?.t('body mass index')}
-                    </h3>
-                </motion.div>
-                <motion.div
-                    // position='absolute'
-                    // initial='hidden'
-                    // whileInView='visible'
-                    // viewport={{ amount: 0.3 }}
-                    // variants={rightToLeftVariant}
-                    // transition={{ duration: 0.6, ease: 'easeOut' }}
-                    className={`rounded-lg ${findDefaultTheme?.name === 'home3' && pathName === "/" ? '!bg-black' : '!bg-white'}`}
-                >
+
+                    {/* Footer legend */}
+                    <div className='border-t border-slate-100 px-6 py-4 bg-slate-50/50'>
+                        <p className='text-[12px] text-gray-500 font-medium'>
+                            <span className='font-black text-[#5572fc]'>{i18n?.t('BMR')}</span> {i18n?.t('— Basal Metabolic Rate')} &nbsp;·&nbsp;
+                            <span className='font-black text-[#5572fc]'>{i18n?.t('BMI')}</span> {i18n?.t('— Body Mass Index')}
+                        </p>
+                    </div>
+                </div>
+
+                {/* Right — Form panel */}
+                <div className='rounded-2xl border border-slate-100 shadow-[0_4px_30px_-8px_rgba(0,0,0,0.08)] p-6 lg:p-8 bg-white'>
                     <BannerTitle
                         home3={findDefaultTheme?.name === "home3" && pathName === "/" ? true : false}
                         subtitle={i18n?.t('fitness')}
                         title={i18n?.t('Fitness Calculation')}
                         className={'items-start'}
                     />
-                    <p
-                        className={`description mb-4 mt-2 line-clamp-3 lg:my-10 ${findDefaultTheme?.name === 'home3' && pathName === "/" ? '!text-white' : '!text-[#534c4c]'}`}
-                    >
-                        {i18n?.t(
-                            "Use our BMI calculator to quickly assess if you're at a healthy weight based on your height and weight. Track your progress and stay on the path to better health."
-                        )}
+                    <p className='text-[13px] text-gray-500 leading-relaxed font-medium my-5 line-clamp-3'>
+                        {i18n?.t("Use our BMI calculator to quickly assess if you're at a healthy weight based on your height and weight. Track your progress and stay on the path to better health.")}
                     </p>
                     <BmiForm
                         isHome3={pathName === "/" ? true : false}
@@ -183,7 +158,7 @@ const FitnessCalculator = () => {
                         onFinish={onFinish}
                         form={form}
                     />
-                </motion.div>
+                </div>
             </div>
             <BmiModal
                 results={results}

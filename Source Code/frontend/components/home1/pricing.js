@@ -59,11 +59,12 @@ const Pricing = () => {
                             initial="hidden"
                             whileInView="visible"
                             viewport={{ once: false, amount: 0.3 }}
-                            transition={{ duration: 0.5, ease: "easeOut" }}
+                            transition={{ duration: 0.5, ease: "easeOut", delay: index * 0.1 }}
                             key={index} exit="exit">
                             <PricingCard
                                 data={price}
                                 activeTab={activeTab}
+                                index={index}
                             />
                         </motion.div>
                     ))}

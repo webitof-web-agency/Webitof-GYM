@@ -37,7 +37,8 @@ app.use(
 );
 app.use(cors());
 
-const isEnvExist = fs.existsSync('./.env');
+// const isEnvExist = fs.existsSync('./.env');
+const isEnvExist = !!process.env.DATABASE_URL;    // because of deploying backend on Railway
 
 if (isEnvExist === false) {
   const { createAdminAndEnv } = require('./controllers/admin.controller');

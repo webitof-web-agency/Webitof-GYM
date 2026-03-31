@@ -3,52 +3,63 @@ import Image from 'next/image';
 import React from 'react';
 import { motion } from 'framer-motion';
 import { useI18n } from '../../app/providers/i18n';
-import { Tooltip } from 'antd';
+import { useCurrency } from '../../app/contexts/site';
 
 const FeatureCard = ({ feature }) => {
-  const i18n = useI18n();
+    const i18n = useI18n();
+    const { findDefaultTheme } = useCurrency();
 
-  const slideUpZoomVariant = {
-    hidden: { opacity: 0, y: 50, scale: 0.9 }, 
-    visible: { opacity: 1, y: 0, scale: 1 },  
-  };
-
-  return (
-    <motion.div
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, amount: 0.3 }}
-      variants={slideUpZoomVariant}
-      transition={{ duration: 0.6, ease: "easeOut" }}
-      className='bg-white cursor-pointer  w-full rounded-[4px] min-h-[285px] hover:scale-105 text-textMain group overflow-hidden duration-500' 
-      style={{ boxShadow: '0px 0px 20px 0px rgba(0, 0, 0, 0.10)' }}
-    >
-      <div className='lg:py-12 py-6 px-2 sm:px-4 flex flex-col text-center items-center'>
-        <div
-          className='mb-[30px] w-[56px] h-[56px] rounded-full flex items-center justify-center shadow-custom-light bg-white'
-          style={{ filter: 'drop-shadow(0px 0px 20px rgba(0, 0, 0, 0.10))' }}
+    return (
+        <motion.div
+            initial={{ opacity: 0, y: 40, scale: 0.96 }}
+            whileInView={{ opacity: 1, y: 0, scale: 1 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+            whileHover={{ y: -6, transition: { duration: 0.25 } }}
+            className='group relative bg-white rounded-2xl overflow-hidden cursor-pointer w-full min-h-[280px] border border-slate-100 shadow-[0_4px_24px_-8px_rgba(0,0,0,0.08)] hover:shadow-[0_12px_40px_-8px_rgba(85,114,252,0.18)] hover:border-[#5572fc]/20 transition-all duration-300'
         >
-          <div className='flex items-center justify-center p-3'>
-            <Image
-              src={feature?.image}
-              width={32}
-              height={32}
-              alt={'Feature image'}
-              className='object-fill h-[32px] w-[32px]'
-            />
-          </div>
-        </div>
-        <div className='space-y-6'>
-          <h1 className='cardHeading text-textMain duration-500'>
-            {i18n.t(feature?.name[i18n.langCode])}
-          </h1>
-            <h3 className='cardDescription line-clamp-2'>
-              {feature?.description[i18n.langCode]}
-            </h3>
-        </div>
-      </div>
-    </motion.div>
-  );
+            {/* Top accent bar */}
+            <div className='absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#5572fc] to-[#7c93ff] scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left rounded-t-2xl' />
+
+            {/* Glow background */}
+            <div className='absolute inset-0 bg-gradient-to-br from-[#5572fc]/0 to-[#5572fc]/0 group-hover:from-[#5572fc]/3 group-hover:to-transparent transition-all duration-300 pointer-events-none' />
+
+            <div className='relative lg:py-10 py-8 px-6 flex flex-col items-center text-center'>
+                {/* Icon */}
+                <div className='mb-6 relative'>
+                    <div className='w-16 h-16 rounded-2xl bg-[#5572fc]/8 group-hover:bg-[#5572fc]/12 border border-[#5572fc]/10 group-hover:border-[#5572fc]/25 flex items-center justify-center transition-all duration-300 shadow-sm'>
+                        <Image
+                            src={feature?.image}
+                            width={34}
+                            height={34}
+                            alt={'Feature icon'}
+                            className='object-contain h-[34px] w-[34px]'
+                        />
+                    </div>
+                    {/* Outer ring on hover */}
+                    <div className='absolute inset-0 rounded-2xl border-2 border-[#5572fc]/0 group-hover:border-[#5572fc]/20 scale-110 transition-all duration-300' />
+                </div>
+
+                {/* Text */}
+                <div className='space-y-3'>
+                    <h3 className='text-[17px] font-extrabold text-gray-800 leading-tight tracking-tight group-hover:text-[#5572fc] transition-colors duration-300'>
+                        {i18n.t(feature?.name?.[i18n.langCode])}
+                    </h3>
+                    <p className='text-[13px] text-gray-500 leading-relaxed line-clamp-3 font-medium'>
+                        {feature?.description?.[i18n.langCode]}
+                    </p>
+                </div>
+
+                {/* Arrow indicator */}
+                <div className='mt-5 flex items-center gap-1.5 text-[#5572fc] opacity-0 group-hover:opacity-100 transition-all duration-300 translate-y-1 group-hover:translate-y-0 text-[12px] font-bold'>
+                    <span>Explore</span>
+                    <svg width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='2.5' strokeLinecap='round' strokeLinejoin='round'>
+                        <path d='M5 12h14M12 5l7 7-7 7' />
+                    </svg>
+                </div>
+            </div>
+        </motion.div>
+    );
 };
 
 export default FeatureCard;

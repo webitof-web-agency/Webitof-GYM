@@ -1,94 +1,75 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import React, {useState } from 'react';
-import { FaFacebook, FaLinkedin, FaShareAlt } from 'react-icons/fa';
-import { FaInstagram, FaXTwitter } from 'react-icons/fa6';
+import React, { useState } from 'react';
+import { FaInstagram, FaLinkedin, FaFacebook } from 'react-icons/fa';
+import { FaXTwitter } from 'react-icons/fa6';
 import { motion } from 'framer-motion';
-
+import { FiArrowRight } from 'react-icons/fi';
 
 const ExpartCard = ({ team }) => {
-    const [isHovered, setIsHovered] = useState(false);
-    const slideUpZoomVariant = {
-        hidden: { opacity: 0, y: 50, scale: 0.9 },
-        visible: { opacity: 1, y: 0, scale: 1 },
-    };
+    const [showSocial, setShowSocial] = useState(false);
+
+    const socials = [
+        { href: team?.instagram, icon: <FaInstagram size={14} />, label: 'Instagram' },
+        { href: team?.linkedin, icon: <FaLinkedin size={14} />, label: 'LinkedIn' },
+        { href: team?.twitter, icon: <FaXTwitter size={14} />, label: 'Twitter' },
+        { href: team?.facebook, icon: <FaFacebook size={14} />, label: 'Facebook' },
+    ].filter(s => s.href);
 
     return (
         <motion.div
-            initial="hidden"
-            whileInView="visible"
+            initial={{ opacity: 0, y: 40, scale: 0.96 }}
+            whileInView={{ opacity: 1, y: 0, scale: 1 }}
             viewport={{ once: true, amount: 0.3 }}
-            variants={slideUpZoomVariant}
-            transition={{ duration: 0.6, ease: "easeOut" }}
-            className='group  rounded border-[1px] border-gray-200  bg-white  hover:md:scale-110 duration-500'>
-            <div className='shape relative sm:h-[380px] h-[318px]  bg-gray-200 '>
+            transition={{ duration: 0.6, ease: 'easeOut' }}
+            className='group relative bg-white rounded-2xl overflow-hidden border border-slate-100 shadow-[0_4px_20px_-6px_rgba(0,0,0,0.08)] hover:shadow-[0_16px_40px_-8px_rgba(85,114,252,0.15)] hover:border-[#5572fc]/20 transition-all duration-300'
+        >
+            {/* Photo */}
+            <div className='relative sm:h-[320px] h-[260px] overflow-hidden bg-slate-50'>
                 <Image
                     src={team?.image}
-                    alt='team'
-                    width={1000}
-                    height={400}
-                    className='h-full w-full object-cover transition-all duration-300'
+                    alt={team?.name}
+                    fill
+                    className='object-cover object-top transition-transform duration-500 group-hover:scale-105'
                 />
-                <div
-                    className={`absolute bottom-0 left-0 h-[50%] w-full bg-gradient-to-t from-[#2392F8] to-[#5E1CD5] to-transparent opacity-0 transition-opacity duration-700 group-hover:opacity-100`}
-                />
+                {/* Gradient overlay */}
+                <div className='absolute inset-0 bg-gradient-to-t from-[#5572fc]/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-400' />
+
+                {/* Social icons — appear on hover */}
+                <div className='absolute bottom-4 left-0 right-0 flex justify-center gap-2 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300'>
+                    {socials.map((s, i) => (
+                        <Link
+                            key={i}
+                            href={s.href || '#'}
+                            target='_blank'
+                            aria-label={s.label}
+                            className='flex h-8 w-8 items-center justify-center rounded-xl bg-white/90 text-gray-700 hover:bg-[#5572fc] hover:text-white transition-all duration-200 shadow-sm'
+                        >
+                            {s.icon}
+                        </Link>
+                    ))}
+                </div>
             </div>
-            <div className='relative flex flex-col justify-between bg-white p-6'>
-                <div className=' pt-5'>
+
+            {/* Info */}
+            <div className='p-5 flex items-center justify-between'>
+                <div className='min-w-0'>
                     <Link
                         href={`/trainers/view/${team?._id}`}
-                        className='cardHeading text-textMain capitalize transition-colors duration-300 group-hover:text-[#5572fc]'
+                        className='text-[15px] font-extrabold text-gray-800 capitalize hover:text-[#5572fc] transition-colors block leading-tight truncate'
                     >
                         {team?.name}
                     </Link>
-                    <p className='mt-4 capitalize description text-textBody transition-colors duration-300'>
+                    <p className='text-[11px] font-bold text-[#5572fc] uppercase tracking-widest mt-1 truncate'>
                         {team?.role}
                     </p>
                 </div>
-                <div
-                    className='relative flex items-center justify-center rounded-lg'
-                    onMouseEnter={() => setIsHovered(true)}
-                    onMouseLeave={() => setIsHovered(false)}
+                <Link
+                    href={`/trainers/view/${team?._id}`}
+                    className='shrink-0 ml-3 flex h-8 w-8 items-center justify-center rounded-xl border border-slate-100 text-gray-400 hover:border-[#5572fc] hover:text-[#5572fc] transition-all duration-200'
                 >
-                    <div
-                        className={`absolute sm:bottom-[100px] bottom-[94px] sm:left-[57.5px] left-[48px] cursor-pointer bg-[#333333] p-4 sm:p-5 text-white transition-all duration-300 ${isHovered ? 'rounded-full' : 'rounded-full'} `}
-                    >
-                        {isHovered ? (
-                            <div className='flex flex-col gap-7'>
-                                <Link
-                                    href={team?.instagram || ''}
-                                    target={'_blank'}
-                                    className='hover:text-[#5572fc]'
-                                >
-                                    <FaInstagram size={30} />
-                                </Link>
-                                <Link
-                                    href={team?.linkedin || ''}
-                                    target={'_blank'}
-                                    className='hover:text-[#5572fc]'
-                                >
-                                    <FaLinkedin size={30} />
-                                </Link>
-                                <Link
-                                    href={team?.twitter || ''}
-                                    target={'_blank'}
-                                    className='hover:text-[#5572fc]'
-                                >
-                                    <FaXTwitter size={30} />
-                                </Link>
-                                <Link
-                                    href={team?.facebook || ''}
-                                    target='_blank'
-                                    className='hover:text-[#5572fc]'
-                                >
-                                    <FaFacebook size={30} />
-                                </Link>
-                            </div>
-                        ) : (
-                            <FaShareAlt size={30} />
-                        )}
-                    </div>
-                </div>
+                    <FiArrowRight size={14} />
+                </Link>
             </div>
         </motion.div>
     );

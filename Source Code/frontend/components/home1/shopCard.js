@@ -1,7 +1,6 @@
 import Image from 'next/image';
 import React, { useState, useEffect } from 'react';
-import { PiHeartLight } from 'react-icons/pi';
-import { CgEye } from 'react-icons/cg';
+import { FiHeart, FiEye, FiShoppingBag } from 'react-icons/fi';
 import Link from 'next/link';
 import { columnFormatter } from '../../app/helpers/utils';
 import { message } from 'antd';
@@ -17,15 +16,14 @@ const ShopCard = ({ data, getData }) => {
     const { user } = useUser();
     const i18n = useI18n();
     const router = useRouter();
-    const { currencySymbol, convertAmount,findDefaultTheme } = useCurrency();
+    const { currencySymbol, convertAmount, findDefaultTheme } = useCurrency();
     const pathName = usePathname();
     const [wishlist, getWaishlist] = useFetch(fatchWishlist);
     const [wishListed, setWishListed] = useState(false);
 
     useEffect(() => {
-        if (wishlist?.docs && wishlist.docs.length > 0) {
-            const listed = wishlist.docs[0].products?.some(item => item._id === data._id);
-            setWishListed(Boolean(listed));
+        if (wishlist?.docs?.length > 0) {
+            setWishListed(Boolean(wishlist.docs[0].products?.some(item => item._id === data._id)));
         }
     }, [wishlist, data._id]);
 
@@ -36,101 +34,88 @@ const ShopCard = ({ data, getData }) => {
         } else {
             try {
                 const res = await postWishlist({ productId: id });
-
-                if (res?.error === false) {
-                    getWaishlist();
-                    getData();
-                    message.success(res.msg);
-                } else {
-                    message.error(res.msg);
-                }
-            } catch (error) {
-                console.error('Error submitting wishlist:', error);
-            }
+                if (res?.error === false) { getWaishlist(); getData(); message.success(res.msg); }
+                else message.error(res.msg);
+            } catch (err) { console.error(err); }
         }
     };
 
-    const slideUpZoomVariant = {
-        hidden: { opacity: 0, y: 50, scale: 0.9 },
-        visible: { opacity: 1, y: 0, scale: 1 },
-    };
+    const isSoldOut = data?.quantity === 0;
 
     return (
         <motion.div
-            // initial="hidden"
-            // whileInView="visible"
-            // viewport={{ once: true, amount: 0.3 }}
-            // variants={slideUpZoomVariant}
-            // transition={{ duration: 0.6, ease: "easeOut" }}
-            className="rounded hover:scale-105 transition-all cursor-pointer p-4 duration-150 w-full mx-auto border overflow-hidden group"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.5, ease: 'easeOut' }}
+            whileHover={{ y: -4, transition: { duration: 0.2 } }}
+            className='group relative bg-white rounded-2xl overflow-hidden border border-slate-100 shadow-[0_4px_20px_-6px_rgba(0,0,0,0.07)] hover:shadow-[0_16px_40px_-8px_rgba(85,114,252,0.12)] hover:border-[#5572fc]/20 transition-all duration-300 flex flex-col'
         >
-            <div className="relative mx-auto w-full rounded bg-gray-100">
-                <Link href={`/shop/${data?._id}`}>
-                    <motion.div
-                        className="group-hover:hidden"
-                        // whileHover={{ scale: 1.05 }}
-                        // transition={{ duration: 0.3 }}
-                    >
-                        <Image
-                            src={data?.thumbnail_image}
-                            alt="shop"
-                            width={310}
-                            height={294}
-                            className="object-cover w-full lg:h-[294px] sm:h-[250px] h-[150px]"
-                        />
-                    </motion.div>
-                    <motion.div
-                        className="hidden group-hover:block"
-                        // whileHover={{ scale: 1.05 }}
-                        // transition={{ duration: 0.3 }}
-                    >
-                        <Image
-                            src={data?.images[0] ? data?.images[0] : data?.thumbnail_image}
-                            alt="shop"
-                            width={310}
-                            height={294}
-                            className="object-cover w-full lg:h-[294px] sm:h-[250px] h-[150px]"
-                        />
-                    </motion.div>
+            {/* Image area */}
+            <div className='relative overflow-hidden bg-slate-50 lg:h-[240px] sm:h-[200px] h-[170px] shrink-0'>
+                {/* Main image */}
+                <Link href={`/shop/${data?._id}`} className='block w-full h-full'>
+                    <Image
+                        src={data?.thumbnail_image}
+                        alt={columnFormatter(data?.name)}
+                        fill
+                        className='object-cover transition-opacity duration-300 group-hover:opacity-0'
+                    />
+                    <Image
+                        src={data?.images?.[0] || data?.thumbnail_image}
+                        alt={columnFormatter(data?.name)}
+                        fill
+                        className='object-cover opacity-0 transition-opacity duration-300 group-hover:opacity-100'
+                    />
                 </Link>
-                {data?.quantity === 0 && (
-                    <div className="absolute top-0 status bg-[#5572fc] w-[115px] h-[115px]">
-                        <p className="text-white flex mt-2 items-center -rotate-45">
-                            {i18n?.t('Sold Out')}
-                        </p>
+
+                {/* Sold out badge */}
+                {isSoldOut && (
+                    <div className='absolute top-3 left-3 bg-red-500 text-white text-[10px] font-black uppercase tracking-widest py-1 px-3 rounded-full shadow'>
+                        {i18n?.t('Sold Out')}
                     </div>
                 )}
+
+                {/* Hover action strip */}
+                <div className='absolute inset-x-0 bottom-0 flex items-center justify-center gap-2 translate-y-full group-hover:translate-y-0 transition-transform duration-300 bg-white/90 backdrop-blur-sm py-2.5'>
+                    <button
+                        onClick={() => submitWishlist(data?._id)}
+                        className={`flex h-8 w-8 items-center justify-center rounded-xl border transition-all duration-200 ${wishListed ? 'bg-[#5572fc] border-[#5572fc] text-white' : 'border-slate-200 text-gray-500 hover:border-[#5572fc] hover:text-[#5572fc]'}`}
+                        title={i18n?.t('Wishlist')}
+                    >
+                        <FiHeart size={14} className={wishListed ? 'fill-current' : ''} />
+                    </button>
+                    <Link
+                        href={`/shop/${data?._id}`}
+                        className='flex h-8 w-8 items-center justify-center rounded-xl border border-slate-200 text-gray-500 hover:border-[#5572fc] hover:text-[#5572fc] transition-all duration-200'
+                        title={i18n?.t('Quick View')}
+                    >
+                        <FiEye size={14} />
+                    </Link>
+                    <Link
+                        href={`/shop/${data?._id}`}
+                        className='flex h-8 items-center gap-1.5 px-4 rounded-xl bg-[#5572fc] text-[11px] font-bold text-white hover:bg-[#4461eb] transition-colors'
+                    >
+                        <FiShoppingBag size={12} /> {i18n?.t('Buy')}
+                    </Link>
+                </div>
             </div>
-            <div className="text-center flex flex-col gap-2 pt-6">
-                <Link
-                    href={`/shop/${data?._id}`}
-                    className={`shop-title ${findDefaultTheme?.name === 'home3' && pathName=== "/"  ? 'text-white' : ' text-textMain'} hover:text-[#5572fc]`}
-                >
+
+            {/* Info */}
+            <div className='p-4 flex flex-col flex-1'>
+                <Link href={`/shop/${data?._id}`} className='text-[13px] font-extrabold text-gray-800 leading-snug line-clamp-2 hover:text-[#5572fc] transition-colors mb-1'>
                     {columnFormatter(data?.name)}
                 </Link>
-                <div className="flex justify-between items-center mt-2">
-                    <h6 className={`cardDescription !font-semibold ${findDefaultTheme?.name === 'home3' && pathName=== "/"  ? 'text-white' : ' text-textMain'}`}>
+                <p className='text-[11px] text-gray-400 font-medium capitalize mb-2'>{columnFormatter(data?.category?.name)}</p>
+                <div className='mt-auto flex items-center justify-between'>
+                    <span className='text-base font-black text-[#5572fc]'>
                         {currencySymbol}{convertAmount(data?.price || 0)}
-                    </h6>
-                </div>
-                <div className="flex sm:flex-row flex-col items-center justify-between mt-3 sm:gap-0 gap-2">
-                    <h2 className={`text-base font-medium font-poppins ${findDefaultTheme?.name === 'home3' && pathName=== "/"  ? 'text-white' : ' text-textMain'}`}>
-                        {columnFormatter(data?.category?.name)}
-                    </h2>
-                    <div className="flex gap-[14px] justify-center">
-                        <button
-                            onClick={() => submitWishlist(data?._id)}
-                            className={`${wishListed
-                                    ? 'bg-[#5572fc] text-white px-1 border rounded'
-                                    : 'text-secondary_text hover:bg-[#5572fc] hover:text-white border px-1 rounded text-[#5572fc] border-[#5572fc]'
-                                }`}
-                        >
-                            <PiHeartLight className="lg:text-2xl md:text-xl text-lg" />
-                        </button>
-                        <Link href={`/shop/${data?._id}`} className="shop-button text-[#5572fc]">
-                            <CgEye className="lg:text-2xl md:text-xl text-lg" />
-                        </Link>
-                    </div>
+                    </span>
+                    {data?.compare_price > data?.price && (
+                        <span className='text-[11px] text-gray-400 line-through font-medium'>
+                            {currencySymbol}{convertAmount(data?.compare_price)}
+                        </span>
+                    )}
                 </div>
             </div>
         </motion.div>

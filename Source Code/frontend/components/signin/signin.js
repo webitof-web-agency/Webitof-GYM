@@ -1,24 +1,21 @@
 'use client';
 import React, { useEffect, useState } from 'react';
 import FormInput from '../form/input';
-import {  Form, Input, message, Modal } from 'antd';
+import { Form, Input, message, Modal } from 'antd';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useUser } from '../../app/contexts/user';
-import { postLogin, postResetPassword, postVerifyOtp, sendOtp } from '../../app/helpers/backend'
+import { postLogin, postResetPassword, postVerifyOtp, sendOtp } from '../../app/helpers/backend';
 import OTPInput from 'react-otp-input';
 import { useTimer } from 'use-timer';
 import { useI18n } from '../../app/providers/i18n';
 import { useEnv } from '../../app/contexts/envContext';
+import { FiArrowRight, FiLock, FiMail, FiShield } from 'react-icons/fi';
 
 const getDashboardPath = (role) => {
-    if (role === 'admin' || role === 'employee') {
-        return '/admin';
-    }
-    if (role === 'trainer') {
-        return '/trainer';
-    }
+    if (role === 'admin' || role === 'employee') return '/admin';
+    if (role === 'trainer') return '/trainer';
     return '/user';
 };
 
@@ -37,298 +34,257 @@ const SignIn = () => {
     const [forgetValues, setForgetValues] = useState({});
     const [forget, setForget] = useState(false);
     const [getEmail, setGetEmail] = useState('');
+
     const handleSubmit = async (values) => {
-        setLoadingRequest(true)
-        const { error, msg, data } = await postLogin(values)
-        if (error) {
-            message.error(msg)
-            setLoadingRequest(false)
-        }
+        setLoadingRequest(true);
+        const { error, msg, data } = await postLogin(values);
+        if (error) { message.error(msg); setLoadingRequest(false); }
         else {
             const redirectPath = getDashboardPath(data?.role);
-            localStorage.setItem('token', data?.token)
-            await getUser()
-            setLoadingRequest(false)
-            message.success(msg)
-            window.location.href = redirectPath
-        }
-    }
-
-    const { time, start, pause, reset, status } = useTimer({
-        initialTime: 150,
-        timerType: 'DECREMENTAL',
-    });
-
-    useEffect(() => {
-        if (email) {
-            start()
-        }
-        if (time === 0) pause()
-    }, [time, start, pause, email])
-    useEffect(() => {
-        if (user?.role) {
+            localStorage.setItem('token', data?.token);
+            await getUser();
             setLoadingRequest(false);
-            router.replace(getDashboardPath(user.role));
+            message.success(msg);
+            window.location.href = redirectPath;
         }
+    };
+
+    const { time, start, pause, reset, status } = useTimer({ initialTime: 150, timerType: 'DECREMENTAL' });
+    useEffect(() => { if (email) start(); if (time === 0) pause(); }, [time, start, pause, email]);
+    useEffect(() => {
+        if (user?.role) { setLoadingRequest(false); router.replace(getDashboardPath(user.role)); }
         setLoadingRequest(false);
     }, [user, router]);
 
     return (
-        <div className='px-2 sm:px-8 md:px-0 lg:mt-[120px] mt-[20px] max-w-[1320px] mx-auto'>
-            <h2 className='heading text-center font-poppins'>{i18n?.t("Sign In to your Account")} </h2>
-            <div className='lg:mt-[116px] mt-[40px] w-full flex items-center flex-col md:flex-row space-x-0 md:space-x-14 lg:space-x-20 bg-[#5572fc] rounded'>
-                <div className='w-[50%] relative'>
-                    <p className='p-0 md:p-6 mt-10 md:mt-0 text-element md:!flex !hidden !text-5xl md:!text-[80px] lg:!text-[100px] xl:!text-[130px] md:!text-6xl font-montserrat !text-center'>
+        <div className='px-2 sm:px-8 md:px-0 lg:mt-[80px] mt-[40px] max-w-[1320px] mx-auto pb-20'>
+
+            {/* ── Main Card ─────────────────────────────────────────────── */}
+            <div className='relative overflow-hidden rounded-2xl shadow-2xl shadow-black/15 flex flex-col md:flex-row min-h-[520px]'>
+
+                {/* Left — Athlete Panel */}
+                <div className='relative hidden md:flex md:w-[42%] flex-col items-center justify-end overflow-hidden bg-gradient-to-br from-[#1a2f6e] via-[#3a52c4] to-[#5572fc]'>
+                    {/* Background pattern */}
+                    <div className='absolute inset-0 opacity-[0.07]' style={{ backgroundImage: 'radial-gradient(circle, white 1px, transparent 1px)', backgroundSize: '28px 28px' }} />
+                    {/* Glow */}
+                    <div className='absolute top-10 left-10 w-48 h-48 bg-white/10 rounded-full blur-3xl' />
+                    <div className='absolute bottom-20 right-0 w-32 h-32 bg-[#7c93ff]/20 rounded-full blur-2xl' />
+
+                    {/* Brand watermark — centered behind image */}
+                    <p className='absolute inset-0 flex items-center justify-center text-[70px] xl:text-[90px] font-black font-montserrat text-white/15 leading-none select-none pointer-events-none tracking-tight text-center'>
                         {data?.title?.slice(0, 8)}
                     </p>
-                    <Image
-                        className='hidden md:flex absolute lg:left-[9.15rem] md:left-[1.15rem] md:top-[calc(-290px)]'
-                        src='/signin.png'
-                        alt='Login Image'
-                        width={350}
-                        height={780}
-                    />
+
+                    {/* Athlete image — constrained, bottom-anchored */}
+                    <div className='relative z-10 w-[280px] xl:w-[320px] shrink-0'>
+                        <Image
+                            className='w-full h-auto object-contain object-bottom drop-shadow-2xl'
+                            src='/signin.png'
+                            alt='athlete'
+                            width={320}
+                            height={480}
+                        />
+                    </div>
                 </div>
-                <div className='md:w-[50%] w-full md:pl-6 pl-4 md:px-0 pr-4 md:pr-6 lg:pr-[100px] xl:pr-[112px] py-10'>
-                    <div className='text-white control-form'>
-                        <p className='text-[32px] font-bold font-montserrat capitalize'>{i18n?.t('Sign In')} </p>
-                        <div className='mt-4 md:mt-10'>
-                            <Form className='space-y-4 ' onFinish={handleSubmit} form={form}>
-                                <FormInput
-                                    label={i18n?.t('Email')}
-                                    name='email'
-                                    placeholder={i18n?.t('Email')}
+
+                {/* Right — Form Panel */}
+                <div className='flex-1 bg-white flex flex-col justify-center px-8 sm:px-12 lg:px-16 py-12'>
+                    {/* Header */}
+                    <div className='mb-8'>
+                        <div className='flex items-center gap-2 mb-3'>
+                            <div className='w-8 h-8 rounded-lg bg-[#5572fc]/10 text-[#5572fc] flex items-center justify-center'>
+                                <FiShield size={16} />
+                            </div>
+                            <span className='text-[11px] font-black text-[#5572fc] uppercase tracking-widest'>Secure Login</span>
+                        </div>
+                        <h1 className='text-3xl font-extrabold text-gray-800 tracking-tight leading-tight'>
+                            {i18n?.t('Sign In')}
+                        </h1>
+                        <p className='text-sm text-gray-400 font-medium mt-1.5'>
+                            {i18n?.t("Welcome back! Enter your credentials to continue.")}
+                        </p>
+                    </div>
+
+                    {/* Form */}
+                    <Form className='space-y-5' onFinish={handleSubmit} form={form} layout='vertical'>
+                        {/* Email */}
+                        <Form.Item
+                            label={<span className='text-[12px] font-bold text-gray-600 uppercase tracking-widest'>{i18n?.t('Email')}</span>}
+                            name='email'
+                            rules={[{ required: true, message: i18n?.t('Please input your email!') }, { type: 'email', message: i18n?.t('Please enter a valid email address') }]}
+                        >
+                            <div className='relative'>
+                                <FiMail size={15} className='absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none' />
+                                <Input
                                     type='email'
-                                    className="border placeholder:!text-black text-gray/70 border-[#ffff] w-full p-4 rounded bg-[#5572fc]"
-                                    rules={[{ required: true, message: (i18n?.t('Please input your email!')) }, { type: 'email', message: (i18n?.t('Please enter a valid email address')) }]}
+                                    placeholder={i18n?.t('you@example.com')}
+                                    className='pl-10 h-11 rounded-xl border-slate-200 text-[13px] focus:border-[#5572fc] focus:ring-2 focus:ring-[#5572fc]/15'
                                 />
-                                <FormInput
-                                    label={i18n?.t('Password')}
-                                    name='password'
-                                    placeholder={i18n?.t('Password')}
-                                    type='password'
-                                    className="border custom-input text-white border-[#D9D9D9] w-full p-4 rounded bg-[#5572fc]"
-                                    rules={[
-                                        {
-                                            required: true,
-                                            message: (i18n?.t('Please input your password!')),
-                                        },
-                                    ]}
+                            </div>
+                        </Form.Item>
+
+                        {/* Password */}
+                        <Form.Item
+                            label={<span className='text-[12px] font-bold text-gray-600 uppercase tracking-widest'>{i18n?.t('Password')}</span>}
+                            name='password'
+                            rules={[{ required: true, message: i18n?.t('Please input your password!') }]}
+                        >
+                            <div className='relative'>
+                                <FiLock size={15} className='absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none z-10' />
+                                <Input.Password
+                                    placeholder={i18n?.t('••••••••')}
+                                    className='pl-10 h-11 rounded-xl border-slate-200 text-[13px] focus:border-[#5572fc] focus:ring-2 focus:ring-[#5572fc]/15'
                                 />
-                                <div className='description !text-white mt-3 md:mt-0'>
-                                    <button
-                                        type="button"
-                                        onClick={() => setForget(true)}
-                                        className='!text-white cursor-pointer description underline font-poppins'
-                                    >
-                                        {i18n?.t('Forgot Password?')}
-                                    </button>
-                                </div>
-                                <button
-                                    type="submit"
-                                    className="auth-button flex items-center gap-2 justify-center !text-[#5572fc] hover:!text-white !bg-white font-poppins h-[56px] !mt-12"
-                                >
-                                    {i18n?.t('Sign In')}
-                                    {loadingRequest && (
-                                        <span className="custom-loader ml-2"></span>
-                                    )}
-                                </button>
-                            </Form>
-                            <p className='mt-4 !text-white description font-poppins'>{i18n?.t('Don’t have an account?')} <Link className='text-white underline font-poppins' href='/signup'>{i18n?.t('Sign Up')}</Link></p>
+                            </div>
+                        </Form.Item>
+
+                        {/* Forgot password */}
+                        <div className='flex justify-end -mt-2'>
+                            <button type='button' onClick={() => setForget(true)} className='text-[12px] font-semibold text-[#5572fc] hover:underline'>
+                                {i18n?.t('Forgot Password?')}
+                            </button>
+                        </div>
+
+                        {/* Submit */}
+                        <button
+                            type='submit'
+                            className='w-full flex items-center justify-center gap-2 rounded-xl bg-[#5572fc] py-3 text-sm font-bold text-white shadow-lg shadow-[#5572fc]/30 hover:bg-[#4461eb] hover:shadow-xl hover:shadow-[#5572fc]/40 transition-all hover:-translate-y-0.5 mt-4'
+                        >
+                            {loadingRequest ? (
+                                <span className='h-4 w-4 rounded-full border-2 border-white/30 border-t-white animate-spin' />
+                            ) : (
+                                <>{i18n?.t('Sign In')} <FiArrowRight size={15} /></>
+                            )}
+                        </button>
+                    </Form>
+
+                    {/* Footer */}
+                    <p className='mt-6 text-center text-[13px] text-gray-400 font-medium'>
+                        {i18n?.t("Don't have an account?")}{' '}
+                        <Link href='/signup' className='text-[#5572fc] font-bold hover:underline'>{i18n?.t('Sign Up')}</Link>
+                    </p>
+                </div>
+            </div>
+
+            {/* ── Forget Password Modal ─────────────────────────────────── */}
+            <Modal open={forget} maskClosable={false} footer={null} onCancel={() => setForget(false)}
+                className='!w-[460px]'
+                styles={{ content: { borderRadius: '16px', padding: '32px' } }}
+                title={
+                    <div className='flex items-center gap-3 pb-3 border-b border-slate-100'>
+                        <div className='w-8 h-8 rounded-lg bg-[#5572fc]/10 text-[#5572fc] flex items-center justify-center shrink-0'>
+                            <FiMail size={15} />
+                        </div>
+                        <div>
+                            <p className='text-sm font-extrabold text-gray-800'>{i18n?.t('Forgot Password?')}</p>
+                            <p className='text-[11px] text-gray-400 font-medium'>Enter your email to receive a reset code</p>
                         </div>
                     </div>
-                </div>
-            </div>
-            <div className='otp-modals'>
-                <Modal open={forget} maskClosable={false} className='relative !w-[520px]  flex flex-col h-fit items-center  mx-auto' footer={null} width={1000} onCancel={() => setForget(false)} >
-                    <div className=' sm:w-[422px] w-full flex flex-col items-center mt-3 '>
-                        <h1 className='md:text-[32px] text-2xl font-bold mb-3 text-center capitalize text-[#2B2B2B]'>{('forget your password')}</h1>
-                        <p className='md:text-sm text-xs text-center font-poppins  '>Please confirm your email address below and we will send you a verification code.</p>
-                        <Form
-                            form={form}
-                            onFinish={async (values) => {
-                                if (!!values?.email) {
-                                    setEmail(values?.email)
-                                    const { error, msg, data } = await sendOtp({ email: values?.email, action: 'forgot_password' });
-                                    if (error) {
-                                        return message.error(msg);
-                                    } else {
-                                        setOtpModal(true);
-                                        message.success(`${('OTP sent to')} ${values?.email}`);
-                                        setForgetValues(values);
-                                        setGetEmail(values?.email);
-                                        setForget(false);
-                                    }
-                                }
-                            }}
-                            layout="vertical"
-                        >
-                            <div className="sm:w-[422px] w-[280px] forgetPass mt-10">
-                                <FormInput
-                                    name="email"
-                                    label={('Email')}
-                                    rules={[{ required: true, message: (i18n?.t('Please input your email!')) }, { type: 'email', message: (i18n?.t('Please enter a valid email address')) }]}
-                                    placeholder={(i18n?.t('Email'))}
-                                    className="!py-2 "
-                                />
-                            </div>
+                }
+            >
+                <Form form={form} layout='vertical' className='mt-4'
+                    onFinish={async (values) => {
+                        if (values?.email) {
+                            setEmail(values?.email);
+                            const { error, msg } = await sendOtp({ email: values?.email, action: 'forgot_password' });
+                            if (error) { message.error(msg); }
+                            else { setOtpModal(true); message.success(`OTP sent to ${values?.email}`); setForgetValues(values); setGetEmail(values?.email); setForget(false); }
+                        }
+                    }}
+                >
+                    <FormInput name='email' label={i18n?.t('Email Address')}
+                        rules={[{ required: true, message: i18n?.t('Please input your email!') }, { type: 'email', message: i18n?.t('Please enter a valid email address') }]}
+                        placeholder={i18n?.t('you@example.com')} className='!py-2' />
+                    <button className='mt-4 w-full bg-[#5572fc] text-white py-3 rounded-xl font-bold text-sm hover:bg-[#4461eb] transition-colors shadow-lg shadow-[#5572fc]/25'>
+                        {i18n?.t('Send Reset Code')}
+                    </button>
+                </Form>
+            </Modal>
 
-                            <button className='bg-[#5572fc] text-white w-full !text-lg py-[14px] rounded-md mt-6 button_paragraph'  >{i18n?.t('Continue')}</button>
-                        </Form>
+            {/* ── OTP Modal ─────────────────────────────────────────────── */}
+            <Modal open={otpModal} maskClosable={false} footer={null} onCancel={() => setOtpModal(false)}
+                className='!w-[460px]'
+                styles={{ content: { borderRadius: '16px', padding: '32px' } }}
+                title={
+                    <div className='flex items-center gap-3 pb-3 border-b border-slate-100'>
+                        <div className='w-8 h-8 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0'>
+                            <FiShield size={15} />
+                        </div>
+                        <div>
+                            <p className='text-sm font-extrabold text-gray-800'>{i18n?.t('Verify Code')}</p>
+                            <p className='text-[11px] text-gray-400 font-medium'>Code sent to <span className='text-[#5572fc] font-bold'>{getEmail}</span></p>
+                        </div>
                     </div>
-                </Modal>
-            </div>
-            {/* otp modal  */}
-            <div className=''>
-                <Modal open={otpModal} maskClosable={false} className=' !w-[520px] rounded flex flex-col items-center ' footer={null} width={1000} onCancel={() => setOtpModal(false)} >
-                    <div className='  py-5 w-full flex flex-col items-center '>
-                        <h1 className='md:text-[32px] text-2xl font-bold mb-3 text-center capitalize text-[#2B2B2B]'>{i18n?.t('Verify Code')}</h1>
-                        <p className='md:text-sm text-xs text-center font-poppins w-[70%] '>{i18n?.t('Please enter the verification code sent to')} {getEmail} <span className='font-medium text-[#5572fc]'>{getEmail}</span> </p>
-                        <Form
-                            form={otpform}
-                            name="basic"
-                            style={{
-                                width: '100%',
-                                display: 'flex',
-                                justifyContent: 'center',
-                                flexDirection: 'column',
-                                alignItems: 'center'
-                            }}
-                            initialValues={{
-                                remember: true,
-                            }}
-                            onFinish={
-                                async (values) => {
-                                    if (!!values?.otp) {
-                                        const payload = {
-                                            ...forgetValues,
-                                            otp: values?.otp,
-                                            action: 'forgot_password',
-                                            email: forgetValues?.email
-                                        }
-                                        const { error, msg, data } = await postVerifyOtp(payload);
-                                        if (error) {
-                                            return message.error(msg);
-                                        } else {
-                                            message.success(msg);
-                                            localStorage.setItem('token', data.token);
-                                            setOtpModal(false);
-                                            setNewPass(true)
-                                            otpform.resetFields()
-                                        }
-                                    }
-                                }
-                            }
-                        >
+                }
+            >
+                <Form form={otpform} className='mt-6 flex flex-col items-center'
+                    onFinish={async (values) => {
+                        if (values?.otp) {
+                            const { error, msg, data } = await postVerifyOtp({ ...forgetValues, otp: values?.otp, action: 'forgot_password', email: forgetValues?.email });
+                            if (error) { message.error(msg); }
+                            else { message.success(msg); localStorage.setItem('token', data.token); setOtpModal(false); setNewPass(true); otpform.resetFields(); }
+                        }
+                    }}
+                >
+                    <Form.Item name='otp' className='mb-4'>
+                        <OTPInput numInputs={4} renderInput={(props) => <input {...props} />}
+                            inputStyle={{ width: '52px', height: '52px', marginRight: '12px', fontSize: '22px', border: '2px solid #e2e8f0', outline: 'none', borderRadius: '12px', fontWeight: '700', textAlign: 'center' }}
+                        />
+                    </Form.Item>
+                    <p className='text-[12px] text-gray-400 font-medium mb-5 text-center'>
+                        {i18n?.t("Didn't receive the code?")}{' '}
+                        {time === 0
+                            ? <button type='button' className='text-[#5572fc] font-bold' onClick={async () => { const { error, msg } = await sendOtp({ email, action: 'forgot_password' }); if (error) message.error(msg); else { message.success(msg); reset(); start(); } }}>{i18n?.t('Resend')}</button>
+                            : <span className='text-[#5572fc] font-bold'>{i18n?.t('resend in')} {time}s</span>
+                        }
+                    </p>
+                    <button className='w-full bg-[#5572fc] text-white py-3 rounded-xl font-bold text-sm hover:bg-[#4461eb] transition-colors shadow-lg shadow-[#5572fc]/25'>
+                        {i18n?.t('Verify Code')}
+                    </button>
+                </Form>
+            </Modal>
 
-                            <Form.Item
-                                name="otp"
-                                className='my-8'
-                            >
-                                <OTPInput
-                                    numInputs={4} renderInput={(props) => <input {...props} />} inputStyle={{
-                                        width: '50px',
-                                        height: '48px',
-                                        marginRight: '1rem',
-                                        fontSize: '20px',
-                                        border: '1px solid #F79C39',
-                                        outline: 'none',
-                                        borderRadius: '8px',
-                                    }} />
-
-                            </Form.Item>
-                            <p className="dark:text-White_Colo capitalize mt-6 mb-2 md:text-sm text-xs font-poppins">
-                                {i18n?.t(`Didn't receive the code?`)} {
-                                    time === 0 ?
-                                        <button
-                                            type="button"
-                                            className="text-[#5572fc] cursor-pointer"
-                                            onClick={async () => {
-                                                const { error, msg } = await sendOtp({ email: email, action: 'forgot_password' });
-                                                if (error) return message.error(msg)
-                                                message.success(msg)
-                                                reset()
-                                                start()
-                                            }}
-                                        >
-                                            {i18n?.t("Resend")}
-                                        </button>
-                                        :
-                                        <span className="text-[#5572fc]">
-                                            {(`resend in`)} {time} {('s')}
-                                        </span>
-                                }
-                            </p>
-                            <button className='bg-[#5572fc] text-white w-full !text-lg py-[14px] rounded-md mt-2 button_paragraph'  >{('Verify')}</button>
-                            <p className='md:text-sm text-xs font-poppins mt-6'>{i18n?.t("Already have an account?")}<span className='text-[#5572fc]'><Link onClick={() => setOtpModal(false)} href='/signin'>{i18n?.t('Sign in now')}</Link></span></p>
-                        </Form>
+            {/* ── Reset Password Modal ───────────────────────────────────── */}
+            <Modal open={newPass} maskClosable={false} footer={null} onCancel={() => setNewPass(false)}
+                className='!w-[460px]'
+                styles={{ content: { borderRadius: '16px', padding: '32px' } }}
+                title={
+                    <div className='flex items-center gap-3 pb-3 border-b border-slate-100'>
+                        <div className='w-8 h-8 rounded-lg bg-orange-50 text-orange-500 flex items-center justify-center shrink-0'>
+                            <FiLock size={15} />
+                        </div>
+                        <div>
+                            <p className='text-sm font-extrabold text-gray-800'>{i18n?.t('Reset Password')}</p>
+                            <p className='text-[11px] text-gray-400 font-medium'>Choose a strong new password</p>
+                        </div>
                     </div>
-                </Modal>
-            </div>
-            <div className=''>
-                <Modal open={newPass} maskClosable={false} className=' !w-[520px] rounded flex flex-col items-center ' footer={null} width={1000} onCancel={() => setNewPass(false)} >
-                    <div className=' py-5 w-full flex flex-col  '>
-                        <h1 className='md:text-[32px] text-2xl font-bold mb-3 text-center capitalize text-[#2B2B2B]'>{i18n?.t('Reset your password')}</h1>
-                        <Form form={newform} layout="vertical" onFinish={async (values) => {
-                            const payload = {
-                                ...values,
-                                token: localStorage.getItem('token')
-                            }
-                            const { error, msg, data } = await postResetPassword(payload)
-                            if (error) {
-                                message.error(msg)
-                            } else {
-                                message.success(msg)
-                                router.push('/signin')
-                                setNewPass(false)
-                                newform.resetFields()
-                            }
-                        }}>
-                            <div className='w-full mt-8'>
-                                <Form.Item
-                                    name="password"
-                                    label={i18n?.t("New Password")}
-                                    rules={[
-                                        {
-                                            required: true,
-                                            message: i18n?.t('Please input your password!'),
-                                        },
-                                    ]}
-                                    hasFeedback
-                                    className='w-full'
-                                >
-                                    <Input.Password placeholder={i18n?.t("'Enter new password'")} className=' focus:text-dark_text border w-full rounded-md h-10  pl-2 py-3' />
-                                </Form.Item>
-                                <Form.Item
-                                    name="confirm_password"
-                                    label={"Re-type Password"}
-                                    dependencies={['password']}
-                                    className='w-full mt-3'
-                                    hasFeedback
-                                    rules={[
-                                        {
-                                            required: true,
-                                            message: i18n?.t('Please confirm your password!'),
-                                        },
-                                        ({ getFieldValue }) => ({
-                                            validator(_, value) {
-                                                if (!value || getFieldValue('password') === value) {
-                                                    return Promise.resolve();
-                                                }
-                                                return Promise.reject(new Error(i18n?.t('The two passwords that you entered do not match!')));
-                                            },
-                                        }),
-                                    ]}
-                                >
-                                    <Input.Password placeholder={i18n?.t("'Re-type password'")} className=' focus:text-dark_text w-full border rounded-md h-10  pl-2 py-3' />
-                                </Form.Item>
-                            </div>
-                            <button className='bg-[#5572fc] text-white w-full h-10 rounded-md mt-4 button_paragraph'  >{i18n?.t('Reset')}</button>
-                        </Form>
-                    </div>
-                </Modal>
-            </div>
+                }
+            >
+                <Form form={newform} layout='vertical' className='mt-4'
+                    onFinish={async (values) => {
+                        const { error, msg } = await postResetPassword({ ...values, token: localStorage.getItem('token') });
+                        if (error) { message.error(msg); }
+                        else { message.success(msg); router.push('/signin'); setNewPass(false); newform.resetFields(); }
+                    }}
+                >
+                    <Form.Item name='password' label={<span className='text-[12px] font-bold text-gray-600 uppercase tracking-widest'>{i18n?.t('New Password')}</span>}
+                        rules={[{ required: true, message: i18n?.t('Please input your password!') }]} hasFeedback>
+                        <Input.Password placeholder={i18n?.t('Enter new password')} className='h-11 rounded-xl border-slate-200 text-[13px]' />
+                    </Form.Item>
+                    <Form.Item name='confirm_password' label={<span className='text-[12px] font-bold text-gray-600 uppercase tracking-widest'>{i18n?.t('Confirm Password')}</span>}
+                        dependencies={['password']} hasFeedback
+                        rules={[{ required: true, message: i18n?.t('Please confirm your password!') },
+                            ({ getFieldValue }) => ({ validator(_, value) { if (!value || getFieldValue('password') === value) return Promise.resolve(); return Promise.reject(new Error(i18n?.t('Passwords do not match!'))); } })
+                        ]}>
+                        <Input.Password placeholder={i18n?.t('Confirm password')} className='h-11 rounded-xl border-slate-200 text-[13px]' />
+                    </Form.Item>
+                    <button className='mt-2 w-full bg-[#5572fc] text-white py-3 rounded-xl font-bold text-sm hover:bg-[#4461eb] transition-colors shadow-lg shadow-[#5572fc]/25'>
+                        {i18n?.t('Reset Password')}
+                    </button>
+                </Form>
+            </Modal>
         </div>
     );
 };
+
 export default SignIn;
