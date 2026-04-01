@@ -124,6 +124,16 @@ if (isEnvExist === false) {
   app.use(decodeToken);
   app.use('/uploads', express.static(path.join(process.cwd(), 'uploads')));
   app.use('/api', apiRoutes);
+
+  // Health check endpoint — pinged by external cron job to keep Render alive
+  app.get('/health', (req, res) => {
+    res.status(200).json({
+      status: 'ok',
+      uptime: process.uptime(),
+      timestamp: new Date().toISOString(),
+    });
+  });
+
   app.get('*', (req, res) => {
     res.send('Welcome to Gymstick!');
   });

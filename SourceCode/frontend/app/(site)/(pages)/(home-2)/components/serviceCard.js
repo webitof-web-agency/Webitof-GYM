@@ -4,41 +4,74 @@ import Image from 'next/image';
 import { useI18n } from '../../../../providers/i18n';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
+import { FiArrowRight } from 'react-icons/fi';
 
-const ServiceCard = ({ data }) => {
+const ACCENT_COLORS = [
+    { bar: 'bg-[#5572fc]', icon: 'bg-[#5572fc]/10 border-[#5572fc]/20', text: 'text-[#5572fc]' },
+    { bar: 'bg-purple-500', icon: 'bg-purple-50 border-purple-200', text: 'text-purple-600' },
+    { bar: 'bg-teal-500', icon: 'bg-teal-50 border-teal-200', text: 'text-teal-600' },
+    { bar: 'bg-amber-500', icon: 'bg-amber-50 border-amber-200', text: 'text-amber-600' },
+    { bar: 'bg-rose-500', icon: 'bg-rose-50 border-rose-200', text: 'text-rose-600' },
+    { bar: 'bg-emerald-500', icon: 'bg-emerald-50 border-emerald-200', text: 'text-emerald-600' },
+];
+
+const ServiceCard = ({ data, index = 0 }) => {
     const i18n = useI18n();
-    const slideUpZoomVariant = {
-        hidden: { opacity: 0, y: 50, scale: 0.9 },
-        visible: { opacity: 1, y: 0, scale: 1 },
-    };
+    const ac = ACCENT_COLORS[index % ACCENT_COLORS.length];
+
     return (
         <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.3 }}
-            variants={slideUpZoomVariant}
-            transition={{ duration: 0.6, ease: "easeOut" }}
-            className='hover:md:scale-105 box-shadow transition-all bg-white hover:bg-[#5572fc] group rounded duration-500'>
-            <div className='w-full h-[230px] bg-white  '>
-                <Link href={`/services/details/${data?._id}`} >
-                    <Image src={data?.image} alt='service' width={1000} height={1000} className='object-cover h-full w-full  ' />
-                </Link>
-            </div>
-            <div className='rounded-full w-16 h-16 duration-700 bottom-8 p-4 bg-white flex mx-auto relative box-shadow bg'>
-                <Image src={data?.icon} width={50} height={50} alt='service' className='object-contain w-[32px]' />
-            </div>
-            <h4 className='service-heading group-hover:text-white text-textMain'>
-                {data?.name[i18n.langCode]}
-            </h4>
-            <p className=' max-w-[296px] mx-auto mt-4 description !font-normal line-clamp-2 h-[51.19px] !text-textBody group-hover:!text-white px-3'>
-                {data.description[i18n.langCode]}
-            </p>
-            <div className='mt-8 pb-8 flex space-x-2 items-center justify-center'>
-                <Link href={`/services/details/${data?._id}`} className='text-center service-description w-fit group-hover:text-white hover:!underline'>
-                    {i18n?.t('Read More')}
-                </Link>
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.5, ease: 'easeOut' }}
+            whileHover={{ y: -4, transition: { duration: 0.2 } }}
+            className='group relative bg-white rounded-2xl border border-slate-100 shadow-[0_4px_20px_-6px_rgba(0,0,0,0.07)] hover:shadow-[0_16px_40px_-8px_rgba(85,114,252,0.12)] hover:border-[#5572fc]/20 overflow-hidden flex flex-col transition-all duration-300'
+        >
+            {/* Top accent bar */}
+            <div className={`h-0.5 w-full ${ac.bar} scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left absolute top-0 left-0 z-10`} />
+
+            {/* Cover image */}
+            <Link href={`/services/details/${data?._id}`} className='block overflow-hidden h-[210px] bg-slate-50 shrink-0'>
+                <Image
+                    src={data?.image}
+                    alt={data?.name?.[i18n.langCode] || 'Service'}
+                    width={600}
+                    height={400}
+                    className='object-cover w-full h-full transition-transform duration-500 group-hover:scale-105'
+                />
+            </Link>
+
+            {/* Icon tile — overlapping the image bottom */}
+            <div className='px-5 -mt-6 relative z-10'>
+                <div className={`inline-flex h-12 w-12 items-center justify-center rounded-xl border ${ac.icon} shadow-md bg-white`}>
+                    <Image
+                        src={data?.icon}
+                        width={28}
+                        height={28}
+                        alt='icon'
+                        className='object-contain'
+                    />
+                </div>
             </div>
 
+            {/* Content */}
+            <div className='px-5 pt-3 pb-5 flex flex-col flex-1'>
+                <h4 className='text-[15px] font-extrabold text-gray-800 tracking-tight capitalize line-clamp-1 mb-2'>
+                    {data?.name?.[i18n.langCode]}
+                </h4>
+                <p className='text-[12px] text-gray-500 font-medium leading-relaxed line-clamp-2 flex-1'>
+                    {data?.description?.[i18n.langCode]}
+                </p>
+
+                {/* CTA */}
+                <Link
+                    href={`/services/details/${data?._id}`}
+                    className={`mt-4 inline-flex items-center gap-1.5 text-[12px] font-bold ${ac.text} hover:gap-3 transition-all duration-200`}
+                >
+                    {i18n?.t('Read More')} <FiArrowRight size={13} />
+                </Link>
+            </div>
         </motion.div>
     );
 };

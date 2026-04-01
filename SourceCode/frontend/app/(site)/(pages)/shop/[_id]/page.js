@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
 import { Empty, message, Rate } from 'antd';
-import { BsCartPlus } from "react-icons/bs";
 import Link from 'next/link';
 import BasicBar from '../../../../../components/common/basic-bar';
 import ShopCard from '../../../../../components/home1/shopCard';
@@ -10,168 +9,205 @@ import { useFetch } from '../../../../helpers/hooks';
 import { fatchWishlist, postCartlist, postWishlist, singleProductAdmin } from '../../../../helpers/backend';
 import { useI18n } from '../../../../providers/i18n';
 import { columnFormatter } from '../../../../helpers/utils';
-import { PiHeartLight } from 'react-icons/pi';
 import { useRouter } from 'next/navigation';
 import { useCurrency } from '../../../../contexts/site';
 import { FaFacebookF, FaLinkedinIn, FaRedditAlien, FaTwitter } from 'react-icons/fa';
 import ProductImageSlider from '../../../../../components/common/imageSlider';
-import Button from '../../../../../components/common/button';
+import { FiHeart, FiShoppingCart, FiStar, FiCheckCircle, FiPackage, FiTag } from 'react-icons/fi';
+import { motion } from 'framer-motion';
 
 const Review = dynamic(() => import('../../../../../components/shop/review'));
 const WriteReview = dynamic(() => import('../../../../../components/shop/writeReview'));
 
 const Wheyprotein = ({ params }) => {
-    const i18n = useI18n()
-    const router = useRouter()
+    const i18n = useI18n();
+    const router = useRouter();
     const [activeTab, setActiveTab] = useState('description');
     const [wishlist, getWaishlist] = useFetch(fatchWishlist);
-    const [wishListed, setWishListed] = useState(false)
+    const [wishListed, setWishListed] = useState(false);
     const { currencySymbol, convertAmount, getCartItems } = useCurrency();
-    const [data, getData] = useFetch(singleProductAdmin, {}, false)
+    const [data, getData] = useFetch(singleProductAdmin, {}, false);
+    const [variant, setVariant] = useState();
+    const [varientPrice, setVariantPrice] = useState(null);
+    const [addingToCart, setAddingToCart] = useState(false);
+    const [url, setUrl] = useState('');
 
-    const [variant, setVariant] = useState()
-    const [varientPrice, setVariantPrice] = useState(null)
+    useEffect(() => { getData({ _id: params._id }); }, [params._id]);
+    useEffect(() => { setUrl(window.location.href); }, []);
 
     useEffect(() => {
-        getData({ _id: params._id });
-    }, [params._id]);
-
-    const tabs = ["description", "review", "Write review"];
-
-    const handleWeightChange = (id) => {
-        setVariant(id)
-    };
-    useEffect(() => {
-        if (wishlist?.docs && wishlist.docs.length > 0) {
-            const listed = wishlist.docs[0].products?.some(item => item._id === params._id);
-            setWishListed(Boolean(listed));
+        if (wishlist?.docs?.length > 0) {
+            setWishListed(Boolean(wishlist.docs[0].products?.some(item => item._id === params._id)));
         }
     }, [wishlist, params._id]);
-    const [url, setUrl] = useState("");
-    useEffect(() => {
-        setUrl(window.location.href);
-    }, []);
-
-    const shareLinks = [
-        {
-            key: 'facebook',
-            href: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`,
-            icon: <FaFacebookF />,
-        },
-        {
-            key: 'twitter',
-            href: `https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}`,
-            icon: <FaTwitter />,
-        },
-        {
-            key: 'reddit',
-            href: `https://www.reddit.com/submit?url=${encodeURIComponent(url)}`,
-            icon: <FaRedditAlien />,
-        },
-        {
-            key: 'linkedin',
-            href: `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`,
-            icon: <FaLinkedinIn />,
-        },
-    ];
-
-    const submitWishlist = async (id) => {
-        try {
-            const res = await postWishlist({ productId: params._id, variantId: variant });
-            if (res?.error === false) {
-                getWaishlist();
-                getData({ _id: params._id });
-                message.success(res.msg);
-            } else {
-                message.error(res.msg);
-            }
-        } catch (error) {
-            console.error('Error submitting wishlist:', error);
-            message.error('Failed to add to wishlist.');
-        }
-    };
 
     useEffect(() => {
-        let varientProduct = data?.product?.variants?.find(item => item?._id === variant)
-        setVariantPrice(varientProduct?.price)
+        let varientProduct = data?.product?.variants?.find(item => item?._id === variant);
+        setVariantPrice(varientProduct?.price);
     }, [variant]);
 
-    const addToCart = async () => {
-        const res = await postCartlist({
-            product_id: params._id,
-            variant_id: variant,
-            quantity: 1
-        })
-        if (res.error === false) {
-            getCartItems()
-            message.success(res?.msg)
-            router.push('/cart')
-        } else {
-            message.error(res?.msg)
-            router.push('/signin')
-        }
-    }
     useEffect(() => {
-        if (data?.product?.variants?.length > 0) {
-            setVariant(data?.product?.variants[0]?._id)
-        }
+        if (data?.product?.variants?.length > 0) setVariant(data?.product?.variants[0]?._id);
     }, [data?.product?.variants]);
+
+    const submitWishlist = async () => {
+        try {
+            const res = await postWishlist({ productId: params._id, variantId: variant });
+            if (res?.error === false) { getWaishlist(); getData({ _id: params._id }); message.success(res.msg); }
+            else message.error(res.msg);
+        } catch { message.error('Failed to add to wishlist.'); }
+    };
+
+    const addToCart = async () => {
+        setAddingToCart(true);
+        const res = await postCartlist({ product_id: params._id, variant_id: variant, quantity: 1 });
+        setAddingToCart(false);
+        if (res.error === false) { getCartItems(); message.success(res?.msg); router.push('/cart'); }
+        else { message.error(res?.msg); router.push('/signin'); }
+    };
+
+    const shareLinks = [
+        { key: 'facebook', href: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`, icon: <FaFacebookF size={13} /> },
+        { key: 'twitter', href: `https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}`, icon: <FaTwitter size={13} /> },
+        { key: 'reddit', href: `https://www.reddit.com/submit?url=${encodeURIComponent(url)}`, icon: <FaRedditAlien size={13} /> },
+        { key: 'linkedin', href: `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`, icon: <FaLinkedinIn size={13} /> },
+    ];
+
+    const tabs = ['description', 'review', 'Write review'];
+    const inStock = data?.product?.quantity > 0;
+    const displayPrice = currencySymbol + convertAmount(varientPrice ?? data?.product?.price ?? 0);
+
     return (
-        <section className=''>
+        <section>
             <BasicBar heading={i18n?.t('Product Details')} subHeading={i18n?.t('Product Details')} />
-            <div className='container lg:my-[120px] md:my-20 my-10'>
-                <div className='flex flex-col lg:flex-row md:space-x-6'>
-                    <div className='flex-shrink-0'>
-                        <ProductImageSlider thumbnail_image={data?.product?.thumbnail_image} images={data?.product?.images} />
+
+            <div className='container py-16 lg:py-24'>
+
+                {/* ── Product Hero ──────────────────────────────────────── */}
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5 }}
+                    className='grid grid-cols-1 lg:grid-cols-2 gap-10 xl:gap-16'
+                >
+                    {/* Left — Image slider */}
+                    <div className='rounded-2xl border border-slate-100 shadow-[0_4px_30px_-8px_rgba(0,0,0,0.08)] bg-white p-4 lg:p-6'>
+                        <ProductImageSlider
+                            thumbnail_image={data?.product?.thumbnail_image}
+                            images={data?.product?.images}
+                        />
                     </div>
-                    <div className='flex-1 font-poppins text-textMain mt-6'>
-                        <div className='flex flex-col lg:gap-0 gap-2 lg:flex-row lg:items-center justify-between'>
-                            <p className='font-medium text-[18px] text-gray-600'>{columnFormatter(data?.product?.category?.name)}</p>
-                            <div className='flex items-center space-x-5 md:mt-4 lg:mt-0'>
-                                <Rate disabled className='text-[#5572fc]' value={data?.avgRating} />
-                                <p className='text-[16px] font-normal text-gray-600'>{i18n?.t("Review")}({data?.reviews?.length || 0})</p>
+
+                    {/* Right — Product info */}
+                    <div className='flex flex-col gap-5'>
+
+                        {/* Category + rating row */}
+                        <div className='flex flex-wrap items-center justify-between gap-3'>
+                            <span className='inline-flex items-center gap-1.5 rounded-full border border-[#5572fc]/25 bg-[#5572fc]/8 px-3 py-1 text-[11px] font-black text-[#5572fc] uppercase tracking-widest'>
+                                <FiTag size={10} /> {columnFormatter(data?.product?.category?.name)}
+                            </span>
+                            <div className='flex items-center gap-2'>
+                                <Rate disabled value={data?.avgRating} className='text-amber-400 text-sm' />
+                                <span className='text-[12px] text-gray-400 font-medium'>
+                                    ({data?.reviews?.length || 0} {i18n?.t('reviews')})
+                                </span>
                             </div>
                         </div>
-                        <h2 className='mt-6 font-semibold text-[28px] capitalize text-gray-800'>{columnFormatter(data?.product?.name)}</h2>
-                        <div className='mt-6 flex items-center required: true space-x-6 text-[18px] font-semibold text-gray-800'>
-                            <p>{currencySymbol}{convertAmount(varientPrice ? varientPrice : data?.product?.price || 0)}</p>
-                            {data?.variants?.length > 0 && <p className='description capitalize'>({data?.product?.variants?.in_stock})</p>}
+
+                        {/* Product name */}
+                        <h1 className='text-2xl lg:text-3xl font-extrabold text-gray-800 capitalize tracking-tight leading-tight'>
+                            {columnFormatter(data?.product?.name)}
+                        </h1>
+
+                        {/* Price row */}
+                        <div className='flex items-baseline gap-4'>
+                            <span className='text-3xl font-black text-[#5572fc]'>{displayPrice}</span>
+                            {data?.product?.compare_price > (varientPrice ?? data?.product?.price) && (
+                                <span className='text-lg text-gray-400 line-through font-medium'>
+                                    {currencySymbol}{convertAmount(data?.product?.compare_price)}
+                                </span>
+                            )}
                         </div>
-                        <p className='mt-2 description text-gray-600'>{i18n?.t("Quantity")}{":"}{data?.product?.quantity || 0}</p>
-                        <p className='mt-6 description line-clamp-4 text-gray-600'>{columnFormatter(data?.product?.short_description)}</p>
+
+                        {/* Stock badge */}
+                        <div className='flex items-center gap-2'>
+                            <div className={`h-2 w-2 rounded-full ${inStock ? 'bg-emerald-400' : 'bg-red-400'}`} />
+                            <span className={`text-[12px] font-bold ${inStock ? 'text-emerald-600' : 'text-red-500'}`}>
+                                {inStock ? `${i18n?.t('In Stock')} · ${data?.product?.quantity} ${i18n?.t('units')}` : i18n?.t('Out of Stock')}
+                            </span>
+                        </div>
+
+                        {/* Short description */}
+                        <p className='text-[13px] text-gray-500 font-medium leading-relaxed line-clamp-4 border-t border-slate-100 pt-4'>
+                            {columnFormatter(data?.product?.short_description)}
+                        </p>
+
+                        {/* Variants */}
                         {data?.product?.variants?.length > 0 && (
-                            <>
-                                <div className='mt-4 flex items-center space-x-2 md:space-x-6'>
-                                    {data?.product?.variants?.map(size => (
-                                        <button key={size?._id} onClick={() => handleWeightChange(size?._id)} className={`product-button text-[12px] md:text-[16px] px-4 py-2 md:px-6 ${variant === size?._id ? '!bg-[#5572fc] !text-white' : 'bg-gray-200 text-gray-800 hover:bg-[#5572fc] hover:text-white transition duration-300'}`}>
-                                            {size?.name[i18n?.langCode]}
+                            <div>
+                                <p className='text-[11px] font-black text-gray-400 uppercase tracking-widest mb-2.5'>{i18n?.t('Select Variant')}</p>
+                                <div className='flex flex-wrap gap-2'>
+                                    {data.product.variants.map(size => (
+                                        <button
+                                            key={size?._id}
+                                            onClick={() => setVariant(size?._id)}
+                                            className={`px-4 py-2 rounded-xl text-[12px] font-bold border-2 transition-all duration-200 ${
+                                                variant === size?._id
+                                                    ? 'bg-[#5572fc] border-[#5572fc] text-white shadow-md shadow-[#5572fc]/25'
+                                                    : 'bg-white border-slate-200 text-gray-600 hover:border-[#5572fc] hover:text-[#5572fc]'
+                                            }`}
+                                        >
+                                            {size?.name?.[i18n?.langCode]}
                                         </button>
                                     ))}
                                 </div>
-                            </>
+                            </div>
                         )}
-                        <div className='lg:mt-10 mt-4 flex space-x-2 items-center lg:space-x-6'>
-                            {data?.product?.quantity > 0 ? (
+
+                        {/* CTA buttons */}
+                        <div className='flex flex-wrap gap-3 pt-2'>
+                            {inStock ? (
                                 <>
-                                    <Button children={<div className='flex items-center gap-4'><span>{i18n?.t("Add to Cart")}</span> <BsCartPlus size={20} /></div>} onClick={addToCart} ></Button>
-                                    <Button className={wishListed ? 'bg-[#5572fc] text-white' : ''} children={<div className='flex items-center gap-4'><span>{wishListed ? `${i18n?.t("Remove from wishlist")}` : `${i18n?.t("Add to wishlist")}`}</span> <PiHeartLight size={20} /></div>} onClick={() => submitWishlist(data?._id)} ></Button>
+                                    <button
+                                        onClick={addToCart}
+                                        disabled={addingToCart}
+                                        className='flex-1 min-w-[160px] flex items-center justify-center gap-2 rounded-xl bg-[#5572fc] py-3 px-6 text-[13px] font-bold text-white shadow-lg shadow-[#5572fc]/25 hover:bg-[#4461eb] hover:-translate-y-0.5 transition-all disabled:opacity-60'
+                                    >
+                                        {addingToCart
+                                            ? <span className='h-4 w-4 rounded-full border-2 border-white/30 border-t-white animate-spin' />
+                                            : <><FiShoppingCart size={15} /> {i18n?.t('Add to Cart')}</>
+                                        }
+                                    </button>
+                                    <button
+                                        onClick={submitWishlist}
+                                        className={`flex items-center justify-center gap-2 rounded-xl border-2 py-3 px-5 text-[13px] font-bold transition-all hover:-translate-y-0.5 ${
+                                            wishListed
+                                                ? 'bg-[#5572fc]/8 border-[#5572fc]/30 text-[#5572fc]'
+                                                : 'bg-white border-slate-200 text-gray-500 hover:border-[#5572fc] hover:text-[#5572fc]'
+                                        }`}
+                                    >
+                                        <FiHeart size={15} className={wishListed ? 'fill-[#5572fc]' : ''} />
+                                        {wishListed ? i18n?.t('Wishlisted') : i18n?.t('Wishlist')}
+                                    </button>
                                 </>
                             ) : (
-                                <p className='w-full mt-6 lg:mt-0 py-4 flex items-center justify-center space-x-[10px] bg-red-500 text-white rounded-lg shadow-lg'>
-                                   {i18n?.t("Out of Stock")}
-                                </p>
+                                <div className='w-full flex items-center justify-center gap-2 rounded-xl bg-red-50 border-2 border-red-200 py-3 text-[13px] font-bold text-red-500'>
+                                    <FiPackage size={15} /> {i18n?.t('Out of Stock')}
+                                </div>
                             )}
                         </div>
-                        <div className='mt-12 flex items-center space-x-3 md:space-x-5'>
-                            <p className='text-[18px] font-medium text-gray-800'>{i18n?.t("Share")}:</p>
-                            <div className="flex gap-2">
+
+                        {/* Share row */}
+                        <div className='flex items-center gap-3 pt-2 border-t border-slate-100'>
+                            <p className='text-[11px] font-black text-gray-400 uppercase tracking-widest'>{i18n?.t('Share')}:</p>
+                            <div className='flex gap-2'>
                                 {shareLinks.map((item) => (
                                     <a
                                         key={item.key}
                                         href={item.href}
-                                        target="_blank"
-                                        rel="noreferrer"
-                                        className="flex h-8 w-8 items-center justify-center rounded-full bg-[#5572fc] text-white transition-colors hover:bg-[#3f5ae0]"
+                                        target='_blank'
+                                        rel='noreferrer'
+                                        className='flex h-8 w-8 items-center justify-center rounded-xl bg-slate-100 text-gray-500 hover:bg-[#5572fc] hover:text-white transition-all duration-200'
                                     >
                                         {item.icon}
                                     </a>
@@ -179,45 +215,61 @@ const Wheyprotein = ({ params }) => {
                             </div>
                         </div>
                     </div>
-                </div>
-                <div className='md:mt-[75px] mt-10 lg:mt-[148px]'>
-                    <div className="flex space-x-3 md:space-x-[35px]">
+                </motion.div>
+
+                {/* ── Tabs ─────────────────────────────────────────────── */}
+                <div className='mt-16'>
+                    {/* Tab bar */}
+                    <div className='flex gap-1 border-b border-slate-100 mb-8'>
                         {tabs.map(tab => (
                             <button
                                 key={tab}
-                                className={`sm:px-7 px-3 py-2 font-poppins rounded whitespace-pre sm:py-3 ${activeTab === tab ? 'bg-[#5572fc] text-white' : 'text-black border border-[#D9D9D9] bg-white hover:bg-gray-200 transition duration-300'}`}
                                 onClick={() => setActiveTab(tab)}
+                                className={`px-5 py-3 text-[13px] font-bold rounded-t-xl transition-all duration-200 whitespace-nowrap ${
+                                    activeTab === tab
+                                        ? 'bg-[#5572fc] text-white shadow-md shadow-[#5572fc]/20'
+                                        : 'text-gray-500 hover:text-[#5572fc] hover:bg-[#5572fc]/5'
+                                }`}
                             >
                                 {i18n?.t(tab.charAt(0).toUpperCase() + tab.slice(1))}
                             </button>
                         ))}
                     </div>
-                        <div className="mt-10">
-                        {activeTab === 'description' && <p dangerouslySetInnerHTML={{ __html: columnFormatter(data?.product?.description) }} className='description border border-[#D9D9D9] !text-[#2B2B2BCC] py-10 px-7 rounded bg-gray-50'>
-                        </p>}
+
+                    {/* Tab content */}
+                    <div>
+                        {activeTab === 'description' && (
+                            <div
+                                dangerouslySetInnerHTML={{ __html: columnFormatter(data?.product?.description) }}
+                                className='prose prose-sm sm:prose max-w-none text-gray-600 leading-relaxed rounded-2xl border border-slate-100 p-6 lg:p-8 bg-white shadow-[0_2px_12px_-4px_rgba(0,0,0,0.05)]
+                                    prose-headings:text-gray-800 prose-headings:font-extrabold
+                                    prose-strong:text-gray-800 prose-a:text-[#5572fc]'
+                            />
+                        )}
                         {activeTab === 'review' && <Review review={data?.reviews} />}
                         {activeTab === 'Write review' && <WriteReview productId={params._id} />}
                     </div>
-                    <div className='mt-[70px] md:mt-[140px]'>
-                        <p className='text-[28px] font-semibold text-gray-800'>{i18n.t("Related Products")}</p>
-                        {
-                            data?.relatedProducts?.length > 0 ?
-                                <div className='grid grid-cols-2 lg:grid-cols-4 gap-6 mt-6'>
-                                    {
+                </div>
 
-                                        data?.relatedProducts?.map(product => (
-                                            <Link key={product._id} href={`/shop/_${product._id}`} passHref>
-                                                <ShopCard data={product} />
-                                            </Link>
-                                        ))
-
-                                    }
-                                </div> :
-                                <div className='min-h-[10vh] flex items-center justify-center w-full'>
-                                    <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description='No Related Products available for this product' />
-                                </div>
-                        }
+                {/* ── Related Products ─────────────────────────────────── */}
+                <div className='mt-20'>
+                    <div className='flex items-center gap-2.5 mb-8'>
+                        <span className='h-5 w-0.5 rounded-full bg-[#5572fc]' />
+                        <h2 className='text-[13px] font-black text-gray-800 uppercase tracking-widest'>{i18n?.t('Related Products')}</h2>
                     </div>
+                    {data?.relatedProducts?.length > 0 ? (
+                        <div className='grid grid-cols-2 lg:grid-cols-4 gap-6'>
+                            {data.relatedProducts.map(product => (
+                                <Link key={product._id} href={`/shop/${product._id}`} passHref>
+                                    <ShopCard data={product} getData={() => getData({ _id: params._id })} />
+                                </Link>
+                            ))}
+                        </div>
+                    ) : (
+                        <div className='min-h-[20vh] flex items-center justify-center rounded-2xl border border-slate-100 bg-white'>
+                            <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={i18n?.t('No Related Products')} />
+                        </div>
+                    )}
                 </div>
             </div>
         </section>

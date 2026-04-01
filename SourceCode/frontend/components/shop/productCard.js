@@ -2,121 +2,134 @@
 import Image from 'next/image';
 import React from 'react';
 import { usePathname, useRouter } from 'next/navigation';
-import { BsCartPlus } from 'react-icons/bs';
-import Swal from 'sweetalert2';
 import { useI18n } from '../../app/providers/i18n';
 import { useAction, useActionConfirm } from '../../app/helpers/hooks';
 import { delCart, postCartlist, postWishlist } from '../../app/helpers/backend';
-import { FaPlus } from "react-icons/fa6";
-import { RiSubtractFill } from "react-icons/ri";
+import { swalDanger } from '../../app/helpers/swal';
+import { FiPlus, FiMinus, FiTrash2, FiShoppingCart } from 'react-icons/fi';
 import { message } from 'antd';
 import { columnFormatter } from '../../app/helpers/utils';
 import { useCurrency } from '../../app/contexts/site';
 import Link from 'next/link';
-import { MdDelete } from "react-icons/md";
-
-
 
 const ProductCard = ({ data, getWaishlist, getData }) => {
     const i18n = useI18n();
     const pathname = usePathname();
     const router = useRouter();
-    const { currencySymbol, convertAmount, currency, getCartItems } = useCurrency();
+    const { currencySymbol, convertAmount, getCartItems } = useCurrency();
 
     const remove = (id) => {
-        Swal.fire({
-            title: 'Are you sure?',
-            text: "You won't be able to revert this!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, remove it!'
+        swalDanger({
+            title: i18n?.t('Remove from Wishlist?'),
+            text: i18n?.t('This product will be removed from your wishlist.'),
+            confirmText: i18n?.t('Yes, Remove'),
         }).then((result) => {
             if (result.isConfirmed) {
                 const storedPropertyIds = JSON.parse(localStorage.getItem('propertyIds')) || [];
-                const updatedPropertyIds = storedPropertyIds.filter(item => item !== id);
-                localStorage.setItem('propertyIds', JSON.stringify(updatedPropertyIds)); 
-                useAction(postWishlist, { productId: id, variantId: data?.variant?._id }, () => {
-                    getWaishlist();
-                });
-
-                Swal.fire('Removed!', 'The product has been removed from your wishlist.', 'success');
+                localStorage.setItem('propertyIds', JSON.stringify(storedPropertyIds.filter(item => item !== id)));
+                useAction(postWishlist, { productId: id, variantId: data?.variant?._id }, () => { getWaishlist?.(); });
             }
         });
     };
+
     const deleteFromCart = async (id) => {
-        await useActionConfirm(delCart, { product_id: id, variant_id: data?.variant?._id }, () => getData(), 'Are you sure you want to delete this item?', 'Yes, Delete');
-    }
+        await useActionConfirm(delCart, { product_id: id, variant_id: data?.variant?._id }, () => getData(), i18n?.t('Remove this item from cart?'), i18n?.t('Yes, Remove'));
+    };
+
     const addToCart = async (quantity) => {
-        const res = await postCartlist({
-            product_id: data?._id,
-            variant_id: data?.variant?._id,
-            quantity: quantity ? quantity : 1
-        })
+        const res = await postCartlist({ product_id: data?._id, variant_id: data?.variant?._id, quantity: quantity || 1 });
         if (res.error === false) {
-            getCartItems()
-            if (!quantity) {
-                message.success(res?.msg)
-            }
-            if (pathname === '/cart') {
-                getData()
-            }
-            else {
-                message.success(res?.msg)
-                router.push('/cart')
-                getWaishlist()
-            }
-
+            getCartItems();
+            if (pathname === '/cart') { getData(); }
+            else { message.success(res?.msg); router.push('/cart'); getWaishlist?.(); }
         } else {
-            message.error(res?.msg)
+            message.error(res?.msg);
         }
-    }
+    };
+
+    const lineTotal = currencySymbol + convertAmount((data?.price * data?.quantity)?.toFixed(2));
+
     return (
-        <div className='flex rounded sm:flex-row flex-col  border md:gap-5 items-start xl:items-center sm:items-start border-[#D9D9D9] '>
-            <Image className='rounded md:h-[170px] h-[210px] sm:w-[230px] object-cover' src={data?.thumbnail_image} alt="shop" width={500} height={500} />
-            <div className='flex-1 md:py-3 px-3 md:px-2 py-2'>
-                <div className='flex md:gap-10 sm:flex-row flex-col gap-5 justify-between w-full '>
-                    <Link href={`/shop/${data?._id}`} className='capitalize font-semibold line-clamp-2 font-montserrat'>{data?.name[[i18n.langCode]]}</Link>
-                    <p className='text-[#5572fc] font-medium'>{currencySymbol}{convertAmount(data?.price?.toFixed(2))}</p>
-                </div>
-                <div className='flex justify-between itcems-end md:mt-3 mt-1'>
-                    <div className='description mt-1'>
-                        {
-                            data?.variant && (
-                                <p> {i18n.t('Variant')}: {columnFormatter(data?.variant?.name)}</p>
-                            )
-                        }
-                        <p>{pathname == "/wishlist" ? i18n.t('Available Quantity') : i18n.t('Quantity')}: {data?.quantity} Pcs</p>
-                        {
-                            pathname !== '/wishlist' && (
-                                <div className='flex items-center mt-3'>
-                                    <button onClick={() => { addToCart(-1) }} className='product-button px-2 py-1 flex items-center justify-center'><RiSubtractFill size={16} /></button>
-                                    <span className='mx-2'>{data?.quantity}</span>
-                                    <button onClick={() => { addToCart(1) }} className='product-button px-2 py-1 flex items-center justify-center'><FaPlus size={16} /></button>
-                                </div>)
-                        }
+        <div className='flex sm:flex-row flex-col gap-4 rounded-2xl border border-slate-100 bg-white shadow-[0_2px_12px_-4px_rgba(0,0,0,0.06)] hover:border-[#5572fc]/20 hover:shadow-[0_4px_20px_-6px_rgba(85,114,252,0.08)] transition-all p-4'>
+            {/* Product image */}
+            <Link href={`/shop/${data?._id}`} className='shrink-0'>
+                <Image
+                    className='rounded-xl object-cover sm:w-[120px] sm:h-[120px] w-full h-[200px]'
+                    src={data?.thumbnail_image}
+                    alt={data?.name?.[i18n.langCode] || 'Product'}
+                    width={300}
+                    height={300}
+                />
+            </Link>
 
+            {/* Product details */}
+            <div className='flex-1 flex flex-col justify-between min-w-0'>
+                {/* Top row: name + price */}
+                <div className='flex items-start justify-between gap-3'>
+                    <div className='min-w-0'>
+                        <Link href={`/shop/${data?._id}`} className='text-[14px] font-extrabold text-gray-800 capitalize line-clamp-2 hover:text-[#5572fc] transition-colors leading-snug'>
+                            {data?.name?.[i18n.langCode]}
+                        </Link>
+                        {data?.variant && (
+                            <span className='inline-block mt-1 text-[11px] font-bold text-[#5572fc] bg-[#5572fc]/8 border border-[#5572fc]/15 rounded-full px-2.5 py-0.5'>
+                                {i18n.t('Variant')}: {columnFormatter(data?.variant?.name)}
+                            </span>
+                        )}
+                    </div>
+                    <div className='shrink-0 text-right'>
+                        <p className='text-[16px] font-black text-[#5572fc]'>{currencySymbol}{convertAmount(data?.price?.toFixed(2))}</p>
+                        {data?.quantity > 1 && (
+                            <p className='text-[10px] text-gray-400 font-medium'>{i18n?.t('Each')}</p>
+                        )}
                     </div>
                 </div>
-                <div className={`flex gap-2 mt-2 ${pathname === '/cart' && 'justify-end w-full'}`}>
-                    <div className={`flex items-center space-x-2`}>
-                        {
-                            pathname !== '/cart' ?
-                                (<button onClick={() => remove(data?._id)} className='product-button px-2 py-2 xl:text-base text-sm !text-[#5572fc] hover:!text-white'><MdDelete /></button>)
-                                :
-                                (<button onClick={() => deleteFromCart(data?._id)} className='product-button px-2 py-2 xl:text-base text-sm !text-[#5572fc] hover:!text-white'><MdDelete /></button>)
-                        }
-                    </div>
-                    {
-                        pathname !== '/cart' && (
-                            <button onClick={() => addToCart(1)} className='product-button xl:px-3 px-2 !py-1 flex items-center justify-center gap-2 w-fit'>
-                                <span className='xl:text-base text-sm  font-medium'>{i18n.t('Add to Cart')}</span>
-                                <BsCartPlus size={20} />
+
+                {/* Bottom row: qty control + delete */}
+                <div className='flex items-center justify-between gap-3 mt-4'>
+                    {/* Qty stepper (only on cart page) */}
+                    {pathname !== '/wishlist' && (
+                        <div className='flex items-center gap-1 rounded-xl border border-slate-200 overflow-hidden'>
+                            <button
+                                onClick={() => addToCart(-1)}
+                                className='flex h-8 w-8 items-center justify-center text-gray-500 hover:bg-[#5572fc] hover:text-white transition-colors'
+                            >
+                                <FiMinus size={12} />
                             </button>
-                        )
-                    }
+                            <span className='w-8 text-center text-[13px] font-bold text-gray-800'>{data?.quantity}</span>
+                            <button
+                                onClick={() => addToCart(1)}
+                                className='flex h-8 w-8 items-center justify-center text-gray-500 hover:bg-[#5572fc] hover:text-white transition-colors'
+                            >
+                                <FiPlus size={12} />
+                            </button>
+                        </div>
+                    )}
 
+                    {/* Line total (cart only) */}
+                    {pathname === '/cart' && data?.quantity > 1 && (
+                        <p className='text-[12px] text-gray-500 font-bold'>
+                            {i18n?.t('Total')}: <span className='text-gray-800'>{lineTotal}</span>
+                        </p>
+                    )}
+
+                    {/* Action buttons */}
+                    <div className='flex items-center gap-2 ml-auto'>
+                        {pathname !== '/cart' && (
+                            <button
+                                onClick={() => addToCart(1)}
+                                className='flex items-center gap-1.5 rounded-xl bg-[#5572fc]/8 border border-[#5572fc]/20 text-[#5572fc] px-3 py-1.5 text-[12px] font-bold hover:bg-[#5572fc] hover:text-white transition-all'
+                            >
+                                <FiShoppingCart size={12} /> {i18n.t('Add to Cart')}
+                            </button>
+                        )}
+                        <button
+                            onClick={() => pathname !== '/cart' ? remove(data?._id) : deleteFromCart(data?._id)}
+                            className='flex h-8 w-8 items-center justify-center rounded-xl border border-red-100 bg-red-50 text-red-400 hover:bg-red-500 hover:text-white hover:border-red-500 transition-all'
+                            title={i18n?.t('Remove')}
+                        >
+                            <FiTrash2 size={13} />
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
