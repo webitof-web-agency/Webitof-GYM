@@ -13,6 +13,9 @@ import {
     fetchUsers,
     removeUser,
     subscriptionPlan,
+    subscriptionHistory,
+    paySubscriptionDueByAdmin,
+    fetchAdminDueUsers,
 } from '../../../helpers/backend';
 import { useI18n } from '../../../providers/i18n';
 import PageTitle from '../../components/common/page-title';
@@ -29,16 +32,73 @@ import { FiUser, FiCalendar, FiUnlock, FiPlus, FiShield, FiRefreshCw, FiFilter }
 const UsersPageContent = () => {
     const [form] = Form.useForm();
     const [resetForm] = Form.useForm();
+    const [payDueForm] = Form.useForm();
     const router = useRouter();
     const i18n = useI18n();
     const [data, getData, { loading }] = useFetch(fetchUsers, { role: 'user' });
     const [payMethods] = useFetch(fetchUserPaymentMethods);
     const [subscriptions] = useFetch(subscriptionPlan);
-    const { currencies } = useCurrency();
+    const { currencies, currencySymbol, convertAmoutnWithCurrency, getCurrencySymbol } = useCurrency();
     const [open, setOpen] = useState(false);
     const [renue, setRenue] = useState(false);
     const [isReset, setIsReset] = useState(false);
     const [employeId, setEmployeId] = useState('');
+    const [payDueOpen, setPayDueOpen] = useState(false);
+    const [dueSubscription, setDueSubscription] = useState(null);
+    const [payDueLoading, setPayDueLoading] = useState(false);
+    const selectedSubscriptionId = Form.useWatch('subscription', form);
+    const selectedSubscriptionType = Form.useWatch('subscriptionType', form);
+    const selectedCurrency = Form.useWatch('currency', form);
+
+    const selectedPlan = subscriptions?.docs?.find((sub) => sub?._id === selectedSubscriptionId);
+    const basePrice =
+        selectedSubscriptionType === 'yearly'
+            ? selectedPlan?.yearly_price
+            : selectedSubscriptionType === 'monthly'
+                ? selectedPlan?.monthly_price
+                : undefined;
+    const displayCurrencySymbol = selectedCurrency ? getCurrencySymbol(selectedCurrency) : currencySymbol;
+    const displayPrice =
+        basePrice !== undefined && basePrice !== null
+            ? selectedCurrency
+                ? convertAmoutnWithCurrency(basePrice, selectedCurrency)
+                : basePrice
+            : undefined;
+
+    const getDueAmountFromSubscription = (subscription) => {
+        const totalAmount = subscription?.payment?.amount ?? subscription?.price ?? 0;
+        const currentPaid =
+            subscription?.payment?.paid_amount ??
+            (subscription?.payment?.status === 'paid' ? totalAmount : 0);
+        const currentDue =
+            subscription?.payment?.due_amount ?? Math.max(totalAmount - currentPaid, 0);
+        return { totalAmount, currentPaid, currentDue };
+    };
+
+    const handleOpenPayDue = async (userId) => {
+        setPayDueLoading(true);
+        try {
+            const response = await subscriptionHistory({ user: userId, page: 1, limit: 10 });
+            const history = response?.data?.docs || [];
+            const dueRecord = history.find((record) => getDueAmountFromSubscription(record).currentDue > 0);
+            if (!dueRecord) {
+                message.warning(i18n?.t('No due amount found for this member'));
+                setPayDueLoading(false);
+                return;
+            }
+            const dueInfo = getDueAmountFromSubscription(dueRecord);
+            setDueSubscription(dueRecord);
+            setPayDueOpen(true);
+            payDueForm.setFieldsValue({
+                paidAmount: dueInfo.currentDue,
+                paymentMethod: dueRecord?.payment?.method || 'cash',
+            });
+        } catch (error) {
+            message.error(i18n?.t('Failed to load due subscription'));
+        } finally {
+            setPayDueLoading(false);
+        }
+    };
 
     const columns = [
         {
@@ -121,10 +181,30 @@ const UsersPageContent = () => {
         );
     };
 
+    const [dueUsers, setDueUsers] = useState(new Set());
+
     const filteredData = {
         ...data,
         docs: data?.docs?.filter((user) => user.role !== 'admin' && user.role !== 'trainer'),
     };
+
+    React.useEffect(() => {
+        const userIds = filteredData?.docs?.map((u) => u?._id).filter(Boolean) || [];
+        if (userIds.length === 0) {
+            setDueUsers(new Set());
+            return;
+        }
+        fetchAdminDueUsers({ userIds })
+            .then((res) => {
+                if (res?.error === false) {
+                    const dueSet = new Set(res?.data?.map((item) => String(item?._id)));
+                    setDueUsers(dueSet);
+                }
+            })
+            .catch(() => {
+                setDueUsers(new Set());
+            });
+    }, [filteredData?.docs]);
 
     return (
         <div className="max-w-[1600px] mx-auto space-y-3 animate-fade-in relative">
@@ -171,17 +251,32 @@ const UsersPageContent = () => {
                         </div>
                     )}
                     actions={(d) => (
-                        <button
-                            className='flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-[#5572fc]/30 text-[#5572fc] hover:bg-[#5572fc] hover:text-white transition-all duration-300 text-[11px] font-bold shadow-sm bg-white whitespace-nowrap'
-                            onClick={(e) => {
-                                e.stopPropagation();
-                                setIsReset(true);
-                                setEmployeId(d?._id);
-                            }}
-                        >
-                            <FiUnlock size={12} />
-                            {i18n.t('Reset Pass')}
-                        </button>
+                        <div className='flex items-center gap-2'>
+                            <button
+                                className='flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-[#5572fc]/30 text-[#5572fc] hover:bg-[#5572fc] hover:text-white transition-all duration-300 text-[11px] font-bold shadow-sm bg-white whitespace-nowrap'
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    setIsReset(true);
+                                    setEmployeId(d?._id);
+                                }}
+                            >
+                                <FiUnlock size={12} />
+                                {i18n.t('Reset Pass')}
+                            </button>
+                            {dueUsers.has(String(d?._id)) && (
+                                <button
+                                    className='flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-amber-200 text-amber-700 hover:bg-amber-500 hover:text-white transition-all duration-300 text-[11px] font-bold shadow-sm bg-white whitespace-nowrap'
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        handleOpenPayDue(d?._id);
+                                    }}
+                                    disabled={payDueLoading}
+                                >
+                                    <FiRefreshCw size={12} />
+                                    {i18n.t('Pay Due')}
+                                </button>
+                            )}
+                        </div>
                     )}
                     onDelete={removeUser}
                 />
@@ -222,6 +317,7 @@ const UsersPageContent = () => {
                                 paymentMethod: values?.paymentMethod,
                                 subscriptionType: values?.subscriptionType,
                                 currency: values?.currency,
+                                paidAmount: values?.paidAmount,
                             });
                             if (error === false) {
                                 message.success(msg);
@@ -249,6 +345,7 @@ const UsersPageContent = () => {
                                     paymentMethod: values?.paymentMethod,
                                     subscriptionType: values?.subscriptionType,
                                     currency: values?.currency,
+                                    paidAmount: values?.paidAmount,
                                 });
                                 message.success(msg);
                                 setOpen(false);
@@ -317,7 +414,29 @@ const UsersPageContent = () => {
                             }))}
                             placeholder={'Select Currency'}
                         />
+                        <FormInput
+                            name='paidAmount'
+                            label='Paid Amount'
+                            type='number'
+                            placeholder='Enter paid amount (optional)'
+                        />
                     </div>
+                    <div className="rounded-lg border border-slate-100 bg-slate-50/60 px-3 py-2 text-[11px] text-gray-600">
+                        <span className="font-semibold text-gray-700">Plan Price:</span>{' '}
+                        {selectedPlan && selectedSubscriptionType ? (
+                            <span className="font-bold text-[#5572fc]">
+                                {displayCurrencySymbol}{displayPrice}
+                                <span className="ml-1 text-[10px] font-semibold text-gray-500 uppercase">
+                                    {selectedSubscriptionType}
+                                </span>
+                            </span>
+                        ) : (
+                            <span className="text-gray-400">Select a plan and type to see price</span>
+                        )}
+                    </div>
+                    <p className="text-[11px] text-gray-400 mt-1">
+                        Leave Paid Amount empty to mark as fully paid. Enter a smaller amount to mark as partial payment.
+                    </p>
                     
                     <div className="flex justify-end gap-2 mt-5 pt-3 border-t border-gray-100">
                         <Button
@@ -401,6 +520,105 @@ const UsersPageContent = () => {
                         </Button>
                         <Button type='submit' loading={loading} className="!px-5 !py-1.5 shadow-md shadow-[#5572fc]/20 !font-semibold !rounded-lg block w-fit !text-xs">
                             {i18n?.t('Reset Pass')}
+                        </Button>
+                    </div>
+                </Form>
+            </Modal>
+
+            <Modal
+                open={payDueOpen}
+                onCancel={() => {
+                    setPayDueOpen(false);
+                    setDueSubscription(null);
+                    payDueForm.resetFields();
+                }}
+                footer={null}
+                title={
+                    <div className="flex items-center gap-2.5 pb-2.5 border-b border-gray-100">
+                        <div className="w-8 h-8 rounded-lg bg-amber-50 flex items-center justify-center text-amber-600">
+                            <FiRefreshCw size={16} />
+                        </div>
+                        <div>
+                            <span className="text-base font-bold text-gray-800 block leading-tight">{i18n?.t('Pay Due Amount')}</span>
+                        </div>
+                    </div>
+                }
+                destroyOnClose={true}
+                className="rounded-xl"
+                width={420}
+                styles={{ content: { padding: '20px' } }}
+            >
+                <Form
+                    form={payDueForm}
+                    layout="vertical"
+                    onFinish={async (values) => {
+                        if (!dueSubscription?._id) {
+                            message.error(i18n?.t('Subscription not found'));
+                            return;
+                        }
+                        const { error, msg } = await paySubscriptionDueByAdmin({
+                            subscriptionId: dueSubscription._id,
+                            paidAmount: values?.paidAmount,
+                            paymentMethod: values?.paymentMethod,
+                        });
+                        if (error === false) {
+                            message.success(msg);
+                            setPayDueOpen(false);
+                            setDueSubscription(null);
+                            payDueForm.resetFields();
+                            getData();
+                        } else {
+                            message.error(msg);
+                        }
+                    }}
+                    className="mt-3 space-y-3"
+                >
+                    <div className="rounded-lg border border-slate-100 bg-slate-50/60 px-3 py-2 text-[11px] text-gray-600">
+                        <span className="font-semibold text-gray-700">{i18n?.t('Due Amount')}:</span>{' '}
+                        <span className="font-bold text-amber-600">
+                            {getCurrencySymbol(dueSubscription?.currency) || currencySymbol}
+                            {getDueAmountFromSubscription(dueSubscription).currentDue}
+                        </span>
+                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-x-3 gap-y-2">
+                        <FormInput
+                            name='paidAmount'
+                            label={i18n?.t('Paid Amount')}
+                            type='number'
+                            placeholder={i18n?.t('Enter paid amount')}
+                            required={true}
+                        />
+                        <FormSelect
+                            name='paymentMethod'
+                            label={i18n?.t('Payment Method')}
+                            options={[
+                                ...(payMethods?.docs?.map((method) => ({
+                                    label: method?.name,
+                                    value: method?.type,
+                                })) || []),
+                                { label: 'Cash', value: 'cash' },
+                            ]}
+                            placeholder={i18n?.t('Select Method')}
+                        />
+                    </div>
+                    <div className="flex justify-end gap-2 mt-5 pt-3 border-t border-gray-100">
+                        <Button
+                            type="button"
+                            onClick={() => {
+                                setPayDueOpen(false);
+                                setDueSubscription(null);
+                                payDueForm.resetFields();
+                            }}
+                            className="!bg-white !text-gray-600 !border-gray-200 hover:!bg-gray-50 !py-1.5 !px-4 !font-semibold !rounded-lg !text-xs"
+                        >
+                            {i18n?.t('Cancel')}
+                        </Button>
+                        <Button
+                            type='submit'
+                            className='!px-5 !py-1.5 flex items-center gap-1.5 shadow-sm shadow-amber-200/60 !font-semibold !rounded-lg block w-fit !text-xs !bg-amber-500 hover:!bg-amber-600'
+                        >
+                            <FiRefreshCw size={14} />
+                            {i18n?.t('Pay Due')}
                         </Button>
                     </div>
                 </Form>

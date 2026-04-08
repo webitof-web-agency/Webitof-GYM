@@ -105,7 +105,6 @@ const page = ({ params }) => {
                                 <div className="grid grid-cols-1 gap-y-3">
                                     {[
                                         { label: i18n?.t("Membership"), value: data?.subscription?.[0]?.subscription_type || "N/A", icon: <FiTag /> },
-                                        { label: i18n?.t("Member ID"), value: data?.subscription?.[0]?.uid || data?.member?.uid, icon: <FiHash /> },
                                         { label: i18n?.t("Price"), value: data?.subscription?.[0]?.price ? currencySymbol + convertAmount(data?.subscription[0]?.price) : "N/A", icon: <FiCreditCard /> },
                                         { label: i18n?.t("Start Date"), value: data?.subscription?.[0]?.start_date ? dayjs(data?.subscription[0]?.start_date).format('DD MMM YYYY') : null, icon: <FiCalendar /> },
                                         { label: i18n?.t("End Date"), value: data?.subscription?.[0]?.end_date ? dayjs(data?.subscription[0]?.end_date).format('DD MMM YYYY') : null, icon: <FiClock /> },
@@ -145,6 +144,7 @@ const page = ({ params }) => {
                                         <th className="px-6 py-3 whitespace-nowrap text-[11px] font-semibold tracking-wider">{i18n?.t('Price')}</th>
                                         <th className="px-6 py-3 whitespace-nowrap text-[11px] font-semibold tracking-wider">{i18n?.t('Joining Date')}</th>
                                         <th className="px-6 py-3 whitespace-nowrap text-[11px] font-semibold tracking-wider">{i18n?.t('Expire Date')}</th>
+                                        <th className="px-6 py-3 whitespace-nowrap text-[11px] font-semibold tracking-wider">{i18n?.t('Payment Method')}</th>
                                         <th className="px-6 py-3 whitespace-nowrap text-[11px] font-semibold tracking-wider text-right">{i18n?.t('Status')}</th>
                                     </tr>
                                 </thead>
@@ -164,6 +164,9 @@ const page = ({ params }) => {
                                                 <td className="px-6 py-3.5 whitespace-nowrap text-gray-500 font-medium text-sm">
                                                     {sub?.end_date ? dayjs(sub?.end_date).format('DD MMM YYYY') : "N/A"}
                                                 </td>
+                                                <td className="px-6 py-3.5 whitespace-nowrap text-gray-500 font-medium text-sm capitalize">
+                                                    {sub?.payment?.method || "N/A"}
+                                                </td>
                                                 <td className="px-6 py-3.5 whitespace-nowrap text-right">
                                                     {sub?.active ? (
                                                         <span className="inline-flex items-center gap-1.5 rounded-md px-2.5 py-1 text-[10px] font-bold capitalize bg-emerald-50 text-emerald-600 border border-emerald-100/50">
@@ -179,7 +182,7 @@ const page = ({ params }) => {
                                         ))
                                     ) : (
                                         <tr>
-                                            <td colSpan="5" className="px-4 py-10 text-center text-gray-400 font-medium text-sm">
+                                            <td colSpan="6" className="px-4 py-10 text-center text-gray-400 font-medium text-sm">
                                                 {i18n?.t('No subscription history available')}
                                             </td>
                                         </tr>

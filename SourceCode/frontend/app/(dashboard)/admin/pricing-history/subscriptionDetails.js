@@ -72,10 +72,6 @@ const SubscriptionModal = ({ isVisible, onClose, subscriptionData }) => {
               <span className="text-gray-500 font-medium">Subscription Name</span>
               <span className="font-bold text-[#5572fc] capitalize bg-[#5572fc]/10 px-2.5 py-0.5 rounded-md">{columnFormatter(subscription?.name) || "Deleted Plan"}</span>
             </div>
-            <div className="flex justify-between items-center text-sm">
-              <span className="text-gray-500 font-medium flex items-center gap-1.5"><FiHash size={12} /> Reference ID</span>
-              <span className="font-bold text-gray-800 font-mono text-xs">{uid}</span>
-            </div>
           </div>
         </div>
 
@@ -110,7 +106,15 @@ const SubscriptionModal = ({ isVisible, onClose, subscriptionData }) => {
           <div className="grid grid-cols-2 gap-4 relative z-10 mt-4">
               <div className="flex flex-col gap-1">
                  <span className="text-[10px] uppercase font-bold text-gray-400">Paid Amount</span>
-                 <span className="text-lg font-bold text-gray-800">{currencySymbol}{price}</span>
+                 <span className="text-lg font-bold text-gray-800">
+                   {currencySymbol}{payment?.paid_amount ?? price}
+                 </span>
+              </div>
+              <div className="flex flex-col gap-1">
+                 <span className="text-[10px] uppercase font-bold text-gray-400">Due Amount</span>
+                 <span className="text-lg font-bold text-gray-800">
+                   {currencySymbol}{payment?.due_amount ?? 0}
+                 </span>
               </div>
               <div className="flex flex-col gap-1">
                  <span className="text-[10px] uppercase font-bold text-gray-400">Method</span>
@@ -125,6 +129,8 @@ const SubscriptionModal = ({ isVisible, onClose, subscriptionData }) => {
                  <div className="flex gap-2 items-center">
                      {payment?.status === "paid" ? (
                         <span className="inline-flex rounded text-[10px] font-bold uppercase bg-blue-100 text-blue-700 px-2 py-0.5 shadow-sm">Paid</span>
+                     ) : payment?.status === "partial" ? (
+                        <span className="inline-flex rounded text-[10px] font-bold uppercase bg-amber-100 text-amber-700 px-2 py-0.5 shadow-sm">Partial</span>
                      ) : (
                         <span className="inline-flex rounded text-[10px] font-bold uppercase bg-orange-100 text-orange-700 px-2 py-0.5 shadow-sm">{payment?.status || 'Pending'}</span>
                      )}

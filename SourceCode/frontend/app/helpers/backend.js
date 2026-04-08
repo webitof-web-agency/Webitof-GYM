@@ -143,6 +143,8 @@ export const addTrainer = (data) => post("/user/add/trainer", data);
 export const fetchTrainers = (data) => get("/user/admin/trainers", data);
 export const addUser = (data) => post("/user/add/user", data);
 export const buySubscriptionByAdmin = (data) => post("/subscription/buy-by-admin", data);
+export const paySubscriptionDueByAdmin = (data) => post("/subscription/pay-due-by-admin", data);
+export const fetchAdminDueUsers = (data) => post("/subscription/admin-due-users", data);
 export const removeUser = (data) => del("/user/remove/user", data);
 
 // admin image file

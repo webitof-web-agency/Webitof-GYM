@@ -423,7 +423,8 @@ export const getGroupMemberDetails = async (req, res) => {
         }
 
         const member = await User.findById({ _id: _id }).select('name email phone image uid skills dob gender address');  
-        const subscription = await UserSubscription.find({ user: _id, active: true }).select("uid price subscription_type active start_date end_date");  
+        const subscription = await UserSubscription.find({ user: _id, active: true })
+            .select("uid price subscription_type active start_date end_date payment");  
         const newMember = { member, subscription }
 
         return res.status(200).json({

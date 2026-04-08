@@ -2,7 +2,7 @@ import { Router } from "express";
 import { isAdminOrEmployee, isAnyUser } from "../../middlewares/auth.middleware";
 import { createSubscription, deleteSubscription, getSubscription, getSubscriptionList, getSubscriptions } from "../../controllers/subscription.controller";
 import { getOrDelSubscriptionValidator } from "../../middlewares/subscription.middleware";
-import { adminAddSubscriptionForUser, allSubscriptionHistoryAdmin, buySubscription, getSubscriptionPaypalPaymentCancel, getSubscriptionRazorpayPaymentSuccess, getSubscriptionStripePaymentCancel, getUserSubscriptionHistory, molliePaymentSuccess, paypalPaymentSuccess, SSLCommerzPaymentSuccess, stripePaymentSuccess } from "../../controllers/userSubscription.controller";
+import { adminAddSubscriptionForUser, adminGetUsersWithDue, adminPaySubscriptionDue, allSubscriptionHistoryAdmin, buySubscription, getSubscriptionPaypalPaymentCancel, getSubscriptionRazorpayPaymentSuccess, getSubscriptionStripePaymentCancel, getUserSubscriptionHistory, molliePaymentSuccess, paypalPaymentSuccess, SSLCommerzPaymentSuccess, stripePaymentSuccess } from "../../controllers/userSubscription.controller";
 
 const subscriptionRoutes = Router();
 
@@ -16,6 +16,8 @@ subscriptionRoutes.delete('/', isAdminOrEmployee, getOrDelSubscriptionValidator,
 
 subscriptionRoutes.post('/buy', isAnyUser, buySubscription)
 subscriptionRoutes.post('/buy-by-admin', isAdminOrEmployee, adminAddSubscriptionForUser)
+subscriptionRoutes.post('/pay-due-by-admin', isAdminOrEmployee, adminPaySubscriptionDue)
+subscriptionRoutes.post('/admin-due-users', isAdminOrEmployee, adminGetUsersWithDue)
 subscriptionRoutes.get('/stripe/success', isAnyUser, stripePaymentSuccess)
 subscriptionRoutes.get('/stripe/cancel', isAnyUser, getSubscriptionStripePaymentCancel)
 

@@ -855,11 +855,14 @@ export const getUserSubscriptionHistory = async (req, res) => {
 
 export const allSubscriptionHistoryAdmin = async (req, res) => {
     try {
-        const { page = 1, limit = 10, search } = req.query;
+        const { page = 1, limit = 10, search, user: userId } = req.query;
 
         const filters = {};
         if (search) {
             filters[`uid`] = { $regex: `${search}`, $options: 'i' };
+        }
+        if (userId) {
+            filters[`user._id`] = new mongoose.Types.ObjectId(userId);
         }
 
         const aggregationPipeline = [
@@ -920,7 +923,7 @@ export const allSubscriptionHistoryAdmin = async (req, res) => {
 
 export const adminAddSubscriptionForUser = async (req, res) => {
     try {
-        const { subscription: subscriptionId, user: userId, paymentMethod, subscriptionType } = req.body;
+        const { subscription: subscriptionId, user: userId, paymentMethod, subscriptionType, paidAmount } = req.body;
         const subscription = await Subscription.findById(subscriptionId);
         if (!subscription) {
             return res.status(400).send({
@@ -939,10 +942,13 @@ export const adminAddSubscriptionForUser = async (req, res) => {
 
         const startDate = new Date();
         let endDate;
+        let totalPrice;
         if (subscriptionType === 'monthly') {
             endDate = new Date(startDate.setMonth(startDate.getMonth() + 1));
+            totalPrice = subscription.monthly_price;
         } else if (subscriptionType === 'yearly') {
             endDate = new Date(startDate.setFullYear(startDate.getFullYear() + 1));
+            totalPrice = subscription.yearly_price;
         } else {
             return res.status(400).send({
                 error: true,
@@ -950,17 +956,42 @@ export const adminAddSubscriptionForUser = async (req, res) => {
             });
         }
 
+        let paidAmountValue = totalPrice;
+        let dueAmountValue = 0;
+        let paymentStatus = 'paid';
+
+        if (paidAmount !== undefined && paidAmount !== null && paidAmount !== '') {
+            const parsedPaidAmount = Number(paidAmount);
+            if (Number.isNaN(parsedPaidAmount) || parsedPaidAmount < 0) {
+                return res.status(400).send({
+                    error: true,
+                    msg: 'Invalid paid amount',
+                });
+            }
+            if (parsedPaidAmount > totalPrice) {
+                return res.status(400).send({
+                    error: true,
+                    msg: 'Paid amount cannot be greater than total price',
+                });
+            }
+            paidAmountValue = parsedPaidAmount;
+            dueAmountValue = Math.max(totalPrice - parsedPaidAmount, 0);
+            paymentStatus = parsedPaidAmount < totalPrice ? 'partial' : 'paid';
+        }
+
         const newSubscription = await UserSubscription.create({
             uid: `${userId}-${subscriptionId}-${Date.now()}`, 
             user: userId,
             subscription: subscriptionId,
             currency: req.body.currency,
-            price: subscriptionType === 'monthly' ? subscription.monthly_price : subscription.yearly_price,
+            price: totalPrice,
             active: true,
             payment: {
                 method: paymentMethod ? paymentMethod : "cash",
-                status: 'paid', 
-                amount: subscriptionType === 'monthly' ? subscription.monthly_price : subscription.yearly_price,
+                status: paymentStatus,
+                amount: totalPrice,
+                paid_amount: paidAmountValue,
+                due_amount: dueAmountValue,
                 ref: res.locals.user._id
             },
             subscription_type: subscriptionType,
@@ -978,6 +1009,142 @@ export const adminAddSubscriptionForUser = async (req, res) => {
         return res.status(500).send({
             error: true,
             msg: "Internal Server Error",
+        });
+    }
+};
+
+export const adminPaySubscriptionDue = async (req, res) => {
+    try {
+        const { subscriptionId, paidAmount, paymentMethod } = req.body;
+
+        if (!subscriptionId) {
+            return res.status(400).send({
+                error: true,
+                msg: 'Subscription ID is required',
+            });
+        }
+
+        const subscription = await UserSubscription.findById(subscriptionId);
+        if (!subscription) {
+            return res.status(404).send({
+                error: true,
+                msg: 'Subscription not found',
+            });
+        }
+
+        const totalAmount = subscription?.payment?.amount ?? subscription?.price ?? 0;
+        const currentPaid =
+            subscription?.payment?.paid_amount ?? (subscription?.payment?.status === 'paid' ? totalAmount : 0);
+        const currentDue =
+            subscription?.payment?.due_amount ?? Math.max(totalAmount - currentPaid, 0);
+
+        if (currentDue <= 0) {
+            return res.status(400).send({
+                error: true,
+                msg: 'No due amount for this subscription',
+            });
+        }
+
+        let paidAmountValue = currentDue;
+        if (paidAmount !== undefined && paidAmount !== null && paidAmount !== '') {
+            const parsedPaidAmount = Number(paidAmount);
+            if (Number.isNaN(parsedPaidAmount) || parsedPaidAmount <= 0) {
+                return res.status(400).send({
+                    error: true,
+                    msg: 'Invalid paid amount',
+                });
+            }
+            if (parsedPaidAmount > currentDue) {
+                return res.status(400).send({
+                    error: true,
+                    msg: 'Paid amount cannot be greater than due amount',
+                });
+            }
+            paidAmountValue = parsedPaidAmount;
+        }
+
+        const updatedPaid = currentPaid + paidAmountValue;
+        const updatedDue = Math.max(totalAmount - updatedPaid, 0);
+
+        subscription.payment.paid_amount = updatedPaid;
+        subscription.payment.due_amount = updatedDue;
+        subscription.payment.status = updatedDue > 0 ? 'partial' : 'paid';
+        if (paymentMethod) {
+            subscription.payment.method = paymentMethod;
+        } else if (!subscription.payment.method) {
+            subscription.payment.method = 'cash';
+        }
+
+        await subscription.save();
+
+        return res.status(200).send({
+            error: false,
+            msg: 'Due amount paid successfully',
+            data: subscription,
+        });
+    } catch (error) {
+        console.error("Error in adminPaySubscriptionDue:", error);
+        return res.status(500).send({
+            error: true,
+            msg: "Internal Server Error",
+        });
+    }
+};
+
+export const adminGetUsersWithDue = async (req, res) => {
+    try {
+        const { userIds } = req.body;
+        if (!Array.isArray(userIds) || userIds.length === 0) {
+            return res.status(200).send({
+                error: false,
+                msg: 'No users provided',
+                data: [],
+            });
+        }
+
+        const objectIds = userIds.map((id) => new mongoose.Types.ObjectId(id));
+
+        const results = await UserSubscription.aggregate([
+            { $match: { user: { $in: objectIds } } },
+            {
+                $addFields: {
+                    totalAmount: { $ifNull: ['$payment.amount', '$price'] },
+                    paidAmount: {
+                        $ifNull: [
+                            '$payment.paid_amount',
+                            {
+                                $cond: [{ $eq: ['$payment.status', 'paid'] }, { $ifNull: ['$payment.amount', '$price'] }, 0]
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                $addFields: {
+                    dueAmount: {
+                        $max: [{ $subtract: ['$totalAmount', '$paidAmount'] }, 0]
+                    }
+                }
+            },
+            { $match: { dueAmount: { $gt: 0 } } },
+            {
+                $group: {
+                    _id: '$user',
+                    dueAmount: { $max: '$dueAmount' }
+                }
+            },
+        ]);
+
+        return res.status(200).send({
+            error: false,
+            msg: 'Users with due amount',
+            data: results,
+        });
+    } catch (error) {
+        console.error("Error in adminGetUsersWithDue:", error);
+        return res.status(500).send({
+            error: true,
+            msg: 'Internal Server Error',
         });
     }
 };

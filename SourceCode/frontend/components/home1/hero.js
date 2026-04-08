@@ -12,6 +12,18 @@ const Hero = ({ data }) => {
     const words = heading.split(' ');
     const firstThreeWords = words.slice(0, 3).join(' ');
     const remainingWords = words.slice(3).join(' ');
+    const heroImage = data?.image?.[0]?.url || data?.image;
+    const heroImageUrl = typeof heroImage === 'string' ? heroImage.trim() : '';
+    const heroImageLower = heroImageUrl.toLowerCase();
+    const hasHeroImage =
+        heroImageUrl !== '' &&
+        !['image', 'undefined', 'null', 'none', 'no', '0'].includes(heroImageLower) &&
+        (heroImageUrl.startsWith('http') ||
+            heroImageUrl.startsWith('/') ||
+            heroImageUrl.startsWith('data:') ||
+            heroImageUrl.includes('/'));
+    const contentAlignClass = hasHeroImage ? 'mx-auto' : 'mx-0';
+    const textAlignClass = hasHeroImage ? '' : 'text-left items-start';
 
     const stats = [
         { icon: <FiUsers size={18} />, value: '5K+', label: i18n?.t('Active Members') },
@@ -41,10 +53,10 @@ const Hero = ({ data }) => {
                     whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: false, amount: 0.3 }}
                     transition={{ duration: 1 }}
-                    className='hero-content mx-auto flex h-full'
+                    className={`hero-content flex h-full ${contentAlignClass}`}
                 >
-                    <div className='relative mt-20 h-[50%] max-w-[1320px] mx-auto px-4 py-20 md:top-[80px] md:py-0 lg:top-0 lg:h-[83%] xl:h-[86%]'>
-                        <div className='flex h-full flex-col justify-center xl:w-[660px]'>
+                    <div className={`relative mt-20 h-[50%] max-w-[1320px] px-4 py-20 md:top-[80px] md:py-0 lg:top-0 lg:h-[83%] xl:h-[86%] ${contentAlignClass}`}>
+                        <div className={`flex h-full flex-col justify-center xl:w-[660px] ${textAlignClass}`}>
                             {/* Badge */}
                             <motion.div
                                 initial={{ opacity: 0, y: -20 }}
@@ -138,21 +150,23 @@ const Hero = ({ data }) => {
                     </div>
 
                     {/* Hero image */}
-                    <motion.div
-                        initial={{ opacity: 0, y: -50 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: false, amount: 0.3 }}
-                        transition={{ duration: 1 }}
-                        className='hero-img relative top-20 hidden h-[65vh] w-fit flex-col justify-end md:flex lg:top-[130px] xl:right-[4%] 2xl:right-[6%] lg:h-[100%] 2xl:h-[100%]'
-                    >
-                        <Image
-                            src={data?.image?.[0]?.url ? data.image[0].url : data?.image}
-                            width={788}
-                            height={750}
-                            alt='hero athlete'
-                            className='h-full w-[788px] drop-shadow-2xl'
-                        />
-                    </motion.div>
+                    {hasHeroImage ? (
+                        <motion.div
+                            initial={{ opacity: 0, y: -50 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: false, amount: 0.3 }}
+                            transition={{ duration: 1 }}
+                            className='hero-img relative top-20 hidden h-[65vh] w-fit flex-col justify-end md:flex lg:top-[130px] xl:right-[4%] 2xl:right-[6%] lg:h-[100%] 2xl:h-[100%]'
+                        >
+                            <Image
+                                src={heroImageUrl}
+                                width={788}
+                                height={750}
+                                alt='hero athlete'
+                                className='h-full w-[788px] drop-shadow-2xl'
+                            />
+                        </motion.div>
+                    ) : null}
                 </motion.div>
             </div>
         </div>

@@ -300,7 +300,7 @@ const Navbar = () => {
           key={link.path}
           href={link.path || '#'}
           className={`relative text-[14px] font-semibold transition-colors after:absolute after:-bottom-1 after:left-0 after:h-0.5 after:w-full after:rounded-full after:bg-[#5572fc] after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300 ${
-            isActive(link.path) ? 'text-[#5572fc] after:scale-x-100' : 'text-white/85 hover:text-white'
+            isActive(link.path) ? 'text-white after:scale-x-100' : 'text-white/85 hover:text-white'
           }`}
           onClick={() => handleLinkClick(link.path)}
         >
@@ -313,10 +313,8 @@ const Navbar = () => {
     <nav
       className={`fixed top-0 z-50 w-full transition-all duration-300 ${
         scrolled
-          ? 'border-b border-white/10 bg-[#0c1728]/95 backdrop-blur-xl shadow-2xl shadow-black/20 py-0'
-          : isHome3
-            ? 'bg-black border-b border-white/5'
-            : 'bg-transparent border-b border-white/10'
+          ? 'border-b border-slate-200/80 bg-black/40 backdrop-blur-md shadow-md py-0'
+          : 'bg-transparent border-b border-white/10'
       }`}
     >
       <div className="container flex items-center justify-between gap-4 py-4 lg:py-5">

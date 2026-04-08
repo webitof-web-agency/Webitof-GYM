@@ -38,10 +38,12 @@ let userSubscriptionSchema = new Schema({
         },
         status: {
             type: String,
-            enum: ['pending', 'paid', 'failed'],
+            enum: ['pending', 'paid', 'partial', 'failed'],
         },
         transaction_id: String,
         amount: Number,
+        paid_amount: Number,
+        due_amount: Number,
         ref: {
             type: Schema.Types.ObjectId,
             ref: 'user'
