@@ -12,6 +12,9 @@ import { useCurrency } from '../../app/contexts/site';
 import { useEnv } from '../../app/contexts/envContext';
 import Cookies from 'js-cookie';
 import { notifySuccess } from '../../app/helpers/notify';
+import dynamic from 'next/dynamic';
+
+const CouponBar = dynamic(() => import('./couponBar'), { ssr: false });
 
 const Navbar = () => {
   const { getUser, user, setActive, setUser } = useUser();
@@ -28,6 +31,8 @@ const Navbar = () => {
   const [preferencesOpen, setPreferencesOpen] = useState(false);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+
+  const hidePromoBar = pathname === "/signin" || pathname === "/signup" || pathname === "/setting";
 
   const moreRef = useRef(null);
   const preferencesRefDesktop = useRef(null);
@@ -317,6 +322,7 @@ const Navbar = () => {
           : 'bg-transparent border-b border-white/10'
       }`}
     >
+      {!hidePromoBar && <CouponBar />}
       <div className="container flex items-center justify-between gap-4 py-4 lg:py-5">
         {/* Logo */}
         <Link href="/" className="flex items-center shrink-0">

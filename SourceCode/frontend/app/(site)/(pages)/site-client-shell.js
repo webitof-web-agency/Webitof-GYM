@@ -8,12 +8,9 @@ import Navbar from "../../../components/layout/header";
 import axios from "axios";
 
 const Scroll = dynamic(() => import("../../../components/common/scroll-bar"), { ssr: false });
-const CouponBar = dynamic(() => import("../../../components/layout/couponBar"), { ssr: false });
 
 const SiteClientShell = ({ children }) => {
   const router = useRouter();
-  const pathname = usePathname();
-  const hidePromoBar = pathname === "/signin" || pathname === "/signup" || pathname === "/setting";
 
   useEffect(() => {
     const checkEnvFile = async () => {
@@ -31,7 +28,6 @@ const SiteClientShell = ({ children }) => {
 
   return (
     <>
-      {!hidePromoBar && <CouponBar />}
       <Navbar />
       {children}
       <Footer />
