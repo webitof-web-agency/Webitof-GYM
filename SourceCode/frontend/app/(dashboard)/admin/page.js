@@ -26,7 +26,7 @@ const DonutChart = dynamic(() => import('../components/form/pieChartComponent'),
     loading: () => <div className="h-[300px] animate-pulse rounded-xl bg-slate-100" />,
 });
 
-// â”€â”€ Stat Card â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// Stat Card
 const StatCard = ({ title, value, icon: Icon, gradient, accent }) => (
     <div className={`relative overflow-hidden bg-white rounded-xl border border-slate-100/80 shadow-sm p-5 group hover:shadow-md transition-all`}>
         <div className={`absolute inset-0 opacity-[0.03] ${gradient}`} />
@@ -111,7 +111,7 @@ const page = () => {
     return (
         <div className="max-w-[1600px] mx-auto space-y-5 animate-fade-in pb-10">
 
-            {/* â”€â”€ Top Row: Welcome Card + Stats â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+            {/* Top Row: Welcome Card + Stats */}
             <div className="flex 2xl:flex-row flex-col gap-5">
 
                 {/* Welcome Card */}
@@ -182,30 +182,46 @@ const page = () => {
                 </div>
             </div>
 
-            {/* â”€â”€ Charts Row â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+            {/* Charts Row */}
             <div className="flex xl:flex-row flex-col gap-5">
                 <div className="xl:flex-[3] bg-white rounded-xl border border-slate-100/80 shadow-sm p-5">
-                    <div className="flex items-center gap-2 mb-4">
-                        <div className="w-7 h-7 rounded-lg bg-[#F97316]/10 text-[#F97316] flex items-center justify-center">
-                            <FiTrendingUp size={15} />
+                    <div className="flex items-center justify-between gap-2 mb-4">
+                        <div className="flex items-center gap-2">
+                            <div className="w-7 h-7 rounded-lg bg-[#F97316]/10 text-[#F97316] flex items-center justify-center">
+                                <FiTrendingUp size={15} />
+                            </div>
+                            <h3 className="text-sm font-extrabold text-gray-800">Monthly Revenue</h3>
                         </div>
-                        <h3 className="text-sm font-extrabold text-gray-800">Monthly Revenue</h3>
+                        <Link
+                            href="/admin/monthly-revenue"
+                            className="text-[11px] font-bold text-[#F97316] hover:text-[#EA580C] inline-flex items-center gap-1"
+                        >
+                            View Details <FiArrowRight size={12} />
+                        </Link>
                     </div>
                     <MonthlyEarningsChart data={data?.monthlyEarnings} />
                 </div>
 
                 <div className="xl:flex-[2] bg-white rounded-xl border border-slate-100/80 shadow-sm p-5">
-                    <div className="flex items-center gap-2 mb-4">
-                        <div className="w-7 h-7 rounded-lg bg-purple-50 text-purple-600 flex items-center justify-center">
-                            <FiShoppingCart size={15} />
+                    <div className="flex items-center justify-between gap-2 mb-4">
+                        <div className="flex items-center gap-2">
+                            <div className="w-7 h-7 rounded-lg bg-purple-50 text-purple-600 flex items-center justify-center">
+                                <FiShoppingCart size={15} />
+                            </div>
+                            <h3 className="text-sm font-extrabold text-gray-800">Sales Analytics</h3>
                         </div>
-                        <h3 className="text-sm font-extrabold text-gray-800">Sales Analytics</h3>
+                        <Link
+                            href="/admin/sales-analytics"
+                            className="text-[11px] font-bold text-[#F97316] hover:text-[#EA580C] inline-flex items-center gap-1"
+                        >
+                            View Details <FiArrowRight size={12} />
+                        </Link>
                     </div>
                     <DonutChart data={data?.salesData} />
                 </div>
             </div>
 
-            {/* â”€â”€ Quick Lists Row â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+            {/* Quick Lists Row */}
             <div className="grid 2xl:grid-cols-3 xl:grid-cols-2 grid-cols-1 gap-5">
 
                 {/* Top Products */}
@@ -319,7 +335,7 @@ const page = () => {
                 </div>
             </div>
 
-            {/* â”€â”€ Latest Transactions â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+            {/* Latest Transactions */}
             <div className="bg-white rounded-xl border border-slate-100/80 shadow-sm overflow-hidden">
                 <div className="px-5 py-4 border-b border-slate-100 flex items-center gap-2 bg-slate-50/50">
                     <div className="w-7 h-7 rounded-lg bg-[#F97316]/10 text-[#F97316] flex items-center justify-center shrink-0">

@@ -142,6 +142,7 @@ export const employeePasswordChange = (data) => post("/user/employee/password-ch
 export const addTrainer = (data) => post("/user/add/trainer", data);
 export const fetchTrainers = (data) => get("/user/admin/trainers", data);
 export const addUser = (data) => post("/user/add/user", data);
+export const adminUpdateUser = (data) => post("/user/admin/update", data);
 export const buySubscriptionByAdmin = (data) => post("/subscription/buy-by-admin", data);
 export const paySubscriptionDueByAdmin = (data) => post("/subscription/pay-due-by-admin", data);
 export const fetchAdminDueUsers = (data) => post("/subscription/admin-due-users", data);
@@ -270,6 +271,8 @@ export const fetchGeneralSettings = (data) => get("/general-setting", data)
 export const postGeneralSettings = (data) => post("/general-setting", data)
 
 export const fetchAdminDashboardData = (data) => get("/dashboard/admin", data)
+export const fetchAdminRevenueAnalytics = (data) => get("/dashboard/admin/revenue-analytics", data)
+export const fetchAdminSalesAnalytics = (data) => get("/dashboard/admin/sales-analytics", data)
 
 export const postCompareProperties = (data) => post('/compare', data);
 

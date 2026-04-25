@@ -30,6 +30,7 @@ import {
     deleteUser,
     getUserList,
     addUser,
+    adminUpdateManagedUser,
     removeUser,
     employeeCreate,
     employeePasswordChange,
@@ -64,6 +65,7 @@ userRoutes.get('/employee-list', isAdminOrEmployee, employeeList);
 userRoutes.delete('/employee', isAdminOrEmployee, deleteEmployee);
 
 userRoutes.post('/add/user', isAdminOrEmployee, addUser)
+userRoutes.post('/admin/update', isAdminOrEmployee, adminUpdateManagedUser)
 userRoutes.delete('/remove/user', isAdminOrEmployee, removeUser)
 
 userRoutes.get('/trainers', getAllTrainers)

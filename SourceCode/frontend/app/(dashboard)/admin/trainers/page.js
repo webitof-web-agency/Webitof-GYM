@@ -6,13 +6,13 @@ import Image from 'next/image';
 import Table from '../../components/form/table';
 import Button from '../../../../components/common/button';
 import { useAction, useFetch } from '../../../helpers/hooks';
-import { addTrainer, delTrainer, employeePasswordChange, fetchTrainers } from '../../../helpers/backend';
+import { addTrainer, adminUpdateUser, delTrainer, employeePasswordChange, fetchTrainers } from '../../../helpers/backend';
 import { useI18n } from '../../../providers/i18n';
 import FormInput from '../../../../components/form/input';
 import PhoneNumberInput from '../../components/form/phoneNumberInput';
 import PageTitle from '../../components/common/page-title';
 import FormPassword from '../../../../components/form/password';
-import { FiUser, FiMail, FiPhone, FiCalendar, FiUnlock, FiPlus, FiBriefcase, FiX, FiShield } from 'react-icons/fi';
+import { FiUser, FiMail, FiPhone, FiCalendar, FiUnlock, FiPlus, FiBriefcase, FiX, FiShield, FiEdit2 } from 'react-icons/fi';
 
 const Page = () => {
     const [form] = Form.useForm();
@@ -22,6 +22,8 @@ const Page = () => {
     const [viewModal, setViewModal] = useState(false);
     const [selectedTrainer, setSelectedTrainer] = useState(null);
     const [open, setOpen] = useState(false);
+    const [isEdit, setIsEdit] = useState(false);
+    const [editingTrainerId, setEditingTrainerId] = useState('');
     const [isReset, setIsReset] = useState(false);
     const [trainerId, setUserId] = useState('');
 
@@ -92,7 +94,12 @@ const Page = () => {
                     onReload={getData}
                     action={
                         <Button
-                            onClick={() => setOpen(true)}
+                            onClick={() => {
+                                setIsEdit(false);
+                                setEditingTrainerId('');
+                                form.resetFields();
+                                setOpen(true);
+                            }}
                             className="flex items-center gap-1.5 !px-4 shadow-md shadow-[#F97316]/20 hover:shadow-lg hover:shadow-[#F97316]/30 transition-all !h-8 !py-0 !rounded-lg block !w-auto !text-xs"
                         >
                             <FiPlus size={14} />
@@ -100,17 +107,36 @@ const Page = () => {
                         </Button>
                     }
                     actions={(d) => (
-                        <button
-                            className='flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-[#F97316]/30 text-[#F97316] hover:bg-[#F97316] hover:text-white transition-all duration-300 text-[11px] font-bold shadow-sm bg-white whitespace-nowrap'
-                            onClick={(e) => {
-                                e.stopPropagation();
-                                setIsReset(true);
-                                setUserId(d?._id);
-                            }}
-                        >
-                            <FiUnlock size={12} />
-                            {i18n.t('Reset Pass')}
-                        </button>
+                        <div className='flex items-center gap-2'>
+                            <button
+                                className='flex items-center justify-center w-8 h-8 bg-white border border-slate-200 rounded-lg shadow-sm text-gray-500 hover:text-[#F97316] hover:border-[#F97316] hover:bg-[#F97316]/10 transition-all'
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    setEditingTrainerId(d?._id);
+                                    setIsEdit(true);
+                                    form.setFieldsValue({
+                                        name: d?.name,
+                                        email: d?.email,
+                                        phone: d?.phone,
+                                    });
+                                    setOpen(true);
+                                }}
+                                title={i18n.t('Edit')}
+                            >
+                                <FiEdit2 size={13} />
+                            </button>
+                            <button
+                                className='flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-[#F97316]/30 text-[#F97316] hover:bg-[#F97316] hover:text-white transition-all duration-300 text-[11px] font-bold shadow-sm bg-white whitespace-nowrap'
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    setIsReset(true);
+                                    setUserId(d?._id);
+                                }}
+                            >
+                                <FiUnlock size={12} />
+                                {i18n.t('Reset Pass')}
+                            </button>
+                        </div>
                     )}
                     indexed
                     onDelete={delTrainer}
@@ -125,14 +151,19 @@ const Page = () => {
 
             <Modal
                 open={open}
-                onCancel={() => setOpen(false)}
+                onCancel={() => {
+                    setOpen(false);
+                    setIsEdit(false);
+                    setEditingTrainerId('');
+                    form.resetFields();
+                }}
                 title={
                     <div className="flex items-center gap-2.5 pb-2.5 border-b border-gray-100">
                         <div className="w-8 h-8 rounded-lg bg-[#F97316]/10 flex items-center justify-center text-[#F97316]">
                             <FiUser size={16} />
                         </div>
                         <div>
-                            <span className="text-base font-bold text-gray-800 block leading-tight">{i18n?.t('Add New Trainer')}</span>
+                            <span className="text-base font-bold text-gray-800 block leading-tight">{isEdit ? i18n?.t('Edit Trainer') : i18n?.t('Add New Trainer')}</span>
                         </div>
                     </div>
                 }
@@ -145,13 +176,26 @@ const Page = () => {
                 <Form
                     form={form}
                     layout='vertical'
-                    onFinish={(values) =>
-                        useAction(addTrainer, values, () => {
+                    onFinish={(values) => {
+                        if (isEdit) {
+                            return useAction(
+                                adminUpdateUser,
+                                { _id: editingTrainerId, role: 'trainer', ...values },
+                                () => {
+                                    setOpen(false);
+                                    setIsEdit(false);
+                                    setEditingTrainerId('');
+                                    getData();
+                                    form.resetFields();
+                                }
+                            );
+                        }
+                        return useAction(addTrainer, values, () => {
                             setOpen(false);
                             getData();
                             form.resetFields();
-                        })
-                    }
+                        });
+                    }}
                     className='mt-4 space-y-3'>
                     
                     <FormInput name='name' label="Full Name" required={true} placeholder={"e.g. John Doe"} />
@@ -164,18 +208,25 @@ const Page = () => {
                         <FormInput name='email' label="Email Address" required={true} placeholder={"e.g. trainer@gym.com"} />
                     </div>
                     <div>
-                        <FormPassword
-                            name='password'
-                            label="Temporary Password"
-                            required={true}
-                            placeholder={"Enter temporary password"}
-                        />
+                        {!isEdit && (
+                            <FormPassword
+                                name='password'
+                                label="Temporary Password"
+                                required={true}
+                                placeholder={"Enter temporary password"}
+                            />
+                        )}
                     </div>
                     
                     <div className="flex justify-end gap-2 mt-5 pt-3 border-t border-gray-100">
                         <Button
                             type="button"
-                            onClick={() => setOpen(false)}
+                            onClick={() => {
+                                setOpen(false);
+                                setIsEdit(false);
+                                setEditingTrainerId('');
+                                form.resetFields();
+                            }}
                             className="!bg-white !text-gray-600 !border-gray-200 hover:!bg-gray-50 !py-1.5 !px-4 !font-semibold !rounded-lg !text-xs"
                         >
                             Cancel
@@ -184,8 +235,8 @@ const Page = () => {
                             type='submit'
                             className='!px-5 !py-1.5 flex items-center gap-1.5 shadow-sm shadow-[#F97316]/20 !font-semibold !rounded-lg block w-fit !text-xs'
                         >
-                            <FiPlus size={14} />
-                            {i18n?.t('Submit Details')}
+                            {isEdit ? <FiEdit2 size={14} /> : <FiPlus size={14} />}
+                            {isEdit ? i18n?.t('Save Changes') : i18n?.t('Submit Details')}
                         </Button>
                     </div>
                 </Form>

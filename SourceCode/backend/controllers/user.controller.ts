@@ -666,6 +666,74 @@ export const addUser = async (req, res) => {
         })
     }
 }
+
+export const adminUpdateManagedUser = async (req, res) => {
+    try {
+        const body = req.body;
+        const role = body?.role;
+        const allowedRoles = ['user', 'trainer'];
+
+        if (!body?._id) {
+            return res.status(400).send({
+                error: true,
+                msg: 'User id is required'
+            });
+        }
+
+        if (!role || !allowedRoles.includes(role)) {
+            return res.status(400).send({
+                error: true,
+                msg: 'Invalid role. Only user or trainer can be updated.'
+            });
+        }
+
+        const user = await User.findOne({ _id: body._id, role });
+        if (!user) {
+            return res.status(400).send({
+                error: true,
+                msg: `${role === 'trainer' ? 'Trainer' : 'Member'} not found`
+            });
+        }
+
+        if (body?.email && body.email !== user.email) {
+            const existingEmail = await User.findOne({ email: body.email, _id: { $ne: user._id } });
+            if (existingEmail) {
+                return res.status(400).send({
+                    error: true,
+                    msg: 'Email already in use'
+                });
+            }
+            user.email = body.email;
+        }
+
+        if (body?.phone && body.phone !== user.phone) {
+            const existingPhone = await User.findOne({ phone: body.phone, _id: { $ne: user._id } });
+            if (existingPhone) {
+                return res.status(400).send({
+                    error: true,
+                    msg: 'Phone number already in use'
+                });
+            }
+            user.phone = body.phone;
+        }
+
+        if (body?.name) {
+            user.name = body.name;
+        }
+
+        await user.save();
+        return res.status(200).send({
+            error: false,
+            msg: `${role === 'trainer' ? 'Trainer' : 'Member'} updated successfully`,
+            data: user
+        });
+    } catch (e) {
+        return res.status(500).send({
+            error: true,
+            msg: 'Internal server error'
+        });
+    }
+}
 export const removeUser = async (req, res) => {
     try {
         let { query } = req;

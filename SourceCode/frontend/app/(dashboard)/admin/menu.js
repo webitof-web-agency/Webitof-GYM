@@ -23,6 +23,7 @@ import {
 import { IoSettingsOutline } from "react-icons/io5";
 import { MdAttachEmail } from "react-icons/md";
 import { SiAmazonsimpleemailservice } from "react-icons/si";
+import { FiTrendingUp, FiBarChart2 } from "react-icons/fi";
 
 const menu = [
   {
@@ -48,6 +49,18 @@ const menu = [
     href: "/admin/group",
     icon: <MdGroups2 />,
     permissions: ["admin", "group_view_view"],
+  },
+  {
+    label: "Monthly Revenue",
+    href: "/admin/monthly-revenue",
+    icon: <FiTrendingUp />,
+    permissions: ["admin"],
+  },
+  {
+    label: "Sales Analytics",
+    href: "/admin/sales-analytics",
+    icon: <FiBarChart2 />,
+    permissions: ["admin"],
   },
   {
     menu: "Subscription",

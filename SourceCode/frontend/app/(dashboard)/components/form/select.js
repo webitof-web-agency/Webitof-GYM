@@ -1,7 +1,7 @@
 import {Form, Select} from "antd";
 import { useI18n } from "../../../providers/i18n";
 
-const FormSelect = ({label, name, required,onSearch, initialValue, options, search, rules = [], multi, tags, placeholder, onSelect, onChange, allowClear, disabled, title}) => {
+const FormSelect = ({label, name, required,onSearch, initialValue, options, search, rules = [], multi, tags, placeholder, onSelect, onChange, allowClear, disabled, title, value}) => {
     const i18n = useI18n();
     let initRules = [
         {required: required, message: `${i18n.t(`Please select ${label || 'a option'}`)}`},
@@ -23,6 +23,7 @@ const FormSelect = ({label, name, required,onSearch, initialValue, options, sear
                 onSelect={onSelect}
                 disabled={disabled}
                 onChange={onChange}
+                value={value}
                 placeholder={i18n?.t(placeholder)}
                 filterOption={(input, option) => {
                     if (typeof option.children === 'string') {

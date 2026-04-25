@@ -1,5 +1,5 @@
 ﻿'use client';
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import dayjs from 'dayjs';
 import { useRouter } from 'next/navigation';
 import { Form, message, Modal, Select } from 'antd';
@@ -7,6 +7,7 @@ import Image from 'next/image';
 import { useAction, useFetch } from '../../../helpers/hooks';
 import {
     addUser,
+    adminUpdateUser,
     buySubscriptionByAdmin,
     employeePasswordChange,
     fetchUserPaymentMethods,
@@ -27,7 +28,7 @@ import FormSelect from '../../components/form/select';
 import { useCurrency } from '../../../contexts/site';
 import { columnFormatter } from '../../../helpers/utils';
 import FormPassword from '../../../../components/form/password';
-import { FiUser, FiCalendar, FiUnlock, FiPlus, FiShield, FiRefreshCw, FiFilter } from 'react-icons/fi';
+import { FiUser, FiCalendar, FiUnlock, FiPlus, FiShield, FiRefreshCw, FiFilter, FiEdit2 } from 'react-icons/fi';
 
 const UsersPageContent = () => {
     const [form] = Form.useForm();
@@ -41,6 +42,8 @@ const UsersPageContent = () => {
     const { currencies, currencySymbol, convertAmoutnWithCurrency, getCurrencySymbol } = useCurrency();
     const [open, setOpen] = useState(false);
     const [renue, setRenue] = useState(false);
+    const [isEdit, setIsEdit] = useState(false);
+    const [editingMemberId, setEditingMemberId] = useState('');
     const [isReset, setIsReset] = useState(false);
     const [employeId, setEmployeId] = useState('');
     const [payDueOpen, setPayDueOpen] = useState(false);
@@ -150,6 +153,7 @@ const UsersPageContent = () => {
                                 e.stopPropagation();
                                 setOpen(true);
                                 setRenue(true);
+                                setIsEdit(false);
                                 setEmployeId(d?._id);
                             }}
                             className="inline-flex items-center gap-1.5 rounded-md px-2.5 py-1 text-[10px] font-bold capitalize bg-rose-50 text-rose-600 border border-rose-100/50 hover:bg-rose-500 hover:text-white transition-colors group"
@@ -183,28 +187,47 @@ const UsersPageContent = () => {
 
     const [dueUsers, setDueUsers] = useState(new Set());
 
-    const filteredData = {
-        ...data,
-        docs: data?.docs?.filter((user) => user.role !== 'admin' && user.role !== 'trainer'),
-    };
+    const filteredDocs = useMemo(
+        () => data?.docs?.filter((user) => user.role !== 'admin' && user.role !== 'trainer') || [],
+        [data?.docs]
+    );
+    const filteredUserIds = useMemo(
+        () => filteredDocs.map((user) => String(user?._id)).filter(Boolean),
+        [filteredDocs]
+    );
+    const filteredUserIdsSignature = useMemo(
+        () => filteredUserIds.join('|'),
+        [filteredUserIds]
+    );
+
+    const filteredData = useMemo(
+        () => ({ ...(data || {}), docs: filteredDocs }),
+        [data, filteredDocs]
+    );
 
     React.useEffect(() => {
-        const userIds = filteredData?.docs?.map((u) => u?._id).filter(Boolean) || [];
-        if (userIds.length === 0) {
-            setDueUsers(new Set());
+        if (filteredUserIds.length === 0) {
+            setDueUsers((prev) => (prev.size ? new Set() : prev));
             return;
         }
-        fetchAdminDueUsers({ userIds })
+
+        fetchAdminDueUsers({ userIds: filteredUserIds })
             .then((res) => {
                 if (res?.error === false) {
-                    const dueSet = new Set(res?.data?.map((item) => String(item?._id)));
-                    setDueUsers(dueSet);
+                    const nextDueSet = new Set(res?.data?.map((item) => String(item?._id)));
+                    setDueUsers((prev) => {
+                        const prevSignature = Array.from(prev).sort().join('|');
+                        const nextSignature = Array.from(nextDueSet).sort().join('|');
+                        return prevSignature === nextSignature ? prev : nextDueSet;
+                    });
+                    return;
                 }
+                setDueUsers((prev) => (prev.size ? new Set() : prev));
             })
             .catch(() => {
-                setDueUsers(new Set());
+                setDueUsers((prev) => (prev.size ? new Set() : prev));
             });
-    }, [filteredData?.docs]);
+    }, [filteredUserIdsSignature]);
 
     return (
         <div className="max-w-[1600px] mx-auto space-y-3 animate-fade-in relative">
@@ -242,7 +265,14 @@ const UsersPageContent = () => {
                                 </Select>
                             </div>
                             <Button
-                                onClick={() => setOpen(true)}
+                                onClick={() => {
+                                    setRenue(false);
+                                    setIsEdit(false);
+                                    setEmployeId(null);
+                                    setEditingMemberId('');
+                                    form.resetFields();
+                                    setOpen(true);
+                                }}
                                 className="flex items-center gap-1.5 !px-4 shadow-md shadow-[#F97316]/20 hover:shadow-lg hover:shadow-[#F97316]/30 transition-all !h-8 !py-0 !rounded-lg block !w-auto !text-xs whitespace-nowrap"
                             >
                                 <FiPlus size={14} />
@@ -252,6 +282,31 @@ const UsersPageContent = () => {
                     )}
                     actions={(d) => (
                         <div className='flex items-center gap-2'>
+                            <button
+                                className='flex items-center justify-center w-8 h-8 bg-white border border-slate-200 rounded-lg shadow-sm text-gray-500 hover:text-[#F97316] hover:border-[#F97316] hover:bg-[#F97316]/10 transition-all'
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    setEditingMemberId(d?._id);
+                                    setIsEdit(true);
+                                    setRenue(false);
+                                    form.setFieldsValue({
+                                        name: d?.name,
+                                        email: d?.email,
+                                        phone: d?.phone,
+                                        password: undefined,
+                                        confirm_password: undefined,
+                                        subscription: undefined,
+                                        subscriptionType: undefined,
+                                        paymentMethod: undefined,
+                                        currency: undefined,
+                                        paidAmount: undefined,
+                                    });
+                                    setOpen(true);
+                                }}
+                                title={i18n.t('Edit')}
+                            >
+                                <FiEdit2 size={13} />
+                            </button>
                             <button
                                 className='flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-[#F97316]/30 text-[#F97316] hover:bg-[#F97316] hover:text-white transition-all duration-300 text-[11px] font-bold shadow-sm bg-white whitespace-nowrap'
                                 onClick={(e) => {
@@ -287,7 +342,9 @@ const UsersPageContent = () => {
                 onCancel={() => {
                     setOpen(false);
                     setRenue(false);
+                    setIsEdit(false);
                     setEmployeId(null);
+                    setEditingMemberId('');
                     form.resetFields();
                 }}
                 title={
@@ -296,7 +353,7 @@ const UsersPageContent = () => {
                             {renue ? <FiRefreshCw size={16} /> : <FiUser size={16} />}
                         </div>
                         <div>
-                            <span className="text-base font-bold text-gray-800 block leading-tight">{renue ? i18n?.t('Renew Subscription') : i18n?.t('Add Member')}</span>
+                            <span className="text-base font-bold text-gray-800 block leading-tight">{renue ? i18n?.t('Renew Subscription') : isEdit ? i18n?.t('Edit Member') : i18n?.t('Add Member')}</span>
                         </div>
                     </div>
                 }
@@ -326,6 +383,24 @@ const UsersPageContent = () => {
                                 setOpen(false);
                                 getData();
                                 form.resetFields();
+                            }
+                        } else if (isEdit) {
+                            const { error, msg } = await adminUpdateUser({
+                                _id: editingMemberId,
+                                role: 'user',
+                                name: values?.name,
+                                phone: values?.phone,
+                                email: values?.email,
+                            });
+                            if (error === false) {
+                                message.success(msg);
+                                setOpen(false);
+                                setIsEdit(false);
+                                setEditingMemberId('');
+                                getData();
+                                form.resetFields();
+                            } else {
+                                message.error(msg);
                             }
                         } else {
                             const { error, msg, data: createdUser } = await addUser({
@@ -363,80 +438,87 @@ const UsersPageContent = () => {
                                 <PhoneNumberInput name='phone' label={i18n?.t('Phone Number')} required={true} />
                                 <FormInput name='email' label={'Email Address'} required={true} placeholder={"e.g. user@gym.com"} />
                             </div>
-                            <div className='grid grid-cols-1 md:grid-cols-2 gap-x-3 gap-y-3'>
-                                <FormPassword name='password' label={'Password'} required={true} placeholder={"Enter Password"} />
-                                <FormPassword name='confirm_password' label={'Confirm Password'} required={true} confirm placeholder={"Verify Password"} />
-                            </div>
-                            <div className="py-2.5">
-                                <h3 className='text-xs font-bold text-gray-500 uppercase tracking-widest'>{i18n?.t('Subscription Details')}</h3>
-                                <hr className="mt-2 border-gray-100" />
-                            </div>
+                            {!isEdit && (
+                                <>
+                                    <div className='grid grid-cols-1 md:grid-cols-2 gap-x-3 gap-y-3'>
+                                        <FormPassword name='password' label={'Password'} required={true} placeholder={"Enter Password"} />
+                                        <FormPassword name='confirm_password' label={'Confirm Password'} required={true} confirm placeholder={"Verify Password"} />
+                                    </div>
+                                    <div className="py-2.5">
+                                        <h3 className='text-xs font-bold text-gray-500 uppercase tracking-widest'>{i18n?.t('Subscription Details')}</h3>
+                                        <hr className="mt-2 border-gray-100" />
+                                    </div>
+                                </>
+                            )}
                         </>
                     )}
-                    
-                    <div className='grid grid-cols-1 md:grid-cols-2 gap-x-3 gap-y-2 mt-1'>
-                        <FormSelect
-                            name='subscription'
-                            label={'Subscription'}
-                            options={subscriptions?.docs?.map((sub) => ({
-                                label: columnFormatter(sub?.name),
-                                value: sub?._id,
-                            }))}
-                            placeholder={'Select Subscription'}
-                        />
-                        <FormSelect
-                            name='subscriptionType'
-                            label={'Subscription Type'}
-                            options={[
-                                { label: 'Yearly', value: 'yearly' },
-                                { label: 'Monthly', value: 'monthly' },
-                            ]}
-                            placeholder={'Select Duration'}
-                        />
-                        <FormSelect
-                            name='paymentMethod'
-                            label='Payment Method'
-                            options={[
-                                ...(payMethods?.docs?.map((method) => ({
-                                    label: method?.name,
-                                    value: method?.type,
-                                })) || []),
-                                { label: 'Cash', value: 'cash' },
-                            ]}
-                            placeholder={'Select Method'}
-                        />
-                        <FormSelect
-                            name='currency'
-                            label={'Currency'}
-                            options={currencies?.map((currency) => ({
-                                label: currency?.name,
-                                value: currency?.code,
-                            }))}
-                            placeholder={'Select Currency'}
-                        />
-                        <FormInput
-                            name='paidAmount'
-                            label='Paid Amount'
-                            type='number'
-                            placeholder='Enter paid amount (optional)'
-                        />
-                    </div>
-                    <div className="rounded-lg border border-slate-100 bg-slate-50/60 px-3 py-2 text-[11px] text-gray-600">
-                        <span className="font-semibold text-gray-700">Plan Price:</span>{' '}
-                        {selectedPlan && selectedSubscriptionType ? (
-                            <span className="font-bold text-[#F97316]">
-                                {displayCurrencySymbol}{displayPrice}
-                                <span className="ml-1 text-[10px] font-semibold text-gray-500 uppercase">
-                                    {selectedSubscriptionType}
-                                </span>
-                            </span>
-                        ) : (
-                            <span className="text-gray-400">Select a plan and type to see price</span>
-                        )}
-                    </div>
-                    <p className="text-[11px] text-gray-400 mt-1">
-                        Leave Paid Amount empty to mark as fully paid. Enter a smaller amount to mark as partial payment.
-                    </p>
+                    {!isEdit && (
+                        <>
+                            <div className='grid grid-cols-1 md:grid-cols-2 gap-x-3 gap-y-2 mt-1'>
+                                <FormSelect
+                                    name='subscription'
+                                    label={'Subscription'}
+                                    options={subscriptions?.docs?.map((sub) => ({
+                                        label: columnFormatter(sub?.name),
+                                        value: sub?._id,
+                                    }))}
+                                    placeholder={'Select Subscription'}
+                                />
+                                <FormSelect
+                                    name='subscriptionType'
+                                    label={'Subscription Type'}
+                                    options={[
+                                        { label: 'Yearly', value: 'yearly' },
+                                        { label: 'Monthly', value: 'monthly' },
+                                    ]}
+                                    placeholder={'Select Duration'}
+                                />
+                                <FormSelect
+                                    name='paymentMethod'
+                                    label='Payment Method'
+                                    options={[
+                                        ...(payMethods?.docs?.map((method) => ({
+                                            label: method?.name,
+                                            value: method?.type,
+                                        })) || []),
+                                        { label: 'Cash', value: 'cash' },
+                                    ]}
+                                    placeholder={'Select Method'}
+                                />
+                                <FormSelect
+                                    name='currency'
+                                    label={'Currency'}
+                                    options={currencies?.map((currency) => ({
+                                        label: currency?.name,
+                                        value: currency?.code,
+                                    }))}
+                                    placeholder={'Select Currency'}
+                                />
+                                <FormInput
+                                    name='paidAmount'
+                                    label='Paid Amount'
+                                    type='number'
+                                    placeholder='Enter paid amount (optional)'
+                                />
+                            </div>
+                            <div className="rounded-lg border border-slate-100 bg-slate-50/60 px-3 py-2 text-[11px] text-gray-600">
+                                <span className="font-semibold text-gray-700">Plan Price:</span>{' '}
+                                {selectedPlan && selectedSubscriptionType ? (
+                                    <span className="font-bold text-[#F97316]">
+                                        {displayCurrencySymbol}{displayPrice}
+                                        <span className="ml-1 text-[10px] font-semibold text-gray-500 uppercase">
+                                            {selectedSubscriptionType}
+                                        </span>
+                                    </span>
+                                ) : (
+                                    <span className="text-gray-400">Select a plan and type to see price</span>
+                                )}
+                            </div>
+                            <p className="text-[11px] text-gray-400 mt-1">
+                                Leave Paid Amount empty to mark as fully paid. Enter a smaller amount to mark as partial payment.
+                            </p>
+                        </>
+                    )}
                     
                     <div className="flex justify-end gap-2 mt-5 pt-3 border-t border-gray-100">
                         <Button
@@ -444,7 +526,9 @@ const UsersPageContent = () => {
                             onClick={() => {
                                 setOpen(false);
                                 setRenue(false);
+                                setIsEdit(false);
                                 setEmployeId(null);
+                                setEditingMemberId('');
                                 form.resetFields();
                             }}
                             className="!bg-white !text-gray-600 !border-gray-200 hover:!bg-gray-50 !py-1.5 !px-4 !font-semibold !rounded-lg !text-xs"
@@ -455,8 +539,8 @@ const UsersPageContent = () => {
                             type='submit'
                             className='!px-5 !py-1.5 flex items-center gap-1.5 shadow-sm shadow-[#F97316]/20 !font-semibold !rounded-lg block w-fit !text-xs'
                         >
-                            {renue ? <FiRefreshCw size={14} /> : <FiPlus size={14} />}
-                            {renue ? i18n?.t('Confirm Renew') : i18n?.t('Save Details')}
+                            {renue ? <FiRefreshCw size={14} /> : isEdit ? <FiEdit2 size={14} /> : <FiPlus size={14} />}
+                            {renue ? i18n?.t('Confirm Renew') : isEdit ? i18n?.t('Save Changes') : i18n?.t('Save Details')}
                         </Button>
                     </div>
                 </Form>
