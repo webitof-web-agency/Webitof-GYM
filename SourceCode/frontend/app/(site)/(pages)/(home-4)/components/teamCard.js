@@ -1,4 +1,4 @@
-import Image from 'next/image';
+﻿import Image from 'next/image';
 import Link from 'next/link';
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
@@ -32,7 +32,7 @@ const ExpartCard = ({ team }) => {
                     height={400}
                     className=' w-full h-full object-fill transition-all duration-500 absolute '
                 />
-                <div className='absolute w-full h-full bg-[#5572fc]/70 lg:p-6 p-4 text-white -left-[350px] group-hover:left-0 duration-500 '>
+                <div className='absolute w-full h-full bg-[#F97316]/70 lg:p-6 p-4 text-white -left-[350px] group-hover:left-0 duration-500 '>
                     <h1 className='text-lg font-semibold text-center pb-2 border-b border-white'>{i18n?.t('Trainer Info')}</h1>
                     <div className='mt-4 space-y-1'>
                         <h1 className='text-sm font-semibold flex items-center gap-2'>Name: <span className='text-sm font-normal line-clamp-1 capitalize'>{team?.name}</span>
@@ -70,3 +70,4 @@ const ExpartCard = ({ team }) => {
 };
 
 export default ExpartCard;
+

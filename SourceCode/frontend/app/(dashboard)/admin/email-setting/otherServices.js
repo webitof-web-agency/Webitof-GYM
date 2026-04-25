@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { Form, Input, Select, Switch } from 'antd';
 const { Option } = Select;
 import { useAction } from '../../../helpers/hooks';
@@ -95,7 +95,7 @@ const OtherProviderManageEmail = ({ settings, getSettings, loading, setCheckedVa
                     <Input placeholder="e.g. noreply@yourdomain.com" className="!rounded-lg !text-sm" />
                 </Form.Item>
                 <Form.Item name={['other', 'password']} label={<span className="text-xs font-bold text-gray-600 flex items-center gap-1"><FiLock size={11} className="text-gray-400"/> {i18n?.t('Email Password')}</span>} rules={[{ required: true, message: 'Please input email password!' }]} className="!mb-0">
-                    <Input.Password placeholder="••••••••" className="!rounded-lg !text-sm" />
+                    <Input.Password placeholder="â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢" className="!rounded-lg !text-sm" />
                 </Form.Item>
                 <Form.Item name={['other', 'provider_name']} label={<span className="text-xs font-bold text-gray-600 flex items-center gap-1"><FiServer size={11} className="text-gray-400"/> {i18n?.t('Service Provider')}</span>} rules={[{ required: true, message: 'Please input service provider!' }]} className="!mb-0 md:col-span-2">
                     <Select placeholder="Select or type your provider" allowClear className="!rounded-lg">
@@ -118,13 +118,13 @@ const OtherProviderManageEmail = ({ settings, getSettings, loading, setCheckedVa
                     <Switch
                         checked={defaultEmail === 'others'}
                         onChange={(checked) => setDefaultEmail(checked ? 'others' : '')}
-                        className={defaultEmail === 'others' ? '!bg-[#5572fc]' : '!bg-gray-300'}
+                        className={defaultEmail === 'others' ? '!bg-[#F97316]' : '!bg-gray-300'}
                     />
                 </Form.Item>
             </div>
 
             <div className="flex justify-end mt-5 pt-4 border-t border-slate-100">
-                <Button type='submit' className="flex items-center gap-1.5 !px-6 !py-2 shadow-md shadow-[#5572fc]/20 !rounded-lg !text-xs !font-bold">
+                <Button type='submit' className="flex items-center gap-1.5 !px-6 !py-2 shadow-md shadow-[#F97316]/20 !rounded-lg !text-xs !font-bold">
                     <FiSave size={13} /> {i18n?.t('Save Configuration')}
                 </Button>
             </div>

@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 import React, { useEffect } from 'react';
 import { fetchLanguage, fetchTranslations, postLanguage } from '../../../../../helpers/backend';
 import { useAction, useFetch } from '../../../../../helpers/hooks';
@@ -991,9 +991,9 @@ const Translations = ({ params }) => {
             </div>
 
             <div className="bg-white rounded-xl shadow-[0_2px_10px_-4px_rgba(0,0,0,0.05)] border border-slate-100/80 overflow-hidden">
-                 <div className="px-6 py-4 border-b border-slate-100 bg-[#5572fc]/5 flex items-center justify-between">
+                 <div className="px-6 py-4 border-b border-slate-100 bg-[#F97316]/5 flex items-center justify-between">
                      <div className="flex items-center gap-3">
-                         <div className="w-8 h-8 rounded-lg bg-white border border-[#5572fc]/20 text-[#5572fc] flex items-center justify-center text-lg">
+                         <div className="w-8 h-8 rounded-lg bg-white border border-[#F97316]/20 text-[#F97316] flex items-center justify-center text-lg">
                              {data?.flag || '🌐'}
                          </div>
                          <div>
@@ -1026,7 +1026,7 @@ const Translations = ({ params }) => {
                                              name={[params._id, key.name, 'value']}
                                          >
                                              <input
-                                                 className="w-full flex h-10 rounded-lg border border-slate-200 bg-white px-3 py-2 text-[13px] font-medium placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-[#5572fc]/20 focus:border-[#5572fc] transition-all shadow-sm"
+                                                 className="w-full flex h-10 rounded-lg border border-slate-200 bg-white px-3 py-2 text-[13px] font-medium placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-[#F97316]/20 focus:border-[#F97316] transition-all shadow-sm"
                                                  placeholder={`Enter ${data?.name} translation...`}
                                              />
                                          </Form.Item>
@@ -1037,7 +1037,7 @@ const Translations = ({ params }) => {
                      </div>
 
                      <div className="p-5 border-t border-slate-100 bg-slate-50/50 flex justify-end">
-                         <Button type='submit' className="!px-6 !py-2 flex items-center gap-1.5 shadow-md shadow-[#5572fc]/20 !font-semibold !rounded-lg !text-xs transition-all tracking-wide">
+                         <Button type='submit' className="!px-6 !py-2 flex items-center gap-1.5 shadow-md shadow-[#F97316]/20 !font-semibold !rounded-lg !text-xs transition-all tracking-wide">
                              Deploy Dictionaries
                          </Button>
                      </div>

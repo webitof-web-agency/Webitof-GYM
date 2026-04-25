@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 import { useEffect } from 'react';
 import { useAction, useFetch } from '../../../../../helpers/hooks';
 import { orderDetails, updateOrderStatus } from '../../../../../helpers/backend';
@@ -35,7 +35,7 @@ const Page = ({ params }) => {
   const getOrderStatusStyle = (status) => {
     const map = {
       pending:   { bg: 'bg-orange-50',  text: 'text-orange-600',  border: 'border-orange-100' },
-      accepted:  { bg: 'bg-blue-50',    text: 'text-blue-600',    border: 'border-blue-100'   },
+      accepted:  { bg: 'bg-orange-50',    text: 'text-orange-600',    border: 'border-orange-100'   },
       completed: { bg: 'bg-emerald-50', text: 'text-emerald-600', border: 'border-emerald-100'},
       cancelled: { bg: 'bg-rose-50',    text: 'text-rose-600',    border: 'border-rose-100'   },
     };
@@ -44,7 +44,7 @@ const Page = ({ params }) => {
 
   const getPayStatusStyle = (status) => {
     const map = {
-      paid:    { bg: 'bg-blue-50',   text: 'text-blue-600',   border: 'border-blue-100'   },
+      paid:    { bg: 'bg-orange-50',   text: 'text-orange-600',   border: 'border-orange-100'   },
       unpaid:  { bg: 'bg-rose-50',   text: 'text-rose-600',   border: 'border-rose-100'   },
       pending: { bg: 'bg-orange-50', text: 'text-orange-600', border: 'border-orange-100' },
     };
@@ -61,7 +61,7 @@ const Page = ({ params }) => {
         <div className="flex items-center gap-4">
           <button
             onClick={() => router.back()}
-            className="flex items-center justify-center w-8 h-8 bg-white border border-slate-200 rounded-lg shadow-sm text-gray-500 hover:text-[#5572fc] hover:border-[#5572fc] transition-all"
+            className="flex items-center justify-center w-8 h-8 bg-white border border-slate-200 rounded-lg shadow-sm text-gray-500 hover:text-[#F97316] hover:border-[#F97316] transition-all"
           >
             <FaArrowLeft size={14} />
           </button>
@@ -95,7 +95,7 @@ const Page = ({ params }) => {
         {/* Customer Card */}
         <div className="bg-white rounded-2xl shadow-sm border border-slate-100/80 p-5 col-span-1">
           <div className="flex items-center gap-2 mb-4">
-            <div className="w-7 h-7 rounded-lg bg-[#5572fc]/10 text-[#5572fc] flex items-center justify-center">
+            <div className="w-7 h-7 rounded-lg bg-[#F97316]/10 text-[#F97316] flex items-center justify-center">
               <FiUser size={13} />
             </div>
             <h3 className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">{i18n?.t('Customer')}</h3>
@@ -150,7 +150,7 @@ const Page = ({ params }) => {
             </div>
             <div className="flex flex-col">
               <span className="text-[10px] font-bold text-gray-400 uppercase">Reference</span>
-              <span className="font-mono font-bold text-[#5572fc] text-xs bg-[#5572fc]/10 px-1.5 py-0.5 rounded w-fit">#{data?.uid}</span>
+              <span className="font-mono font-bold text-[#F97316] text-xs bg-[#F97316]/10 px-1.5 py-0.5 rounded w-fit">#{data?.uid}</span>
             </div>
           </div>
         </div>
@@ -176,7 +176,7 @@ const Page = ({ params }) => {
       {/* Order Items Table */}
       <div className="bg-white rounded-2xl shadow-sm border border-slate-100/80 overflow-hidden mb-5">
         <div className="flex items-center gap-2 p-5 border-b border-slate-100">
-          <div className="w-8 h-8 rounded-lg bg-[#5572fc]/10 text-[#5572fc] flex items-center justify-center">
+          <div className="w-8 h-8 rounded-lg bg-[#F97316]/10 text-[#F97316] flex items-center justify-center">
             <FiShoppingBag size={16} />
           </div>
           <h3 className="text-sm font-bold text-gray-800 uppercase tracking-wide leading-none">{i18n?.t("Order Items")}</h3>
@@ -235,7 +235,7 @@ const Page = ({ params }) => {
                     </span>
                   </td>
                   <td className="px-5 py-4 text-right">
-                    <span className="font-bold text-[#5572fc] text-sm">
+                    <span className="font-bold text-[#F97316] text-sm">
                       {getCurrencySymbol(data?.payment?.currency)}{item?.total}
                     </span>
                   </td>

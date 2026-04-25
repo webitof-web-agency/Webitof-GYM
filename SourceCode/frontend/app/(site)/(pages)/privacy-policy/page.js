@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import BasicBar from "../../../../components/common/basic-bar";
 import { fetchSinglePage } from "../../../helpers/backend";
@@ -43,7 +43,7 @@ const Page = () => {
                                 prose-headings:text-gray-800 prose-headings:font-extrabold
                                 prose-h1:text-2xl prose-h2:text-xl prose-h3:text-lg
                                 prose-strong:text-gray-800 prose-strong:font-bold
-                                prose-a:text-[#5572fc] prose-a:no-underline hover:prose-a:underline
+                                prose-a:text-[#F97316] prose-a:no-underline hover:prose-a:underline
                                 prose-li:my-1 prose-ul:pl-5 prose-ol:pl-5'
                         />
                     )}
@@ -54,3 +54,4 @@ const Page = () => {
 };
 
 export default Page;
+

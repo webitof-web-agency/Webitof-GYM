@@ -1,4 +1,4 @@
-import Image from 'next/image';
+﻿import Image from 'next/image';
 import React from 'react';
 import { FiUser, FiCalendar, FiArrowRight } from 'react-icons/fi';
 import Link from 'next/link';
@@ -16,7 +16,7 @@ const NewsCard = ({ data, index = 0 }) => {
             viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.6, ease: 'easeOut', delay: index * 0.1 }}
             whileHover={{ y: -5, transition: { duration: 0.2 } }}
-            className='group bg-white rounded-2xl overflow-hidden border border-slate-100 shadow-[0_4px_20px_-6px_rgba(0,0,0,0.07)] hover:shadow-[0_16px_40px_-8px_rgba(85,114,252,0.12)] hover:border-[#5572fc]/20 transition-all duration-300 flex flex-col'
+            className='group bg-white rounded-2xl overflow-hidden border border-slate-100 shadow-[0_4px_20px_-6px_rgba(0,0,0,0.07)] hover:shadow-[0_16px_40px_-8px_rgba(85,114,252,0.12)] hover:border-[#F97316]/20 transition-all duration-300 flex flex-col'
         >
             {/* Cover image */}
             <Link href={`/blog/view/${data?._id}`} className='relative w-full h-[220px] overflow-hidden bg-slate-50 block shrink-0'>
@@ -28,7 +28,7 @@ const NewsCard = ({ data, index = 0 }) => {
                 />
                 {/* Category badge */}
                 <div className='absolute top-3 left-3'>
-                    <span className='text-[10px] font-black text-white bg-[#5572fc] rounded-full px-3 py-1 uppercase tracking-widest shadow-md'>
+                    <span className='text-[10px] font-black text-white bg-[#F97316] rounded-full px-3 py-1 uppercase tracking-widest shadow-md'>
                         {i18n?.t('Blog')}
                     </span>
                 </div>
@@ -51,7 +51,7 @@ const NewsCard = ({ data, index = 0 }) => {
 
                 {/* Title */}
                 <Link href={`/blog/view/${data?._id}`} className='flex-1'>
-                    <h5 className='text-[14.5px] font-extrabold text-gray-800 leading-snug line-clamp-2 capitalize group-hover:text-[#5572fc] transition-colors'>
+                    <h5 className='text-[14.5px] font-extrabold text-gray-800 leading-snug line-clamp-2 capitalize group-hover:text-[#F97316] transition-colors'>
                         {data?.title?.[i18n.langCode]}
                     </h5>
                 </Link>
@@ -62,7 +62,7 @@ const NewsCard = ({ data, index = 0 }) => {
                 {/* Read more */}
                 <Link
                     href={`/blog/view/${data?._id}`}
-                    className='flex items-center gap-1.5 text-[12px] font-bold text-gray-400 group-hover:text-[#5572fc] transition-all w-fit'
+                    className='flex items-center gap-1.5 text-[12px] font-bold text-gray-400 group-hover:text-[#F97316] transition-all w-fit'
                 >
                     {i18n?.t('Read More')}
                     <FiArrowRight size={12} className='transition-transform group-hover:translate-x-1' />

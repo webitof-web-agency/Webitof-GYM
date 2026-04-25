@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 import React from 'react';
 import { FaUsers, FaBell } from 'react-icons/fa';
 import Image from 'next/image';
@@ -38,7 +38,7 @@ const TrainerDashboard = () => {
       {/* Stat Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
         {/* Groups Card */}
-        <div className="relative overflow-hidden bg-gradient-to-br from-[#5572fc] to-indigo-600 rounded-2xl p-6 shadow-md transition-all duration-300 hover:shadow-lg hover:-translate-y-1 group">
+        <div className="relative overflow-hidden bg-gradient-to-br from-[#F97316] to-indigo-600 rounded-2xl p-6 shadow-md transition-all duration-300 hover:shadow-lg hover:-translate-y-1 group">
           <div className="absolute -right-4 -bottom-4 opacity-10 group-hover:scale-110 group-hover:rotate-6 transition-transform duration-500">
             <FaPeopleGroup className="text-9xl text-white" />
           </div>
@@ -74,7 +74,7 @@ const TrainerDashboard = () => {
       <div className="bg-slate-50/50 rounded-2xl border border-slate-200/60 overflow-hidden">
         <div className="p-5 sm:p-6 border-b border-slate-200/80 bg-white">
           <h2 className="text-lg font-bold text-slate-800 flex items-center gap-2">
-            <span className="w-1.5 h-6 bg-[#5572fc] rounded-full inline-block"></span>
+            <span className="w-1.5 h-6 bg-[#F97316] rounded-full inline-block"></span>
             {i18n?.t("Group List")}
           </h2>
         </div>
@@ -94,3 +94,4 @@ const TrainerDashboard = () => {
 };
 
 export default TrainerDashboard;
+

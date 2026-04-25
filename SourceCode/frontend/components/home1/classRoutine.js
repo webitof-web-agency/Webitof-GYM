@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 import BannerTitle from '../common/banner-title'
 import { useFetch } from '../../app/helpers/hooks'
 import { fetchShedule } from '../../app/helpers/backend'
@@ -43,13 +43,13 @@ const ClassRoutine = () => {
                     {/* Header */}
                     <thead>
                         <tr>
-                            <th className="bg-[#5572fc] text-white text-[11px] font-black uppercase tracking-widest px-5 py-4 text-left rounded-tl-2xl w-24">
+                            <th className="bg-[#F97316] text-white text-[11px] font-black uppercase tracking-widest px-5 py-4 text-left rounded-tl-2xl w-24">
                                 <div className="flex items-center gap-1.5"><FiClock size={12} /> Time</div>
                             </th>
                             {days.map((day, i) => (
                                 <th
                                     key={day}
-                                    className={`text-[11px] font-black uppercase tracking-widest px-3 py-4 text-center ${i === days.length - 1 ? 'rounded-tr-2xl' : ''} ${day === 'Saturday' || day === 'Sunday' ? 'bg-[#5572fc]/8 text-[#5572fc]' : 'bg-slate-50 text-gray-500'}`}
+                                    className={`text-[11px] font-black uppercase tracking-widest px-3 py-4 text-center ${i === days.length - 1 ? 'rounded-tr-2xl' : ''} ${day === 'Saturday' || day === 'Sunday' ? 'bg-[#F97316]/8 text-[#F97316]' : 'bg-slate-50 text-gray-500'}`}
                                 >
                                     {i18n?.t(day)}
                                 </th>
@@ -70,7 +70,7 @@ const ClassRoutine = () => {
                             >
                                 {/* Time cell */}
                                 <td className="border-b border-slate-100 px-5 py-3.5">
-                                    <span className="flex items-center gap-1.5 text-[12px] font-bold text-[#5572fc] whitespace-nowrap">
+                                    <span className="flex items-center gap-1.5 text-[12px] font-bold text-[#F97316] whitespace-nowrap">
                                         <FiClock size={11} /> {time}
                                     </span>
                                 </td>
@@ -83,18 +83,18 @@ const ClassRoutine = () => {
                                         <td
                                             key={day}
                                             onClick={() => { if (!isEmpty) { setTrainer(data); setOpen(true) } }}
-                                            className={`border-b border-slate-100 px-3 py-3 text-center text-[12px] transition-all duration-200 ${isEmpty ? 'text-slate-300 font-medium' : 'cursor-pointer group hover:bg-[#5572fc]/6'}`}
+                                            className={`border-b border-slate-100 px-3 py-3 text-center text-[12px] transition-all duration-200 ${isEmpty ? 'text-slate-300 font-medium' : 'cursor-pointer group hover:bg-[#F97316]/6'}`}
                                         >
-                                            {isEmpty ? '—' : (
+                                            {isEmpty ? 'â€”' : (
                                                 <>
                                                     {title.length > 18 ? (
                                                         <Tooltip title={i18n?.t(title)}>
-                                                            <p className="font-bold text-gray-700 group-hover:text-[#5572fc] transition-colors line-clamp-1">
-                                                                {i18n?.t(title.substring(0, 18) + '…')}
+                                                            <p className="font-bold text-gray-700 group-hover:text-[#F97316] transition-colors line-clamp-1">
+                                                                {i18n?.t(title.substring(0, 18) + 'â€¦')}
                                                             </p>
                                                         </Tooltip>
                                                     ) : (
-                                                        <p className="font-bold text-gray-700 group-hover:text-[#5572fc] transition-colors">
+                                                        <p className="font-bold text-gray-700 group-hover:text-[#F97316] transition-colors">
                                                             {i18n?.t(title)}
                                                         </p>
                                                     )}
@@ -122,7 +122,7 @@ const ClassRoutine = () => {
                 styles={{ content: { borderRadius: '20px', padding: 0, overflow: 'hidden' } }}
             >
                 {/* Header banner */}
-                <div className="relative h-[90px] bg-gradient-to-r from-[#4461eb] to-[#5572fc] flex items-end justify-center pb-0">
+                <div className="relative h-[90px] bg-gradient-to-r from-[#EA580C] to-[#F97316] flex items-end justify-center pb-0">
                     <div className="absolute bottom-[-44px] left-1/2 -translate-x-1/2 w-[88px] h-[88px] rounded-full border-4 border-white shadow-lg overflow-hidden bg-white">
                         <Image
                             src={trainer?.image || '/defaultimg.jpg'}
@@ -143,11 +143,11 @@ const ClassRoutine = () => {
 
                     <div className="space-y-2 text-left">
                         <div className="flex items-center gap-2.5 text-[12px] text-gray-600">
-                            <FiMail size={13} className="text-[#5572fc] shrink-0" />
+                            <FiMail size={13} className="text-[#F97316] shrink-0" />
                             <span className="truncate font-medium">{trainer?.email || 'N/A'}</span>
                         </div>
                         <div className="flex items-center gap-2.5 text-[12px] text-gray-600">
-                            <FiStar size={13} className="text-[#5572fc] shrink-0" />
+                            <FiStar size={13} className="text-[#F97316] shrink-0" />
                             <span className="font-medium">{i18n?.t('Experience')}: {trainer?.experience || 'N/A'}</span>
                         </div>
                     </div>
@@ -158,7 +158,7 @@ const ClassRoutine = () => {
 
                     <button
                         onClick={() => push(`/trainers/view/${trainer?._id}`)}
-                        className="mt-5 w-full rounded-xl bg-[#5572fc] py-2.5 text-[13px] font-bold text-white hover:bg-[#4461eb] transition-colors shadow-lg shadow-[#5572fc]/25"
+                        className="mt-5 w-full rounded-xl bg-[#F97316] py-2.5 text-[13px] font-bold text-white hover:bg-[#EA580C] transition-colors shadow-lg shadow-[#F97316]/25"
                     >
                         {i18n?.t('View Full Profile')}
                     </button>

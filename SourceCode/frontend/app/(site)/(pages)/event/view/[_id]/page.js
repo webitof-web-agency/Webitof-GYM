@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 import React, { useEffect, useState } from 'react';
 import BasicBar from '../../../../../../components/common/basic-bar';
 import { useAction, useFetch } from '../../../../../helpers/hooks';
@@ -65,7 +65,7 @@ const Page = ({ params }) => {
                     <p className='para1 text-justify font-poppins'>{columnFormatter(data?.description)}</p>
                 </div>
                 <div className="flex justify-between lg:mt-10 mt-6">
-                    <Button type='submit' className={`flex gap-2 items-center ${data?.is_interest===true ? '!bg-[#5572fc] !text-white' : ''}`} onClick={intersted1}>
+                    <Button type='submit' className={`flex gap-2 items-center ${data?.is_interest===true ? '!bg-[#F97316] !text-white' : ''}`} onClick={intersted1}>
                         <div className="flex justify-center items-center">
                             {isInterested ? <FaStar size={20} /> : <CiStar size={20} />}
                         </div>

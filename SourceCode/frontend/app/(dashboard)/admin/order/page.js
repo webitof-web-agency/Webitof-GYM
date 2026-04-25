@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import dayjs from "dayjs";
 import { useRouter } from "next/navigation";
@@ -36,7 +36,7 @@ const Page = () => {
     const getOrderStatusBadge = (status) => {
         const map = {
             pending:   { bg: 'bg-orange-50',  text: 'text-orange-600',  border: 'border-orange-100/50'  },
-            accepted:  { bg: 'bg-blue-50',    text: 'text-blue-600',    border: 'border-blue-100/50'    },
+            accepted:  { bg: 'bg-orange-50',    text: 'text-orange-600',    border: 'border-orange-100/50'    },
             completed: { bg: 'bg-emerald-50', text: 'text-emerald-600', border: 'border-emerald-100/50' },
             cancelled: { bg: 'bg-rose-50',    text: 'text-rose-600',    border: 'border-rose-100/50'    },
         };
@@ -45,7 +45,7 @@ const Page = () => {
 
     const getPaymentStatusBadge = (status) => {
         const map = {
-            paid:    { bg: 'bg-blue-50',   text: 'text-blue-600',   border: 'border-blue-100/50'   },
+            paid:    { bg: 'bg-orange-50',   text: 'text-orange-600',   border: 'border-orange-100/50'   },
             unpaid:  { bg: 'bg-rose-50',   text: 'text-rose-600',   border: 'border-rose-100/50'   },
             pending: { bg: 'bg-orange-50', text: 'text-orange-600', border: 'border-orange-100/50' },
         };
@@ -58,7 +58,7 @@ const Page = () => {
             dataField: "uid",
             formatter: (_, d) => (
                 <div className="flex flex-col">
-                    <span className="font-mono font-bold text-[#5572fc] text-xs bg-[#5572fc]/10 px-2 py-0.5 rounded w-fit">
+                    <span className="font-mono font-bold text-[#F97316] text-xs bg-[#F97316]/10 px-2 py-0.5 rounded w-fit">
                         #{d?.uid}
                     </span>
                     <span className="text-[10px] text-gray-400 font-medium mt-1 inline-flex items-center gap-1">
@@ -98,7 +98,7 @@ const Page = () => {
                             {d?.payment?.status || 'N/A'}
                         </span>
                         <span className="text-[10px] text-gray-500 font-medium capitalize bg-slate-50 border border-slate-100 px-1.5 py-0.5 rounded w-fit">
-                            {d?.payment?.method || '—'}
+                            {d?.payment?.method || 'â€”'}
                         </span>
                     </div>
                 );
@@ -190,3 +190,4 @@ const Page = () => {
 }
 
 export default Page;
+

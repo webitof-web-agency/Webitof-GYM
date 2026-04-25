@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 import dynamic from "next/dynamic";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
@@ -49,7 +49,7 @@ const Layout = ({ children }) => {
     if (!userLoaded || !menuBuilder || (user?.role !== "admin" && user?.role !== "employee")) {
         return (
             <div className="flex justify-center items-center h-screen ">
-                <InfinitySpin width='140' color='#5572fc' />
+                <InfinitySpin width='140' color='#F97316' />
             </div>
         );
     }
@@ -66,3 +66,4 @@ const Layout = ({ children }) => {
 };
 
 export default Layout;
+

@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 import Image from 'next/image';
 import BannerTitle from '../../../../../components/common/banner-title';
 import Button from '../../../../../components/common/button';
@@ -53,19 +53,19 @@ const AboutUsSection = ({ data }) => {
                 </p>
                 <div className="flex text-lg font-semibold md:gap-[56px] gap-8 md:my-10 my-5">
                     <button
-                        className={`${activeSection === 'Mission' ? 'text-[#5572fc] underline font-bold font-poppins' : 'text-textMain font-poppins hover:text-[#5572fc]'}`}
+                        className={`${activeSection === 'Mission' ? 'text-[#F97316] underline font-bold font-poppins' : 'text-textMain font-poppins hover:text-[#F97316]'}`}
                         onClick={() => setActiveSection('Mission')}
                     >
                         {i18n?.t('Mission')}
                     </button>
                     <button
-                        className={`${activeSection === 'Vision' ? 'text-[#5572fc] underline font-bold font-poppins' : 'text-textMain font-poppins hover:text-[#5572fc]'}`}
+                        className={`${activeSection === 'Vision' ? 'text-[#F97316] underline font-bold font-poppins' : 'text-textMain font-poppins hover:text-[#F97316]'}`}
                         onClick={() => setActiveSection('Vision')}
                     >
                         {i18n?.t('Vision')}
                     </button>
                     <button
-                        className={`${activeSection === 'Values' ? 'text-[#5572fc] underline font-bold font-poppins' : 'text-textMain font-poppins hover:text-[#5572fc]'}`}
+                        className={`${activeSection === 'Values' ? 'text-[#F97316] underline font-bold font-poppins' : 'text-textMain font-poppins hover:text-[#F97316]'}`}
                         onClick={() => setActiveSection('Values')}
                     >
                         {i18n?.t('Values')}
@@ -78,7 +78,7 @@ const AboutUsSection = ({ data }) => {
                     // variants={rightToLeftVariant}
                     // transition={{ duration: 0.6, ease: "easeOut" }}
                     className="w-[80%] flex sm:my-14 xs:my-10 my-8 relative lg:hidden xs:mx-auto items-center justify-center  ">
-                    <div className='bg-[#5572fc] absolute w-full sm:h-[450px] xs:h-[340px] h-[310px]'></div>
+                    <div className='bg-[#F97316] absolute w-full sm:h-[450px] xs:h-[340px] h-[310px]'></div>
                     <div className='w-full sm:h-[400px] xs:h-[300px] h-[280px] bg-gray-400 relative z-40 sm:left-6 xs:left-5  left-4 '>
                         <Image
                             width={500}
@@ -103,7 +103,7 @@ const AboutUsSection = ({ data }) => {
                 // variants={rightToLeftVariant}
                 // transition={{ duration: 0.6, ease: "easeOut" }}
                 className="w-[600px] lg:flex mt-8 md:mt-0 relative hidden items-center justify-center ">
-                <div className='bg-[#5572fc] absolute w-full h-[565px]'></div>
+                <div className='bg-[#F97316] absolute w-full h-[565px]'></div>
                 <div className='w-full h-[500px] bg-gray-400 relative z-40 left-8'>
                     <Image
                         width={900}
@@ -119,3 +119,4 @@ const AboutUsSection = ({ data }) => {
 };
 
 export default AboutUsSection;
+

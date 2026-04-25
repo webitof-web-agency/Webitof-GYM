@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
@@ -46,7 +46,7 @@ const ListItem = ({ data }) => {
                             <td className="px-6 flex items-center gap-2 py-4 text-center">
                                 <button
                                     onClick={() => push(`/trainer/group/view/${member?._id}`)}
-                                    className="bg-white shadow-sm shadow-gray-400 text-[#2b2b2b] hover:bg-[#5572fc] hover:text-white duration-500 p-1 rounded"
+                                    className="bg-white shadow-sm shadow-gray-400 text-[#2b2b2b] hover:bg-[#F97316] hover:text-white duration-500 p-1 rounded"
                                     title="Edit" >
                                     <FiEye size={22} />
                                 </button>
@@ -55,7 +55,7 @@ const ListItem = ({ data }) => {
                                         setOpen(true);
                                         setTrainerId(member?._id);
                                     }}
-                                    className="bg-white shadow-sm shadow-gray-400 text-[#2b2b2b] hover:bg-[#5572fc] hover:text-white duration-500 p-1 rounded"
+                                    className="bg-white shadow-sm shadow-gray-400 text-[#2b2b2b] hover:bg-[#F97316] hover:text-white duration-500 p-1 rounded"
                                     title="Send Message" >
                                     <MdMessage size={22} />
                                 </button>
@@ -92,7 +92,7 @@ const ListItem = ({ data }) => {
                 <FormInput name='message' label={'Message'} textArea={true} placeholder={"please write your message here"} required={true} />
                 <Button
                 type='submit'
-                    className='border-[#5572fc] bg-[#5572fc] text-white !py-[6px] !h-fit !text-xs mt-2'
+                    className='border-[#F97316] bg-[#F97316] text-white !py-[6px] !h-fit !text-xs mt-2'
                 >
                     {('Send Message')}
                 </Button>

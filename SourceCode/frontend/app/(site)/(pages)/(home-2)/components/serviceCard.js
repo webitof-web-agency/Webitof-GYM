@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 import React from 'react';
 import Image from 'next/image';
 import { useI18n } from '../../../../providers/i18n';
@@ -7,7 +7,7 @@ import { motion } from 'framer-motion';
 import { FiArrowRight } from 'react-icons/fi';
 
 const ACCENT_COLORS = [
-    { bar: 'bg-[#5572fc]', icon: 'bg-[#5572fc]/10 border-[#5572fc]/20', text: 'text-[#5572fc]' },
+    { bar: 'bg-[#F97316]', icon: 'bg-[#F97316]/10 border-[#F97316]/20', text: 'text-[#F97316]' },
     { bar: 'bg-purple-500', icon: 'bg-purple-50 border-purple-200', text: 'text-purple-600' },
     { bar: 'bg-teal-500', icon: 'bg-teal-50 border-teal-200', text: 'text-teal-600' },
     { bar: 'bg-amber-500', icon: 'bg-amber-50 border-amber-200', text: 'text-amber-600' },
@@ -26,7 +26,7 @@ const ServiceCard = ({ data, index = 0 }) => {
             viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.5, ease: 'easeOut' }}
             whileHover={{ y: -4, transition: { duration: 0.2 } }}
-            className='group relative bg-white rounded-2xl border border-slate-100 shadow-[0_4px_20px_-6px_rgba(0,0,0,0.07)] hover:shadow-[0_16px_40px_-8px_rgba(85,114,252,0.12)] hover:border-[#5572fc]/20 overflow-hidden flex flex-col transition-all duration-300'
+            className='group relative bg-white rounded-2xl border border-slate-100 shadow-[0_4px_20px_-6px_rgba(0,0,0,0.07)] hover:shadow-[0_16px_40px_-8px_rgba(85,114,252,0.12)] hover:border-[#F97316]/20 overflow-hidden flex flex-col transition-all duration-300'
         >
             {/* Top accent bar */}
             <div className={`h-0.5 w-full ${ac.bar} scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left absolute top-0 left-0 z-10`} />
@@ -42,7 +42,7 @@ const ServiceCard = ({ data, index = 0 }) => {
                 />
             </Link>
 
-            {/* Icon tile — overlapping the image bottom */}
+            {/* Icon tile â€” overlapping the image bottom */}
             <div className='px-5 -mt-6 relative z-10'>
                 <div className={`inline-flex h-12 w-12 items-center justify-center rounded-xl border ${ac.icon} shadow-md bg-white`}>
                     <Image

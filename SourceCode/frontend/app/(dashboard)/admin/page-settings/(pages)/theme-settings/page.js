@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 import { Form } from 'antd';
 import React, { useState, useRef, useEffect } from 'react';
 import { useI18n } from '../../../../../providers/i18n';
@@ -42,7 +42,7 @@ const ThemeSetting = () => {
     if (!Array.isArray(allThemes)) {
         return (
             <div className="bg-white rounded-xl border border-slate-100/80 p-8 flex items-center justify-center">
-                <div className="text-gray-400 text-sm font-medium animate-pulse">Loading themes…</div>
+                <div className="text-gray-400 text-sm font-medium animate-pulse">Loading themesâ€¦</div>
             </div>
         );
     }
@@ -55,7 +55,7 @@ const ThemeSetting = () => {
                 </div>
                 <div>
                     <h3 className="text-base font-bold text-gray-800 leading-tight">Display Theme Activation</h3>
-                    <p className="text-[11px] text-gray-500 font-medium">Hover to preview — click to activate as global layout</p>
+                    <p className="text-[11px] text-gray-500 font-medium">Hover to preview â€” click to activate as global layout</p>
                 </div>
             </div>
 
@@ -63,10 +63,10 @@ const ThemeSetting = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
                     {allThemes?.map((theme, index) => (
                         <div key={index}
-                            className={`group relative rounded-xl cursor-pointer transition-all duration-200 overflow-hidden border-2 shadow-sm hover:shadow-md ${theme?.isDefault ? 'border-[#5572fc] shadow-[#5572fc]/20' : 'border-slate-200 hover:border-[#5572fc]/40'}`}
+                            className={`group relative rounded-xl cursor-pointer transition-all duration-200 overflow-hidden border-2 shadow-sm hover:shadow-md ${theme?.isDefault ? 'border-[#F97316] shadow-[#F97316]/20' : 'border-slate-200 hover:border-[#F97316]/40'}`}
                         >
                             {theme?.isDefault && (
-                                <div className="absolute top-2 left-2 z-10 bg-[#5572fc] text-white text-[10px] font-bold uppercase tracking-widest px-2 py-1 rounded-md flex items-center gap-1 shadow-md">
+                                <div className="absolute top-2 left-2 z-10 bg-[#F97316] text-white text-[10px] font-bold uppercase tracking-widest px-2 py-1 rounded-md flex items-center gap-1 shadow-md">
                                     <FiCheckCircle size={10} /> Active
                                 </div>
                             )}
@@ -94,12 +94,12 @@ const ThemeSetting = () => {
                                 </div>
                                 <Button
                                     type='button'
-                                    className={`!w-full !rounded-none !border-none !py-2.5 !text-xs !font-bold tracking-wide transition-all ${theme?.isDefault ? '!bg-[#5572fc] !text-white' : '!bg-slate-100 !text-gray-600 hover:!bg-[#5572fc]/10 hover:!text-[#5572fc]'}`}
+                                    className={`!w-full !rounded-none !border-none !py-2.5 !text-xs !font-bold tracking-wide transition-all ${theme?.isDefault ? '!bg-[#F97316] !text-white' : '!bg-slate-100 !text-gray-600 hover:!bg-[#F97316]/10 hover:!text-[#F97316]'}`}
                                     onClick={() => {
                                         useActionConfirm(updateTheme, { _id: theme?._id }, getAllThemes, 'Are you sure you want to activate this theme?');
                                     }}
                                 >
-                                    {theme?.isDefault ? `✓ ${i18n?.t('Currently Active')}` : i18n?.t('Set as Default')}
+                                    {theme?.isDefault ? `âœ“ ${i18n?.t('Currently Active')}` : i18n?.t('Set as Default')}
                                 </Button>
                             </div>
                         </div>
@@ -111,3 +111,4 @@ const ThemeSetting = () => {
 };
 
 export default ThemeSetting;
+

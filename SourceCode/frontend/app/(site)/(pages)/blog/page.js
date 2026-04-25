@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 import BasicBar from "../../../../components/common/basic-bar";
 import NewsCard from "../../../../components/home1/newsCard";
 import { blogCategoryList, fetchBlogsListUser } from "../../../helpers/backend";
@@ -63,7 +63,7 @@ const BlogPageContent = () => {
             value={selectedCategory}
             name="blog-category"
             aria-label={i18n?.t('Blog category') || 'Blog category'}
-            className="text-base cursor-pointer w-full h-fit md:w-fit pl-4 pr-8 py-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5572fc] focus-visible:ring-offset-2 focus-visible:ring-offset-white rounded-md appearance-none transition-all duration-300"
+            className="text-base cursor-pointer w-full h-fit md:w-fit pl-4 pr-8 py-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F97316] focus-visible:ring-offset-2 focus-visible:ring-offset-white rounded-md appearance-none transition-all duration-300"
           >
             <option value="">{i18n?.t('All Categories')}</option>
             {categories?.docs?.map(category => (
@@ -121,3 +121,4 @@ const Page = () => (
 );
 
 export default Page;
+

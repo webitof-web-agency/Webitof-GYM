@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { Form, Modal, Spin, Switch } from 'antd';
 import { useEffect, useState } from 'react';
@@ -70,7 +70,7 @@ const page = () => {
                     </div>
                     <div className="flex items-center gap-2">
                         <span className="text-[10px] font-bold text-gray-400 w-12 pt-0.5">YEARLY</span>
-                        <span className="text-xs font-bold text-[#5572fc] bg-[#5572fc]/10 px-2 rounded-md">{currencySymbol}{convertAmount(d?.yearly_price)}</span>
+                        <span className="text-xs font-bold text-[#F97316] bg-[#F97316]/10 px-2 rounded-md">{currencySymbol}{convertAmount(d?.yearly_price)}</span>
                     </div>
                 </div>
             )
@@ -164,7 +164,7 @@ const page = () => {
                     action={
                         <Button
                             onClick={handleAddNew}
-                            className="flex items-center gap-1.5 !px-4 shadow-md shadow-[#5572fc]/20 hover:shadow-lg hover:shadow-[#5572fc]/30 transition-all !h-8 !py-0 !rounded-lg block !w-auto !text-xs whitespace-nowrap"
+                            className="flex items-center gap-1.5 !px-4 shadow-md shadow-[#F97316]/20 hover:shadow-lg hover:shadow-[#F97316]/30 transition-all !h-8 !py-0 !rounded-lg block !w-auto !text-xs whitespace-nowrap"
                         >
                             <FiPlus size={14} />
                             {i18n?.t('Add Plan')}
@@ -182,7 +182,7 @@ const page = () => {
                 width={550}
                 title={
                     <div className="flex items-center gap-2.5 pb-2.5 border-b border-gray-100">
-                        <div className="w-8 h-8 rounded-lg bg-[#5572fc]/10 text-[#5572fc] flex items-center justify-center">
+                        <div className="w-8 h-8 rounded-lg bg-[#F97316]/10 text-[#F97316] flex items-center justify-center">
                             {editData ? <FiEdit2 size={16} /> : <FiTag size={16} />}
                         </div>
                         <div>
@@ -205,7 +205,7 @@ const page = () => {
                                 onClick={() => setSelectedLang(l.code)}
                                 className={`rounded-lg px-4 py-1.5 text-xs font-bold transition-all duration-300 flex-shrink-0 ${
                                     l.code === selectedLang
-                                        ? 'bg-white text-[#5572fc] shadow-sm border border-slate-200/50'
+                                        ? 'bg-white text-[#F97316] shadow-sm border border-slate-200/50'
                                         : 'text-gray-500 hover:bg-white/50 hover:text-gray-700'
                                 }`}
                                 key={index}
@@ -272,7 +272,7 @@ const page = () => {
                 >
                     {loading2 ? (
                         <div className='flex min-h-[20vh] items-center justify-center'>
-                            <InfinitySpin width='140' color='#5572fc' />
+                            <InfinitySpin width='140' color='#F97316' />
                         </div>
                     ) : (
                         availableLanguages.map((l, index) => (
@@ -332,7 +332,7 @@ const page = () => {
                                                     <button
                                                         type='button'
                                                         onClick={() => add()}
-                                                        className='w-full border-2 border-dashed border-slate-200 hover:border-[#5572fc] bg-slate-50 hover:bg-[#5572fc]/5 text-gray-500 hover:text-[#5572fc] transition-all duration-300 rounded-lg py-2.5 text-xs font-bold flex items-center justify-center gap-1.5'
+                                                        className='w-full border-2 border-dashed border-slate-200 hover:border-[#F97316] bg-slate-50 hover:bg-[#F97316]/5 text-gray-500 hover:text-[#F97316] transition-all duration-300 rounded-lg py-2.5 text-xs font-bold flex items-center justify-center gap-1.5'
                                                     >
                                                         <FiPlus size={14} />
                                                         {i18n?.t('Add Feature Highlight')}
@@ -408,7 +408,7 @@ const page = () => {
                                             handleNoSelected();
                                             form.submit();
                                         }}
-                                        className='!px-5 !py-1.5 flex items-center gap-1.5 shadow-md shadow-[#5572fc]/20 hover:shadow-lg hover:shadow-[#5572fc]/30 !font-semibold !rounded-lg block w-fit !text-xs transition-all'
+                                        className='!px-5 !py-1.5 flex items-center gap-1.5 shadow-md shadow-[#F97316]/20 hover:shadow-lg hover:shadow-[#F97316]/30 !font-semibold !rounded-lg block w-fit !text-xs transition-all'
                                     >
                                         {editData ? <FiEdit2 size={14} /> : <FiPlus size={14} />}
                                         {editData ? t('Save Changes') : t('Create Plan')}
@@ -424,3 +424,4 @@ const page = () => {
 };
 
 export default page;
+

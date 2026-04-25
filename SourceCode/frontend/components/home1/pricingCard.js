@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 import Image from 'next/image';
 import React, { useState, useContext } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
@@ -44,10 +44,10 @@ const PricingCard = ({ data, activeTab, index = 0 }) => {
             transition={{ duration: 0.6, ease: "easeOut" }}
             className={`group relative rounded-2xl overflow-hidden flex flex-col transition-all duration-300
                 ${isPopular
-                    ? 'bg-gradient-to-br from-[#5572fc] to-[#3a56f0] shadow-[0_20px_60px_-12px_rgba(85,114,252,0.5)] scale-105 border-0'
+                    ? 'bg-gradient-to-br from-[#F97316] to-[#3a56f0] shadow-[0_20px_60px_-12px_rgba(85,114,252,0.5)] scale-105 border-0'
                     : isHome3
                         ? 'bg-white/5 border border-white/10 backdrop-blur-sm hover:shadow-xl'
-                        : 'bg-white border border-slate-100 shadow-[0_4px_24px_-8px_rgba(0,0,0,0.08)] hover:shadow-[0_16px_40px_-8px_rgba(85,114,252,0.15)] hover:border-[#5572fc]/20'
+                        : 'bg-white border border-slate-100 shadow-[0_4px_24px_-8px_rgba(0,0,0,0.08)] hover:shadow-[0_16px_40px_-8px_rgba(85,114,252,0.15)] hover:border-[#F97316]/20'
                 }
             `}
         >
@@ -69,9 +69,9 @@ const PricingCard = ({ data, activeTab, index = 0 }) => {
                     className='w-full h-full object-cover'
                 />
                 {/* Image overlay for popular */}
-                {isPopular && <div className='absolute inset-0 bg-[#5572fc]/20 mix-blend-multiply' />}
+                {isPopular && <div className='absolute inset-0 bg-[#F97316]/20 mix-blend-multiply' />}
                 {/* Gradient fade-to-card */}
-                <div className={`absolute bottom-0 left-0 right-0 h-12 bg-gradient-to-t ${isPopular ? 'from-[#5572fc]' : isHome3 ? 'from-[#0d1829]' : 'from-white'} to-transparent`} />
+                <div className={`absolute bottom-0 left-0 right-0 h-12 bg-gradient-to-t ${isPopular ? 'from-[#F97316]' : isHome3 ? 'from-[#0d1829]' : 'from-white'} to-transparent`} />
             </div>
 
             {/* Card Content */}
@@ -82,7 +82,7 @@ const PricingCard = ({ data, activeTab, index = 0 }) => {
                         {data?.name?.[i18n.langCode]}
                     </h2>
                     <div className='flex items-end gap-1'>
-                        <span className={`text-3xl font-black ${isPopular ? 'text-white' : 'text-[#5572fc]'}`}>
+                        <span className={`text-3xl font-black ${isPopular ? 'text-white' : 'text-[#F97316]'}`}>
                             {currencySymbol}{activeTab === 'monthly' ? convertAmount(data?.monthly_price) : convertAmount(data?.yearly_price)}
                         </span>
                         <span className={`text-[12px] font-semibold mb-1.5 ${isPopular ? 'text-white/60' : 'text-gray-400'}`}>
@@ -98,7 +98,7 @@ const PricingCard = ({ data, activeTab, index = 0 }) => {
                 <ul className='space-y-2.5 flex-1'>
                     {data?.features?.slice(0, showAllFeatures ? data.features.length : 4).map((item, idx) => (
                         <li key={idx} className='flex items-start gap-2.5'>
-                            <span className={`mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full ${isPopular ? 'bg-white/20 text-white' : 'bg-[#5572fc]/10 text-[#5572fc]'}`}>
+                            <span className={`mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full ${isPopular ? 'bg-white/20 text-white' : 'bg-[#F97316]/10 text-[#F97316]'}`}>
                                 <FiCheck size={11} strokeWidth={3} />
                             </span>
                             <Tooltip title={item?.[i18n.langCode]}>
@@ -114,9 +114,9 @@ const PricingCard = ({ data, activeTab, index = 0 }) => {
                 {data?.features?.length > 4 ? (
                     <button
                         onClick={() => setShowAllFeatures(!showAllFeatures)}
-                        className={`mt-3 text-[12px] font-bold hover:underline ${isPopular ? 'text-white/70 hover:text-white' : 'text-[#5572fc]'}`}
+                        className={`mt-3 text-[12px] font-bold hover:underline ${isPopular ? 'text-white/70 hover:text-white' : 'text-[#F97316]'}`}
                     >
-                        {showAllFeatures ? i18n?.t('Show Less ↑') : i18n?.t('Show More ↓')}
+                        {showAllFeatures ? i18n?.t('Show Less â†‘') : i18n?.t('Show More â†“')}
                     </button>
                 ) : <div className='h-3' />}
 
@@ -125,8 +125,8 @@ const PricingCard = ({ data, activeTab, index = 0 }) => {
                     onClick={handleButtonClick}
                     className={`mt-6 w-full flex items-center justify-center gap-2 rounded-xl py-3 text-sm font-bold transition-all duration-300
                         ${isPopular
-                            ? 'bg-white text-[#5572fc] hover:bg-white/90 shadow-lg'
-                            : 'bg-[#5572fc] text-white hover:bg-[#4461eb] shadow-md shadow-[#5572fc]/25 hover:shadow-lg hover:shadow-[#5572fc]/35'
+                            ? 'bg-white text-[#F97316] hover:bg-white/90 shadow-lg'
+                            : 'bg-[#F97316] text-white hover:bg-[#EA580C] shadow-md shadow-[#F97316]/25 hover:shadow-lg hover:shadow-[#F97316]/35'
                         }
                     `}
                 >
@@ -139,3 +139,4 @@ const PricingCard = ({ data, activeTab, index = 0 }) => {
 };
 
 export default PricingCard;
+

@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 import React from 'react';
 import BannerTitle from '../common/banner-title';
 import NewsCard from './newsCard';
@@ -22,7 +22,7 @@ const BlogNews = () => {
         <section className='container lg:my-[120px] my-[60px] overflow-hidden'>
             <div className='flex justify-between items-end '>
                 <BannerTitle home3={findDefaultTheme?.name==="home3" ? true : false} subtitle={i18n?.t('blog  and news')} title={i18n?.t('our latest news')} className={''} />
-                <Link href={'/blog'} className='text-[#5572fc] text-base underline cursor-pointer sm:block hidden capitalize'>{i18n?.t('All Blogs')}</Link>
+                <Link href={'/blog'} className='text-[#F97316] text-base underline cursor-pointer sm:block hidden capitalize'>{i18n?.t('All Blogs')}</Link>
             </div>
             <div className='grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3  gap-6 lg:mt-[50px] mt-[30px] pb-2 px-1'>
                 {data?.docs?.slice(0, 3).map((news, index) => (

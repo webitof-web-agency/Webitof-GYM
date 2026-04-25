@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 import { useState } from 'react';
 import Image from 'next/image';
 import BannerTitle from '../../../../../components/common/banner-title';
@@ -54,19 +54,19 @@ const AboutUsSection = ({ data }) => {
                 </p>
                 <div className="flex text-lg font-semibold md:gap-[56px] gap-8 md:my-10 my-5">
                     <button
-                        className={`${activeSection === 'Mission' ? 'text-[#5572fc] underline font-bold font-poppins' : 'text-textMain font-poppins hover:text-[#5572fc]'}`}
+                        className={`${activeSection === 'Mission' ? 'text-[#F97316] underline font-bold font-poppins' : 'text-textMain font-poppins hover:text-[#F97316]'}`}
                         onClick={() => setActiveSection('Mission')}
                     >
                         {i18n?.t('Mission')}
                     </button>
                     <button
-                        className={`${activeSection === 'Vision' ? 'text-[#5572fc] underline font-bold font-poppins' : 'text-textMain font-poppins hover:text-[#5572fc]'}`}
+                        className={`${activeSection === 'Vision' ? 'text-[#F97316] underline font-bold font-poppins' : 'text-textMain font-poppins hover:text-[#F97316]'}`}
                         onClick={() => setActiveSection('Vision')}
                     >
                         {i18n?.t('Vision')}
                     </button>
                     <button
-                        className={`${activeSection === 'Values' ? 'text-[#5572fc] underline font-bold font-poppins' : 'text-textMain font-poppins hover:text-[#5572fc]'}`}
+                        className={`${activeSection === 'Values' ? 'text-[#F97316] underline font-bold font-poppins' : 'text-textMain font-poppins hover:text-[#F97316]'}`}
                         onClick={() => setActiveSection('Values')}
                     >
                         {i18n?.t('Values')}
@@ -106,3 +106,4 @@ const AboutUsSection = ({ data }) => {
 };
 
 export default AboutUsSection;
+

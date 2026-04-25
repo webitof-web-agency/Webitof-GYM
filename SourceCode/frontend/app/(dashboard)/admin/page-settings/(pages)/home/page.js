@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 import React from 'react';
 import { fetchTheme } from '../../../../../helpers/backend';
 import { useFetch } from '../../../../../helpers/hooks';
@@ -16,7 +16,7 @@ const HomePageSetting = ({ slug }) => {
     if (!Array.isArray(theme)) {
         return (
             <div className="bg-white rounded-xl border border-slate-100/80 p-8 flex items-center justify-center">
-                <div className="text-gray-400 text-sm font-medium animate-pulse">Loading layout config…</div>
+                <div className="text-gray-400 text-sm font-medium animate-pulse">Loading layout configâ€¦</div>
             </div>
         );
     }
@@ -32,13 +32,13 @@ const HomePageSetting = ({ slug }) => {
     return (
         <div className="bg-white rounded-xl shadow-[0_2px_10px_-4px_rgba(0,0,0,0.05)] border border-slate-100/80 overflow-hidden">
             <div className="px-6 py-4 border-b border-slate-100 bg-slate-50/50 flex items-center gap-3">
-                <div className="w-8 h-8 rounded-lg bg-[#5572fc]/10 text-[#5572fc] flex items-center justify-center">
+                <div className="w-8 h-8 rounded-lg bg-[#F97316]/10 text-[#F97316] flex items-center justify-center">
                     <FiHome size={16} />
                 </div>
                 <div>
                     <h3 className="text-base font-bold text-gray-800 leading-tight">Landing Page Hero Config</h3>
                     <p className="text-[11px] text-gray-500 font-medium capitalize">
-                        Active theme: <span className="font-bold text-[#5572fc]">{defaultName || 'home1'}</span>
+                        Active theme: <span className="font-bold text-[#F97316]">{defaultName || 'home1'}</span>
                     </p>
                 </div>
             </div>
@@ -50,3 +50,4 @@ const HomePageSetting = ({ slug }) => {
 };
 
 export default HomePageSetting;
+

@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useEffect, useState } from 'react';
 import { useI18n } from '../../../../providers/i18n';
@@ -110,7 +110,7 @@ const page = ({ params }) => {
                             }
 
                         }}
-                        className='header_5 border-secondary_text mt-10 w-full rounded-lg border py-3 transition-all ease-in-out bg-[#5572fc] text-white'
+                        className='header_5 border-secondary_text mt-10 w-full rounded-lg border py-3 transition-all ease-in-out bg-[#F97316] text-white'
                     >
                         {checkoutLoading ? "Checking..." : i18n?.t('Checkout')}
                     </button>

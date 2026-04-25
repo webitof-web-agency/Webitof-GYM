@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 import Image from 'next/image';
 import React, { useState, useContext } from 'react';
 import { useRouter } from 'next/navigation';
@@ -79,7 +79,7 @@ const PricingCard = ({ data, activeTab }) => {
                             key={index}
                             className='relative flex items-center gap-2 mb-2 '
                         >
-                            <FaCheckCircle className="text-[#5572fc] min-w-5 min-h-5" />
+                            <FaCheckCircle className="text-[#F97316] min-w-5 min-h-5" />
                             <Tooltip title={item[i18n.langCode]}>
                                 <span className='line-clamp-1'>
                                     {item[i18n.langCode]}
@@ -93,7 +93,7 @@ const PricingCard = ({ data, activeTab }) => {
                     data?.features?.length > 4 ? (
                         <button
                             onClick={() => setShowAllFeatures(!showAllFeatures)}
-                            className={`text-textMain hover:text-[#5572fc] font-medium hover:underline mt-2 `}
+                            className={`text-textMain hover:text-[#F97316] font-medium hover:underline mt-2 `}
                         >
                             {showAllFeatures ? i18n?.t('Show Less') : i18n?.t('Show More')}
                         </button>
@@ -113,4 +113,5 @@ const PricingCard = ({ data, activeTab }) => {
 };
 
 export default PricingCard;
+
 

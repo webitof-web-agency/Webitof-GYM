@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 import React, { useState } from 'react'
 import BasicBar from '../../../../components/common/basic-bar'
 import PricingCard from '../../../../components/home1/pricingCard'
@@ -40,7 +40,7 @@ const Page = () => {
                     className="flex justify-center  gap-4 relative bottom-3 md:bottom-12 ">
                     <label className="md:flex hidden cursor-pointer items-center  gap-2">
                         <span
-                            className={`text-xl font-bold transition-colors duration-300 ${activeTab === 'monthly' ? 'text-[#5572fc]' : `text-black ${pathName === "/home-3" && "text-white"}`}`}
+                            className={`text-xl font-bold transition-colors duration-300 ${activeTab === 'monthly' ? 'text-[#F97316]' : `text-black ${pathName === "/home-3" && "text-white"}`}`}
                         >
                             {i18n?.t('Monthly')}
                         </span>
@@ -53,7 +53,7 @@ const Page = () => {
                         />
 
                         <span
-                            className={`text-xl font-bold transition-colors duration-300 ${activeTab === 'yearly' ? 'text-[#5572fc]' : `text-black ${pathName === "/home-3" && "text-white"}`}`}
+                            className={`text-xl font-bold transition-colors duration-300 ${activeTab === 'yearly' ? 'text-[#F97316]' : `text-black ${pathName === "/home-3" && "text-white"}`}`}
                         >
                             {i18n?.t('Yearly')}
                         </span>

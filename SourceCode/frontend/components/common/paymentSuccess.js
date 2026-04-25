@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
@@ -13,7 +13,7 @@ const PaymentSuccess = ({url,title}) => {
             {i18n?.t('Payment Success')}
         </h1>
         <div className="lg:mt-12 mt-4 flex items-center justify-center">
-            <Link href={url ? url : "/"} className="underline font-poppins text-[#5572fc]">{i18n?.t(title ? title : "Back To Dashboard")}</Link>
+            <Link href={url ? url : "/"} className="underline font-poppins text-[#F97316]">{i18n?.t(title ? title : "Back To Dashboard")}</Link>
         </div>
     </div>
     );

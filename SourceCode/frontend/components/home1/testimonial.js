@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 import React, { useEffect, useRef, useState } from 'react';
 import 'swiper/css';
 import 'swiper/css/pagination';
@@ -91,18 +91,18 @@ const Testimonial = () => {
                     <div className='me-4 flex items-center justify-end gap-6 lg:hidden'>
                         <button
                             onClick={goPrev}
-                            className={`box-shadow flex h-[30px] w-[30px] items-center justify-center rounded-full text-[#5572fc] duration-500 hover:bg-[#5572fc] hover:text-white ${currentSlide === 0
-                                ? 'bg-[#5572fc] text-white'
-                                : 'bg-white text-[#5572fc]'
+                            className={`box-shadow flex h-[30px] w-[30px] items-center justify-center rounded-full text-[#F97316] duration-500 hover:bg-[#F97316] hover:text-white ${currentSlide === 0
+                                ? 'bg-[#F97316] text-white'
+                                : 'bg-white text-[#F97316]'
                                 }`}
                         >
                             <MdKeyboardArrowLeft size={25} />
                         </button>
                         <button
                             onClick={goNext}
-                            className={`box-shadow flex h-[30px] w-[30px] items-center justify-center rounded-full text-[#5572fc] duration-500 hover:bg-[#5572fc] hover:text-white ${currentSlide === 1
-                                ? 'bg-[#5572fc] text-white'
-                                : 'bg-white text-[#5572fc]'
+                            className={`box-shadow flex h-[30px] w-[30px] items-center justify-center rounded-full text-[#F97316] duration-500 hover:bg-[#F97316] hover:text-white ${currentSlide === 1
+                                ? 'bg-[#F97316] text-white'
+                                : 'bg-white text-[#F97316]'
                                 }`}
                         >
                             <MdKeyboardArrowRight size={25} />
@@ -149,18 +149,18 @@ const Testimonial = () => {
                     <div className='mt-6 hidden items-center gap-6 lg:flex'>
                         <button
                             onClick={goPrev}
-                            className={`box-shadow flex h-[40px] w-[40px] items-center justify-center rounded-full text-[#5572fc] duration-500 hover:bg-[#5572fc] hover:text-white ${currentSlide === 0
-                                ? 'bg-[#5572fc] text-white'
-                                : 'bg-white text-[#5572fc]'
+                            className={`box-shadow flex h-[40px] w-[40px] items-center justify-center rounded-full text-[#F97316] duration-500 hover:bg-[#F97316] hover:text-white ${currentSlide === 0
+                                ? 'bg-[#F97316] text-white'
+                                : 'bg-white text-[#F97316]'
                                 }`}
                         >
                             <MdKeyboardArrowLeft size={30} />
                         </button>
                         <button
                             onClick={goNext}
-                            className={`box-shadow flex h-[40px] w-[40px] items-center justify-center rounded-full text-[#5572fc] duration-500 hover:bg-[#5572fc] hover:text-white ${currentSlide === 1
-                                ? 'bg-[#5572fc] text-white'
-                                : 'bg-white text-[#5572fc]'
+                            className={`box-shadow flex h-[40px] w-[40px] items-center justify-center rounded-full text-[#F97316] duration-500 hover:bg-[#F97316] hover:text-white ${currentSlide === 1
+                                ? 'bg-[#F97316] text-white'
+                                : 'bg-white text-[#F97316]'
                                 }`}
                         >
                             <MdKeyboardArrowRight size={30} />
@@ -173,3 +173,4 @@ const Testimonial = () => {
 };
 
 export default Testimonial;
+

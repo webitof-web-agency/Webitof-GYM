@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 import { Form, Input, message } from "antd";
 import { postChangePassword } from "../../../../../helpers/backend";
 import Button from "../../../../../../components/common/button";
@@ -37,7 +37,7 @@ const Page = () => {
             <Input.Password
               placeholder={i18n?.t("Old Password")}
               autoComplete="current-password"
-              className=" w-full px-2 sm:px-2 py-2 sm:py-[15px] border !border-gray-300 rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5572fc] focus-visible:ring-offset-2 focus-visible:ring-offset-white "
+              className=" w-full px-2 sm:px-2 py-2 sm:py-[15px] border !border-gray-300 rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F97316] focus-visible:ring-offset-2 focus-visible:ring-offset-white "
             />
           </Form.Item>
           <Form.Item
@@ -50,7 +50,7 @@ const Page = () => {
             <Input.Password
               placeholder={i18n.t("New Password")}
               autoComplete="new-password"
-              className=" w-full px-2 sm:px-2 py-2 sm:py-[15px] border border-gray-300 rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5572fc] focus-visible:ring-offset-2 focus-visible:ring-offset-white "
+              className=" w-full px-2 sm:px-2 py-2 sm:py-[15px] border border-gray-300 rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F97316] focus-visible:ring-offset-2 focus-visible:ring-offset-white "
             />
           </Form.Item>
           <Form.Item
@@ -63,7 +63,7 @@ const Page = () => {
             <Input.Password
               placeholder={i18n?.t("Retype Confirm Password *")}
               autoComplete="new-password"
-              className=" w-full px-2 sm:px-2 py-2 sm:py-[15px] border border-gray-300 rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5572fc] focus-visible:ring-offset-2 focus-visible:ring-offset-white "
+              className=" w-full px-2 sm:px-2 py-2 sm:py-[15px] border border-gray-300 rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F97316] focus-visible:ring-offset-2 focus-visible:ring-offset-white "
             />
           </Form.Item>
         </div>
@@ -78,3 +78,4 @@ const Page = () => {
 }
 
 export default Page
+

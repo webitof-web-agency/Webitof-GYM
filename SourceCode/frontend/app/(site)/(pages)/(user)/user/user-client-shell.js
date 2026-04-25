@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
@@ -65,8 +65,8 @@ const UserClientShell = ({ children }) => {
               {i18n?.t(currentName)}
             </h1>
             <div className="mt-3 flex items-center gap-2 text-[15px] text-white/90 font-medium font-poppins">
-              <IoHome className="text-[#5572fc]" />
-              <Link href="/" className="text-[#5572fc] hover:text-white transition-colors">
+              <IoHome className="text-[#F97316]" />
+              <Link href="/" className="text-[#F97316] hover:text-white transition-colors">
                 {i18n?.t("Home")}
               </Link>
               <FaAngleRight className="text-white/60 text-sm" />
@@ -113,7 +113,7 @@ const UserClientShell = ({ children }) => {
                   </div>
                   <div>
                     <h2 className="font-bold text-lg text-slate-800 tracking-tight leading-tight capitalize">{user?.name}</h2>
-                    <p className="text-xs text-[#5572fc] font-bold mt-0.5 uppercase tracking-wider">{user?.role}</p>
+                    <p className="text-xs text-[#F97316] font-bold mt-0.5 uppercase tracking-wider">{user?.role}</p>
                   </div>
                 </div>
               </div>
@@ -127,12 +127,12 @@ const UserClientShell = ({ children }) => {
                           href={item.href}
                           className={`group flex items-center px-4 py-3.5 rounded-xl font-medium transition-all duration-200 ${
                             isActive 
-                              ? "bg-white text-[#5572fc] shadow-sm ring-1 ring-slate-200/80" 
+                              ? "bg-white text-[#F97316] shadow-sm ring-1 ring-slate-200/80" 
                               : "text-slate-600 hover:bg-slate-200/50 hover:text-slate-900"
                           }`}
                           onClick={() => setDrawerOpen(false)}
                         >
-                          <span className={`text-[20px] mr-3.5 transition-colors ${isActive ? 'text-[#5572fc]' : 'text-slate-400 group-hover:text-slate-600'}`}>
+                          <span className={`text-[20px] mr-3.5 transition-colors ${isActive ? 'text-[#F97316]' : 'text-slate-400 group-hover:text-slate-600'}`}>
                             {item.icon}
                           </span>
                           <span className="text-[14.5px]">{i18n?.t(item.name)}</span>
@@ -180,7 +180,7 @@ const UserClientShell = ({ children }) => {
                   <h2 className="font-bold text-[16px] text-slate-800 tracking-tight leading-tight truncate capitalize">
                     {user?.name}
                   </h2>
-                  <p className="text-[11px] text-[#5572fc] font-bold mt-1 uppercase tracking-wider">{user?.role}</p>
+                  <p className="text-[11px] text-[#F97316] font-bold mt-1 uppercase tracking-wider">{user?.role}</p>
                 </div>
               </div>
             </div>
@@ -195,12 +195,12 @@ const UserClientShell = ({ children }) => {
                         href={item.href}
                         className={`group flex items-center px-4 py-3.5 rounded-xl font-medium transition-all duration-200 ${
                           isActive 
-                            ? "bg-white text-[#5572fc] shadow-sm ring-1 ring-slate-200/80 relative overflow-hidden" 
+                            ? "bg-white text-[#F97316] shadow-sm ring-1 ring-slate-200/80 relative overflow-hidden" 
                             : "text-slate-600 hover:bg-slate-200/60 hover:text-slate-900"
                         }`}
                       >
-                        {isActive && <div className="absolute left-0 top-0 bottom-0 w-1 bg-[#5572fc]" />}
-                        <span className={`text-[20px] mr-3.5 transition-colors ${isActive ? 'text-[#5572fc]' : 'text-slate-400 group-hover:text-slate-600'}`}>
+                        {isActive && <div className="absolute left-0 top-0 bottom-0 w-1 bg-[#F97316]" />}
+                        <span className={`text-[20px] mr-3.5 transition-colors ${isActive ? 'text-[#F97316]' : 'text-slate-400 group-hover:text-slate-600'}`}>
                           {item.icon}
                         </span>
                         <span className="text-[14.5px]">{i18n?.t(item?.name)}</span>
@@ -246,3 +246,4 @@ const UserClientShell = ({ children }) => {
 };
 
 export default UserClientShell;
+

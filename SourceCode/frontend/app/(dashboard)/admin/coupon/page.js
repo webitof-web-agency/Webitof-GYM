@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 import dayjs from 'dayjs';
 import { useState } from 'react';
 import { Form, Modal, Switch } from 'antd';
@@ -29,7 +29,7 @@ const Page = () => {
             formatter: (_, d) => (
                 <div className="flex items-center gap-2 flex-wrap">
                     <span className="font-bold text-gray-800 text-sm capitalize">{d?.name}</span>
-                    <span className="font-mono font-bold text-[#5572fc] text-[10px] bg-[#5572fc]/10 px-2 py-0.5 rounded tracking-widest uppercase flex-shrink-0">
+                    <span className="font-mono font-bold text-[#F97316] text-[10px] bg-[#F97316]/10 px-2 py-0.5 rounded tracking-widest uppercase flex-shrink-0">
                         {d?.code}
                     </span>
                 </div>
@@ -46,7 +46,7 @@ const Page = () => {
                     <span className={`inline-flex items-center gap-1 rounded-md px-2 py-0.5 text-[9px] font-bold uppercase border ${
                         d?.type === 'percentage'
                             ? 'bg-purple-50 text-purple-600 border-purple-100/50'
-                            : 'bg-blue-50 text-blue-600 border-blue-100/50'
+                            : 'bg-orange-50 text-orange-600 border-orange-100/50'
                     }`}>
                         {d?.type === 'percentage' ? <FiPercent size={8} /> : null}
                         {d?.type}
@@ -140,7 +140,7 @@ const Page = () => {
                                 setEdit(false);
                                 setOpen(true);
                             }}
-                            className="flex items-center gap-1.5 !px-4 shadow-md shadow-[#5572fc]/20 hover:shadow-lg hover:shadow-[#5572fc]/30 transition-all !h-8 !py-0 !rounded-lg block !w-auto !text-xs whitespace-nowrap"
+                            className="flex items-center gap-1.5 !px-4 shadow-md shadow-[#F97316]/20 hover:shadow-lg hover:shadow-[#F97316]/30 transition-all !h-8 !py-0 !rounded-lg block !w-auto !text-xs whitespace-nowrap"
                         >
                             <FiPlus size={14} />
                             {i18n?.t('Add Coupon')}
@@ -179,7 +179,7 @@ const Page = () => {
                 width={580}
                 title={
                     <div className="flex items-center gap-2.5 pb-2.5 border-b border-gray-100">
-                        <div className="w-8 h-8 rounded-lg bg-[#5572fc]/10 text-[#5572fc] flex items-center justify-center">
+                        <div className="w-8 h-8 rounded-lg bg-[#F97316]/10 text-[#F97316] flex items-center justify-center">
                             {edit ? <FiEdit2 size={15} /> : <FiTag size={15} />}
                         </div>
                         <div>
@@ -283,7 +283,7 @@ const Page = () => {
                         </Button>
                         <Button
                             type='submit'
-                            className='!px-5 !py-1.5 flex items-center gap-1.5 shadow-md shadow-[#5572fc]/20 hover:shadow-lg !font-semibold !rounded-lg !text-xs transition-all'
+                            className='!px-5 !py-1.5 flex items-center gap-1.5 shadow-md shadow-[#F97316]/20 hover:shadow-lg !font-semibold !rounded-lg !text-xs transition-all'
                         >
                             {edit ? <FiEdit2 size={13} /> : <FiPlus size={13} />}
                             {edit ? i18n?.t('Save Changes') : i18n?.t('Create Coupon')}
@@ -296,3 +296,4 @@ const Page = () => {
 };
 
 export default Page;
+

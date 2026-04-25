@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 import { Form } from 'antd';
 import React, { useEffect } from 'react';
 import { useUser } from '../../../../../contexts/user';
@@ -146,7 +146,7 @@ const AccountSettings = () => {
             <FormInput name="occupation" label={i18n?.t('Occupation')} />
 
             <div className="col-span-1 md:col-span-2 mt-4 p-5 rounded-2xl bg-slate-50 border border-slate-100 shadow-sm relative overflow-hidden">
-              <div className="absolute top-0 left-0 w-1 bg-[#5572fc] h-full" />
+              <div className="absolute top-0 left-0 w-1 bg-[#F97316] h-full" />
               <div className="mb-4">
                <label className="block text-sm font-semibold text-slate-800 mb-1">{i18n?.t('Skills')}</label>
                <p className="text-xs text-slate-500">{i18n?.t("List up to 4 core professional skills.")}</p>
@@ -175,7 +175,7 @@ const AccountSettings = () => {
                     {fields.length < 4 && (
                       <button
                         type="button"
-                        className="text-[#5572fc] font-semibold text-sm flex items-center gap-2 hover:text-indigo-700 transition-colors w-fit mt-2 ml-1"
+                        className="text-[#F97316] font-semibold text-sm flex items-center gap-2 hover:text-indigo-700 transition-colors w-fit mt-2 ml-1"
                         onClick={() => add()}
                       >
                         <FaPlusCircle className="text-lg" /> {i18n?.t("Add another skill")}
@@ -206,7 +206,7 @@ const AccountSettings = () => {
           <div className="pt-6 border-t border-slate-100 flex justify-end pb-8">
             <button
               type="submit"
-              className="w-full sm:w-auto rounded-xl bg-[#5572fc] shadow-md shadow-[#5572fc]/20 px-8 py-3.5 text-[15px] font-semibold text-white transition-all duration-300 hover:bg-indigo-600 hover:shadow-lg hover:-translate-y-0.5"
+              className="w-full sm:w-auto rounded-xl bg-[#F97316] shadow-md shadow-[#F97316]/20 px-8 py-3.5 text-[15px] font-semibold text-white transition-all duration-300 hover:bg-indigo-600 hover:shadow-lg hover:-translate-y-0.5"
             >
               {i18n?.t('Save Changes')}
             </button>
@@ -218,3 +218,4 @@ const AccountSettings = () => {
 };
 
 export default AccountSettings;
+

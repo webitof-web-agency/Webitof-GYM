@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 import React, { useEffect } from 'react';
 import BasicBar from '../../../../../../components/common/basic-bar';
 import Image from 'next/image';
@@ -27,17 +27,17 @@ const Page = ({ params }) => {
     ].filter(s => s.href);
 
     const contactItems = [
-        { icon: <FiAward size={16} className='text-[#5572fc]' />, label: i18n?.t('Experience'), value: data?.experience },
-        { icon: <FiMail size={16} className='text-[#5572fc]' />, label: i18n?.t('Email'), value: data?.email },
-        { icon: <FiPhone size={16} className='text-[#5572fc]' />, label: i18n?.t('Phone'), value: data?.phone },
-        { icon: <FiMapPin size={16} className='text-[#5572fc]' />, label: i18n?.t('Address'), value: data?.address },
+        { icon: <FiAward size={16} className='text-[#F97316]' />, label: i18n?.t('Experience'), value: data?.experience },
+        { icon: <FiMail size={16} className='text-[#F97316]' />, label: i18n?.t('Email'), value: data?.email },
+        { icon: <FiPhone size={16} className='text-[#F97316]' />, label: i18n?.t('Phone'), value: data?.phone },
+        { icon: <FiMapPin size={16} className='text-[#F97316]' />, label: i18n?.t('Address'), value: data?.address },
     ];
 
     if (loading) return (
         <div>
             <BasicBar heading={i18n?.t('Trainers')} subHeading={i18n?.t('Trainer Details')} />
             <div className='container py-20 flex justify-center'>
-                <div className='h-8 w-8 rounded-full border-4 border-[#5572fc]/20 border-t-[#5572fc] animate-spin' />
+                <div className='h-8 w-8 rounded-full border-4 border-[#F97316]/20 border-t-[#F97316] animate-spin' />
             </div>
         </div>
     );
@@ -56,14 +56,14 @@ const Page = ({ params }) => {
                     className='relative overflow-hidden rounded-2xl border border-slate-100 shadow-[0_8px_40px_-10px_rgba(0,0,0,0.12)] bg-white mb-8'
                 >
                     {/* Top gradient strip */}
-                    <div className='h-2 bg-gradient-to-r from-[#3a52c4] via-[#5572fc] to-[#7c93ff]' />
+                    <div className='h-2 bg-gradient-to-r from-[#EA580C] via-[#F97316] to-[#FB923C]' />
 
                     <div className='grid grid-cols-1 lg:grid-cols-3 gap-0'>
 
                         {/* Left — Photo */}
                         <div className='relative overflow-hidden bg-slate-50 lg:rounded-none'>
                             {/* Background pattern */}
-                            <div className='absolute inset-0 opacity-[0.04]' style={{ backgroundImage: 'radial-gradient(circle, #5572fc 1px, transparent 1px)', backgroundSize: '20px 20px' }} />
+                            <div className='absolute inset-0 opacity-[0.04]' style={{ backgroundImage: 'radial-gradient(circle, #F97316 1px, transparent 1px)', backgroundSize: '20px 20px' }} />
                             <div className='relative aspect-[3/4] lg:aspect-auto lg:h-full min-h-[300px]'>
                                 {data?.image && (
                                     <Image
@@ -77,8 +77,8 @@ const Page = ({ params }) => {
                                 <div className='absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-black/50 to-transparent' />
                                 {/* Role badge */}
                                 <div className='absolute bottom-5 left-5'>
-                                    <span className='inline-flex items-center gap-1.5 rounded-full bg-white/90 backdrop-blur-sm px-4 py-1.5 text-[11px] font-black text-[#5572fc] uppercase tracking-widest shadow-md'>
-                                        <FiStar size={11} className='fill-[#5572fc]' /> {i18n?.t('Trainer')}
+                                    <span className='inline-flex items-center gap-1.5 rounded-full bg-white/90 backdrop-blur-sm px-4 py-1.5 text-[11px] font-black text-[#F97316] uppercase tracking-widest shadow-md'>
+                                        <FiStar size={11} className='fill-[#F97316]' /> {i18n?.t('Trainer')}
                                     </span>
                                 </div>
                             </div>
@@ -93,7 +93,7 @@ const Page = ({ params }) => {
                                         <h1 className='text-3xl lg:text-4xl font-extrabold text-gray-800 capitalize tracking-tight leading-tight'>
                                             {data?.name}
                                         </h1>
-                                        <p className='text-[13px] text-[#5572fc] font-bold uppercase tracking-widest mt-1'>{data?.role}</p>
+                                        <p className='text-[13px] text-[#F97316] font-bold uppercase tracking-widest mt-1'>{data?.role}</p>
                                     </div>
 
                                     {/* Social links */}
@@ -105,7 +105,7 @@ const Page = ({ params }) => {
                                                     href={s.href}
                                                     target='_blank'
                                                     aria-label={s.label}
-                                                    className='flex h-9 w-9 items-center justify-center rounded-xl border border-slate-200 text-gray-500 transition-all hover:border-[#5572fc] hover:bg-[#5572fc]/5 hover:text-[#5572fc]'
+                                                    className='flex h-9 w-9 items-center justify-center rounded-xl border border-slate-200 text-gray-500 transition-all hover:border-[#F97316] hover:bg-[#F97316]/5 hover:text-[#F97316]'
                                                 >
                                                     {s.icon}
                                                 </Link>
@@ -126,7 +126,7 @@ const Page = ({ params }) => {
                                 <div className='grid grid-cols-1 sm:grid-cols-2 gap-5'>
                                     {contactItems.map((item, idx) => (
                                         <div key={idx} className='flex items-center gap-4'>
-                                            <div className='shrink-0 flex h-10 w-10 items-center justify-center rounded-xl border border-[#5572fc]/15 bg-[#5572fc]/8'>
+                                            <div className='shrink-0 flex h-10 w-10 items-center justify-center rounded-xl border border-[#F97316]/15 bg-[#F97316]/8'>
                                                 {item.icon}
                                             </div>
                                             <div className='min-w-0'>
@@ -151,7 +151,7 @@ const Page = ({ params }) => {
                     {/* About */}
                     <div className='rounded-2xl border border-slate-100 shadow-[0_4px_20px_-6px_rgba(0,0,0,0.07)] bg-white p-8'>
                         <div className='flex items-center gap-2.5 mb-5'>
-                            <span className='h-5 w-0.5 rounded-full bg-[#5572fc]' />
+                            <span className='h-5 w-0.5 rounded-full bg-[#F97316]' />
                             <h2 className='text-[13px] font-black text-gray-800 uppercase tracking-widest'>{i18n?.t('About')} {data?.name}</h2>
                         </div>
                         <p className='text-[13px] text-gray-500 leading-relaxed font-medium'>
@@ -163,7 +163,7 @@ const Page = ({ params }) => {
                     {data?.skills?.length > 0 && (
                         <div className='rounded-2xl border border-slate-100 shadow-[0_4px_20px_-6px_rgba(0,0,0,0.07)] bg-white p-8'>
                             <div className='flex items-center gap-2.5 mb-6'>
-                                <span className='h-5 w-0.5 rounded-full bg-[#5572fc]' />
+                                <span className='h-5 w-0.5 rounded-full bg-[#F97316]' />
                                 <h2 className='text-[13px] font-black text-gray-800 uppercase tracking-widest'>{i18n?.t('Key Skills')}</h2>
                             </div>
                             <div className='flex flex-col gap-5'>
@@ -171,7 +171,7 @@ const Page = ({ params }) => {
                                     <div key={skill?._id}>
                                         <div className='flex justify-between mb-2'>
                                             <span className='text-[13px] font-bold text-gray-700 capitalize'>{skill?.name}</span>
-                                            <span className='text-[12px] font-extrabold text-[#5572fc]'>{skill?.level}%</span>
+                                            <span className='text-[12px] font-extrabold text-[#F97316]'>{skill?.level}%</span>
                                         </div>
                                         {/* Custom progress bar */}
                                         <div className='h-2 w-full rounded-full bg-slate-100 overflow-hidden'>
@@ -179,7 +179,7 @@ const Page = ({ params }) => {
                                                 initial={{ width: 0 }}
                                                 animate={{ width: `${skill?.level}%` }}
                                                 transition={{ duration: 1, ease: 'easeOut', delay: 0.3 }}
-                                                className='h-full rounded-full bg-gradient-to-r from-[#4461eb] to-[#5572fc]'
+                                                className='h-full rounded-full bg-gradient-to-r from-[#EA580C] to-[#F97316]'
                                             />
                                         </div>
                                     </div>

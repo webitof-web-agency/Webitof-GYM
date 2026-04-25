@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+﻿import React, { useEffect, useState } from 'react';
 import dayjs from 'dayjs';
 import Table from '../../../components/form/table';
 import Button from '../../../../../components/common/button';
@@ -49,7 +49,7 @@ const Group = ({ data, getData, loading }) => {
             dataField: 'name',
             formatter: (_, d) => (
                 <div className="flex items-center gap-2.5">
-                    <div className="w-8 h-8 rounded-full bg-blue-50 text-[#5572fc] flex items-center justify-center flex-shrink-0">
+                    <div className="w-8 h-8 rounded-full bg-orange-50 text-[#F97316] flex items-center justify-center flex-shrink-0">
                         <FiUsers size={14} />
                     </div>
                     <span className="text-xs font-bold text-gray-800">{d?.name}</span>
@@ -88,7 +88,7 @@ const Group = ({ data, getData, loading }) => {
             formatter: (_, d) => (
                 <button
                     onClick={() => router.push(`/admin/marketing-group/${d?._id}`)}
-                    className="flex items-center justify-center gap-1.5 bg-[#5572fc]/10 hover:bg-[#5572fc] text-[#5572fc] hover:text-white border border-[#5572fc]/20 rounded-lg px-3 py-1.5 text-[10px] font-bold transition-all w-fit whitespace-nowrap"
+                    className="flex items-center justify-center gap-1.5 bg-[#F97316]/10 hover:bg-[#F97316] text-[#F97316] hover:text-white border border-[#F97316]/20 rounded-lg px-3 py-1.5 text-[10px] font-bold transition-all w-fit whitespace-nowrap"
                 >
                     <FiSettings size={12} /> Manage Contacts
                 </button>
@@ -110,7 +110,7 @@ const Group = ({ data, getData, loading }) => {
                             form.resetFields();
                             setOpen(true);
                         }}
-                        className="flex items-center gap-1.5 !px-4 shadow-md shadow-[#5572fc]/20 hover:shadow-lg hover:shadow-[#5572fc]/30 transition-all !h-8 !py-0 !rounded-lg block !w-auto !text-xs whitespace-nowrap"
+                        className="flex items-center gap-1.5 !px-4 shadow-md shadow-[#F97316]/20 hover:shadow-lg hover:shadow-[#F97316]/30 transition-all !h-8 !py-0 !rounded-lg block !w-auto !text-xs whitespace-nowrap"
                     >
                         <FiPlus size={14} /> {('Create Group')}
                     </Button>
@@ -138,7 +138,7 @@ const Group = ({ data, getData, loading }) => {
                 footer={null}
                 title={
                     <div className="flex items-center gap-2.5 pb-2.5 border-b border-gray-100">
-                        <div className="w-8 h-8 rounded-lg bg-[#5572fc]/10 text-[#5572fc] flex items-center justify-center">
+                        <div className="w-8 h-8 rounded-lg bg-[#F97316]/10 text-[#F97316] flex items-center justify-center">
                             {editingFeature ? <FiEdit2 size={15} /> : <FiUsers size={15} />}
                         </div>
                         <span className="text-base font-bold text-gray-800 leading-tight">
@@ -184,7 +184,7 @@ const Group = ({ data, getData, loading }) => {
                         <Button
                             type='submit'
                             onClick={() => noSelected({ form })}
-                            className='!px-5 !py-1.5 flex items-center gap-1.5 shadow-md shadow-[#5572fc]/20 !font-semibold !rounded-lg !text-xs transition-all'
+                            className='!px-5 !py-1.5 flex items-center gap-1.5 shadow-md shadow-[#F97316]/20 !font-semibold !rounded-lg !text-xs transition-all'
                         >
                             {editingFeature ? <FiEdit2 size={13} /> : <FiPlus size={13} />}
                             {editingFeature ? 'Save Changes' : 'Create Group'}
@@ -197,3 +197,4 @@ const Group = ({ data, getData, loading }) => {
 };
 
 export default Group;
+

@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 import { Form, Modal } from 'antd';
 import React, { useEffect, useState } from 'react';
 
@@ -96,7 +96,7 @@ const page = () => {
                                 setOpen(true);
                                 setIsEdit(false);
                             }}
-                            className="flex items-center gap-1.5 !px-4 shadow-md shadow-[#5572fc]/20 hover:shadow-lg hover:shadow-[#5572fc]/30 transition-all !h-8 !py-0 !rounded-lg block !w-auto !text-xs whitespace-nowrap"
+                            className="flex items-center gap-1.5 !px-4 shadow-md shadow-[#F97316]/20 hover:shadow-lg hover:shadow-[#F97316]/30 transition-all !h-8 !py-0 !rounded-lg block !w-auto !text-xs whitespace-nowrap"
                         >
                             <FiPlus size={14} />
                             {i18n.t("Add Category")}
@@ -122,7 +122,7 @@ const page = () => {
                 width={500}
                 title={
                     <div className="flex items-center gap-2.5 pb-2.5 border-b border-gray-100">
-                        <div className="w-8 h-8 rounded-lg bg-[#5572fc]/10 text-[#5572fc] flex items-center justify-center">
+                        <div className="w-8 h-8 rounded-lg bg-[#F97316]/10 text-[#F97316] flex items-center justify-center">
                             {isEdit ? <FiEdit2 size={16} /> : <FiTag size={16} />}
                         </div>
                         <div>
@@ -145,7 +145,7 @@ const page = () => {
                                 onClick={() => setSelectedLang(l.code)}
                                 className={`rounded-lg px-4 py-1.5 text-xs font-bold transition-all duration-300 flex-shrink-0 ${
                                     l.code === selectedLang
-                                        ? 'bg-white text-[#5572fc] shadow-sm border border-slate-200/50'
+                                        ? 'bg-white text-[#F97316] shadow-sm border border-slate-200/50'
                                         : 'text-gray-500 hover:bg-white/50 hover:text-gray-700'
                                 }`}
                                 key={index}
@@ -223,7 +223,7 @@ const page = () => {
                                             handleNoSelected();
                                             form.submit();
                                         }}
-                                        className='!px-5 !py-1.5 flex items-center gap-1.5 shadow-md shadow-[#5572fc]/20 hover:shadow-lg hover:shadow-[#5572fc]/30 !font-semibold !rounded-lg block w-fit !text-xs transition-all'
+                                        className='!px-5 !py-1.5 flex items-center gap-1.5 shadow-md shadow-[#F97316]/20 hover:shadow-lg hover:shadow-[#F97316]/30 !font-semibold !rounded-lg block w-fit !text-xs transition-all'
                                     >
                                         {isEdit ? <FiEdit2 size={14} /> : <FiPlus size={14} />}
                                         {isEdit ? i18n?.t('Save Changes') : i18n?.t('Create Category')}
@@ -239,3 +239,4 @@ const page = () => {
 };
 
 export default page;
+

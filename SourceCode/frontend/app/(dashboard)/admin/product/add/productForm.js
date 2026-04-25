@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { Form, message, Radio, Switch } from "antd";
 import { useState } from "react";
@@ -91,7 +91,7 @@ const ProductForm = ({ isVarient, setIsVarient, category, languages, selectedLan
     if (loading) {
         return (
             <div className="flex justify-center items-center min-h-[40vh] bg-white rounded-2xl shadow-sm border border-slate-100/80">
-                <BiLoader size={50} className="animate-spin" color={"#5572fc"} />
+                <BiLoader size={50} className="animate-spin" color={"#F97316"} />
             </div>
         );
     }
@@ -108,7 +108,7 @@ const ProductForm = ({ isVarient, setIsVarient, category, languages, selectedLan
                     {/* Basic Info Card */}
                     <div className="bg-white rounded-2xl shadow-sm border border-slate-100/80 p-6 h-full">
                          <div className="flex items-center gap-2 pb-4 border-b border-gray-100/80 mb-5">
-                             <div className="w-8 h-8 rounded-lg bg-[#5572fc]/10 text-[#5572fc] flex items-center justify-center font-bold">
+                             <div className="w-8 h-8 rounded-lg bg-[#F97316]/10 text-[#F97316] flex items-center justify-center font-bold">
                                  <FiFileText size={16} />
                              </div>
                              <h3 className="text-sm font-bold text-gray-800 uppercase tracking-wide leading-none">{i18n?.t("Core Product Identity")}</h3>
@@ -221,7 +221,7 @@ const ProductForm = ({ isVarient, setIsVarient, category, languages, selectedLan
                                             ))}
                                             <button
                                                 type="button"
-                                                className="w-full border-2 border-dashed border-slate-200 hover:border-[#5572fc] bg-slate-50 hover:bg-[#5572fc]/5 text-gray-500 hover:text-[#5572fc] transition-all duration-300 rounded-lg py-3 text-sm font-bold flex items-center justify-center gap-1.5 mt-2"
+                                                className="w-full border-2 border-dashed border-slate-200 hover:border-[#F97316] bg-slate-50 hover:bg-[#F97316]/5 text-gray-500 hover:text-[#F97316] transition-all duration-300 rounded-lg py-3 text-sm font-bold flex items-center justify-center gap-1.5 mt-2"
                                                 onClick={() => add()}
                                             >
                                                 <FiPlus size={16} /> {i18n?.t("Attach New Variant")}
@@ -236,7 +236,7 @@ const ProductForm = ({ isVarient, setIsVarient, category, languages, selectedLan
                     {/* Rich Description */}
                     <div className="bg-white rounded-2xl shadow-sm border border-slate-100/80 p-6">
                         <div className="flex items-center gap-2 pb-4 border-b border-gray-100/80 mb-5">
-                             <div className="w-8 h-8 rounded-lg bg-blue-50 text-blue-500 border border-blue-100/50 flex items-center justify-center font-bold">
+                             <div className="w-8 h-8 rounded-lg bg-orange-50 text-orange-500 border border-orange-100/50 flex items-center justify-center font-bold">
                                  <FiFileText size={16} />
                              </div>
                              <h3 className="text-sm font-bold text-gray-800 uppercase tracking-wide leading-none">{i18n?.t("Extended Technical Description")}</h3>
@@ -270,7 +270,7 @@ const ProductForm = ({ isVarient, setIsVarient, category, languages, selectedLan
                 <Button 
                     onClick={(e) => { e.preventDefault(); noSelected({ form, setSelectedLang }); form.submit(); }} 
                     type="submit" 
-                    className="!px-8 !py-3 flex items-center gap-2 shadow-md shadow-[#5572fc]/20 hover:shadow-lg hover:shadow-[#5572fc]/30 !font-semibold !rounded-xl block w-fit !text-sm transition-all"
+                    className="!px-8 !py-3 flex items-center gap-2 shadow-md shadow-[#F97316]/20 hover:shadow-lg hover:shadow-[#F97316]/30 !font-semibold !rounded-xl block w-fit !text-sm transition-all"
                 >
                     {i18n?.t("Validate & Save")}
                 </Button>
@@ -280,3 +280,4 @@ const ProductForm = ({ isVarient, setIsVarient, category, languages, selectedLan
 };
 
 export default ProductForm;
+

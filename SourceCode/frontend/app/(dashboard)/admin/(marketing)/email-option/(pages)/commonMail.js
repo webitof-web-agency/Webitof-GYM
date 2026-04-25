@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import PageTitle from '../../../../components/common/page-title';
 import dayjs from 'dayjs';
 import { delMarketingMail } from '../../../../../helpers/backend';
@@ -30,7 +30,7 @@ const CommonMail = ({ data, getData, title, isScheduled=false }) => {
             formatter: (value, d) => (
                 <div className="flex flex-col gap-1 max-w-[240px]">
                     <span className="font-bold text-gray-800 text-xs leading-snug line-clamp-1 flex items-center gap-1.5">
-                        <FiMessageSquare size={10} className="text-[#5572fc] flex-shrink-0" />
+                        <FiMessageSquare size={10} className="text-[#F97316] flex-shrink-0" />
                         {value || 'No Subject'}
                     </span>
                     <span 
@@ -64,7 +64,7 @@ const CommonMail = ({ data, getData, title, isScheduled=false }) => {
                             <span className="text-[9px] font-bold text-gray-400 bg-slate-50 border border-slate-100 rounded px-1.5 py-0.5">None</span>
                         )}
                         {targets.length > 2 && (
-                            <span className="text-[9px] font-bold text-[#5572fc] bg-[#5572fc]/10 rounded px-1.5 py-0.5">+{targets.length - 2}</span>
+                            <span className="text-[9px] font-bold text-[#F97316] bg-[#F97316]/10 rounded px-1.5 py-0.5">+{targets.length - 2}</span>
                         )}
                     </div>
                 );
@@ -108,7 +108,7 @@ const CommonMail = ({ data, getData, title, isScheduled=false }) => {
     return (
         <div className="flex flex-col w-full h-full">
             <div className="px-6 py-5 border-b border-slate-100 flex items-center gap-2">
-                <div className="w-8 h-8 rounded-lg bg-[#5572fc]/10 text-[#5572fc] flex items-center justify-center">
+                <div className="w-8 h-8 rounded-lg bg-[#F97316]/10 text-[#F97316] flex items-center justify-center">
                     <FiMail size={15} />
                 </div>
                 <div>

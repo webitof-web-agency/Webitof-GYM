@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 import Image from 'next/image';
 import { useI18n } from '../../../../providers/i18n';
 import { useFetch } from '../../../../helpers/hooks';
@@ -92,7 +92,7 @@ const Introduction = ({ data , company}) => {
                                             className='w-full h-full object-fill '
                                         />
                                     </div>
-                                    <div className='bg-[#5572fc] rounded-[10px] w-[238px] h-[122px] absolute -top-[4px] -right-[4px] -z-[20px]'></div>
+                                    <div className='bg-[#F97316] rounded-[10px] w-[238px] h-[122px] absolute -top-[4px] -right-[4px] -z-[20px]'></div>
 
                                     <div className='lg:left- absolute -bottom-2 left-0 lg:-bottom-1 z-40'>
                                         <h1 className='relative text-xl font-semibold'>
@@ -120,7 +120,7 @@ const Introduction = ({ data , company}) => {
                                             className='w-full h-full object-contain '
                                         />
                                     </div>
-                                    <div className='bg-[#5572fc] rounded-[10px] w-[238px] h-[122px] absolute -top-[4px] -right-[4px] -z-[20px]'></div>
+                                    <div className='bg-[#F97316] rounded-[10px] w-[238px] h-[122px] absolute -top-[4px] -right-[4px] -z-[20px]'></div>
 
                                     <div className='absolute -bottom-1 -left-1'>
                                         <h1 className='relative text-xl font-semibold'>
@@ -164,7 +164,7 @@ const Introduction = ({ data , company}) => {
                                             className='w-full h-full  '
                                         />
                                     </div>
-                                    <div className='bg-[#5572fc] rounded-[10px] w-[238px] h-[122px] absolute -bottom-[4px] right-[0px] -z-[20px]'></div>
+                                    <div className='bg-[#F97316] rounded-[10px] w-[238px] h-[122px] absolute -bottom-[4px] right-[0px] -z-[20px]'></div>
                                 </div>
                                 <div className='absolute left-0 top-0'>
                                     <h1 className='relative text-xl font-semibold'>
@@ -208,3 +208,4 @@ const Introduction = ({ data , company}) => {
 };
 
 export default Introduction;
+

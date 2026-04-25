@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+﻿import React, { useEffect, useState } from 'react';
 import { MdOutlineKeyboardArrowUp } from 'react-icons/md';
 
 const Scroll = () => {
@@ -46,7 +46,7 @@ const Scroll = () => {
             {isVisible && (
                 <button
                     onClick={scrollToTop}
-                    className='fixed p-1 rounded-full bottom-5 right-5 bg-[#5572fc] shadow-lg text-white animate-bounce hover:scale-110 active:scale-95 transition-transform'
+                    className='fixed p-1 rounded-full bottom-5 right-5 bg-[#F97316] shadow-lg text-white animate-bounce hover:scale-110 active:scale-95 transition-transform'
                 >
                     <MdOutlineKeyboardArrowUp size={30} />
                 </button>
@@ -56,3 +56,4 @@ const Scroll = () => {
 };
 
 export default Scroll;
+

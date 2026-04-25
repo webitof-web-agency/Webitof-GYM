@@ -1,4 +1,4 @@
-import { Form } from 'antd';
+﻿import { Form } from 'antd';
 import React, { useEffect } from 'react';
 import JodiEditor from '../../../components/form/jodiEditor';
 import PageTitle from '../../../components/common/page-title';
@@ -26,7 +26,7 @@ const EmailTemplate = ({ settings, getSettings, loading }) => {
         <div className="bg-white rounded-xl shadow-sm border border-slate-100/80 overflow-hidden min-h-[500px]">
              <div className="px-6 py-5 border-b border-slate-100">
                 <h2 className="text-lg font-bold text-gray-800 flex items-center gap-2">
-                    <FiLayout className="text-[#5572fc]" /> Marketing Email Templates
+                    <FiLayout className="text-[#F97316]" /> Marketing Email Templates
                 </h2>
                 <p className="text-xs text-gray-500 mt-1">Configure your default rich-text email wrapper layouts for use in marketing campaigns.</p>
             </div>
@@ -48,7 +48,7 @@ const EmailTemplate = ({ settings, getSettings, loading }) => {
                     <div className="flex flex-col gap-6 mb-6">
                         <div className="bg-slate-50/50 border border-slate-100 rounded-xl p-5">
                             <div className="flex items-center gap-2 mb-3">
-                                <div className="w-6 h-6 rounded bg-[#5572fc]/10 text-[#5572fc] flex items-center justify-center">
+                                <div className="w-6 h-6 rounded bg-[#F97316]/10 text-[#F97316] flex items-center justify-center">
                                     <span className="text-xs font-bold">1</span>
                                 </div>
                                 <span className="text-sm font-bold text-gray-700">Template Slot 1</span>
@@ -73,7 +73,7 @@ const EmailTemplate = ({ settings, getSettings, loading }) => {
 
                     <div className="flex justify-end pt-5 border-t border-slate-100">
                         <Button 
-                            className="flex items-center gap-1.5 !px-8 !py-2.5 shadow-lg shadow-[#5572fc]/20 hover:shadow-[#5572fc]/40 transition-all !rounded-xl text-sm font-bold" 
+                            className="flex items-center gap-1.5 !px-8 !py-2.5 shadow-lg shadow-[#F97316]/20 hover:shadow-[#F97316]/40 transition-all !rounded-xl text-sm font-bold" 
                             htmlType="submit"
                         >
                             <FiSave size={15} /> Save Templates

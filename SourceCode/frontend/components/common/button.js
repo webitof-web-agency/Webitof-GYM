@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 import React, { useState } from 'react';
 import { usePathname } from 'next/navigation';
 const Button = ({
@@ -6,7 +6,7 @@ const Button = ({
   onClick,
   className = '',
   type = 'button',
-  loadingText = 'Loading…',
+  loadingText = 'Loadingâ€¦',
   skipDemo,
   pathName,
   ...props
@@ -29,7 +29,7 @@ const Button = ({
     <button
       type={type}
       onClick={handleClick}
-      className={`inline-flex items-center justify-center border-2 whitespace-pre transition-all duration-300 ease-in-out md:px-6 py-[10px] px-5 sm:text-[14px] text-[14px] font-semibold rounded-xl h-fit active:scale-[0.98] ${isLoading ? 'bg-gray-300 border-gray-300 text-gray-500 cursor-not-allowed shadow-none' : 'bg-[#5572fc] border-[#5572fc] text-white hover:bg-[#4660e5] hover:border-[#4660e5] hover:shadow-lg hover:shadow-[#5572fc]/25 shadow-md shadow-[#5572fc]/10'} ${pathName === 'home3' && pathname==="/" ? 'brightness-110' : ''} ${className}`}
+      className={`inline-flex items-center justify-center border-2 whitespace-pre transition-all duration-300 ease-in-out md:px-6 py-[10px] px-5 sm:text-[14px] text-[14px] font-semibold rounded-xl h-fit active:scale-[0.98] ${isLoading ? 'bg-gray-300 border-gray-300 text-gray-500 cursor-not-allowed shadow-none' : 'bg-[#F97316] border-[#F97316] text-white hover:bg-[#4660e5] hover:border-[#4660e5] hover:shadow-lg hover:shadow-[#F97316]/25 shadow-md shadow-[#F97316]/10'} ${pathName === 'home3' && pathname==="/" ? 'brightness-110' : ''} ${className}`}
       disabled={isLoading}
       {...props}
     >
@@ -39,3 +39,4 @@ const Button = ({
 };
 
 export default Button;
+

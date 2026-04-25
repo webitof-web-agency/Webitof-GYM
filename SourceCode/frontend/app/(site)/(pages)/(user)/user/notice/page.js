@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { Modal } from 'antd';
 import { useRouter } from 'next/navigation';
@@ -95,7 +95,7 @@ const Page = () => {
             </p>
             <button
                 onClick={() => setEdit(false)}
-                className="mt-5 cursor-pointer hover:scale-105 rounded-md bg-[#5572fc] px-6 py-3 text-white font-semibold transition-transform duration-300 ease-in-out shadow-md hover:shadow-lg"
+                className="mt-5 cursor-pointer hover:scale-105 rounded-md bg-[#F97316] px-6 py-3 text-white font-semibold transition-transform duration-300 ease-in-out shadow-md hover:shadow-lg"
             >
                 {i18n?.t('Okay!')}
             </button>
@@ -108,3 +108,4 @@ const Page = () => {
 };
 
 export default Page;
+

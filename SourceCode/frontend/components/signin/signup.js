@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -42,23 +42,23 @@ const SignUp = () => {
     return (
         <div className='container lg:my-[80px] my-[40px] otp-modal pb-20'>
 
-            {/* ── Main Card ─────────────────────────────────────────────── */}
+            {/* â”€â”€ Main Card â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
             <div className='relative overflow-hidden rounded-2xl shadow-2xl shadow-black/15 flex flex-col lg:flex-row min-h-[580px]'>
 
-                {/* Left — Athlete Panel */}
-                <div className='relative hidden lg:flex lg:w-[42%] flex-col items-center justify-end overflow-hidden bg-gradient-to-br from-[#1a2f6e] via-[#3a52c4] to-[#5572fc]'>
+                {/* Left â€” Athlete Panel */}
+                <div className='relative hidden lg:flex lg:w-[42%] flex-col items-center justify-end overflow-hidden bg-gradient-to-br from-[#C2410C] via-[#EA580C] to-[#F97316]'>
                     {/* Background pattern */}
                     <div className='absolute inset-0 opacity-[0.07]' style={{ backgroundImage: 'radial-gradient(circle, white 1px, transparent 1px)', backgroundSize: '28px 28px' }} />
                     {/* Glows */}
                     <div className='absolute top-10 left-10 w-48 h-48 bg-white/10 rounded-full blur-3xl' />
-                    <div className='absolute bottom-20 right-0 w-32 h-32 bg-[#7c93ff]/20 rounded-full blur-2xl' />
+                    <div className='absolute bottom-20 right-0 w-32 h-32 bg-[#FB923C]/20 rounded-full blur-2xl' />
 
-                    {/* Brand watermark — centered behind image */}
+                    {/* Brand watermark â€” centered behind image */}
                     <p className='absolute inset-0 flex items-center justify-center text-[70px] xl:text-[90px] font-black font-montserrat text-white/15 leading-none select-none pointer-events-none tracking-tight text-center'>
                         {data?.title?.slice(0, 8)}
                     </p>
 
-                    {/* Athlete image — constrained, bottom-anchored */}
+                    {/* Athlete image â€” constrained, bottom-anchored */}
                     <div className='relative z-10 w-[280px] xl:w-[320px] shrink-0'>
                         <Image
                             className='w-full h-auto object-contain object-bottom drop-shadow-2xl'
@@ -70,15 +70,15 @@ const SignUp = () => {
                     </div>
                 </div>
 
-                {/* Right — Form Panel */}
+                {/* Right â€” Form Panel */}
                 <div className='flex-1 bg-white flex flex-col justify-center px-8 sm:px-12 lg:px-14 py-12'>
                     {/* Header */}
                     <div className='mb-7'>
                         <div className='flex items-center gap-2 mb-3'>
-                            <div className='w-8 h-8 rounded-lg bg-[#5572fc]/10 text-[#5572fc] flex items-center justify-center'>
+                            <div className='w-8 h-8 rounded-lg bg-[#F97316]/10 text-[#F97316] flex items-center justify-center'>
                                 <FiUser size={15} />
                             </div>
-                            <span className='text-[11px] font-black text-[#5572fc] uppercase tracking-widest'>New Account</span>
+                            <span className='text-[11px] font-black text-[#F97316] uppercase tracking-widest'>New Account</span>
                         </div>
                         <h1 className='text-3xl font-extrabold text-gray-800 tracking-tight leading-tight'>
                             {i18n?.t("Let's Join Us")}
@@ -152,7 +152,7 @@ const SignUp = () => {
                             >
                                 <div className='relative'>
                                     <FiLock size={14} className='absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none z-10' />
-                                    <Input.Password placeholder={i18n?.t('••••••••')} className='pl-9 h-11 rounded-xl border-slate-200 text-[13px]' />
+                                    <Input.Password placeholder={i18n?.t('â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢')} className='pl-9 h-11 rounded-xl border-slate-200 text-[13px]' />
                                 </div>
                             </Form.Item>
 
@@ -167,7 +167,7 @@ const SignUp = () => {
                             >
                                 <div className='relative'>
                                     <FiLock size={14} className='absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none z-10' />
-                                    <Input.Password placeholder={i18n?.t('••••••••')} className='pl-9 h-11 rounded-xl border-slate-200 text-[13px]' />
+                                    <Input.Password placeholder={i18n?.t('â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢')} className='pl-9 h-11 rounded-xl border-slate-200 text-[13px]' />
                                 </div>
                             </Form.Item>
                         </div>
@@ -175,7 +175,7 @@ const SignUp = () => {
                         {/* Submit */}
                         <button
                             type='submit'
-                            className='w-full flex items-center justify-center gap-2 rounded-xl bg-[#5572fc] py-3 text-sm font-bold text-white shadow-lg shadow-[#5572fc]/30 hover:bg-[#4461eb] hover:shadow-xl hover:shadow-[#5572fc]/40 transition-all hover:-translate-y-0.5 mt-2'
+                            className='w-full flex items-center justify-center gap-2 rounded-xl bg-[#F97316] py-3 text-sm font-bold text-white shadow-lg shadow-[#F97316]/30 hover:bg-[#EA580C] hover:shadow-xl hover:shadow-[#F97316]/40 transition-all hover:-translate-y-0.5 mt-2'
                         >
                             {loadingRequest
                                 ? <span className='h-4 w-4 rounded-full border-2 border-white/30 border-t-white animate-spin' />
@@ -187,12 +187,12 @@ const SignUp = () => {
                     {/* Footer */}
                     <p className='mt-5 text-center text-[13px] text-gray-400 font-medium'>
                         {i18n?.t('Already have an account?')}{' '}
-                        <Link href='/signin' className='text-[#5572fc] font-bold hover:underline'>{i18n?.t('Sign In')}</Link>
+                        <Link href='/signin' className='text-[#F97316] font-bold hover:underline'>{i18n?.t('Sign In')}</Link>
                     </p>
                 </div>
             </div>
 
-            {/* ── OTP Modal ─────────────────────────────────────────────── */}
+            {/* â”€â”€ OTP Modal â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
             <Modal open={otpModal} maskClosable={false} footer={null} onCancel={() => setOtpModal(false)}
                 className='!w-[460px]'
                 styles={{ content: { borderRadius: '16px', padding: '32px' } }}
@@ -203,7 +203,7 @@ const SignUp = () => {
                         </div>
                         <div>
                             <p className='text-sm font-extrabold text-gray-800'>{i18n?.t('Verify Your Email')}</p>
-                            <p className='text-[11px] text-gray-400 font-medium'>Code sent to <span className='text-[#5572fc] font-bold'>{getEmail}</span></p>
+                            <p className='text-[11px] text-gray-400 font-medium'>Code sent to <span className='text-[#F97316] font-bold'>{getEmail}</span></p>
                         </div>
                     </div>
                 }
@@ -231,16 +231,16 @@ const SignUp = () => {
                     <p className='text-[12px] text-gray-400 font-medium mb-5 text-center'>
                         {i18n?.t("Didn't receive the code?")}{' '}
                         {time === 0
-                            ? <span className='text-[#5572fc] font-bold cursor-pointer' onClick={async () => { const { error, msg } = await sendOtp({ email, action: 'registration' }); if (error) message.error(msg); else { message.success(msg); reset(); start(); } }}>{i18n?.t('Resend')}</span>
-                            : <span className='text-[#5572fc] font-bold'>{i18n?.t('resend in')} {time}s</span>
+                            ? <span className='text-[#F97316] font-bold cursor-pointer' onClick={async () => { const { error, msg } = await sendOtp({ email, action: 'registration' }); if (error) message.error(msg); else { message.success(msg); reset(); start(); } }}>{i18n?.t('Resend')}</span>
+                            : <span className='text-[#F97316] font-bold'>{i18n?.t('resend in')} {time}s</span>
                         }
                     </p>
-                    <button className='w-full bg-[#5572fc] text-white py-3 rounded-xl font-bold text-sm hover:bg-[#4461eb] transition-colors shadow-lg shadow-[#5572fc]/25'>
+                    <button className='w-full bg-[#F97316] text-white py-3 rounded-xl font-bold text-sm hover:bg-[#EA580C] transition-colors shadow-lg shadow-[#F97316]/25'>
                         {i18n?.t('Verify & Create Account')}
                     </button>
                     <p className='mt-4 text-[12px] text-gray-400 font-medium text-center'>
                         {i18n?.t('Already have an account?')}{' '}
-                        <Link href='/signin' onClick={() => setOtpModal(false)} className='text-[#5572fc] font-bold hover:underline'>{i18n?.t('Sign in now')}</Link>
+                        <Link href='/signin' onClick={() => setOtpModal(false)} className='text-[#F97316] font-bold hover:underline'>{i18n?.t('Sign in now')}</Link>
                     </p>
                 </Form>
             </Modal>
@@ -249,3 +249,4 @@ const SignUp = () => {
 };
 
 export default SignUp;
+

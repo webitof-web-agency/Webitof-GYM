@@ -1,4 +1,4 @@
-import { Rate } from 'antd';
+﻿import { Rate } from 'antd';
 import Image from 'next/image';
 import React from 'react';
 import BasicBar from '../../../../components/common/basic-bar';
@@ -18,10 +18,10 @@ const Testimonial_Details = () => {
             <Image src='/join.png' height={424} width={424} alt='image' className='lg:max-h-[424px] h-full lg:max-w-[424px] w-full'/>
            </div>
            <div className='col-span-2'>
-              <h1 className='text-[28px] font-medium text-[#5572fc] my-4'>Sandra Garica</h1>
+              <h1 className='text-[28px] font-medium text-[#F97316] my-4'>Sandra Garica</h1>
               <h3 className='text-secondary text-[18px]'>Manager</h3>
              
-              <Rate className='text-[#5572fc] my-6' disabled defaultValue={5} />
+              <Rate className='text-[#F97316] my-6' disabled defaultValue={5} />
               
               <div className='border rounded mt-6'>
                 <p className='para1 p-6 leading-[160%] '>I have been hiring people in this space for a number of years and I have never seen this level of the more profe

@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 import React, { useState } from 'react';
 import PageTitle from '../../components/common/page-title';
 import { fetchEmailSettings } from '../../../helpers/backend';
@@ -41,7 +41,7 @@ const EmailSettings = () => {
                                 onClick={() => setActiveTab(tab.key)}
                                 className={`flex items-center gap-2 px-5 py-2.5 rounded-t-xl text-xs font-bold transition-all duration-200 border-b-2 -mb-[1px] ${
                                     isActive
-                                        ? 'bg-white text-[#5572fc] border-[#5572fc] shadow-sm'
+                                        ? 'bg-white text-[#F97316] border-[#F97316] shadow-sm'
                                         : 'text-gray-500 border-transparent hover:text-gray-700 hover:bg-white/60'
                                 }`}
                             >
@@ -75,3 +75,4 @@ const EmailSettings = () => {
 };
 
 export default EmailSettings;
+

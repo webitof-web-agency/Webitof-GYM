@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { Form, Input, Switch } from 'antd';
 import { useAction } from '../../../helpers/hooks';
 import { postEmailSettings } from '../../../helpers/backend';
@@ -84,7 +84,7 @@ const SendGridManageEmail = ({ settings, getSettings, loading, setCheckedValue }
             <HiddenInput name="_id" />
 
             <div className="flex items-center gap-2 mb-5 pb-4 border-b border-slate-100">
-                <div className="w-8 h-8 rounded-lg bg-[#5572fc]/10 text-[#5572fc] flex items-center justify-center">
+                <div className="w-8 h-8 rounded-lg bg-[#F97316]/10 text-[#F97316] flex items-center justify-center">
                     <FiSend size={15} />
                 </div>
                 <div>
@@ -104,7 +104,7 @@ const SendGridManageEmail = ({ settings, getSettings, loading, setCheckedValue }
                     <Input placeholder="e.g. apikey" className="!rounded-lg !text-sm" />
                 </Form.Item>
                 <Form.Item name={['sendgrid', 'password']} label={<span className="text-xs font-bold text-gray-600 flex items-center gap-1"><FiLock size={11} className="text-gray-400"/> {i18n?.t('Email Password')}</span>} rules={[{ required: true, message: i18n?.t('Please input email password!') }]} className="!mb-0">
-                    <Input.Password placeholder="••••••••" className="!rounded-lg !text-sm" />
+                    <Input.Password placeholder="â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢" className="!rounded-lg !text-sm" />
                 </Form.Item>
                 <Form.Item name={['sendgrid', 'sender_email']} label={<span className="text-xs font-bold text-gray-600 flex items-center gap-1"><FiMail size={11} className="text-gray-400"/> {i18n?.t('Sender Email')}</span>} rules={[{ required: true, message: i18n?.t('Please input sender email!') }]} className="!mb-0 md:col-span-2">
                     <Input placeholder="e.g. noreply@yourdomain.com" className="!rounded-lg !text-sm" />
@@ -123,13 +123,13 @@ const SendGridManageEmail = ({ settings, getSettings, loading, setCheckedValue }
                     <Switch
                         checked={defaultEmail === 'sendgrid'}
                         onChange={(checked) => setDefaultEmail(checked ? 'sendgrid' : '')}
-                        className={defaultEmail === 'sendgrid' ? '!bg-[#5572fc]' : '!bg-gray-300'}
+                        className={defaultEmail === 'sendgrid' ? '!bg-[#F97316]' : '!bg-gray-300'}
                     />
                 </Form.Item>
             </div>
 
             <div className="flex justify-end mt-5 pt-4 border-t border-slate-100">
-                <Button type='submit' className="flex items-center gap-1.5 !px-6 !py-2 shadow-md shadow-[#5572fc]/20 !rounded-lg !text-xs !font-bold">
+                <Button type='submit' className="flex items-center gap-1.5 !px-6 !py-2 shadow-md shadow-[#F97316]/20 !rounded-lg !text-xs !font-bold">
                     <FiSave size={13} /> {i18n?.t('Save Configuration')}
                 </Button>
             </div>
@@ -138,3 +138,4 @@ const SendGridManageEmail = ({ settings, getSettings, loading, setCheckedValue }
 };
 
 export default SendGridManageEmail;
+

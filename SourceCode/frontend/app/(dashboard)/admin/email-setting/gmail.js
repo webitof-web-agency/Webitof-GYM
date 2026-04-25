@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { Form, Input, Switch } from 'antd';
 import { useAction } from '../../../helpers/hooks';
 import { postEmailSettings } from '../../../helpers/backend';
@@ -107,13 +107,13 @@ const GmailEmailProvider = ({ settings, getSettings, loading, setCheckedValue })
                     <Switch
                         checked={defaultEmail === 'gmail'}
                         onChange={(checked) => setDefaultEmail(checked ? 'gmail' : '')}
-                        className={defaultEmail === 'gmail' ? '!bg-[#5572fc]' : '!bg-gray-300'}
+                        className={defaultEmail === 'gmail' ? '!bg-[#F97316]' : '!bg-gray-300'}
                     />
                 </Form.Item>
             </div>
 
             <div className="flex justify-end mt-5 pt-4 border-t border-slate-100">
-                <Button type='submit' className="flex items-center gap-1.5 !px-6 !py-2 shadow-md shadow-[#5572fc]/20 !rounded-lg !text-xs !font-bold">
+                <Button type='submit' className="flex items-center gap-1.5 !px-6 !py-2 shadow-md shadow-[#F97316]/20 !rounded-lg !text-xs !font-bold">
                     <FiSave size={13} /> {i18n?.t('Save Configuration')}
                 </Button>
             </div>
@@ -122,3 +122,4 @@ const GmailEmailProvider = ({ settings, getSettings, loading, setCheckedValue })
 };
 
 export default GmailEmailProvider;
+

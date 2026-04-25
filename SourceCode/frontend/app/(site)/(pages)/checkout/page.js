@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import CheckOutCard from '../../../../components/shop/chackoutCard';
@@ -88,7 +88,7 @@ const Page = () => {
         }
     };
 
-    const inputClass = 'h-11 rounded-xl border-slate-200 text-[13px] font-medium focus:border-[#5572fc]';
+    const inputClass = 'h-11 rounded-xl border-slate-200 text-[13px] font-medium focus:border-[#F97316]';
 
     return (
         <section>
@@ -99,7 +99,7 @@ const Page = () => {
                     <Form form={form} onFinish={handlePlaceOrder}>
                         <div className='grid grid-cols-1 lg:grid-cols-3 gap-8 xl:gap-12'>
 
-                            {/* ── LEFT: Shipping + Payment ─────────────────── */}
+                            {/* â”€â”€ LEFT: Shipping + Payment â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
                             <div className='lg:col-span-2 space-y-6'>
 
                                 {/* Shipping details card */}
@@ -111,8 +111,8 @@ const Page = () => {
                                 >
                                     {/* Card header */}
                                     <div className='flex items-center gap-3 px-6 py-4 border-b border-slate-100 bg-slate-50/50'>
-                                        <div className='flex h-8 w-8 items-center justify-center rounded-lg bg-[#5572fc]/10 border border-[#5572fc]/20'>
-                                            <FiMapPin size={14} className='text-[#5572fc]' />
+                                        <div className='flex h-8 w-8 items-center justify-center rounded-lg bg-[#F97316]/10 border border-[#F97316]/20'>
+                                            <FiMapPin size={14} className='text-[#F97316]' />
                                         </div>
                                         <div>
                                             <p className='text-[13px] font-extrabold text-gray-800'>{i18n?.t('Shipping Details')}</p>
@@ -175,8 +175,8 @@ const Page = () => {
                                     className='rounded-2xl border border-slate-100 bg-white shadow-[0_4px_20px_-6px_rgba(0,0,0,0.07)] overflow-hidden'
                                 >
                                     <div className='flex items-center gap-3 px-6 py-4 border-b border-slate-100 bg-slate-50/50'>
-                                        <div className='flex h-8 w-8 items-center justify-center rounded-lg bg-[#5572fc]/10 border border-[#5572fc]/20'>
-                                            <FiCreditCard size={14} className='text-[#5572fc]' />
+                                        <div className='flex h-8 w-8 items-center justify-center rounded-lg bg-[#F97316]/10 border border-[#F97316]/20'>
+                                            <FiCreditCard size={14} className='text-[#F97316]' />
                                         </div>
                                         <div>
                                             <p className='text-[13px] font-extrabold text-gray-800'>{i18n?.t('Payment Method')}</p>
@@ -193,18 +193,18 @@ const Page = () => {
                                             {payMethods?.docs?.map(method => (
                                                 <label
                                                     key={method?._id}
-                                                    className={`flex items-center gap-3 w-full rounded-xl border-2 px-4 py-3.5 cursor-pointer transition-all duration-200 ${value === method?.type ? 'border-[#5572fc] bg-[#5572fc]/5' : 'border-slate-100 hover:border-slate-200'}`}
+                                                    className={`flex items-center gap-3 w-full rounded-xl border-2 px-4 py-3.5 cursor-pointer transition-all duration-200 ${value === method?.type ? 'border-[#F97316] bg-[#F97316]/5' : 'border-slate-100 hover:border-slate-200'}`}
                                                     onClick={() => setValue(method?.type)}
                                                 >
                                                     <Radio value={method?.type} className='opacity-0 w-0 h-0 absolute' />
-                                                    <div className={`h-4 w-4 rounded-full border-2 flex items-center justify-center shrink-0 transition-all ${value === method?.type ? 'border-[#5572fc] bg-[#5572fc]' : 'border-slate-300'}`}>
+                                                    <div className={`h-4 w-4 rounded-full border-2 flex items-center justify-center shrink-0 transition-all ${value === method?.type ? 'border-[#F97316] bg-[#F97316]' : 'border-slate-300'}`}>
                                                         {value === method?.type && <div className='h-1.5 w-1.5 rounded-full bg-white' />}
                                                     </div>
-                                                    <span className={`text-[13px] font-bold transition-colors ${value === method?.type ? 'text-[#5572fc]' : 'text-gray-700'}`}>
+                                                    <span className={`text-[13px] font-bold transition-colors ${value === method?.type ? 'text-[#F97316]' : 'text-gray-700'}`}>
                                                         {method?.name}
                                                     </span>
                                                     {value === method?.type && (
-                                                        <FiCheckCircle size={14} className='text-[#5572fc] ml-auto' />
+                                                        <FiCheckCircle size={14} className='text-[#F97316] ml-auto' />
                                                     )}
                                                 </label>
                                             ))}
@@ -213,7 +213,7 @@ const Page = () => {
                                 </motion.div>
                             </div>
 
-                            {/* ── RIGHT: Order Summary ──────────────────────── */}
+                            {/* â”€â”€ RIGHT: Order Summary â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
                             <div className='lg:col-span-1'>
                                 <motion.div
                                     initial={{ opacity: 0, y: 20 }}
@@ -222,7 +222,7 @@ const Page = () => {
                                     className='rounded-2xl border border-slate-100 bg-white shadow-[0_4px_30px_-8px_rgba(0,0,0,0.08)] overflow-hidden sticky top-24'
                                 >
                                     {/* Header */}
-                                    <div className='bg-gradient-to-r from-[#3a52c4] to-[#5572fc] px-6 py-5'>
+                                    <div className='bg-gradient-to-r from-[#EA580C] to-[#F97316] px-6 py-5'>
                                         <div className='flex items-center gap-2'>
                                             <FiPackage size={16} className='text-white/80' />
                                             <p className='text-[11px] font-black text-white/60 uppercase tracking-widest'>{data?.products?.length} {i18n?.t('items')}</p>
@@ -249,16 +249,16 @@ const Page = () => {
                                                     value={coupon}
                                                     onChange={e => setCoupon(e.target.value)}
                                                     disabled={couponStatus}
-                                                    className='w-full pl-9 pr-3 h-10 rounded-xl border border-slate-200 text-[12px] font-medium focus:outline-none focus:border-[#5572fc] disabled:bg-slate-50 disabled:text-gray-400'
+                                                    className='w-full pl-9 pr-3 h-10 rounded-xl border border-slate-200 text-[12px] font-medium focus:outline-none focus:border-[#F97316] disabled:bg-slate-50 disabled:text-gray-400'
                                                 />
                                             </div>
                                             <button
                                                 type='button'
                                                 onClick={applyCouponHandler}
                                                 disabled={couponStatus || applyingCoupon}
-                                                className={`px-4 h-10 rounded-xl text-[12px] font-bold whitespace-nowrap transition-all ${couponStatus ? 'bg-emerald-50 border border-emerald-200 text-emerald-600' : 'bg-[#5572fc] text-white hover:bg-[#4461eb] disabled:opacity-60'}`}
+                                                className={`px-4 h-10 rounded-xl text-[12px] font-bold whitespace-nowrap transition-all ${couponStatus ? 'bg-emerald-50 border border-emerald-200 text-emerald-600' : 'bg-[#F97316] text-white hover:bg-[#EA580C] disabled:opacity-60'}`}
                                             >
-                                                {couponStatus ? `✓ ${i18n?.t('Applied')}` : applyingCoupon ? '…' : i18n?.t('Apply')}
+                                                {couponStatus ? `âœ“ ${i18n?.t('Applied')}` : applyingCoupon ? 'â€¦' : i18n?.t('Apply')}
                                             </button>
                                         </div>
                                     </div>
@@ -282,7 +282,7 @@ const Page = () => {
                                         <div className='h-px bg-slate-100' />
                                         <div className='flex justify-between items-center'>
                                             <span className='text-[14px] font-extrabold text-gray-800'>{i18n?.t('Total')}</span>
-                                            <span className='text-xl font-black text-[#5572fc]'>{currencySymbol}{convertAmount(subtotal)}</span>
+                                            <span className='text-xl font-black text-[#F97316]'>{currencySymbol}{convertAmount(subtotal)}</span>
                                         </div>
                                     </div>
 
@@ -291,7 +291,7 @@ const Page = () => {
                                         <button
                                             type='submit'
                                             disabled={placing}
-                                            className='w-full flex items-center justify-center gap-2 rounded-xl bg-[#5572fc] py-3.5 text-[13px] font-bold text-white shadow-lg shadow-[#5572fc]/25 hover:bg-[#4461eb] hover:-translate-y-0.5 transition-all disabled:opacity-60'
+                                            className='w-full flex items-center justify-center gap-2 rounded-xl bg-[#F97316] py-3.5 text-[13px] font-bold text-white shadow-lg shadow-[#F97316]/25 hover:bg-[#EA580C] hover:-translate-y-0.5 transition-all disabled:opacity-60'
                                         >
                                             {placing
                                                 ? <span className='h-4 w-4 rounded-full border-2 border-white/30 border-t-white animate-spin' />
@@ -299,7 +299,7 @@ const Page = () => {
                                             }
                                         </button>
                                         <p className='text-[10px] text-gray-400 font-medium text-center mt-3'>
-                                            🔒 {i18n?.t('Secure & encrypted checkout')}
+                                            ðŸ”’ {i18n?.t('Secure & encrypted checkout')}
                                         </p>
                                     </div>
                                 </motion.div>
@@ -308,12 +308,12 @@ const Page = () => {
                     </Form>
                 ) : (
                     <div className='flex flex-col items-center justify-center min-h-[50vh] rounded-2xl border border-slate-100 bg-white shadow-[0_4px_20px_-6px_rgba(0,0,0,0.06)]'>
-                        <div className='flex h-20 w-20 items-center justify-center rounded-2xl bg-[#5572fc]/8 border border-[#5572fc]/15 mb-6'>
-                            <FiShoppingBag size={36} className='text-[#5572fc]/50' />
+                        <div className='flex h-20 w-20 items-center justify-center rounded-2xl bg-[#F97316]/8 border border-[#F97316]/15 mb-6'>
+                            <FiShoppingBag size={36} className='text-[#F97316]/50' />
                         </div>
                         <h3 className='text-xl font-extrabold text-gray-800 mb-2'>{i18n?.t('No items in cart')}</h3>
                         <p className='text-[13px] text-gray-400 font-medium mb-6'>{i18n?.t('Add some products before checking out.')}</p>
-                        <Link href='/shop' className='inline-flex items-center gap-2 rounded-xl bg-[#5572fc] px-6 py-3 text-[13px] font-bold text-white shadow-lg shadow-[#5572fc]/25 hover:bg-[#4461eb] transition-all'>
+                        <Link href='/shop' className='inline-flex items-center gap-2 rounded-xl bg-[#F97316] px-6 py-3 text-[13px] font-bold text-white shadow-lg shadow-[#F97316]/25 hover:bg-[#EA580C] transition-all'>
                             <FiShoppingBag size={14} /> {i18n?.t('Browse Shop')} <FiArrowRight size={13} />
                         </Link>
                     </div>
@@ -324,3 +324,4 @@ const Page = () => {
 };
 
 export default Page;
+

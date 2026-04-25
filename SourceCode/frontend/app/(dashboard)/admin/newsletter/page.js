@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import React from 'react';
 import Table from '../../components/form/table'
@@ -17,7 +17,7 @@ const Page = () => {
       dataField: 'email',
       formatter: (_, d) => (
         <div className="flex items-center gap-2.5">
-          <div className="w-7 h-7 rounded-full bg-[#5572fc]/10 text-[#5572fc] flex items-center justify-center flex-shrink-0">
+          <div className="w-7 h-7 rounded-full bg-[#F97316]/10 text-[#F97316] flex items-center justify-center flex-shrink-0">
             <FiMail size={12} />
           </div>
           <span className="text-xs font-bold text-gray-700">{d?.email}</span>
@@ -58,3 +58,4 @@ const Page = () => {
 }
 
 export default Page
+

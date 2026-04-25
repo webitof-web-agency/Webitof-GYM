@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 import React from 'react';
 import { useRouter } from 'next/navigation';
 import { useFetch } from '../../../helpers/hooks';
@@ -26,7 +26,7 @@ const PaymentMethods = () => {
                       </div>
                       <div className="flex flex-col">
                           <span className="font-bold text-gray-800 text-[13px] capitalize">{name}</span>
-                          <span className="text-[10px] font-bold text-[#5572fc] mt-0.5 tracking-widest uppercase flex items-center gap-1">
+                          <span className="text-[10px] font-bold text-[#F97316] mt-0.5 tracking-widest uppercase flex items-center gap-1">
                               <FiBox size={10}/> Provider: {d?.type}
                           </span>
                       </div>
@@ -56,7 +56,7 @@ const PaymentMethods = () => {
                     columns={columns}
                     data={paymentMethod}
                     action={(
-                        <Button onClick={() => push('/admin/payment-method/add')} className="flex items-center gap-1.5 !px-4 shadow-md shadow-[#5572fc]/20 hover:shadow-lg hover:shadow-[#5572fc]/30 transition-all !h-8 !py-0 !rounded-lg block !w-auto !text-xs whitespace-nowrap">
+                        <Button onClick={() => push('/admin/payment-method/add')} className="flex items-center gap-1.5 !px-4 shadow-md shadow-[#F97316]/20 hover:shadow-lg hover:shadow-[#F97316]/30 transition-all !h-8 !py-0 !rounded-lg block !w-auto !text-xs whitespace-nowrap">
                             <FiPlus size={14} /> {i18n?.t("Map Gateway")}
                         </Button>
                     )}

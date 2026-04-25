@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 import React, { useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
 import { Empty, message, Rate } from 'antd';
@@ -103,7 +103,7 @@ const Wheyprotein = ({ params }) => {
 
                         {/* Category + rating row */}
                         <div className='flex flex-wrap items-center justify-between gap-3'>
-                            <span className='inline-flex items-center gap-1.5 rounded-full border border-[#5572fc]/25 bg-[#5572fc]/8 px-3 py-1 text-[11px] font-black text-[#5572fc] uppercase tracking-widest'>
+                            <span className='inline-flex items-center gap-1.5 rounded-full border border-[#F97316]/25 bg-[#F97316]/8 px-3 py-1 text-[11px] font-black text-[#F97316] uppercase tracking-widest'>
                                 <FiTag size={10} /> {columnFormatter(data?.product?.category?.name)}
                             </span>
                             <div className='flex items-center gap-2'>
@@ -121,7 +121,7 @@ const Wheyprotein = ({ params }) => {
 
                         {/* Price row */}
                         <div className='flex items-baseline gap-4'>
-                            <span className='text-3xl font-black text-[#5572fc]'>{displayPrice}</span>
+                            <span className='text-3xl font-black text-[#F97316]'>{displayPrice}</span>
                             {data?.product?.compare_price > (varientPrice ?? data?.product?.price) && (
                                 <span className='text-lg text-gray-400 line-through font-medium'>
                                     {currencySymbol}{convertAmount(data?.product?.compare_price)}
@@ -153,8 +153,8 @@ const Wheyprotein = ({ params }) => {
                                             onClick={() => setVariant(size?._id)}
                                             className={`px-4 py-2 rounded-xl text-[12px] font-bold border-2 transition-all duration-200 ${
                                                 variant === size?._id
-                                                    ? 'bg-[#5572fc] border-[#5572fc] text-white shadow-md shadow-[#5572fc]/25'
-                                                    : 'bg-white border-slate-200 text-gray-600 hover:border-[#5572fc] hover:text-[#5572fc]'
+                                                    ? 'bg-[#F97316] border-[#F97316] text-white shadow-md shadow-[#F97316]/25'
+                                                    : 'bg-white border-slate-200 text-gray-600 hover:border-[#F97316] hover:text-[#F97316]'
                                             }`}
                                         >
                                             {size?.name?.[i18n?.langCode]}
@@ -171,7 +171,7 @@ const Wheyprotein = ({ params }) => {
                                     <button
                                         onClick={addToCart}
                                         disabled={addingToCart}
-                                        className='flex-1 min-w-[160px] flex items-center justify-center gap-2 rounded-xl bg-[#5572fc] py-3 px-6 text-[13px] font-bold text-white shadow-lg shadow-[#5572fc]/25 hover:bg-[#4461eb] hover:-translate-y-0.5 transition-all disabled:opacity-60'
+                                        className='flex-1 min-w-[160px] flex items-center justify-center gap-2 rounded-xl bg-[#F97316] py-3 px-6 text-[13px] font-bold text-white shadow-lg shadow-[#F97316]/25 hover:bg-[#EA580C] hover:-translate-y-0.5 transition-all disabled:opacity-60'
                                     >
                                         {addingToCart
                                             ? <span className='h-4 w-4 rounded-full border-2 border-white/30 border-t-white animate-spin' />
@@ -182,11 +182,11 @@ const Wheyprotein = ({ params }) => {
                                         onClick={submitWishlist}
                                         className={`flex items-center justify-center gap-2 rounded-xl border-2 py-3 px-5 text-[13px] font-bold transition-all hover:-translate-y-0.5 ${
                                             wishListed
-                                                ? 'bg-[#5572fc]/8 border-[#5572fc]/30 text-[#5572fc]'
-                                                : 'bg-white border-slate-200 text-gray-500 hover:border-[#5572fc] hover:text-[#5572fc]'
+                                                ? 'bg-[#F97316]/8 border-[#F97316]/30 text-[#F97316]'
+                                                : 'bg-white border-slate-200 text-gray-500 hover:border-[#F97316] hover:text-[#F97316]'
                                         }`}
                                     >
-                                        <FiHeart size={15} className={wishListed ? 'fill-[#5572fc]' : ''} />
+                                        <FiHeart size={15} className={wishListed ? 'fill-[#F97316]' : ''} />
                                         {wishListed ? i18n?.t('Wishlisted') : i18n?.t('Wishlist')}
                                     </button>
                                 </>
@@ -207,7 +207,7 @@ const Wheyprotein = ({ params }) => {
                                         href={item.href}
                                         target='_blank'
                                         rel='noreferrer'
-                                        className='flex h-8 w-8 items-center justify-center rounded-xl bg-slate-100 text-gray-500 hover:bg-[#5572fc] hover:text-white transition-all duration-200'
+                                        className='flex h-8 w-8 items-center justify-center rounded-xl bg-slate-100 text-gray-500 hover:bg-[#F97316] hover:text-white transition-all duration-200'
                                     >
                                         {item.icon}
                                     </a>
@@ -227,8 +227,8 @@ const Wheyprotein = ({ params }) => {
                                 onClick={() => setActiveTab(tab)}
                                 className={`px-5 py-3 text-[13px] font-bold rounded-t-xl transition-all duration-200 whitespace-nowrap ${
                                     activeTab === tab
-                                        ? 'bg-[#5572fc] text-white shadow-md shadow-[#5572fc]/20'
-                                        : 'text-gray-500 hover:text-[#5572fc] hover:bg-[#5572fc]/5'
+                                        ? 'bg-[#F97316] text-white shadow-md shadow-[#F97316]/20'
+                                        : 'text-gray-500 hover:text-[#F97316] hover:bg-[#F97316]/5'
                                 }`}
                             >
                                 {i18n?.t(tab.charAt(0).toUpperCase() + tab.slice(1))}
@@ -243,7 +243,7 @@ const Wheyprotein = ({ params }) => {
                                 dangerouslySetInnerHTML={{ __html: columnFormatter(data?.product?.description) }}
                                 className='prose prose-sm sm:prose max-w-none text-gray-600 leading-relaxed rounded-2xl border border-slate-100 p-6 lg:p-8 bg-white shadow-[0_2px_12px_-4px_rgba(0,0,0,0.05)]
                                     prose-headings:text-gray-800 prose-headings:font-extrabold
-                                    prose-strong:text-gray-800 prose-a:text-[#5572fc]'
+                                    prose-strong:text-gray-800 prose-a:text-[#F97316]'
                             />
                         )}
                         {activeTab === 'review' && <Review review={data?.reviews} />}
@@ -254,7 +254,7 @@ const Wheyprotein = ({ params }) => {
                 {/* ── Related Products ─────────────────────────────────── */}
                 <div className='mt-20'>
                     <div className='flex items-center gap-2.5 mb-8'>
-                        <span className='h-5 w-0.5 rounded-full bg-[#5572fc]' />
+                        <span className='h-5 w-0.5 rounded-full bg-[#F97316]' />
                         <h2 className='text-[13px] font-black text-gray-800 uppercase tracking-widest'>{i18n?.t('Related Products')}</h2>
                     </div>
                     {data?.relatedProducts?.length > 0 ? (

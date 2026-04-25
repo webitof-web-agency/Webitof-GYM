@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 import React, { useState } from 'react';
 import dayjs from 'dayjs';
 import { Form, Modal, Progress } from 'antd';
@@ -93,7 +93,7 @@ const Page = () => {
                     action={
                         <Button
                             onClick={() => setOpen(true)}
-                            className="flex items-center gap-1.5 !px-4 shadow-md shadow-[#5572fc]/20 hover:shadow-lg hover:shadow-[#5572fc]/30 transition-all !h-8 !py-0 !rounded-lg block !w-auto !text-xs"
+                            className="flex items-center gap-1.5 !px-4 shadow-md shadow-[#F97316]/20 hover:shadow-lg hover:shadow-[#F97316]/30 transition-all !h-8 !py-0 !rounded-lg block !w-auto !text-xs"
                         >
                             <FiPlus size={14} />
                             {i18n?.t('Add Trainer')}
@@ -101,7 +101,7 @@ const Page = () => {
                     }
                     actions={(d) => (
                         <button
-                            className='flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-[#5572fc]/30 text-[#5572fc] hover:bg-[#5572fc] hover:text-white transition-all duration-300 text-[11px] font-bold shadow-sm bg-white whitespace-nowrap'
+                            className='flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-[#F97316]/30 text-[#F97316] hover:bg-[#F97316] hover:text-white transition-all duration-300 text-[11px] font-bold shadow-sm bg-white whitespace-nowrap'
                             onClick={(e) => {
                                 e.stopPropagation();
                                 setIsReset(true);
@@ -128,7 +128,7 @@ const Page = () => {
                 onCancel={() => setOpen(false)}
                 title={
                     <div className="flex items-center gap-2.5 pb-2.5 border-b border-gray-100">
-                        <div className="w-8 h-8 rounded-lg bg-[#5572fc]/10 flex items-center justify-center text-[#5572fc]">
+                        <div className="w-8 h-8 rounded-lg bg-[#F97316]/10 flex items-center justify-center text-[#F97316]">
                             <FiUser size={16} />
                         </div>
                         <div>
@@ -182,7 +182,7 @@ const Page = () => {
                         </Button>
                         <Button
                             type='submit'
-                            className='!px-5 !py-1.5 flex items-center gap-1.5 shadow-sm shadow-[#5572fc]/20 !font-semibold !rounded-lg block w-fit !text-xs'
+                            className='!px-5 !py-1.5 flex items-center gap-1.5 shadow-sm shadow-[#F97316]/20 !font-semibold !rounded-lg block w-fit !text-xs'
                         >
                             <FiPlus size={14} />
                             {i18n?.t('Submit Details')}
@@ -204,7 +204,7 @@ const Page = () => {
             >
                 {selectedTrainer && (
                     <div className='w-full bg-slate-50 relative pb-4 rounded-2xl overflow-hidden'>
-                        <div className="h-28 w-full bg-gradient-to-br from-[#5572fc] to-[#7f93ff] relative">
+                        <div className="h-28 w-full bg-gradient-to-br from-[#F97316] to-[#FB923C] relative">
                              <div className="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] mix-blend-overlay"></div>
                         </div>
                         
@@ -222,7 +222,7 @@ const Page = () => {
 
                         <div className='mt-12 px-5 flex flex-col items-center text-center'>
                             <h2 className="text-xl font-bold text-gray-800 tracking-tight">{selectedTrainer.name}</h2>
-                            <span className="inline-flex items-center gap-1 mt-1 bg-[#5572fc]/10 text-[#5572fc] px-3 py-1 rounded-full text-[9px] font-bold tracking-widest">
+                            <span className="inline-flex items-center gap-1 mt-1 bg-[#F97316]/10 text-[#F97316] px-3 py-1 rounded-full text-[9px] font-bold tracking-widest">
                                 <FiBriefcase size={10} />
                                 FITNESS TRAINER
                             </span>
@@ -256,10 +256,10 @@ const Page = () => {
                                         <div key={skill?._id} className='w-full'>
                                             <div className="flex justify-between items-center mb-1">
                                                 <span className='text-gray-700 text-xs font-bold capitalize'>{skill?.name}</span>
-                                                <span className="text-[10px] font-black text-[#5572fc]">{skill?.level}%</span>
+                                                <span className="text-[10px] font-black text-[#F97316]">{skill?.level}%</span>
                                             </div>
                                             <Progress 
-                                                strokeColor={{ '0%': '#7f93ff', '100%': '#5572fc' }} 
+                                                strokeColor={{ '0%': '#FB923C', '100%': '#F97316' }} 
                                                 trailColor="#f1f5f9"
                                                 percent={skill?.level} 
                                                 showInfo={false}
@@ -329,7 +329,7 @@ const Page = () => {
                         >
                             Cancel
                         </Button>
-                        <Button type='submit' loading={loading} className="!px-5 !py-1.5 shadow-md shadow-[#5572fc]/20 !font-semibold !rounded-lg block w-fit !text-xs">
+                        <Button type='submit' loading={loading} className="!px-5 !py-1.5 shadow-md shadow-[#F97316]/20 !font-semibold !rounded-lg block w-fit !text-xs">
                             {i18n?.t('Reset Pass')}
                         </Button>
                     </div>
@@ -340,3 +340,4 @@ const Page = () => {
 };
 
 export default Page;
+

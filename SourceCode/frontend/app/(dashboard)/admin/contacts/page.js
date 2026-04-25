@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 import React from 'react'
 import { Tooltip } from "antd";
 import { useRouter } from "next/navigation";
@@ -20,7 +20,7 @@ const Page = () => {
             formatter: (name, d) => (
                 <div className="flex flex-col gap-1">
                     <span className="font-bold text-gray-800 text-xs capitalize flex items-center gap-1.5">
-                        <span className="w-6 h-6 rounded-full bg-[#5572fc]/10 text-[#5572fc] flex items-center justify-center flex-shrink-0">
+                        <span className="w-6 h-6 rounded-full bg-[#F97316]/10 text-[#F97316] flex items-center justify-center flex-shrink-0">
                             <FiUser size={10} />
                         </span>
                         {name}
@@ -40,7 +40,7 @@ const Page = () => {
                     <span className="text-xs text-gray-700 font-medium flex items-start gap-1.5 cursor-help max-w-[220px]">
                         <FiMessageSquare size={11} className="text-gray-400 mt-0.5 flex-shrink-0" />
                         <span className="line-clamp-2">
-                            {subject?.length > 40 ? subject?.slice(0, 40) + '…' : subject}
+                            {subject?.length > 40 ? subject?.slice(0, 40) + 'â€¦' : subject}
                         </span>
                     </span>
                 </Tooltip>
@@ -80,7 +80,7 @@ const Page = () => {
                     onClick={() => router.push(`/admin/contacts/${_id}`)}
                     className={`flex items-center gap-1.5 text-[10px] font-bold px-3 py-1.5 rounded-lg border transition-all ${
                         data?.status === false
-                            ? 'bg-[#5572fc]/10 text-[#5572fc] border-[#5572fc]/20 hover:bg-[#5572fc] hover:text-white'
+                            ? 'bg-[#F97316]/10 text-[#F97316] border-[#F97316]/20 hover:bg-[#F97316] hover:text-white'
                             : 'bg-slate-50 text-gray-600 border-slate-200 hover:bg-slate-100'
                     }`}
                 >
@@ -114,3 +114,4 @@ const Page = () => {
 }
 
 export default Page
+

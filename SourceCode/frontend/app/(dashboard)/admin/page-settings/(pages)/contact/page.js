@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 import React, { useEffect, useState } from 'react';
 import { Form, message } from 'antd';
 import { useI18n } from '../../../../../providers/i18n';
@@ -68,7 +68,7 @@ const ContactPage = ({ slug }) => {
         <div className="bg-white rounded-xl shadow-[0_2px_10px_-4px_rgba(0,0,0,0.05)] border border-slate-100/80 overflow-hidden">
             <div className="px-6 py-4 border-b border-slate-100 bg-slate-50/50 flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 rounded-lg bg-[#5572fc]/10 text-[#5572fc] flex items-center justify-center"><FiPhoneCall size={16} /></div>
+                    <div className="w-8 h-8 rounded-lg bg-[#F97316]/10 text-[#F97316] flex items-center justify-center"><FiPhoneCall size={16} /></div>
                     <div>
                         <h3 className="text-base font-bold text-gray-800 leading-tight">Support Line Config</h3>
                         <p className="text-[11px] text-gray-500 font-medium">Helpdesk routing, address & map binding</p>
@@ -77,7 +77,7 @@ const ContactPage = ({ slug }) => {
                 <div className="flex flex-wrap gap-2">
                     {availableLanguages.map((l, index) => (
                         <button key={index} onClick={() => setSelectedLang(l.code)}
-                            className={`px-3 py-1.5 rounded-md text-[10px] font-bold tracking-wide transition-all border ${l.code === selectedLang ? 'bg-[#5572fc] text-white border-[#5572fc]' : 'bg-transparent text-gray-500 border-gray-200 hover:bg-slate-50'}`}>
+                            className={`px-3 py-1.5 rounded-md text-[10px] font-bold tracking-wide transition-all border ${l.code === selectedLang ? 'bg-[#F97316] text-white border-[#F97316]' : 'bg-transparent text-gray-500 border-gray-200 hover:bg-slate-50'}`}>
                             {l.name}
                         </button>
                     ))}
@@ -108,7 +108,7 @@ const ContactPage = ({ slug }) => {
                 </div>
 
                 <div className="flex justify-end pt-4 border-t border-slate-100">
-                    <Button loading={loader} onClick={() => noSelected({ form, setSelectedLang })} type='submit' className="!px-6 !py-2 flex items-center gap-1.5 shadow-md shadow-[#5572fc]/20 !font-semibold !rounded-lg !text-xs">
+                    <Button loading={loader} onClick={() => noSelected({ form, setSelectedLang })} type='submit' className="!px-6 !py-2 flex items-center gap-1.5 shadow-md shadow-[#F97316]/20 !font-semibold !rounded-lg !text-xs">
                         <FiSave size={13}/> {i18n?.t('Publish Contact Config')}
                     </Button>
                 </div>
@@ -118,3 +118,4 @@ const ContactPage = ({ slug }) => {
 };
 
 export default ContactPage;
+

@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 import Image from 'next/image'
 import React, { useState, useRef, useEffect } from 'react'
 import { FiSend, FiChevronLeft, FiPaperclip, FiSearch, FiMessageCircle, FiImage, FiDownload, FiMoreVertical } from 'react-icons/fi'
@@ -74,7 +74,7 @@ export default function MedicalChat() {
         setMemberRole(role); setActiveChat(name); setActiveChatId(id)
     }
 
-    // ── Sidebar / Chat List ───────────────────────────────────────────────────
+    // â”€â”€ Sidebar / Chat List â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
     const renderChatList = () => (
         <div className={`w-full md:w-[320px] md:border-r border-slate-100 flex-shrink-0 flex flex-col bg-white ${activeChat ? "hidden lg:flex" : "flex"}`}>
             {/* Header */}
@@ -91,9 +91,9 @@ export default function MedicalChat() {
                         type="text"
                         name="chat-search"
                         autoComplete="off"
-                        placeholder="Search conversations…"
+                        placeholder="Search conversationsâ€¦"
                         onChange={(e) => getUsers({ search: e.target.value })}
-                        className="w-full pl-9 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-lg text-[12px] text-gray-600 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#5572fc]/20 focus:border-[#5572fc] transition-all"
+                        className="w-full pl-9 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-lg text-[12px] text-gray-600 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#F97316]/20 focus:border-[#F97316] transition-all"
                     />
                 </div>
             </div>
@@ -113,7 +113,7 @@ export default function MedicalChat() {
                         <div
                             key={index}
                             className={`px-4 py-3.5 cursor-pointer transition-all duration-200 border-b border-slate-50 ${isActive
-                                ? "bg-[#5572fc]/5 border-l-2 border-l-[#5572fc]"
+                                ? "bg-[#F97316]/5 border-l-2 border-l-[#F97316]"
                                 : "hover:bg-slate-50 border-l-2 border-l-transparent"
                                 }`}
                             onClick={() => {
@@ -127,7 +127,7 @@ export default function MedicalChat() {
                                         <Image width={40} height={40} src={item?.chatUser?.image} alt="User"
                                             className="h-10 w-10 rounded-xl border border-slate-200 object-cover" />
                                     ) : (
-                                        <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-[#5572fc] to-[#7c93ff] flex items-center justify-center text-white text-xs font-black">
+                                        <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-[#F97316] to-[#FB923C] flex items-center justify-center text-white text-xs font-black">
                                             {initials}
                                         </div>
                                     )}
@@ -139,14 +139,14 @@ export default function MedicalChat() {
                                 </div>
                                 <div className="flex-1 min-w-0">
                                     <div className="flex justify-between items-start">
-                                        <h3 className={`text-[13px] font-bold capitalize truncate ${isActive ? 'text-[#5572fc]' : 'text-gray-800'}`}>
+                                        <h3 className={`text-[13px] font-bold capitalize truncate ${isActive ? 'text-[#F97316]' : 'text-gray-800'}`}>
                                             {item?.chatUser?.name}
                                         </h3>
                                         <p className="text-[10px] text-gray-400 font-medium shrink-0 ml-2">
                                             {dayjs(item?.lastMessage?.createdAt).fromNow()}
                                         </p>
                                     </div>
-                                    <p className="text-[10px] text-[#5572fc] font-bold uppercase tracking-wide mb-0.5 capitalize">{item?.chatUser?.role}</p>
+                                    <p className="text-[10px] text-[#F97316] font-bold uppercase tracking-wide mb-0.5 capitalize">{item?.chatUser?.role}</p>
                                     {item?.lastMessage?.message && (
                                         <p className={`text-[11px] truncate ${item?.unseenCount > 0 ? "text-gray-700 font-semibold" : "text-gray-400"}`}>
                                             {item?.lastMessage?.message}
@@ -161,7 +161,7 @@ export default function MedicalChat() {
         </div>
     );
 
-    // ── Chat Area ─────────────────────────────────────────────────────────────
+    // â”€â”€ Chat Area â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
     const renderChatArea = () => (
         <div className={`flex-1 flex flex-col min-w-0 ${activeChat ? 'flex' : 'hidden lg:flex'}`}>
             {/* Chat Header */}
@@ -175,13 +175,13 @@ export default function MedicalChat() {
                 {image ? (
                     <Image width={40} height={40} src={image} alt={activeChat} className="h-10 w-10 rounded-xl object-cover border border-slate-200 shrink-0" />
                 ) : (
-                    <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-[#5572fc] to-[#7c93ff] flex items-center justify-center text-white text-xs font-black shrink-0">
+                    <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-[#F97316] to-[#FB923C] flex items-center justify-center text-white text-xs font-black shrink-0">
                         {activeChat?.slice(0, 2).toUpperCase()}
                     </div>
                 )}
                 <div className="flex-1 min-w-0">
                     <h2 className="text-[13px] font-extrabold text-gray-800 leading-tight capitalize truncate">{activeChat}</h2>
-                    <p className="text-[10px] text-[#5572fc] font-bold uppercase tracking-widest capitalize">{memberRole}</p>
+                    <p className="text-[10px] text-[#F97316] font-bold uppercase tracking-widest capitalize">{memberRole}</p>
                 </div>
             </div>
 
@@ -191,9 +191,9 @@ export default function MedicalChat() {
                     <div className="flex justify-center mb-4">
                         <button
                             onClick={() => setLimit(limit + 10)}
-                            className="text-[11px] font-semibold px-4 py-1.5 rounded-full bg-white border border-slate-200 text-gray-500 hover:bg-[#5572fc] hover:text-white hover:border-[#5572fc] transition-all shadow-sm"
+                            className="text-[11px] font-semibold px-4 py-1.5 rounded-full bg-white border border-slate-200 text-gray-500 hover:bg-[#F97316] hover:text-white hover:border-[#F97316] transition-all shadow-sm"
                         >
-                            {loading ? "Loading…" : "Load earlier messages"}
+                            {loading ? "Loadingâ€¦" : "Load earlier messages"}
                         </button>
                     </div>
                 )}
@@ -236,11 +236,11 @@ export default function MedicalChat() {
                                                 </div>
                                             </Tooltip>
                                         )}
-                                        <div className={`rounded-xl px-4 py-3 shadow-sm ${isSent ? "bg-[#5572fc]" : "bg-white border border-slate-200"}`}>
+                                        <div className={`rounded-xl px-4 py-3 shadow-sm ${isSent ? "bg-[#F97316]" : "bg-white border border-slate-200"}`}>
                                             <a href={msg?.file} target="_blank" rel="noopener noreferrer" download
                                                 className={`flex items-center gap-2 text-xs font-semibold underline ${isSent ? "text-white/90" : "text-gray-700"}`}>
                                                 <MdDownload size={16} />
-                                                {i18n.t('Download')} — {msg?.file?.split("/")?.pop()?.slice(0, 20)}
+                                                {i18n.t('Download')} â€” {msg?.file?.split("/")?.pop()?.slice(0, 20)}
                                             </a>
                                         </div>
                                         <p className="text-[10px] text-gray-400 mt-1 font-medium">{dayjs(msg?.createdAt).fromNow()}</p>
@@ -260,7 +260,7 @@ export default function MedicalChat() {
                                             </Tooltip>
                                         )}
                                         <div className={`rounded-2xl px-4 py-2.5 shadow-sm ${isSent
-                                            ? "bg-[#5572fc] rounded-tr-sm"
+                                            ? "bg-[#F97316] rounded-tr-sm"
                                             : "bg-white border border-slate-200 rounded-tl-sm"
                                         }`}>
                                             <p className={`text-[13px] font-medium leading-snug ${isSent ? "text-white" : "text-gray-800"}`}>
@@ -283,13 +283,13 @@ export default function MedicalChat() {
                 onSubmit={handleSendMessage}
                 className="flex items-center gap-2 border-t border-slate-100 px-4 py-3 bg-white"
             >
-                <div className="flex-1 flex items-center gap-2 bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 focus-within:ring-2 focus-within:ring-[#5572fc]/20 focus-within:border-[#5572fc] transition-all">
+                <div className="flex-1 flex items-center gap-2 bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 focus-within:ring-2 focus-within:ring-[#F97316]/20 focus-within:border-[#F97316] transition-all">
                     <input
                         required
                         name="message"
                         type="text"
                         autoComplete="off"
-                        placeholder="Type a message…"
+                        placeholder="Type a messageâ€¦"
                         aria-label="Message"
                         className="flex-1 bg-transparent text-[13px] text-gray-700 placeholder-gray-400 focus:outline-none"
                         value={message || ''}
@@ -300,7 +300,7 @@ export default function MedicalChat() {
                         onClick={() => setImageModal(!imageModal)}
                         aria-label="Add image"
                         title="Send image"
-                        className="text-gray-400 hover:text-[#5572fc] transition-colors"
+                        className="text-gray-400 hover:text-[#F97316] transition-colors"
                     >
                         <FiImage size={17} />
                     </button>
@@ -309,7 +309,7 @@ export default function MedicalChat() {
                         onClick={() => { setImageModal(!pdfUpload); setPdfUpload(!pdfUpload) }}
                         aria-label="Attach file"
                         title="Attach file"
-                        className="text-gray-400 hover:text-[#5572fc] transition-colors"
+                        className="text-gray-400 hover:text-[#F97316] transition-colors"
                     >
                         <FiPaperclip size={17} />
                     </button>
@@ -317,7 +317,7 @@ export default function MedicalChat() {
                 <button
                     type="submit"
                     aria-label="Send message"
-                    className="w-10 h-10 flex items-center justify-center rounded-xl bg-[#5572fc] text-white hover:bg-[#4461eb] shadow-md shadow-[#5572fc]/30 transition-all hover:shadow-lg hover:shadow-[#5572fc]/40 shrink-0"
+                    className="w-10 h-10 flex items-center justify-center rounded-xl bg-[#F97316] text-white hover:bg-[#EA580C] shadow-md shadow-[#F97316]/30 transition-all hover:shadow-lg hover:shadow-[#F97316]/40 shrink-0"
                 >
                     <FiSend size={16} />
                 </button>
@@ -331,7 +331,7 @@ export default function MedicalChat() {
                 footer={null}
                 title={
                     <div className="flex items-center gap-2.5 pb-2 border-b border-gray-100">
-                        <div className="w-7 h-7 rounded-lg bg-[#5572fc]/10 text-[#5572fc] flex items-center justify-center">
+                        <div className="w-7 h-7 rounded-lg bg-[#F97316]/10 text-[#F97316] flex items-center justify-center">
                             {pdfUpload ? <FiPaperclip size={14} /> : <FiImage size={14} />}
                         </div>
                         <span className="text-sm font-bold text-gray-800">
@@ -369,7 +369,7 @@ export default function MedicalChat() {
                         ) : (
                             <MultipleImageInput label="Choose Image" name="image" required className="w-full" />
                         )}
-                        <button type="submit" className="w-full bg-[#5572fc] text-white py-2.5 px-4 rounded-lg font-semibold text-sm hover:bg-[#4461eb] transition-colors shadow-md shadow-[#5572fc]/20">
+                        <button type="submit" className="w-full bg-[#F97316] text-white py-2.5 px-4 rounded-lg font-semibold text-sm hover:bg-[#EA580C] transition-colors shadow-md shadow-[#F97316]/20">
                             <FiSend size={14} className="inline mr-1.5" /> Send
                         </button>
                     </div>
@@ -384,8 +384,8 @@ export default function MedicalChat() {
                 {renderChatList()}
                 {activeChat ? renderChatArea() : (
                     <div className="flex-1 hidden md:flex items-center justify-center flex-col text-center p-8 bg-slate-50/30">
-                        <div className="w-20 h-20 rounded-2xl bg-[#5572fc]/10 flex items-center justify-center mb-6">
-                            <FiMessageCircle size={36} className="text-[#5572fc]" />
+                        <div className="w-20 h-20 rounded-2xl bg-[#F97316]/10 flex items-center justify-center mb-6">
+                            <FiMessageCircle size={36} className="text-[#F97316]" />
                         </div>
                         <h3 className="text-base font-extrabold text-gray-700 mb-2">Select a Conversation</h3>
                         <p className="text-sm text-gray-400 font-medium max-w-xs">
@@ -397,3 +397,4 @@ export default function MedicalChat() {
         </div>
     )
 }
+

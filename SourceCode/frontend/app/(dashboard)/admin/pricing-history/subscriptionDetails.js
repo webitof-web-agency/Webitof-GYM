@@ -1,4 +1,4 @@
-import React from "react";
+﻿import React from "react";
 import { Modal } from "antd";
 import { columnFormatter } from "../../../helpers/utils";
 import { useCurrency } from "../../../contexts/site";
@@ -28,7 +28,7 @@ const SubscriptionModal = ({ isVisible, onClose, subscriptionData }) => {
         width={500}
         title={
             <div className="flex items-center gap-2.5 pb-2.5 border-b border-gray-100">
-                <div className="w-8 h-8 rounded-lg bg-[#5572fc]/10 text-[#5572fc] flex items-center justify-center">
+                <div className="w-8 h-8 rounded-lg bg-[#F97316]/10 text-[#F97316] flex items-center justify-center">
                     <FiActivity size={16} />
                 </div>
                 <div>
@@ -46,7 +46,7 @@ const SubscriptionModal = ({ isVisible, onClose, subscriptionData }) => {
         {/* User Card */}
         <div className="bg-slate-50/50 border border-slate-100 rounded-xl p-3.5 shadow-sm">
           <div className="flex items-center gap-2 mb-2">
-             <FiUser className="text-[#5572fc]" size={14} />
+             <FiUser className="text-[#F97316]" size={14} />
              <h3 className="text-xs font-bold text-gray-600 uppercase tracking-widest leading-none">Subscriber Identity</h3>
           </div>
           <div className="grid grid-cols-1 gap-y-2 mt-3 pl-1">
@@ -64,13 +64,13 @@ const SubscriptionModal = ({ isVisible, onClose, subscriptionData }) => {
         {/* Plan Card */}
         <div className="bg-slate-50/50 border border-slate-100 rounded-xl p-3.5 shadow-sm">
           <div className="flex items-center gap-2 mb-2">
-             <FiTag className="text-[#5572fc]" size={14} />
+             <FiTag className="text-[#F97316]" size={14} />
              <h3 className="text-xs font-bold text-gray-600 uppercase tracking-widest leading-none">Plan Structure</h3>
           </div>
           <div className="grid grid-cols-1 gap-y-2 mt-3 pl-1">
             <div className="flex justify-between items-center text-sm">
               <span className="text-gray-500 font-medium">Subscription Name</span>
-              <span className="font-bold text-[#5572fc] capitalize bg-[#5572fc]/10 px-2.5 py-0.5 rounded-md">{columnFormatter(subscription?.name) || "Deleted Plan"}</span>
+              <span className="font-bold text-[#F97316] capitalize bg-[#F97316]/10 px-2.5 py-0.5 rounded-md">{columnFormatter(subscription?.name) || "Deleted Plan"}</span>
             </div>
           </div>
         </div>
@@ -79,14 +79,14 @@ const SubscriptionModal = ({ isVisible, onClose, subscriptionData }) => {
         <div className="bg-slate-50/50 border border-slate-100 rounded-xl p-3.5 shadow-sm grid grid-cols-2 gap-x-4">
            <div>
                <div className="flex items-center gap-1.5 mb-2">
-                  <FiCalendar className="text-[#5572fc]" size={14} />
+                  <FiCalendar className="text-[#F97316]" size={14} />
                   <h3 className="text-xs font-bold text-gray-600 uppercase tracking-widest leading-none">Start Date</h3>
                </div>
                <span className="text-sm font-bold text-gray-800 pl-1">{dayjs(start_date).format('DD MMM YYYY')}</span>
            </div>
            <div>
                <div className="flex items-center gap-1.5 mb-2">
-                  <FiClock className="text-[#5572fc]" size={14} />
+                  <FiClock className="text-[#F97316]" size={14} />
                   <h3 className="text-xs font-bold text-gray-600 uppercase tracking-widest leading-none">End Date</h3>
                </div>
                <span className="text-sm font-bold text-gray-800 pl-1">{dayjs(end_date).format('DD MMM YYYY')}</span>
@@ -99,7 +99,7 @@ const SubscriptionModal = ({ isVisible, onClose, subscriptionData }) => {
              <FiCreditCard size={100} />
           </div>
           <div className="flex items-center gap-2 mb-3 relative z-10">
-             <FiCreditCard className="text-[#5572fc]" size={14} />
+             <FiCreditCard className="text-[#F97316]" size={14} />
              <h3 className="text-xs font-bold text-gray-600 uppercase tracking-widest leading-none">Financial Settlement</h3>
           </div>
           
@@ -128,7 +128,7 @@ const SubscriptionModal = ({ isVisible, onClose, subscriptionData }) => {
                  <span className="text-[10px] uppercase font-bold text-gray-400">Condition</span>
                  <div className="flex gap-2 items-center">
                      {payment?.status === "paid" ? (
-                        <span className="inline-flex rounded text-[10px] font-bold uppercase bg-blue-100 text-blue-700 px-2 py-0.5 shadow-sm">Paid</span>
+                        <span className="inline-flex rounded text-[10px] font-bold uppercase bg-orange-100 text-orange-700 px-2 py-0.5 shadow-sm">Paid</span>
                      ) : payment?.status === "partial" ? (
                         <span className="inline-flex rounded text-[10px] font-bold uppercase bg-amber-100 text-amber-700 px-2 py-0.5 shadow-sm">Partial</span>
                      ) : (
@@ -150,3 +150,4 @@ const SubscriptionModal = ({ isVisible, onClose, subscriptionData }) => {
 };
 
 export default SubscriptionModal;
+

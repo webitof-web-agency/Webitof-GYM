@@ -1,6 +1,6 @@
-import Swal from 'sweetalert2';
+﻿import Swal from 'sweetalert2';
 
-// ─── Shared inline styles ──────────────────────────────────────────
+// â”€â”€â”€ Shared inline styles â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 const POPUP_STYLE = `
     border-radius: 20px !important;
     box-shadow: 0 24px 64px -12px rgba(0,0,0,0.16), 0 0 0 1px rgba(226,232,240,0.7) !important;
@@ -10,7 +10,7 @@ const POPUP_STYLE = `
 `;
 
 const BTN_CONFIRM = `
-    background: #5572fc !important;
+    background: #F97316 !important;
     color: #fff !important;
     border: none !important;
     border-radius: 12px !important;
@@ -50,12 +50,12 @@ const BTN_DANGER = `
     letter-spacing: 0.1px !important;
 `;
 
-// ─── Icon SVGs ─────────────────────────────────────────────────────
+// â”€â”€â”€ Icon SVGs â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 const ICONS = {
     question: {
         bg: 'rgba(85,114,252,0.08)',
         border: 'rgba(85,114,252,0.2)',
-        svg: `<svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#5572fc" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        svg: `<svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#F97316" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
             <circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/>
         </svg>`,
     },
@@ -82,7 +82,7 @@ const ICONS = {
     },
 };
 
-// ─── didOpen helper: styles popup + buttons ─────────────────────────
+// â”€â”€â”€ didOpen helper: styles popup + buttons â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function applyStyles(popup, { confirmDanger = false } = {}) {
     // Popup shape
     popup.style.cssText += POPUP_STYLE;
@@ -118,7 +118,7 @@ function applyStyles(popup, { confirmDanger = false } = {}) {
     }
 }
 
-// ─── Build HTML body ────────────────────────────────────────────────
+// â”€â”€â”€ Build HTML body â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function buildHtml({ icon = 'question', title, text }) {
     const ic = ICONS[icon] || ICONS.question;
     return `
@@ -132,7 +132,7 @@ function buildHtml({ icon = 'question', title, text }) {
     `;
 }
 
-// ─── Public API ─────────────────────────────────────────────────────
+// â”€â”€â”€ Public API â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 /**
  * Confirmation dialog (blue confirm button)
@@ -194,3 +194,4 @@ export const swalAlert = ({
     background: '#ffffff',
     didOpen: (popup) => applyStyles(popup, { confirmDanger: icon === 'error' }),
 });
+

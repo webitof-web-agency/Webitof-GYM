@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 import React, { useEffect, useState } from 'react';
 import { Form, message } from 'antd';
 import PageTitle from '../../components/common/page-title';
@@ -73,7 +73,7 @@ const AdminSettings = () => {
 
             <div className="bg-white rounded-xl shadow-[0_2px_10px_-4px_rgba(0,0,0,0.05)] border border-slate-100/80 overflow-hidden">
                 <div className="bg-slate-50/50 px-5 py-4 border-b border-slate-100 flex items-center justify-between">
-                    <div className="flex items-center gap-2.5 text-[#5572fc]">
+                    <div className="flex items-center gap-2.5 text-[#F97316]">
                         <div className="w-8 h-8 rounded-lg bg-white border border-slate-200 flex items-center justify-center shadow-sm">
                             <FiSettings size={15} />
                         </div>
@@ -91,7 +91,7 @@ const AdminSettings = () => {
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-5 place-items-start">
                              <div className="w-full">
                                  <label className="flex items-center gap-2 mb-2">
-                                     <FiClock size={13} className="text-[#5572fc]"/>
+                                     <FiClock size={13} className="text-[#F97316]"/>
                                      <span className="text-xs font-bold text-gray-700">Official Check-In Time</span>
                                  </label>
                                  <FormSelect 
@@ -106,7 +106,7 @@ const AdminSettings = () => {
 
                              <div className="w-full">
                                  <label className="flex items-center gap-2 mb-2">
-                                     <FiClock size={13} className="text-[#5572fc]"/>
+                                     <FiClock size={13} className="text-[#F97316]"/>
                                      <span className="text-xs font-bold text-gray-700">Official Check-Out Time</span>
                                  </label>
                                  <FormSelect 
@@ -139,7 +139,7 @@ const AdminSettings = () => {
                              <Button 
                                 type='submit' 
                                 loading={loading}
-                                className="flex items-center justify-center gap-2 shadow-md shadow-[#5572fc]/20 hover:shadow-lg hover:shadow-[#5572fc]/30 transition-all !px-6 !py-2.5 !rounded-lg !text-[12px] font-bold"
+                                className="flex items-center justify-center gap-2 shadow-md shadow-[#F97316]/20 hover:shadow-lg hover:shadow-[#F97316]/30 transition-all !px-6 !py-2.5 !rounded-lg !text-[12px] font-bold"
                              > 
                                 <FiSave size={14}/> {i18n?.t("Save Configuration")} 
                              </Button>

@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 import React from 'react';
 import { Form, Switch } from 'antd';
 import { useRouter } from 'next/navigation';
@@ -52,7 +52,7 @@ const page = () => {
             dataField: 'price',
             formatter: (_, d) => (
                 <div className="flex flex-col gap-1">
-                    <span className="text-sm font-bold text-[#5572fc]">{currencySymbol}{d?.price}</span>
+                    <span className="text-sm font-bold text-[#F97316]">{currencySymbol}{d?.price}</span>
                 </div>
             ),
         },
@@ -116,7 +116,7 @@ const page = () => {
                                 form.resetFields();
                                 router.push('/admin/product/add')
                             }}
-                            className="flex items-center gap-1.5 !px-4 shadow-md shadow-[#5572fc]/20 hover:shadow-lg hover:shadow-[#5572fc]/30 transition-all !h-8 !py-0 !rounded-lg block !w-auto !text-xs whitespace-nowrap"
+                            className="flex items-center gap-1.5 !px-4 shadow-md shadow-[#F97316]/20 hover:shadow-lg hover:shadow-[#F97316]/30 transition-all !h-8 !py-0 !rounded-lg block !w-auto !text-xs whitespace-nowrap"
                         >
                             <FiPlus size={14} />
                             {i18n.t("Add Product")}

@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 import { Form, message } from 'antd';
 import Image from 'next/image';
 import React from 'react';
@@ -55,7 +55,7 @@ const Joining = () => {
                 className='lg:w-1/2 w-full md:px-4  px-3 lg:px-0 py-4 flex items-center '>
                 <div className=' w-full '>
                     <h2 className='text-xl capitalize'>{i18n?.t("get in touch")}</h2>
-                    <h1 className='text-5xl mt-[25px] text-[#5572fc] font-bold mb-[50px] '>{i18n?.t("Join today!")} </h1>
+                    <h1 className='text-5xl mt-[25px] text-[#F97316] font-bold mb-[50px] '>{i18n?.t("Join today!")} </h1>
                     <Form
                         form={form}
                         onFinish={onFinish}
@@ -71,9 +71,9 @@ const Joining = () => {
                                     <input
                                         name="name"
                                         autoComplete="given-name"
-                                        placeholder={i18n?.t('Enter first name, e.g. John…')}
+                                        placeholder={i18n?.t('Enter first name, e.g. Johnâ€¦')}
                                         type="text"
-                                        className={`w-full px-4 py-[18px] border rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5572fc] focus-visible:ring-offset-2 ${findDefaultTheme?.name === "home3" && pathName=== "/" ? "bg-black border-gray-100 text-white focus-visible:ring-offset-black" : " bg-white text-textMain focus-visible:ring-offset-white"}`}
+                                        className={`w-full px-4 py-[18px] border rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F97316] focus-visible:ring-offset-2 ${findDefaultTheme?.name === "home3" && pathName=== "/" ? "bg-black border-gray-100 text-white focus-visible:ring-offset-black" : " bg-white text-textMain focus-visible:ring-offset-white"}`}
                                     />
                                 </Form.Item>
                             </div>
@@ -86,9 +86,9 @@ const Joining = () => {
                                     <input
                                         name="subject"
                                         autoComplete="family-name"
-                                        placeholder={i18n?.t('Enter last name, e.g. Smith…')}
+                                        placeholder={i18n?.t('Enter last name, e.g. Smithâ€¦')}
                                         type="text"
-                                        className={`w-full px-4 py-[18px] border rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5572fc] focus-visible:ring-offset-2 ${findDefaultTheme?.name === "home3" && pathName=== "/"  ? "bg-black border-gray-100 text-white focus-visible:ring-offset-black" : " bg-white text-textMain focus-visible:ring-offset-white"}`}
+                                        className={`w-full px-4 py-[18px] border rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F97316] focus-visible:ring-offset-2 ${findDefaultTheme?.name === "home3" && pathName=== "/"  ? "bg-black border-gray-100 text-white focus-visible:ring-offset-black" : " bg-white text-textMain focus-visible:ring-offset-white"}`}
                                     />
                                 </Form.Item>
                             </div>
@@ -103,9 +103,9 @@ const Joining = () => {
                                     <input
                                         name="email"
                                         autoComplete="email"
-                                        placeholder={i18n?.t('Enter email, e.g. name@example.com…')}
+                                        placeholder={i18n?.t('Enter email, e.g. name@example.comâ€¦')}
                                         type="email"
-                                        className={`w-full px-4 py-[18px] border rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5572fc] focus-visible:ring-offset-2 ${findDefaultTheme?.name === "home3" && pathName=== "/"  ? "bg-black border-gray-100 text-white focus-visible:ring-offset-black" : " bg-white text-textMain focus-visible:ring-offset-white"}`}
+                                        className={`w-full px-4 py-[18px] border rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F97316] focus-visible:ring-offset-2 ${findDefaultTheme?.name === "home3" && pathName=== "/"  ? "bg-black border-gray-100 text-white focus-visible:ring-offset-black" : " bg-white text-textMain focus-visible:ring-offset-white"}`}
                                     />
                                 </Form.Item>
                             </div>
@@ -119,9 +119,9 @@ const Joining = () => {
                                         name="phone"
                                         autoComplete="tel"
                                         inputMode="tel"
-                                        placeholder={i18n?.t('Enter phone number, e.g. 5551234567…')}
+                                        placeholder={i18n?.t('Enter phone number, e.g. 5551234567â€¦')}
                                         type="tel"
-                                        className={`w-full px-4 py-[18px] border rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5572fc] focus-visible:ring-offset-2 ${findDefaultTheme?.name === "home3" && pathName=== "/"  ? "bg-black border-gray-100 text-white focus-visible:ring-offset-black" : " bg-white text-textMain focus-visible:ring-offset-white"}`}
+                                        className={`w-full px-4 py-[18px] border rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F97316] focus-visible:ring-offset-2 ${findDefaultTheme?.name === "home3" && pathName=== "/"  ? "bg-black border-gray-100 text-white focus-visible:ring-offset-black" : " bg-white text-textMain focus-visible:ring-offset-white"}`}
                                     />
                                 </Form.Item>
                             </div>
@@ -135,8 +135,8 @@ const Joining = () => {
                                 <textarea
                                     name="message"
                                     autoComplete="off"
-                                    placeholder={i18n?.t('Enter your message, e.g. I’d like to join…')}
-                                    className={`w-full px-4 py-[18px] border rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5572fc] focus-visible:ring-offset-2 ${findDefaultTheme?.name === "home3" && pathName=== "/"  ? "bg-black border-gray-100 text-white focus-visible:ring-offset-black" : " bg-white text-textMain focus-visible:ring-offset-white"}`}
+                                    placeholder={i18n?.t('Enter your message, e.g. Iâ€™d like to joinâ€¦')}
+                                    className={`w-full px-4 py-[18px] border rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F97316] focus-visible:ring-offset-2 ${findDefaultTheme?.name === "home3" && pathName=== "/"  ? "bg-black border-gray-100 text-white focus-visible:ring-offset-black" : " bg-white text-textMain focus-visible:ring-offset-white"}`}
                                     rows={5}
                                 />
                             </Form.Item>
@@ -159,3 +159,4 @@ const Joining = () => {
 };
 
 export default Joining;
+

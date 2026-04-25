@@ -1,4 +1,4 @@
-import { FaEye, FaPencilAlt, FaTimes, FaTrashAlt } from "react-icons/fa";
+﻿import { FaEye, FaPencilAlt, FaTimes, FaTrashAlt } from "react-icons/fa";
 import { message, Modal } from 'antd';
 import { useState } from "react";
 import { useActionConfirm } from "../../../helpers/hooks";
@@ -90,7 +90,7 @@ const Table = ({
                     ) : (
                         <div className="flex flex-wrap gap-3 items-center">
                             <SearchInput
-                                className="w-64 !rounded-xl !border-slate-200 focus-within:!border-[#5572fc] transition-colors"
+                                className="w-64 !rounded-xl !border-slate-200 focus-within:!border-[#F97316] transition-colors"
                                 onChange={e => {
                                     const search = e.target.value || undefined;
                                     onReload({ search, langCode, page: 1 });
@@ -129,7 +129,7 @@ const Table = ({
                                 <tr>
                                     <td colSpan={cols.length + (indexed ? 1 : 0)} className="h-[400px]">
                                         <div className='absolute inset-0 w-full h-full flex items-center justify-center bg-white/80 backdrop-blur-sm z-10'>
-                                            <InfinitySpin width='140' color='#5572fc' />
+                                            <InfinitySpin width='140' color='#F97316' />
                                         </div>
                                     </td>
                                 </tr>
@@ -237,3 +237,4 @@ export const TableImage = ({ url }) => {
         </div>
     );
 };
+

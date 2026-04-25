@@ -1,4 +1,4 @@
-import Image from 'next/image';
+﻿import Image from 'next/image';
 import React from 'react';
 import { columnFormatter } from '../../app/helpers/utils';
 import { useI18n } from '../../app/providers/i18n';
@@ -16,7 +16,7 @@ const CheckOutCard = ({ thumbnail_image, name, price, quantity, currencySymbol, 
                     className='object-cover'
                 />
                 {/* Qty badge */}
-                <span className='absolute -top-1.5 -right-1.5 flex h-4 w-4 items-center justify-center rounded-full bg-[#5572fc] text-[9px] font-black text-white leading-none shadow'>
+                <span className='absolute -top-1.5 -right-1.5 flex h-4 w-4 items-center justify-center rounded-full bg-[#F97316] text-[9px] font-black text-white leading-none shadow'>
                     {quantity}
                 </span>
             </div>
@@ -27,12 +27,12 @@ const CheckOutCard = ({ thumbnail_image, name, price, quantity, currencySymbol, 
                     {columnFormatter(name)}
                 </p>
                 <p className='text-[11px] text-gray-400 font-medium mt-0.5'>
-                    {quantity} × {currencySymbol}{convertAmount(price?.toFixed(2))}
+                    {quantity} Ã— {currencySymbol}{convertAmount(price?.toFixed(2))}
                 </p>
             </div>
 
             {/* Line total */}
-            <p className='shrink-0 text-[13px] font-extrabold text-[#5572fc]'>
+            <p className='shrink-0 text-[13px] font-extrabold text-[#F97316]'>
                 {currencySymbol}{convertAmount((price * quantity)?.toFixed(2))}
             </p>
         </div>

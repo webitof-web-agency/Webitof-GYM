@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 import React, { useEffect, useState } from 'react';
 import { Form, Modal } from 'antd';
 import Table from '../../components/form/table';
@@ -38,7 +38,7 @@ const Sehedule = () => {
             dataField: "day",
             formatter: (_, d) => (
                 <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 rounded-lg bg-blue-50 text-blue-500 flex items-center justify-center flex-shrink-0 border border-blue-100/50">
+                    <div className="w-8 h-8 rounded-lg bg-orange-50 text-orange-500 flex items-center justify-center flex-shrink-0 border border-orange-100/50">
                         <FiCalendar size={14} />
                     </div>
                     <span className="text-xs font-bold text-gray-800">{d?.day}</span>
@@ -50,7 +50,7 @@ const Sehedule = () => {
             dataField: "time_slots",
             formatter: (_, d) => (
                 <span className="text-[10px] font-bold text-gray-700 bg-slate-50 border border-slate-200 px-2 py-1 rounded inline-flex items-center gap-1.5 uppercase shadow-sm">
-                    <FiClock size={11} className="text-[#5572fc]"/> {d?.time_slots}
+                    <FiClock size={11} className="text-[#F97316]"/> {d?.time_slots}
                 </span>
             )
         },
@@ -94,7 +94,7 @@ const Sehedule = () => {
                                 setOpen(true);
                                 setIsEdit(false);
                             }}
-                            className="flex items-center gap-1.5 !px-4 shadow-md shadow-[#5572fc]/20 hover:shadow-lg hover:shadow-[#5572fc]/30 transition-all !h-8 !py-0 !rounded-lg block !w-auto !text-xs whitespace-nowrap"
+                            className="flex items-center gap-1.5 !px-4 shadow-md shadow-[#F97316]/20 hover:shadow-lg hover:shadow-[#F97316]/30 transition-all !h-8 !py-0 !rounded-lg block !w-auto !text-xs whitespace-nowrap"
                         >
                             <FiPlus size={14} /> {i18n?.t("Draft Schedule")}
                         </Button>
@@ -123,7 +123,7 @@ const Sehedule = () => {
                 onCancel={() => setOpen(false)}
                 title={
                     <div className="flex items-center gap-2.5 pb-2.5 border-b border-gray-100">
-                         <div className="w-8 h-8 rounded-lg bg-blue-50 text-blue-500 flex items-center justify-center">
+                         <div className="w-8 h-8 rounded-lg bg-orange-50 text-orange-500 flex items-center justify-center">
                               {isEdit ? <FiEdit2 size={15} /> : <FiCalendar size={15} />}
                          </div>
                          <span className="text-base font-bold text-gray-800 leading-tight">
@@ -142,7 +142,7 @@ const Sehedule = () => {
                             onClick={() => setSelectedLang(l.code)}
                             className={`px-3 py-1.5 rounded-md text-[10px] font-bold tracking-wide transition-all border ${
                                 l.code === selectedLang
-                                ? 'bg-blue-50 text-blue-600 border-blue-200'
+                                ? 'bg-orange-50 text-orange-600 border-orange-200'
                                 : 'bg-transparent text-gray-500 border-gray-200 hover:bg-slate-50 hover:text-gray-800'
                             }`}
                             key={index}
@@ -266,7 +266,7 @@ const Sehedule = () => {
                          >
                             Cancel
                          </Button>
-                         <Button type='submit' onClick={() => noSelected({ form, setSelectedLang })} className='!px-5 !py-1.5 flex items-center gap-1.5 shadow-md shadow-[#5572fc]/20 !font-semibold !rounded-lg !text-xs transition-all'>
+                         <Button type='submit' onClick={() => noSelected({ form, setSelectedLang })} className='!px-5 !py-1.5 flex items-center gap-1.5 shadow-md shadow-[#F97316]/20 !font-semibold !rounded-lg !text-xs transition-all'>
                             {isEdit ? <FiEdit2 size={13} /> : <FiPlus size={13} />}
                             {i18n.t(isEdit ? "Save Configuration" : "Deploy Schedule")}
                          </Button>
@@ -278,3 +278,4 @@ const Sehedule = () => {
 };
 
 export default Sehedule;
+

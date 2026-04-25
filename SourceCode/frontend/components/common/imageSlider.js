@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 import React, { useEffect, useState } from "react";
 import "swiper/css";
 import Image from "next/image";
@@ -51,7 +51,7 @@ const ProductImageSlider = ({ thumbnail_image, images = [] }) => {
         />
       </div>
 
-      {/* Thumbnail strip — simple click-to-select, no Thumbs module needed */}
+      {/* Thumbnail strip â€” simple click-to-select, no Thumbs module needed */}
       <Swiper
         spaceBetween={10}
         slidesPerView={4}
@@ -66,7 +66,7 @@ const ProductImageSlider = ({ thumbnail_image, images = [] }) => {
               height={100}
               className={`cursor-pointer object-cover rounded-md h-[80px] w-full ${
                 mainImage === image
-                  ? "border-2 border-[#5572fc]"
+                  ? "border-2 border-[#F97316]"
                   : "border border-transparent hover:border-slate-200"
               }`}
             />
@@ -78,3 +78,4 @@ const ProductImageSlider = ({ thumbnail_image, images = [] }) => {
 };
 
 export default ProductImageSlider;
+

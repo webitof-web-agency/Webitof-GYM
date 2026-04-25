@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 import { FaBars } from 'react-icons/fa';
 import { FiLock, FiLogOut, FiUser, FiChevronDown, FiKey, FiBell, FiMessageSquare } from 'react-icons/fi';
 import { useRouter } from 'next/navigation';
@@ -103,7 +103,7 @@ const Header = () => {
         <header className='header z-10 border-b border-slate-100/80 bg-white/95 backdrop-blur-sm'>
             <div className='flex h-full items-center justify-between px-4 py-2.5'>
                 
-                {/* Left — hamburger (mobile) */}
+                {/* Left â€” hamburger (mobile) */}
                 <div className='flex items-center gap-3'>
                     <button
                         type="button"
@@ -117,14 +117,14 @@ const Header = () => {
                     </button>
                 </div>
 
-                {/* Right — action row */}
+                {/* Right â€” action row */}
                 <div className='flex items-center gap-2'>
 
                     {/* Message Icon */}
                     <button
                         type='button'
                         onClick={() => router.push('/admin/message')}
-                        className='relative w-9 h-9 flex items-center justify-center rounded-lg border border-slate-200 text-gray-500 hover:bg-slate-50 hover:text-[#5572fc] hover:border-[#5572fc]/30 transition-all'
+                        className='relative w-9 h-9 flex items-center justify-center rounded-lg border border-slate-200 text-gray-500 hover:bg-slate-50 hover:text-[#F97316] hover:border-[#F97316]/30 transition-all'
                         title="Messages"
                     >
                         <Image
@@ -141,7 +141,7 @@ const Header = () => {
                         <button
                             type='button'
                             onClick={() => setIsNotificationOpen((open) => !open)}
-                            className='relative w-9 h-9 flex items-center justify-center rounded-lg border border-slate-200 text-gray-500 hover:bg-slate-50 hover:text-[#5572fc] hover:border-[#5572fc]/30 transition-all'
+                            className='relative w-9 h-9 flex items-center justify-center rounded-lg border border-slate-200 text-gray-500 hover:bg-slate-50 hover:text-[#F97316] hover:border-[#F97316]/30 transition-all'
                             title="Notifications"
                         >
                             <FiBell size={17} />
@@ -180,7 +180,7 @@ const Header = () => {
                                     localStorage.setItem('lang', nextValue);
                                 }
                             }}
-                            className='h-9 appearance-none pl-3 pr-8 rounded-lg border border-slate-200 bg-white text-[12px] font-semibold text-gray-700 cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#5572fc]/20 focus:border-[#5572fc] transition-all hover:bg-slate-50 capitalize'
+                            className='h-9 appearance-none pl-3 pr-8 rounded-lg border border-slate-200 bg-white text-[12px] font-semibold text-gray-700 cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#F97316]/20 focus:border-[#F97316] transition-all hover:bg-slate-50 capitalize'
                         >
                             {languageOptions.map((lang) => (
                                 <option key={lang?._id} value={lang?._id}>{lang?.flag} {lang?.name}</option>
@@ -196,14 +196,14 @@ const Header = () => {
                     <div className='relative' ref={profileRef}>
                         <button
                             type='button'
-                            className='flex items-center gap-2.5 pl-1 pr-3 py-1.5 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 hover:border-[#5572fc]/30 transition-all'
+                            className='flex items-center gap-2.5 pl-1 pr-3 py-1.5 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 hover:border-[#F97316]/30 transition-all'
                             onClick={() => setIsProfileOpen((open) => !open)}
                         >
                             {/* Avatar */}
                             {user?.image ? (
                                 <img src={user?.image} alt="avatar" className='w-7 h-7 rounded-md object-cover border border-slate-200' />
                             ) : (
-                                <div className='w-7 h-7 rounded-md bg-gradient-to-br from-[#5572fc] to-[#7c93ff] flex items-center justify-center text-white text-[10px] font-black'>
+                                <div className='w-7 h-7 rounded-md bg-gradient-to-br from-[#F97316] to-[#FB923C] flex items-center justify-center text-white text-[10px] font-black'>
                                     {initials}
                                 </div>
                             )}
@@ -226,7 +226,7 @@ const Header = () => {
                                     <button
                                         type='button'
                                         onClick={() => { router.push('/admin/profile'); setIsProfileOpen(false); }}
-                                        className='flex w-full items-center gap-2.5 px-4 py-2.5 text-left text-[12px] font-semibold text-gray-600 hover:bg-[#5572fc]/5 hover:text-[#5572fc] transition-colors'
+                                        className='flex w-full items-center gap-2.5 px-4 py-2.5 text-left text-[12px] font-semibold text-gray-600 hover:bg-[#F97316]/5 hover:text-[#F97316] transition-colors'
                                     >
                                         <FiUser size={14} className='shrink-0' />
                                         {i18n?.t('My Profile')}
@@ -234,7 +234,7 @@ const Header = () => {
                                     <button
                                         type='button'
                                         onClick={() => { router.push('/admin/profile/change-password'); setIsProfileOpen(false); }}
-                                        className='flex w-full items-center gap-2.5 px-4 py-2.5 text-left text-[12px] font-semibold text-gray-600 hover:bg-[#5572fc]/5 hover:text-[#5572fc] transition-colors'
+                                        className='flex w-full items-center gap-2.5 px-4 py-2.5 text-left text-[12px] font-semibold text-gray-600 hover:bg-[#F97316]/5 hover:text-[#F97316] transition-colors'
                                     >
                                         <FiKey size={14} className='shrink-0' />
                                         {i18n?.t('Change Password')}
@@ -261,3 +261,4 @@ const Header = () => {
 };
 
 export default Header;
+

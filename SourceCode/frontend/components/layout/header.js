@@ -52,19 +52,23 @@ const Navbar = () => {
   const links = useMemo(
     () => [
       { name: i18n?.t('Home'), path: '/' },
-      { name: i18n?.t('About'), path: '/about' },
+      // { name: i18n?.t('About'), path: '/about' },
+      { name: i18n?.t('Trainers'), path: '/trainers' },
       { name: i18n?.t('Services'), path: '/services' },
+      { name: i18n?.t('Fitness Calculator'), path: '/bmi-calculator' },
+      { name: i18n?.t('Class Schedule'), path: '/classSchedule' },
       { name: i18n?.t('Shop'), path: '/shop' },
       {
         name: i18n?.t('More'),
         dropdownItems: [
+          { name: i18n?.t('About'), href: '/about' },
           { name: i18n?.t('Pricing Plan'), href: '/pricing-plan' },
-          { name: i18n?.t('Trainers'), href: '/trainers' },
-          { name: i18n?.t('Fitness Calculator'), href: '/bmi-calculator' },
+          // { name: i18n?.t('Trainers'), href: '/trainers' },
+          // { name: i18n?.t('Fitness Calculator'), href: '/bmi-calculator' },
           { name: i18n?.t('Image Gallery'), href: '/gallary' },
           { name: i18n?.t('Event'), href: '/event' },
           { name: i18n?.t('Blogs'), href: '/blog' },
-          { name: i18n?.t('Class Schedule'), href: '/classSchedule' },
+          // { name: i18n?.t('Class Schedule'), href: '/classSchedule' },
           { name: i18n?.t('Group'), href: '/group' },
         ],
       },
@@ -134,7 +138,7 @@ const Navbar = () => {
 
   const isActive = (path) => pathname === path;
 
-  // ── More Dropdown ─────────────────────────────────────────────────────
+  // More Dropdown
   const renderMoreDropdown = () => (
     <div className="absolute right-0 top-full z-[60] mt-3 w-56 overflow-hidden rounded-xl border border-slate-700/60 bg-[#0f172a] shadow-2xl">
       <div className="p-1.5">
@@ -142,10 +146,10 @@ const Navbar = () => {
           <Link
             key={href}
             href={href}
-            className="flex items-center gap-2.5 rounded-lg px-3.5 py-2.5 text-[13px] font-medium text-white/80 transition-all hover:bg-white/8 hover:text-[#5572fc]"
+            className="flex items-center gap-2.5 rounded-lg px-3.5 py-2.5 text-[13px] font-medium text-white/80 transition-all hover:bg-white/8 hover:text-[#F97316]"
             onClick={() => { setMoreOpen(false); setIsOpen(false); }}
           >
-            <span className="h-1.5 w-1.5 rounded-full bg-[#5572fc]/50" />
+            <span className="h-1.5 w-1.5 rounded-full bg-[#F97316]/50" />
             {name}
           </Link>
         ))}
@@ -153,11 +157,17 @@ const Navbar = () => {
     </div>
   );
 
-  // ── Preferences Panel ─────────────────────────────────────────────────
-  const renderPreferencesPanel = () => (
-    <div className="absolute right-0 top-full z-[60] mt-3 w-72 overflow-hidden rounded-xl border border-slate-200 bg-white shadow-2xl">
+  // Preferences Panel
+  const renderPreferencesPanel = (mobile = false) => (
+    <div
+      className={`z-[60] overflow-hidden rounded-xl border border-slate-200 bg-white shadow-2xl ${
+        mobile
+          ? 'fixed left-3 right-3 top-[72px] max-h-[calc(100vh-90px)] overflow-y-auto'
+          : 'absolute right-0 top-full mt-3 w-72'
+      }`}
+    >
       <div className="border-b border-slate-100 px-4 py-3 flex items-center gap-2">
-        <FiGlobe size={15} className="text-[#5572fc]" />
+        <FiGlobe size={15} className="text-[#F97316]" />
         <span className="text-[12px] font-extrabold text-gray-700 uppercase tracking-widest">Preferences</span>
       </div>
       <div className="p-4 space-y-4">
@@ -171,8 +181,8 @@ const Navbar = () => {
                 type="button"
                 className={`flex items-center gap-1.5 rounded-lg border px-3 py-1.5 text-[12px] font-semibold transition-all ${
                   selectedLanguageName === lang?.name
-                    ? 'border-[#5572fc] bg-[#5572fc] text-white shadow-sm shadow-[#5572fc]/30'
-                    : 'border-slate-200 text-gray-600 hover:border-[#5572fc] hover:text-[#5572fc]'
+                    ? 'border-[#F97316] bg-[#F97316] text-white shadow-sm shadow-[#F97316]/30'
+                    : 'border-slate-200 text-gray-600 hover:border-[#F97316] hover:text-[#F97316]'
                 }`}
                 onClick={() => handleLanguageChange(lang)}
               >
@@ -192,8 +202,8 @@ const Navbar = () => {
                 type="button"
                 className={`flex items-center gap-1.5 rounded-lg border px-3 py-1.5 text-[12px] font-semibold transition-all ${
                   activeCurrency === c?.code
-                    ? 'border-[#5572fc] bg-[#5572fc] text-white shadow-sm shadow-[#5572fc]/30'
-                    : 'border-slate-200 text-gray-600 hover:border-[#5572fc] hover:text-[#5572fc]'
+                    ? 'border-[#F97316] bg-[#F97316] text-white shadow-sm shadow-[#F97316]/30'
+                    : 'border-slate-200 text-gray-600 hover:border-[#F97316] hover:text-[#F97316]'
                 }`}
                 onClick={() => handleCurrencyChange(c?.code)}
               >
@@ -207,7 +217,7 @@ const Navbar = () => {
     </div>
   );
 
-  // ── User Menu ─────────────────────────────────────────────────────────
+  // User Menu
   const renderUserMenu = () => {
     const dashboardHref = user?.role === 'admin' ? '/admin' : user?.role === 'trainer' ? '/trainer' : user?.role === 'user' ? '/user' : '/signin';
     const initials = user?.name?.split(' ').map((w) => w[0]).join('').toUpperCase().slice(0, 2);
@@ -217,12 +227,12 @@ const Navbar = () => {
         {/* User info header */}
         <div className="border-b border-white/10 px-4 py-3">
           <p className="text-[13px] font-bold text-white truncate">{user?.name}</p>
-          <p className="text-[10px] text-[#5572fc] font-bold uppercase tracking-widest capitalize mt-0.5">{user?.role}</p>
+          <p className="text-[10px] text-[#F97316] font-bold uppercase tracking-widest capitalize mt-0.5">{user?.role}</p>
         </div>
         <div className="p-1.5">
           <Link
             href={dashboardHref}
-            className="flex items-center gap-2.5 rounded-lg px-3.5 py-2.5 text-[13px] font-medium text-white/80 transition-all hover:bg-white/8 hover:text-[#5572fc]"
+            className="flex items-center gap-2.5 rounded-lg px-3.5 py-2.5 text-[13px] font-medium text-white/80 transition-all hover:bg-white/8 hover:text-[#F97316]"
             onClick={() => setUserMenuOpen(false)}
           >
             <FiUser size={14} /> {i18n?.t('Dashboard')}
@@ -230,7 +240,7 @@ const Navbar = () => {
           {user?.role !== 'admin' && user?.role !== 'trainer' && (
             <Link
               href="/wishlist"
-              className="flex items-center gap-2.5 rounded-lg px-3.5 py-2.5 text-[13px] font-medium text-white/80 transition-all hover:bg-white/8 hover:text-[#5572fc]"
+              className="flex items-center gap-2.5 rounded-lg px-3.5 py-2.5 text-[13px] font-medium text-white/80 transition-all hover:bg-white/8 hover:text-[#F97316]"
               onClick={() => setUserMenuOpen(false)}
             >
               <FiHeart size={14} /> {i18n?.t('Wishlist')}
@@ -250,20 +260,20 @@ const Navbar = () => {
     );
   };
 
-  // ── User Avatar Button ────────────────────────────────────────────────
+  // User Avatar Button
   const UserAvatar = ({ size = 'md' }) => {
     const initials = user?.name?.split(' ').map((w) => w[0]).join('').toUpperCase().slice(0, 2);
     const dims = size === 'sm' ? 'w-8 h-8 text-[11px]' : 'w-10 h-10 text-[12px]';
     return user?.image ? (
       <Image className={`${dims} cursor-pointer rounded-xl object-cover border-2 border-white/20`} src={user.image} width={40} height={40} alt="profile" />
     ) : (
-      <div className={`${dims} cursor-pointer flex items-center justify-center rounded-xl bg-gradient-to-br from-[#5572fc] to-[#7c93ff] font-black text-white border-2 border-white/20`}>
+      <div className={`${dims} cursor-pointer flex items-center justify-center rounded-xl bg-gradient-to-br from-[#F97316] to-[#FB923C] font-black text-white border-2 border-white/20`}>
         {initials}
       </div>
     );
   };
 
-  // ── Nav Links ─────────────────────────────────────────────────────────
+  // Nav Links
   const renderNavLinks = (mobile = false) =>
     links.map((link) => {
       if (link.dropdownItems) {
@@ -276,7 +286,7 @@ const Navbar = () => {
                   <Link
                     key={item.href}
                     href={item.href}
-                    className="rounded-lg px-3 py-2 text-[13px] font-medium text-white/80 transition-colors hover:bg-white/8 hover:text-[#5572fc]"
+                    className="rounded-lg px-3 py-2 text-[13px] font-medium text-white/80 transition-colors hover:bg-white/8 hover:text-[#F97316]"
                     onClick={() => setIsOpen(false)}
                   >
                     {item.name}
@@ -290,7 +300,7 @@ const Navbar = () => {
           <div key={link.name} className="relative" ref={moreRef}>
             <button
               type="button"
-              className={`flex items-center gap-1 text-[14px] font-semibold transition-colors ${moreOpen ? 'text-[#5572fc]' : 'text-white/85 hover:text-white'}`}
+              className={`flex items-center gap-1 text-[14px] font-semibold transition-colors ${moreOpen ? 'text-[#F97316]' : 'text-white/85 hover:text-white'}`}
               onClick={() => setMoreOpen((prev) => !prev)}
             >
               {link.name}
@@ -304,7 +314,7 @@ const Navbar = () => {
         <Link
           key={link.path}
           href={link.path || '#'}
-          className={`relative text-[14px] font-semibold transition-colors after:absolute after:-bottom-1 after:left-0 after:h-0.5 after:w-full after:rounded-full after:bg-[#5572fc] after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300 ${
+          className={`relative text-[14px] font-semibold transition-colors after:absolute after:-bottom-1 after:left-0 after:h-0.5 after:w-full after:rounded-full after:bg-[#F97316] after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300 ${
             isActive(link.path) ? 'text-white after:scale-x-100' : 'text-white/85 hover:text-white'
           }`}
           onClick={() => handleLinkClick(link.path)}
@@ -318,8 +328,10 @@ const Navbar = () => {
     <nav
       className={`fixed top-0 z-50 w-full transition-all duration-300 ${
         scrolled
-          ? 'border-b border-slate-200/80 bg-black/40 backdrop-blur-md shadow-md py-0'
-          : 'bg-transparent border-b border-white/10'
+          // ? 'border-b border-slate-200/80 bg-black/40 backdrop-blur-md shadow-md py-0'
+          // : 'bg-transparent border-b border-white/10'
+          ? 'bg-black/40 backdrop-blur-md shadow-md py-0'
+          : 'bg-transparent'
       }`}
     >
       {!hidePromoBar && <CouponBar />}
@@ -364,7 +376,7 @@ const Navbar = () => {
             >
               <FiShoppingCart size={16} />
               {cartItems?.products?.length > 0 && (
-                <span className="absolute -right-1.5 -top-1.5 flex h-4.5 min-w-[18px] items-center justify-center rounded-full bg-[#5572fc] px-1 text-[9px] font-black text-white shadow-sm">
+                <span className="absolute -right-1.5 -top-1.5 flex h-4.5 min-w-[18px] items-center justify-center rounded-full bg-[#F97316] px-1 text-[9px] font-black text-white shadow-sm">
                   {cartItems.products.length}
                 </span>
               )}
@@ -388,9 +400,9 @@ const Navbar = () => {
           ) : (
             <Link
               href="/signin"
-              className="flex items-center gap-2 rounded-xl bg-[#5572fc] px-5 py-2.5 text-[13px] font-bold text-white shadow-lg shadow-[#5572fc]/25 transition-all hover:bg-[#4461eb] hover:shadow-xl hover:shadow-[#5572fc]/35 hover:-translate-y-0.5"
+              className="flex items-center gap-2 rounded-xl bg-[#F97316] px-5 py-2.5 text-[13px] font-bold text-white shadow-lg shadow-[#F97316]/25 transition-all hover:bg-[#EA580C] hover:shadow-xl hover:shadow-[#F97316]/35 hover:-translate-y-0.5"
             >
-              {i18n?.t('Join Us')}
+              {i18n?.t('Sign In')}
             </Link>
           )}
         </div>
@@ -401,24 +413,24 @@ const Navbar = () => {
             <button
               type="button"
               aria-label="Preferences"
-              className="flex h-9 w-9 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-white/70 transition-all hover:bg-white/10 hover:text-white"
+              className="flex h-8 w-8 sm:h-9 sm:w-9 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-white/70 transition-all hover:bg-white/10 hover:text-white"
               onClick={() => setPreferencesOpen((prev) => !prev)}
             >
               <FiGlobe size={16} />
             </button>
-            {preferencesOpen && renderPreferencesPanel()}
+            {preferencesOpen && renderPreferencesPanel(true)}
           </div>
 
           {user?.role && user.role !== 'admin' && user.role !== 'trainer' && (
             <button
               type="button"
               aria-label="Cart"
-              className="relative flex h-9 w-9 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-white/70"
+              className="relative flex h-8 w-8 sm:h-9 sm:w-9 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-white/70"
               onClick={() => router.push('/cart')}
             >
               <FiShoppingCart size={16} />
               {cartItems?.products?.length > 0 && (
-                <span className="absolute -right-1 -top-1 flex h-4 min-w-[16px] items-center justify-center rounded-full bg-[#5572fc] px-0.5 text-[8px] font-black text-white">
+                <span className="absolute -right-1 -top-1 flex h-4 min-w-[16px] items-center justify-center rounded-full bg-[#F97316] px-0.5 text-[8px] font-black text-white">
                   {cartItems.products.length}
                 </span>
               )}
@@ -433,7 +445,7 @@ const Navbar = () => {
               {userMenuOpen && renderUserMenu()}
             </div>
           ) : (
-            <Link href="/signin" className="rounded-lg bg-[#5572fc] px-3 py-2 text-[12px] font-bold text-white">
+            <Link href="/signin" className="rounded-lg bg-[#F97316] px-3 py-2 text-[12px] font-bold text-white">
               {i18n?.t('Join Us')}
             </Link>
           )}
@@ -445,7 +457,7 @@ const Navbar = () => {
             aria-expanded={isOpen}
             aria-controls="mobile-nav"
             onClick={() => setIsOpen((prev) => !prev)}
-            className="flex h-9 w-9 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-white transition-all hover:bg-white/10"
+            className="flex h-8 w-8 sm:h-9 sm:w-9 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-white transition-all hover:bg-white/10"
           >
             {isOpen ? <FiX size={18} /> : <FiMenu size={18} />}
           </button>
@@ -463,7 +475,7 @@ const Navbar = () => {
             <Link
               key={link.path}
               href={link.path || '#'}
-              className={`block text-[15px] font-bold transition-colors ${isActive(link.path) ? 'text-[#5572fc]' : 'text-white/85 hover:text-white'}`}
+              className={`block text-[15px] font-bold transition-colors ${isActive(link.path) ? 'text-[#F97316]' : 'text-white/85 hover:text-white'}`}
               onClick={() => handleLinkClick(link.path)}
             >
               {link.name}
@@ -478,3 +490,4 @@ const Navbar = () => {
 };
 
 export default Navbar;
+

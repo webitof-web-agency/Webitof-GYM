@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 import React, { useEffect, useState } from 'react';
 import { Modal, Switch, Tooltip, Form } from 'antd';
 import { useRouter } from 'next/navigation';
@@ -98,7 +98,7 @@ const AdminBlogCreate = () => {
                          <span className="font-bold text-gray-800 text-xs truncate" title={columnFormatter(title)}>
                              {columnFormatter(title)}
                          </span>
-                         <span className="text-[9px] font-bold text-[#5572fc] mt-0.5 truncate flex items-center gap-1">
+                         <span className="text-[9px] font-bold text-[#F97316] mt-0.5 truncate flex items-center gap-1">
                              <FiFolder size={9}/> {columnFormatter(d?.category?.name) || 'Uncategorized'}
                          </span>
                      </div>
@@ -211,7 +211,7 @@ const AdminBlogCreate = () => {
                     onReload={getData}
                     onDelete={delBlog}
                     action={
-                        <Button onClick={handleAddNew} className="flex items-center gap-1.5 !px-4 shadow-md shadow-[#5572fc]/20 hover:shadow-lg hover:shadow-[#5572fc]/30 transition-all !h-8 !py-0 !rounded-lg block !w-auto !text-xs whitespace-nowrap">
+                        <Button onClick={handleAddNew} className="flex items-center gap-1.5 !px-4 shadow-md shadow-[#F97316]/20 hover:shadow-lg hover:shadow-[#F97316]/30 transition-all !h-8 !py-0 !rounded-lg block !w-auto !text-xs whitespace-nowrap">
                             <FiPlus size={14} /> {i18n?.t("Create Post")}
                         </Button>
                     }
@@ -232,7 +232,7 @@ const AdminBlogCreate = () => {
                 destroyOnClose={true}
                 title={
                     <div className="flex items-center gap-2.5 pb-2.5 border-b border-gray-100">
-                        <div className="w-8 h-8 rounded-lg bg-[#5572fc]/10 text-[#5572fc] flex items-center justify-center">
+                        <div className="w-8 h-8 rounded-lg bg-[#F97316]/10 text-[#F97316] flex items-center justify-center">
                             {editData ? <FiEdit2 size={15} /> : <FiFileText size={15} />}
                         </div>
                         <span className="text-base font-bold text-gray-800 leading-tight">
@@ -249,7 +249,7 @@ const AdminBlogCreate = () => {
                             onClick={() => setSelectedLang(l.code)}
                             className={`px-3 py-1.5 rounded-md text-[10px] font-bold tracking-wide transition-all border ${
                                 l.code === selectedLang
-                                ? 'bg-[#5572fc] text-white border-[#5572fc]'
+                                ? 'bg-[#F97316] text-white border-[#F97316]'
                                 : 'bg-transparent text-gray-500 border-gray-200 hover:bg-slate-50 hover:text-gray-800'
                             }`}
                             key={index}
@@ -368,7 +368,7 @@ const AdminBlogCreate = () => {
                          >
                             Cancel
                          </Button>
-                         <Button type='submit' loading={formLoader} onClick={() => noSelected({ form, setSelectedLang })} className='!px-5 !py-1.5 flex items-center gap-1.5 shadow-md shadow-[#5572fc]/20 !font-semibold !rounded-lg !text-xs transition-all'>
+                         <Button type='submit' loading={formLoader} onClick={() => noSelected({ form, setSelectedLang })} className='!px-5 !py-1.5 flex items-center gap-1.5 shadow-md shadow-[#F97316]/20 !font-semibold !rounded-lg !text-xs transition-all'>
                             {editData ? <FiEdit2 size={13} /> : <FiPlus size={13} />}
                             {editData ? i18n.t('Save Changes') : i18n.t('Publish Post')}
                          </Button>
@@ -380,3 +380,4 @@ const AdminBlogCreate = () => {
 };
 
 export default AdminBlogCreate;
+

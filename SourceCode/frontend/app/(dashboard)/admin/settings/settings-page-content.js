@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 import React, { useEffect, useState } from 'react';
 import { Form, Radio, message } from 'antd';
 import PageTitle from '../../components/common/page-title';
@@ -106,7 +106,7 @@ const SettingsPageContent = () => {
                 {/* Application Core Parameters */}
                 <div className="bg-white rounded-xl shadow-[0_2px_10px_-4px_rgba(0,0,0,0.05)] border border-slate-100/80 overflow-hidden">
                      <div className="px-6 py-4 border-b border-slate-100 bg-slate-50/50 flex items-center gap-3">
-                          <div className="w-8 h-8 rounded-lg bg-[#5572fc]/10 text-[#5572fc] flex items-center justify-center">
+                          <div className="w-8 h-8 rounded-lg bg-[#F97316]/10 text-[#F97316] flex items-center justify-center">
                                <FiGlobe size={16} />
                           </div>
                           <div>
@@ -177,7 +177,7 @@ const SettingsPageContent = () => {
                                   <div className="md:col-span-2 pt-4 border-t border-slate-100">
                                       <div className="flex gap-6 items-start">
                                           <div className="flex-1">
-                                              <FormInput placeholder={"e.g. © 2026 Webitof GYM. All rights reserved."} name="footer_text" label={<span className="text-xs font-bold text-gray-700">Footer Attribution String</span>} required />
+                                              <FormInput placeholder={"e.g. Â© 2026 Webitof GYM. All rights reserved."} name="footer_text" label={<span className="text-xs font-bold text-gray-700">Footer Attribution String</span>} required />
                                           </div>
                                           <div>
                                               <MultipleImageInput name="logo" label={<span className="text-[10px] font-bold text-gray-600">Brand Imprint Override</span>} required />
@@ -187,7 +187,7 @@ const SettingsPageContent = () => {
                               </div>
                               
                               <div className="flex justify-end pt-5 mt-5 border-t border-slate-100">
-                                   <Button type='submit' loading={baseLoader} className="!px-6 !py-2 flex items-center gap-1.5 shadow-md shadow-[#5572fc]/20 !font-semibold !rounded-lg !text-xs transition-all"> 
+                                   <Button type='submit' loading={baseLoader} className="!px-6 !py-2 flex items-center gap-1.5 shadow-md shadow-[#F97316]/20 !font-semibold !rounded-lg !text-xs transition-all"> 
                                        <FiSave size={13}/> {i18n?.t("Write Base Config")} 
                                    </Button>
                               </div>
@@ -223,7 +223,7 @@ const SettingsPageContent = () => {
                                             <span className="flex items-center gap-1.5"><FiServer className="text-gray-400"/> Local Node</span>
                                        </Radio>
                                        <Radio value="s3" className="flex items-center text-xs font-bold text-gray-700">
-                                            <span className="flex items-center gap-1.5"><FiCloud className="text-blue-500"/> AWS Cloud Target</span>
+                                            <span className="flex items-center gap-1.5"><FiCloud className="text-orange-500"/> AWS Cloud Target</span>
                                        </Radio>
                                    </Radio.Group>
                                </Form.Item>
@@ -260,7 +260,7 @@ const SettingsPageContent = () => {
                                </div>
 
                                <div className="flex justify-end pt-5 mt-5 border-t border-slate-100">
-                                   <Button type='submit' loading={storageLoader} className="!px-6 !py-2 flex items-center gap-1.5 shadow-md shadow-[#5572fc]/20 !font-semibold !rounded-lg !text-xs transition-all !bg-emerald-600 hover:!shadow-emerald-600/30 border-emerald-600"> 
+                                   <Button type='submit' loading={storageLoader} className="!px-6 !py-2 flex items-center gap-1.5 shadow-md shadow-[#F97316]/20 !font-semibold !rounded-lg !text-xs transition-all !bg-emerald-600 hover:!shadow-emerald-600/30 border-emerald-600"> 
                                        <FiSave size={13}/> {i18n?.t("Sync Database Configs")} 
                                    </Button>
                                </div>
@@ -274,3 +274,4 @@ const SettingsPageContent = () => {
 };
 
 export default SettingsPageContent;
+

@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 import { useState } from 'react';
 import { Rate, Switch } from 'antd';
 import { delAdminTestimonial, detailsTestimonial, fetchAdminTestimonial, postAdminTestimonial } from '../../../helpers/backend';
@@ -36,7 +36,7 @@ const Page = () => {
             dataField: 'rating',
             formatter: (_, d) => (
                 <div className="flex items-center gap-2">
-                    <Rate className='!text-[#5572fc] !text-xs' disabled defaultValue={d?.rating} />
+                    <Rate className='!text-[#F97316] !text-xs' disabled defaultValue={d?.rating} />
                     <span className="text-[10px] font-bold text-gray-500 bg-slate-50 border border-slate-100 px-1.5 py-0.5 rounded">
                         {d?.rating}.0
                     </span>
@@ -48,7 +48,7 @@ const Page = () => {
             dataField: 'description',
             formatter: (_, d) => (
                 <span className="text-xs text-gray-600 line-clamp-2 max-w-[220px] leading-relaxed">
-                    {d?.description || '—'}
+                    {d?.description || 'â€”'}
                 </span>
             ),
         },
@@ -116,3 +116,4 @@ const Page = () => {
 };
 
 export default Page;
+

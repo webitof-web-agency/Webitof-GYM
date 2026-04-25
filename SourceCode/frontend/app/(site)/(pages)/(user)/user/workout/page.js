@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 import { Modal } from 'antd';
 import TrainerTable from '../../../../../../components/form/trainerTable';
 import { useFetch } from '../../../../../helpers/hooks';
@@ -70,7 +70,7 @@ const Page = () => {
             >
                 <div className='grid grid-cols-2 border rounded'>
                     <div className='border-r '>
-                        <div className='w-full bg-[#5572fc] text-white py-3 text-[xl] px-[20px] rounded-s font-medium font-montserrat'>{i18n?.t('Day')}</div>
+                        <div className='w-full bg-[#F97316] text-white py-3 text-[xl] px-[20px] rounded-s font-medium font-montserrat'>{i18n?.t('Day')}</div>
                         <div className='flex gap-2 py-5 capitalize px-5'>
                         {
                             workoutDetails?.selected_days?.map((day, index) => (
@@ -82,7 +82,7 @@ const Page = () => {
                         </div>
                     </div>
                     <div>
-                        <div className='w-full bg-[#5572fc] text-white py-3 text-[xl] px-[20px] rounded-r font-poppins'>{i18n?.t('Workouts')}</div>
+                        <div className='w-full bg-[#F97316] text-white py-3 text-[xl] px-[20px] rounded-r font-poppins'>{i18n?.t('Workouts')}</div>
                         <div className='flex flex-col gap-5 py-5 capitalize px-5'>
                             {
                                 workoutDetails?.workouts?.map((work, index) => (
@@ -100,3 +100,4 @@ const Page = () => {
 };
 
 export default Page;
+

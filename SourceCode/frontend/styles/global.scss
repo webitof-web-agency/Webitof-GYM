@@ -1,4 +1,4 @@
-
+﻿
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -88,7 +88,7 @@
   }
 }
 .ant-table-row .ant-table-row-level-0:first-child {
-  background: linear-gradient(-45deg, #2392F8 0%, #5E1CD5 100%) !important;
+  background: linear-gradient(-45deg, #F97316 0%, #EA580C 100%) !important;
 }
 .tableHeader {
   .ant-table-cell{
@@ -118,7 +118,7 @@
   );
   }
   .swiper-pagination-bullet-active{
-    background: linear-gradient(-45deg, #2392F8 0%, #5E1CD5 100%) !important;
+    background: linear-gradient(-45deg, #F97316 0%, #EA580C 100%) !important;
     opacity: 100% !important;
     border-radius: 4px!important;
     height: 20px !important;
@@ -169,7 +169,7 @@
     border-color: #534C4C !important;
   }
   .ant-input-outlined:focus-within {
-    border-color: #5572fc !important;
+    border-color: #F97316 !important;
     box-shadow: none !important;
   }
 }
@@ -183,7 +183,7 @@
 .tableHeadercolor {
   .ant-table-thead{
     .ant-table-cell{
-      background: linear-gradient(-45deg, #2392F8 0%, #5E1CD5 100%) !important;
+      background: linear-gradient(-45deg, #F97316 0%, #EA580C 100%) !important;
       border: none !important;
       color: white !important;
     }
@@ -203,7 +203,7 @@
   /* width: 251px; */
   height: 15px;
   flex-shrink: 0;
-  background: linear-gradient(-45deg, #2392F8 0%, #5E1CD5 100%);
+  background: linear-gradient(-45deg, #F97316 0%, #EA580C 100%);
   filter: blur(10px);
 }
 .mission {
@@ -248,7 +248,7 @@
 }
 
 .swiper-pagination-bullet-active {
-  background: linear-gradient(-45deg, #2392F8 0%, #5E1CD5 100%) !important;
+  background: linear-gradient(-45deg, #F97316 0%, #EA580C 100%) !important;
   width: 16px !important;
   height: 16px !important;
 }
@@ -294,7 +294,7 @@
   left: 9px;
   width: 28px;
   height: 28px;
-  background: linear-gradient(-45deg, #2392F8 0%, #5E1CD5 100%);
+  background: linear-gradient(-45deg, #F97316 0%, #EA580C 100%);
   border-radius: 50%;
   transition: transform 0.3s;
 }
@@ -357,7 +357,7 @@
 }
 
 .ant-pagination .ant-pagination-item-active {
-  background: linear-gradient(-45deg, #2392F8 0%, #5E1CD5 100%);
+  background: linear-gradient(-45deg, #F97316 0%, #EA580C 100%);
   color: #FFFFFF;
   border: none;
 }
@@ -372,13 +372,13 @@
 
 .shop-button {
   
-  border: 1px solid #5572fc;
+  border: 1px solid #F97316;
   border-radius: 4px;
   padding: 4px;
 }
 
 .shop-button:hover {
-  background: linear-gradient(-45deg, #2392F8 0%, #5E1CD5 100%);
+  background: linear-gradient(-45deg, #F97316 0%, #EA580C 100%);
   color: white;
 }
 
@@ -387,14 +387,14 @@
   color: #2B2B2B;
   border-radius: 4px;
   font-size: 16px;
-  border: 0.5px solid #5572fc;
+  border: 0.5px solid #F97316;
   transition: transform 0.3s;
 
 }
 
 .alertButton:hover {
   transform: scale(1.05);
-  background: linear-gradient(-45deg, #2392F8 0%, #5E1CD5 100%);
+  background: linear-gradient(-45deg, #F97316 0%, #EA580C 100%);
   color: white;
 }
 .swal-content {
@@ -442,12 +442,12 @@
  
  .ant-btn-default:not(:disabled):not(.ant-btn-disabled):hover {
    color: #fff;
-   border-color: #5572fc;
-   background: linear-gradient(-45deg, #2392F8 0%, #5E1CD5 100%);
+   border-color: #F97316;
+   background: linear-gradient(-45deg, #F97316 0%, #EA580C 100%);
  }
  
  .ant-input-outlined:focus, :where(.css-dev-only-do-not-override-qnu6hi).ant-input-outlined:focus-within {
-   border-color: #5572fc;
+   border-color: #F97316;
  }
 
 
@@ -455,7 +455,7 @@
 
 
 .text-element {
-  color: #5572fc;
+  color: #F97316;
   text-shadow:
     -2px -2px 0 white,
     2px -2px 0 white,
@@ -471,14 +471,14 @@
   color: #2B2B2B;
   border-radius: 4px;
   font-size: 16px;
-  border: 0.5px solid #5572fc;
+  border: 0.5px solid #F97316;
   transition: transform 0.3s;
 
 }
 
 .alertButton:hover {
   transform: scale(1.05);
-  background: linear-gradient(-45deg, #2392F8 0%, #5E1CD5 100%);
+  background: linear-gradient(-45deg, #F97316 0%, #EA580C 100%);
   color: white;
 }
 
@@ -496,7 +496,7 @@
 .auth-button {
   border-radius: 4px;
   margin-top: 34px;
-  border: 0.5px solid #5572fc;
+  border: 0.5px solid #F97316;
   width: 100%;
   background-color: #FF4E2508;
   transition: transform 0.3s;
@@ -505,7 +505,7 @@
 .auth-button:hover {
   width: 100%;
   transform: scale(1.05);
-  background: linear-gradient(-45deg, #2392F8 0%, #5E1CD5 100%);
+  background: linear-gradient(-45deg, #F97316 0%, #EA580C 100%);
   color: #FFFFFF !important;
 }
 
@@ -538,7 +538,7 @@
     color: white !important;
   }
   .ant-radio-wrapper .ant-radio-checked .ant-radio-inner {
-    background: linear-gradient(-45deg, #2392F8 0%, #5E1CD5 100%) !important;
+    background: linear-gradient(-45deg, #F97316 0%, #EA580C 100%) !important;
     border: white !important;
   }
   .ant-form-item-explain-error {
@@ -568,7 +568,7 @@
 .share-button:hover {
   transform: scale(1.05);
   color: white;
-  background: linear-gradient(-45deg, #2392F8 0%, #5E1CD5 100%);
+  background: linear-gradient(-45deg, #F97316 0%, #EA580C 100%);
 }
 
 .status {
@@ -591,7 +591,7 @@
 }
 
 .ant-pagination .ant-pagination-item-active {
-  background: linear-gradient(-45deg, #2392F8 0%, #5E1CD5 100%);
+  background: linear-gradient(-45deg, #F97316 0%, #EA580C 100%);
   color: #FFFFFF;
   border: none;
 }
@@ -608,22 +608,22 @@
 
 // checkout page radio style
 .ant-radio-wrapper .ant-radio-checked .ant-radio-inner {
-  border-color: #5572fc;
-  background: linear-gradient(-45deg, #2392F8 0%, #5E1CD5 100%);
+  border-color: #F97316;
+  background: linear-gradient(-45deg, #F97316 0%, #EA580C 100%);
 }
 
 .ant-radio-wrapper:hover .ant-radio-inner {
-  border-color: #5572fc !important;
+  border-color: #F97316 !important;
 }
 
 .ant-checkbox-checked .ant-checkbox-inner {
-  border-color: #5572fc;
-  background: linear-gradient(-45deg, #2392F8 0%, #5E1CD5 100%);
+  border-color: #F97316;
+  background: linear-gradient(-45deg, #F97316 0%, #EA580C 100%);
 }
 
 .ant-checkbox-wrapper:hover .ant-checkbox-inner {
-  border-color: #5572fc !important;
-  background: linear-gradient(-45deg, #2392F8 0%, #5E1CD5 100%) !important;
+  border-color: #F97316 !important;
+  background: linear-gradient(-45deg, #F97316 0%, #EA580C 100%) !important;
 }
 
 
@@ -633,14 +633,14 @@
   color: #2B2B2B;
   border-radius: 4px;
   font-size: 16px;
-  border: 0.5px solid #5572fc;
+  border: 0.5px solid #F97316;
   transition: transform 0.3s;
 
 }
 
 .alertButton:hover {
   transform: scale(1.05);
-  background: linear-gradient(-45deg, #2392F8 0%, #5E1CD5 100%);
+  background: linear-gradient(-45deg, #F97316 0%, #EA580C 100%);
   color: white;
 }
 
@@ -732,13 +732,13 @@
   font-size: 18px;
   font-weight: 500;
   border-radius: 0.25rem;
-  border: 1px solid #5572fc;
+  border: 1px solid #F97316;
 }
 
 .process-button:hover {
   transform: scale(1.05);
   color: white;
-  background: linear-gradient(-45deg, #2392F8 0%, #5E1CD5 100%);
+  background: linear-gradient(-45deg, #F97316 0%, #EA580C 100%);
   border: none;
 }
 .shop-heading {
@@ -751,11 +751,11 @@
   transition: transform 0.3s;
   font-weight: 500;
   color: #2B2B2B;
-  border: 0.5px solid #5572fc;
+  border: 0.5px solid #F97316;
 }
 
 .product-button:hover {
-  background: linear-gradient(-45deg, #2392F8 0%, #5E1CD5 100%);
+  background: linear-gradient(-45deg, #F97316 0%, #EA580C 100%);
   transform: scale(1.05);
   color: white;
 }
@@ -780,7 +780,7 @@
  }
 
  .translate_button{
-  @apply bg-gradient-to-r from-[#5572fc] rounded-full to-orange-500 hover:from-[#d46321] hover:to-orange-600 text-white font-medium py-1 px-3  shadow-lg hover:shadow-xl transform transition-transform duration-200 hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-opacity-50
+  @apply bg-gradient-to-r from-[#F97316] rounded-full to-orange-500 hover:from-[#d46321] hover:to-orange-600 text-white font-medium py-1 px-3  shadow-lg hover:shadow-xl transform transition-transform duration-200 hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-opacity-50
  }
 
 .navlang{
@@ -894,7 +894,7 @@
 
 .custom-table{
   :where(.css-dev-only-do-not-override-14qglws).ant-table-wrapper .ant-table.ant-table-bordered >.ant-table-container >.ant-table-content >table >thead>tr>th  {
-background: linear-gradient(-45deg, #2392F8 0%, #5E1CD5 100%)!important;
+background: linear-gradient(-45deg, #F97316 0%, #EA580C 100%)!important;
 color:white!important;
 display: flex-column!important;
 justify-content: center!important;
@@ -952,7 +952,7 @@ text-align: center;
 
 
  .translate_button{
-  @apply bg-gradient-to-r from-[#5572fc] rounded-full to-orange-500 hover:from-[#d46321] hover:to-orange-600 text-white font-medium py-1 px-3  shadow-lg hover:shadow-xl transform transition-transform duration-200 hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-opacity-50
+  @apply bg-gradient-to-r from-[#F97316] rounded-full to-orange-500 hover:from-[#d46321] hover:to-orange-600 text-white font-medium py-1 px-3  shadow-lg hover:shadow-xl transform transition-transform duration-200 hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-opacity-50
  }
 
 @media screen and (min-width: 459px) and (max-width: 767px) {
@@ -979,14 +979,14 @@ text-align: center;
   
 .langTool{
   .ant-tabs-tab-active .primary {
-    color: #5572fc !important;
+    color: #F97316 !important;
   }
   .ant-tabs-tab:hover .primary {
-    color: #5572fc !important; 
+    color: #F97316 !important; 
   }
   .ant-tabs-top >.ant-tabs-nav .ant-tabs-ink-bar, .ant-tabs-top >div>.ant-tabs-nav .ant-tabs-ink-bar {
     bottom: 0;
-    border: 1px solid #5572fc;
+    border: 1px solid #F97316;
   }
   
 }
@@ -1022,7 +1022,7 @@ text-align: center;
   height: 24px;
   border: 3px solid transparent;
   border-radius: 50%;
-  border-top-color: #5572fc; 
+  border-top-color: #F97316; 
   animation: spin 0.8s ease-in-out infinite;
 }
 
@@ -1121,3 +1121,4 @@ text-align: center;
     border-radius: 40px !important;
   }
 }
+

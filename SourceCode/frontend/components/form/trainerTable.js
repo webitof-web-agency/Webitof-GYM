@@ -1,4 +1,4 @@
-import { Pagination } from "antd";
+﻿import { Pagination } from "antd";
 import { useActionConfirm } from "../../app/helpers/hooks";
 import { FiEdit, FiEye } from "react-icons/fi";
 import { RiDeleteBinLine } from "react-icons/ri";
@@ -51,20 +51,20 @@ const TrainerTable = ({
                 <div className="flex justify-end gap-2.5">
                     {actions && actions(data)}
                     {onDelete && (data?.disableDelete !== 1) && (
-                        <button className="bg-white shadow-sm shadow-gray-400 text-[#2b2b2b] hover:bg-[#5572fc] hover:text-white duration-500 p-1 rounded"
+                        <button className="bg-white shadow-sm shadow-gray-400 text-[#2b2b2b] hover:bg-[#F97316] hover:text-white duration-500 p-1 rounded"
                             title="Delete" onClick={() => handleDeleteClick(data)}>
                             <RiDeleteBinLine size={22} />
                         </button>
                     )}
                     {data.disableEdit === 1 && !onView && data.disableDelete === 1 && !actions && '-'}
                     {onEdit && (data?.disableEdit !== 1) && (
-                        <button className="bg-white shadow-sm shadow-gray-400 text-[#2b2b2b] hover:bg-[#5572fc] hover:text-white duration-500 p-1 rounded"
+                        <button className="bg-white shadow-sm shadow-gray-400 text-[#2b2b2b] hover:bg-[#F97316] hover:text-white duration-500 p-1 rounded"
                             title="Edit" onClick={() => handleEditClick(data)}>
                             <FiEdit size={22} />
                         </button>
                     )}
                     {onView && (
-                        <button className="bg-white shadow-sm shadow-gray-400 text-[#2b2b2b] hover:bg-[#5572fc] hover:text-white duration-500 p-1 rounded"
+                        <button className="bg-white shadow-sm shadow-gray-400 text-[#2b2b2b] hover:bg-[#F97316] hover:text-white duration-500 p-1 rounded"
                             title="View" onClick={() => onView(data)}>
                             <FiEye size={22} />
                         </button>

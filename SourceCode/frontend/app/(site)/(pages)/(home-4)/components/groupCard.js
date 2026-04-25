@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 import React from 'react';
 
 import Image from 'next/image';
@@ -23,7 +23,7 @@ const GroupCard = ({ group }) => {
             // viewport={{ once: true, amount: 0.3 }}
             // variants={slideUpZoomVariant}
             // transition={{ duration: 0.6, ease: "easeOut" }}
-            className='box-shadow group relative rounded-[1rem] overflow-hidden transform group duration-500 bg-white pb-16  shadow-custom-light hover:bg-[#5572fc] hover:text-white' 
+            className='box-shadow group relative rounded-[1rem] overflow-hidden transform group duration-500 bg-white pb-16  shadow-custom-light hover:bg-[#F97316] hover:text-white' 
         >
             <div className='flex items-center md:gap-4 gap-3'>
                 <div className='transform overflow-hidden h-[160px] w-full'>
@@ -58,7 +58,7 @@ const GroupCard = ({ group }) => {
                                 key={index}
                                 className='flex w-full items-center gap-2 font-poppins group-hover:text-white text-textMain'
                             >
-                                <FaCheckCircle size={16} className='text-[#5572fc] group-hover:text-white basis-7 !text-base' />
+                                <FaCheckCircle size={16} className='text-[#F97316] group-hover:text-white basis-7 !text-base' />
                                 <span className='line-clamp-1 w-full blogdescription'>{facility[i18n.langCode]}</span>
                             </li>
                         ))}
@@ -79,3 +79,4 @@ const GroupCard = ({ group }) => {
 };
 
 export default GroupCard;
+

@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 import React, { useEffect, useState } from 'react';
 import { Form, Input, Select, message } from 'antd';
 import { MdLocalPhone, MdLockOutline, MdOutlineFace } from 'react-icons/md';
@@ -92,7 +92,7 @@ const Setting = () => {
            <div>
              <div className='flex justify-center items-center pb-[5%] pt-[3%] bg-gray-200 min-h-screen relative'>
                 <div className='h-auto md:w-1/2 border rounded p-10 hero_font_family bg-white shadow scrollbar'>
-                    <h3 className='text-center text-[#5572fc] pb-4 border-b-[1px] border-b-primary'>Quick Setup</h3>
+                    <h3 className='text-center text-[#F97316] pb-4 border-b-[1px] border-b-primary'>Quick Setup</h3>
                     <p className='text-center'> --- Please avoid auto suggestion --- </p>
                     <Form
                         layout="horizontal"
@@ -317,7 +317,7 @@ const Setting = () => {
 
                         <div className='relative'>
                             <Form.Item>
-                                <button type="submit" className='bg-[#5572fc] hover:bg-[#5572fc] text-white px-6 py-2 rounded shadowHover mt-5'>
+                                <button type="submit" className='bg-[#F97316] hover:bg-[#F97316] text-white px-6 py-2 rounded shadowHover mt-5'>
                                     Submit
                                 </button>
                             </Form.Item>
@@ -355,3 +355,4 @@ const Setting = () => {
 };
 
 export default Setting;
+

@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 import Image from 'next/image';
 import React from 'react';
 import { usePathname, useRouter } from 'next/navigation';
@@ -50,7 +50,7 @@ const ProductCard = ({ data, getWaishlist, getData }) => {
     const lineTotal = currencySymbol + convertAmount((data?.price * data?.quantity)?.toFixed(2));
 
     return (
-        <div className='flex sm:flex-row flex-col gap-4 rounded-2xl border border-slate-100 bg-white shadow-[0_2px_12px_-4px_rgba(0,0,0,0.06)] hover:border-[#5572fc]/20 hover:shadow-[0_4px_20px_-6px_rgba(85,114,252,0.08)] transition-all p-4'>
+        <div className='flex sm:flex-row flex-col gap-4 rounded-2xl border border-slate-100 bg-white shadow-[0_2px_12px_-4px_rgba(0,0,0,0.06)] hover:border-[#F97316]/20 hover:shadow-[0_4px_20px_-6px_rgba(85,114,252,0.08)] transition-all p-4'>
             {/* Product image */}
             <Link href={`/shop/${data?._id}`} className='shrink-0'>
                 <Image
@@ -67,17 +67,17 @@ const ProductCard = ({ data, getWaishlist, getData }) => {
                 {/* Top row: name + price */}
                 <div className='flex items-start justify-between gap-3'>
                     <div className='min-w-0'>
-                        <Link href={`/shop/${data?._id}`} className='text-[14px] font-extrabold text-gray-800 capitalize line-clamp-2 hover:text-[#5572fc] transition-colors leading-snug'>
+                        <Link href={`/shop/${data?._id}`} className='text-[14px] font-extrabold text-gray-800 capitalize line-clamp-2 hover:text-[#F97316] transition-colors leading-snug'>
                             {data?.name?.[i18n.langCode]}
                         </Link>
                         {data?.variant && (
-                            <span className='inline-block mt-1 text-[11px] font-bold text-[#5572fc] bg-[#5572fc]/8 border border-[#5572fc]/15 rounded-full px-2.5 py-0.5'>
+                            <span className='inline-block mt-1 text-[11px] font-bold text-[#F97316] bg-[#F97316]/8 border border-[#F97316]/15 rounded-full px-2.5 py-0.5'>
                                 {i18n.t('Variant')}: {columnFormatter(data?.variant?.name)}
                             </span>
                         )}
                     </div>
                     <div className='shrink-0 text-right'>
-                        <p className='text-[16px] font-black text-[#5572fc]'>{currencySymbol}{convertAmount(data?.price?.toFixed(2))}</p>
+                        <p className='text-[16px] font-black text-[#F97316]'>{currencySymbol}{convertAmount(data?.price?.toFixed(2))}</p>
                         {data?.quantity > 1 && (
                             <p className='text-[10px] text-gray-400 font-medium'>{i18n?.t('Each')}</p>
                         )}
@@ -91,14 +91,14 @@ const ProductCard = ({ data, getWaishlist, getData }) => {
                         <div className='flex items-center gap-1 rounded-xl border border-slate-200 overflow-hidden'>
                             <button
                                 onClick={() => addToCart(-1)}
-                                className='flex h-8 w-8 items-center justify-center text-gray-500 hover:bg-[#5572fc] hover:text-white transition-colors'
+                                className='flex h-8 w-8 items-center justify-center text-gray-500 hover:bg-[#F97316] hover:text-white transition-colors'
                             >
                                 <FiMinus size={12} />
                             </button>
                             <span className='w-8 text-center text-[13px] font-bold text-gray-800'>{data?.quantity}</span>
                             <button
                                 onClick={() => addToCart(1)}
-                                className='flex h-8 w-8 items-center justify-center text-gray-500 hover:bg-[#5572fc] hover:text-white transition-colors'
+                                className='flex h-8 w-8 items-center justify-center text-gray-500 hover:bg-[#F97316] hover:text-white transition-colors'
                             >
                                 <FiPlus size={12} />
                             </button>
@@ -117,7 +117,7 @@ const ProductCard = ({ data, getWaishlist, getData }) => {
                         {pathname !== '/cart' && (
                             <button
                                 onClick={() => addToCart(1)}
-                                className='flex items-center gap-1.5 rounded-xl bg-[#5572fc]/8 border border-[#5572fc]/20 text-[#5572fc] px-3 py-1.5 text-[12px] font-bold hover:bg-[#5572fc] hover:text-white transition-all'
+                                className='flex items-center gap-1.5 rounded-xl bg-[#F97316]/8 border border-[#F97316]/20 text-[#F97316] px-3 py-1.5 text-[12px] font-bold hover:bg-[#F97316] hover:text-white transition-all'
                             >
                                 <FiShoppingCart size={12} /> {i18n.t('Add to Cart')}
                             </button>
@@ -137,3 +137,4 @@ const ProductCard = ({ data, getWaishlist, getData }) => {
 };
 
 export default ProductCard;
+

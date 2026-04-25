@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 import React from 'react';
 import BannerTitle from '../common/banner-title';
 import ShopCard from './shopCard';
@@ -40,7 +40,7 @@ const Shop = () => {
                     ))}
                 </div>
                 <div className="flex justify-center my-8">
-                    <Button pathName={findDefaultTheme?.name} onClick={() => router.push('/shop')} className="hover:text-white hover:bg-[#5572fc]">
+                    <Button pathName={findDefaultTheme?.name} onClick={() => router.push('/shop')} className="hover:text-white hover:bg-[#F97316]">
                         {i18n?.t('View All Products')}
                     </Button>
                 </div>

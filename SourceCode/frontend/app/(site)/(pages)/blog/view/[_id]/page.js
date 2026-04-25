@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { Input } from "antd";
 import BasicBar from "../../../../../../components/common/basic-bar";
@@ -43,7 +43,7 @@ const Page = ({ params }) => {
                                         <div key={news._id} className='flex flex-row items-center gap-5 pt-5 '>
                                             <Image src={news?.image} alt='image' height={66} width={66} className='rounded h-[66px] w-[66px] object-fill' />
                                             <div className='w-full  items-start justify-start space-y-1 flex flex-col'>
-                                                <Link href={`/blog/view/${news?._id}`} className='lg:text-xl text- text-secondary hover:text-[#5572fc] line-clamp-2 hover:underline font-medium capitalize font-poppins'>{news?.title[i18n.langCode]}</Link>
+                                                <Link href={`/blog/view/${news?._id}`} className='lg:text-xl text- text-secondary hover:text-[#F97316] line-clamp-2 hover:underline font-medium capitalize font-poppins'>{news?.title[i18n.langCode]}</Link>
                                                 <p className='text-textMain opacity-60 text-[14px] font-poppins'>{dayjs(news?.createdAt).format('MMM DD, YYYY')}</p>
                                             </div>
                                         </div>

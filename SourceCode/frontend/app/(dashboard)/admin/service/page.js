@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 import React, { useEffect, useState } from 'react';
 import { Form, Modal, Tooltip } from 'antd';
 import PageTitle from '../../components/common/page-title';
@@ -49,7 +49,7 @@ const AdminService = () => {
                       </div>
                       <div className="flex flex-col">
                           <span className="font-bold text-gray-800 text-[13px] capitalize">{name?.[langCode] || name?.en || 'Unnamed'}</span>
-                          <span className="text-[9px] font-bold text-[#5572fc] mt-0.5 tracking-widest uppercase">Offered Value</span>
+                          <span className="text-[9px] font-bold text-[#F97316] mt-0.5 tracking-widest uppercase">Offered Value</span>
                       </div>
                  </div>
             ) 
@@ -112,7 +112,7 @@ const AdminService = () => {
                                 setOpen(true);
                                 setIsEdit(false);
                             }}
-                            className="flex items-center gap-1.5 !px-4 shadow-md shadow-[#5572fc]/20 hover:shadow-lg hover:shadow-[#5572fc]/30 transition-all !h-8 !py-0 !rounded-lg block !w-auto !text-xs whitespace-nowrap"
+                            className="flex items-center gap-1.5 !px-4 shadow-md shadow-[#F97316]/20 hover:shadow-lg hover:shadow-[#F97316]/30 transition-all !h-8 !py-0 !rounded-lg block !w-auto !text-xs whitespace-nowrap"
                         >
                             <FiPlus size={14} /> {i18n.t("Add Service")}
                         </Button>
@@ -266,7 +266,7 @@ const AdminService = () => {
                          >
                             Cancel
                          </Button>
-                         <Button type='submit' loading={formLoader} onClick={() => noSelected({ form, setSelectedLang })} className='!px-5 !py-1.5 flex items-center gap-1.5 shadow-md shadow-[#5572fc]/20 !font-semibold !rounded-lg !text-xs transition-all'>
+                         <Button type='submit' loading={formLoader} onClick={() => noSelected({ form, setSelectedLang })} className='!px-5 !py-1.5 flex items-center gap-1.5 shadow-md shadow-[#F97316]/20 !font-semibold !rounded-lg !text-xs transition-all'>
                             {isEdit ? <FiEdit2 size={13} /> : <FiPlus size={13} />}
                             {i18n.t(isEdit ? "Update Directory" : "Deploy Slot")}
                          </Button>
@@ -278,3 +278,4 @@ const AdminService = () => {
 };
 
 export default AdminService;
+

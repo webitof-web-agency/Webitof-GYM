@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 import React, { useState } from 'react';
 import { Form, Input, message } from 'antd';
 import BasicBar from '../../../../components/common/basic-bar';
@@ -28,26 +28,26 @@ const Page = () => {
 
     const contactItems = [
         {
-            icon: <FiPhone size={20} className='text-[#5572fc]' />,
+            icon: <FiPhone size={20} className='text-[#F97316]' />,
             label: i18n?.t('Phone'),
-            value: data?.phone ? `+${data.phone}` : '—',
+            value: data?.phone ? `+${data.phone}` : 'â€”',
             href: `tel:${data?.phone}`,
         },
         {
-            icon: <FiMail size={20} className='text-[#5572fc]' />,
+            icon: <FiMail size={20} className='text-[#F97316]' />,
             label: i18n?.t('Email'),
-            value: data?.email || '—',
+            value: data?.email || 'â€”',
             href: `mailto:${data?.email}`,
         },
         {
-            icon: <FiMapPin size={20} className='text-[#5572fc]' />,
+            icon: <FiMapPin size={20} className='text-[#F97316]' />,
             label: i18n?.t('Address'),
-            value: data?.address || '—',
+            value: data?.address || 'â€”',
             href: null,
         },
     ];
 
-    const inputClass = 'h-11 rounded-xl border-slate-200 text-[13px] font-medium placeholder:text-gray-300 focus:border-[#5572fc] focus:ring-2 focus:ring-[#5572fc]/10';
+    const inputClass = 'h-11 rounded-xl border-slate-200 text-[13px] font-medium placeholder:text-gray-300 focus:border-[#F97316] focus:ring-2 focus:ring-[#F97316]/10';
 
     return (
         <div>
@@ -56,7 +56,7 @@ const Page = () => {
             <div className='container py-16 lg:py-24'>
                 <div className='grid grid-cols-1 lg:grid-cols-5 gap-8 xl:gap-14'>
 
-                    {/* ── Left info panel ─────────────────────────────── */}
+                    {/* â”€â”€ Left info panel â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
                     <motion.div
                         initial={{ opacity: 0, x: -30 }}
                         animate={{ opacity: 1, x: 0 }}
@@ -65,12 +65,12 @@ const Page = () => {
                     >
                         {/* Header */}
                         <div>
-                            <div className='inline-flex items-center gap-2 rounded-full border border-[#5572fc]/25 bg-[#5572fc]/8 px-4 py-1.5 mb-4'>
-                                <span className='h-1.5 w-1.5 rounded-full bg-[#5572fc]' />
-                                <span className='text-[11px] font-black text-[#5572fc] uppercase tracking-widest'>{i18n?.t('Get In Touch')}</span>
+                            <div className='inline-flex items-center gap-2 rounded-full border border-[#F97316]/25 bg-[#F97316]/8 px-4 py-1.5 mb-4'>
+                                <span className='h-1.5 w-1.5 rounded-full bg-[#F97316]' />
+                                <span className='text-[11px] font-black text-[#F97316] uppercase tracking-widest'>{i18n?.t('Get In Touch')}</span>
                             </div>
                             <h2 className='text-3xl lg:text-4xl font-extrabold text-gray-800 tracking-tight leading-tight'>
-                                {i18n?.t("We'd Love to")} <span className='text-[#5572fc]'>{i18n?.t('Hear From You')}</span>
+                                {i18n?.t("We'd Love to")} <span className='text-[#F97316]'>{i18n?.t('Hear From You')}</span>
                             </h2>
                             <p className='text-[13px] text-gray-500 font-medium leading-relaxed mt-4'>
                                 {i18n?.t('Have questions about memberships, training or anything else? Send us a message and we will get back to you shortly.')}
@@ -80,14 +80,14 @@ const Page = () => {
                         {/* Contact info cards */}
                         <div className='flex flex-col gap-4 mt-2'>
                             {contactItems.map((item, i) => (
-                                <div key={i} className='flex items-center gap-4 rounded-2xl border border-slate-100 bg-white p-4 shadow-[0_2px_12px_-4px_rgba(0,0,0,0.06)] hover:border-[#5572fc]/20 hover:shadow-[0_4px_20px_-6px_rgba(85,114,252,0.1)] transition-all'>
-                                    <div className='shrink-0 flex h-11 w-11 items-center justify-center rounded-xl bg-[#5572fc]/8 border border-[#5572fc]/15'>
+                                <div key={i} className='flex items-center gap-4 rounded-2xl border border-slate-100 bg-white p-4 shadow-[0_2px_12px_-4px_rgba(0,0,0,0.06)] hover:border-[#F97316]/20 hover:shadow-[0_4px_20px_-6px_rgba(85,114,252,0.1)] transition-all'>
+                                    <div className='shrink-0 flex h-11 w-11 items-center justify-center rounded-xl bg-[#F97316]/8 border border-[#F97316]/15'>
                                         {item.icon}
                                     </div>
                                     <div className='min-w-0'>
                                         <p className='text-[10px] font-black text-gray-400 uppercase tracking-widest'>{item.label}</p>
                                         {item.href ? (
-                                            <a href={item.href} className='text-[13px] font-bold text-gray-700 hover:text-[#5572fc] transition-colors truncate block mt-0.5'>{item.value}</a>
+                                            <a href={item.href} className='text-[13px] font-bold text-gray-700 hover:text-[#F97316] transition-colors truncate block mt-0.5'>{item.value}</a>
                                         ) : (
                                             <p className='text-[13px] font-semibold text-gray-700 mt-0.5'>{item.value}</p>
                                         )}
@@ -97,7 +97,7 @@ const Page = () => {
                         </div>
 
                         {/* Decorative glow block */}
-                        <div className='mt-4 rounded-2xl overflow-hidden relative h-48 bg-gradient-to-br from-[#1a2f6e] via-[#3a52c4] to-[#5572fc] flex items-center justify-center'>
+                        <div className='mt-4 rounded-2xl overflow-hidden relative h-48 bg-gradient-to-br from-[#C2410C] via-[#EA580C] to-[#F97316] flex items-center justify-center'>
                             <div className='absolute inset-0 opacity-[0.06]' style={{ backgroundImage: 'radial-gradient(circle, white 1px, transparent 1px)', backgroundSize: '20px 20px' }} />
                             <div className='text-center relative z-10'>
                                 <FiMessageSquare size={36} className='text-white/60 mx-auto mb-3' />
@@ -107,7 +107,7 @@ const Page = () => {
                         </div>
                     </motion.div>
 
-                    {/* ── Right form ──────────────────────────────────── */}
+                    {/* â”€â”€ Right form â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
                     <motion.div
                         initial={{ opacity: 0, x: 30 }}
                         animate={{ opacity: 1, x: 0 }}
@@ -190,7 +190,7 @@ const Page = () => {
                             <button
                                 type='submit'
                                 disabled={loading}
-                                className='w-full flex items-center justify-center gap-2 rounded-xl bg-[#5572fc] py-3 text-sm font-bold text-white shadow-lg shadow-[#5572fc]/25 transition-all hover:bg-[#4461eb] hover:shadow-xl hover:-translate-y-0.5 disabled:opacity-60 mt-2'
+                                className='w-full flex items-center justify-center gap-2 rounded-xl bg-[#F97316] py-3 text-sm font-bold text-white shadow-lg shadow-[#F97316]/25 transition-all hover:bg-[#EA580C] hover:shadow-xl hover:-translate-y-0.5 disabled:opacity-60 mt-2'
                             >
                                 {loading
                                     ? <span className='h-4 w-4 rounded-full border-2 border-white/30 border-t-white animate-spin' />
@@ -206,3 +206,4 @@ const Page = () => {
 };
 
 export default Page;
+

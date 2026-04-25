@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 import { Form, Modal } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useAction, useFetch } from '../../../../helpers/hooks';
@@ -97,7 +97,7 @@ const BlogTags = () => {
                                 setOpen(true);
                                 setIsEdit(false);
                             }}
-                            className="flex items-center gap-1.5 !px-4 shadow-md shadow-[#5572fc]/20 hover:shadow-lg hover:shadow-[#5572fc]/30 transition-all !h-8 !py-0 !rounded-lg block !w-auto !text-xs whitespace-nowrap"
+                            className="flex items-center gap-1.5 !px-4 shadow-md shadow-[#F97316]/20 hover:shadow-lg hover:shadow-[#F97316]/30 transition-all !h-8 !py-0 !rounded-lg block !w-auto !text-xs whitespace-nowrap"
                         >
                             <FiPlus size={14} /> {i18n?.t("Create Tag")}
                         </Button>
@@ -182,7 +182,7 @@ const BlogTags = () => {
                          >
                             Cancel
                          </Button>
-                         <Button type='submit' onClick={() => noSelected({ form, setSelectedLang })} className='!px-5 !py-1.5 flex items-center gap-1.5 shadow-md shadow-[#5572fc]/20 !font-semibold !rounded-lg !text-xs transition-all'>
+                         <Button type='submit' onClick={() => noSelected({ form, setSelectedLang })} className='!px-5 !py-1.5 flex items-center gap-1.5 shadow-md shadow-[#F97316]/20 !font-semibold !rounded-lg !text-xs transition-all'>
                             {isEdit ? <FiEdit2 size={13} /> : <FiPlus size={13} />}
                             {i18n.t(isEdit ? "Save Changes" : "Create Tag")}
                          </Button>
@@ -194,3 +194,4 @@ const BlogTags = () => {
 };
 
 export default BlogTags;
+

@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 import { Form, Modal, Switch } from 'antd';
 import React, { useState } from 'react';
 import { useI18n } from '../../../providers/i18n';
@@ -37,7 +37,7 @@ const Currency = () => {
                       </div>
                       <div className="flex flex-col">
                           <span className="font-bold text-gray-800 text-[13px] capitalize">{name}</span>
-                          <span className="text-[10px] font-bold text-[#5572fc] mt-0.5 tracking-widest uppercase flex items-center gap-1">
+                          <span className="text-[10px] font-bold text-[#F97316] mt-0.5 tracking-widest uppercase flex items-center gap-1">
                               <FiBox size={10}/> Code: {d?.code}
                           </span>
                       </div>
@@ -58,7 +58,7 @@ const Currency = () => {
             text: 'Symbol Placement',
             dataField: 'placement',
             formatter: (placement) => (
-                <span className={`text-[10px] font-bold uppercase border px-2.5 py-1 rounded inline-flex items-center gap-1.5 shadow-sm ${placement === 'Before' ? 'bg-purple-50 text-purple-600 border-purple-100' : 'bg-blue-50 text-blue-600 border-blue-100'}`}>
+                <span className={`text-[10px] font-bold uppercase border px-2.5 py-1 rounded inline-flex items-center gap-1.5 shadow-sm ${placement === 'Before' ? 'bg-purple-50 text-purple-600 border-purple-100' : 'bg-orange-50 text-orange-600 border-orange-100'}`}>
                     {placement} Amount
                 </span>
             )
@@ -141,7 +141,7 @@ const Currency = () => {
                                 setOpen(true);
                                 setIsEdit(false);
                             }}
-                            className="flex items-center gap-1.5 !px-4 shadow-md shadow-[#5572fc]/20 hover:shadow-lg hover:shadow-[#5572fc]/30 transition-all !h-8 !py-0 !rounded-lg block !w-auto !text-xs whitespace-nowrap"
+                            className="flex items-center gap-1.5 !px-4 shadow-md shadow-[#F97316]/20 hover:shadow-lg hover:shadow-[#F97316]/30 transition-all !h-8 !py-0 !rounded-lg block !w-auto !text-xs whitespace-nowrap"
                         >
                             <FiPlus size={14} /> {i18n?.t('Register Currency')}
                         </Button>
@@ -188,7 +188,7 @@ const Currency = () => {
                                  <FormInput placeholder={('e.g. US Dollar, Euro')} label={<span className="text-xs font-bold text-gray-700">Display Identity</span>} name='name' required />
                              </div>
                              <div className="col-span-1">
-                                 <FormInput placeholder={('e.g. $, €')} label={<span className="text-xs font-bold text-gray-700">Finance Symbol</span>} name='symbol' required />
+                                 <FormInput placeholder={('e.g. $, â‚¬')} label={<span className="text-xs font-bold text-gray-700">Finance Symbol</span>} name='symbol' required />
                              </div>
                              <div className="col-span-1">
                                  <FormInput placeholder={('e.g. USD, EUR')} label={<span className="text-xs font-bold text-gray-700">ISO Standard Code</span>} name='code' required />
@@ -226,7 +226,7 @@ const Currency = () => {
                          >
                             Cancel
                          </Button>
-                         <Button type='submit' loading={formLoader} className='!px-5 !py-1.5 flex items-center gap-1.5 shadow-md shadow-[#5572fc]/20 !font-semibold !rounded-lg !text-xs transition-all !bg-emerald-600 hover:!shadow-emerald-600/30 border-emerald-600'>
+                         <Button type='submit' loading={formLoader} className='!px-5 !py-1.5 flex items-center gap-1.5 shadow-md shadow-[#F97316]/20 !font-semibold !rounded-lg !text-xs transition-all !bg-emerald-600 hover:!shadow-emerald-600/30 border-emerald-600'>
                             {isEdit ? <FiEdit2 size={13} /> : <FiPlus size={13} />}
                             {i18n.t(isEdit ? 'Patch UI Settings' : 'Initialize Currency')}
                          </Button>
@@ -238,3 +238,4 @@ const Currency = () => {
 };
 
 export default Currency;
+

@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 import React, { useState } from 'react'
 import TrainerTable from '../../../../../../components/form/trainerTable';
 import { useAction, useFetch } from '../../../../../helpers/hooks';
@@ -24,7 +24,7 @@ const TestimonialPageContent = () => {
     {
       text: i18n?.t("rating") || "rating",
       dataField: "rating",
-      formatter: (_, d) => <Rate className='!text-[#5572fc]' disabled defaultValue={d?.rating} />,
+      formatter: (_, d) => <Rate className='!text-[#F97316]' disabled defaultValue={d?.rating} />,
     },
     {
       text: i18n?.t("active") || "active",
@@ -77,7 +77,7 @@ const TestimonialPageContent = () => {
         <Form layout="vertical" onFinish={onFinish} form={form}>
           {isEdit && <HiddenInput name="_id" />}
           <Form.Item name="rating" label={i18n?.t("Rating")} rules={[{ required: true, message: i18n?.t("Please provide a rating") }]}>
-            <Rate className='!text-[#5572fc]' />
+            <Rate className='!text-[#F97316]' />
           </Form.Item>
           <FormInput name="description" label={i18n?.t("Description")} className="mt-4" />
 
@@ -91,3 +91,4 @@ const TestimonialPageContent = () => {
 }
 
 export default TestimonialPageContent;
+

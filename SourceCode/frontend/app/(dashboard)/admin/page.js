@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 import dynamic from 'next/dynamic';
 import { useI18n } from '../../providers/i18n';
 import Image from 'next/image';
@@ -26,7 +26,7 @@ const DonutChart = dynamic(() => import('../components/form/pieChartComponent'),
     loading: () => <div className="h-[300px] animate-pulse rounded-xl bg-slate-100" />,
 });
 
-// ── Stat Card ────────────────────────────────────────────────────────────────
+// â”€â”€ Stat Card â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 const StatCard = ({ title, value, icon: Icon, gradient, accent }) => (
     <div className={`relative overflow-hidden bg-white rounded-xl border border-slate-100/80 shadow-sm p-5 group hover:shadow-md transition-all`}>
         <div className={`absolute inset-0 opacity-[0.03] ${gradient}`} />
@@ -52,11 +52,11 @@ const page = () => {
     const userInitials = user?.name?.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2) || 'A';
 
     const statCards = [
-        { title: i18n?.t('Total Users'), value: data?.totalUsers, icon: FiUsers, gradient: 'bg-blue-500', accent: 'bg-blue-500' },
+        { title: i18n?.t('Total Users'), value: data?.totalUsers, icon: FiUsers, gradient: 'bg-orange-500', accent: 'bg-orange-500' },
         { title: i18n?.t('Total Trainers'), value: data?.totalTrainers, icon: FaDumbbell, gradient: 'bg-emerald-500', accent: 'bg-emerald-500' },
         { title: i18n?.t('Total Employees'), value: data?.totalEmployee, icon: LiaUsersSolid, gradient: 'bg-amber-500', accent: 'bg-amber-500' },
         { title: i18n?.t('Total Groups'), value: data?.totalGroups, icon: TbUsersGroup, gradient: 'bg-purple-500', accent: 'bg-purple-500' },
-        { title: i18n?.t('Total Orders'), value: data?.totalOrders, icon: BsCartPlusFill, gradient: 'bg-[#5572fc]', accent: 'bg-[#5572fc]' },
+        { title: i18n?.t('Total Orders'), value: data?.totalOrders, icon: BsCartPlusFill, gradient: 'bg-[#F97316]', accent: 'bg-[#F97316]' },
         { title: i18n?.t('Active Subscriptions'), value: data?.totalPaidSubscription, icon: TbBellRingingFilled, gradient: 'bg-lime-500', accent: 'bg-lime-500' },
     ];
 
@@ -65,7 +65,7 @@ const page = () => {
             text: "Order ID",
             dataField: "uid",
             formatter: (_, d) => (
-                <span className="font-mono text-[11px] font-bold text-[#5572fc] bg-[#5572fc]/5 px-2 py-1 rounded">
+                <span className="font-mono text-[11px] font-bold text-[#F97316] bg-[#F97316]/5 px-2 py-1 rounded">
                     #{d?.uid}
                 </span>
             ),
@@ -111,17 +111,17 @@ const page = () => {
     return (
         <div className="max-w-[1600px] mx-auto space-y-5 animate-fade-in pb-10">
 
-            {/* ── Top Row: Welcome Card + Stats ─────────────────────────── */}
+            {/* â”€â”€ Top Row: Welcome Card + Stats â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
             <div className="flex 2xl:flex-row flex-col gap-5">
 
                 {/* Welcome Card */}
                 <div className="2xl:w-[380px] w-full shrink-0 bg-white rounded-xl border border-slate-100/80 shadow-sm overflow-hidden">
                     {/* Hero Banner */}
-                    <div className="relative h-36 bg-gradient-to-br from-[#5572fc] to-[#7c93ff] overflow-hidden">
+                    <div className="relative h-36 bg-gradient-to-br from-[#F97316] to-[#FB923C] overflow-hidden">
                         <div className="absolute inset-0 opacity-10" style={{ backgroundImage: 'radial-gradient(circle at 20% 50%, white 1px, transparent 1px)', backgroundSize: '22px 22px' }} />
                         <div className="absolute top-5 left-5">
                             <p className="text-white/70 text-[11px] font-bold tracking-widest uppercase">Admin Portal</p>
-                            <h2 className="text-white text-xl font-extrabold mt-1 leading-tight">Welcome Back! 👋</h2>
+                            <h2 className="text-white text-xl font-extrabold mt-1 leading-tight">Welcome Back! ðŸ‘‹</h2>
                             <p className="text-white/80 text-[12px] font-medium mt-1">GymStick Dashboard</p>
                         </div>
                         <Image
@@ -141,7 +141,7 @@ const page = () => {
                                     <Image src={user?.image} alt="admin avatar" width={56} height={56}
                                         className="w-14 h-14 rounded-xl border-4 border-white shadow-md object-cover" />
                                 ) : (
-                                    <div className="w-14 h-14 rounded-xl border-4 border-white shadow-md bg-gradient-to-br from-[#5572fc] to-[#7c93ff] flex items-center justify-center text-white text-lg font-black">
+                                    <div className="w-14 h-14 rounded-xl border-4 border-white shadow-md bg-gradient-to-br from-[#F97316] to-[#FB923C] flex items-center justify-center text-white text-lg font-black">
                                         {userInitials}
                                     </div>
                                 )}
@@ -152,7 +152,7 @@ const page = () => {
                             </div>
                             <Link
                                 href="/admin/profile"
-                                className="flex items-center gap-1.5 px-3 py-2 rounded-lg bg-[#5572fc] text-white text-[11px] font-bold hover:bg-[#4461eb] transition-colors shadow-md shadow-[#5572fc]/25 shrink-0"
+                                className="flex items-center gap-1.5 px-3 py-2 rounded-lg bg-[#F97316] text-white text-[11px] font-bold hover:bg-[#EA580C] transition-colors shadow-md shadow-[#F97316]/25 shrink-0"
                             >
                                 Profile <FiArrowRight size={12} />
                             </Link>
@@ -182,11 +182,11 @@ const page = () => {
                 </div>
             </div>
 
-            {/* ── Charts Row ────────────────────────────────────────────── */}
+            {/* â”€â”€ Charts Row â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
             <div className="flex xl:flex-row flex-col gap-5">
                 <div className="xl:flex-[3] bg-white rounded-xl border border-slate-100/80 shadow-sm p-5">
                     <div className="flex items-center gap-2 mb-4">
-                        <div className="w-7 h-7 rounded-lg bg-[#5572fc]/10 text-[#5572fc] flex items-center justify-center">
+                        <div className="w-7 h-7 rounded-lg bg-[#F97316]/10 text-[#F97316] flex items-center justify-center">
                             <FiTrendingUp size={15} />
                         </div>
                         <h3 className="text-sm font-extrabold text-gray-800">Monthly Revenue</h3>
@@ -205,7 +205,7 @@ const page = () => {
                 </div>
             </div>
 
-            {/* ── Quick Lists Row ───────────────────────────────────────── */}
+            {/* â”€â”€ Quick Lists Row â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
             <div className="grid 2xl:grid-cols-3 xl:grid-cols-2 grid-cols-1 gap-5">
 
                 {/* Top Products */}
@@ -223,7 +223,7 @@ const page = () => {
                                     <Image alt="product" src={product?.thumbnail_image} className="object-cover w-full h-full" height={40} width={40} />
                                 </div>
                                 <div className="flex-1 min-w-0">
-                                    <Link href={`/admin/product/view/${product?._id}`} className="text-[12px] font-bold text-gray-800 hover:text-[#5572fc] transition-colors line-clamp-1">
+                                    <Link href={`/admin/product/view/${product?._id}`} className="text-[12px] font-bold text-gray-800 hover:text-[#F97316] transition-colors line-clamp-1">
                                         {columnFormatter(product?.name)}
                                     </Link>
                                     <p className="text-[11px] text-emerald-600 font-bold">${product?.price}</p>
@@ -267,7 +267,7 @@ const page = () => {
                                         <p className="text-[10px] text-emerald-600 font-bold uppercase tracking-wide capitalize">{trainer?.role}</p>
                                     </div>
                                     <Link href="/admin/trainers"
-                                        className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-[10px] font-bold bg-[#5572fc]/5 text-[#5572fc] hover:bg-[#5572fc] hover:text-white transition-all shrink-0">
+                                        className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-[10px] font-bold bg-[#F97316]/5 text-[#F97316] hover:bg-[#F97316] hover:text-white transition-all shrink-0">
                                         <FiEye size={11} /> View
                                     </Link>
                                 </div>
@@ -282,7 +282,7 @@ const page = () => {
                 {/* Active Members */}
                 <div className="bg-white rounded-xl border border-slate-100/80 shadow-sm overflow-hidden">
                     <div className="px-5 py-4 border-b border-slate-100 flex items-center gap-2 bg-slate-50/50">
-                        <div className="w-7 h-7 rounded-lg bg-blue-50 text-blue-500 flex items-center justify-center shrink-0">
+                        <div className="w-7 h-7 rounded-lg bg-orange-50 text-orange-500 flex items-center justify-center shrink-0">
                             <FiUsers size={14} />
                         </div>
                         <h3 className="text-[13px] font-extrabold text-gray-800">Active Members</h3>
@@ -296,17 +296,17 @@ const page = () => {
                                         {member?.image ? (
                                             <Image src={member?.image} alt="member" className="object-cover w-full h-full" height={40} width={40} />
                                         ) : (
-                                            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#5572fc] to-[#7c93ff] flex items-center justify-center text-white text-xs font-black">
+                                            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#F97316] to-[#FB923C] flex items-center justify-center text-white text-xs font-black">
                                                 {memberInitials}
                                             </div>
                                         )}
                                     </div>
                                     <div className="flex-1 min-w-0">
                                         <p className="text-[12px] font-bold text-gray-800 line-clamp-1">{member?.name}</p>
-                                        <p className="text-[10px] text-[#5572fc] font-bold uppercase tracking-wide">Member</p>
+                                        <p className="text-[10px] text-[#F97316] font-bold uppercase tracking-wide">Member</p>
                                     </div>
                                     <Link href={`/admin/users/view/${member?._id}`}
-                                        className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-[10px] font-bold bg-[#5572fc]/5 text-[#5572fc] hover:bg-[#5572fc] hover:text-white transition-all shrink-0">
+                                        className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-[10px] font-bold bg-[#F97316]/5 text-[#F97316] hover:bg-[#F97316] hover:text-white transition-all shrink-0">
                                         <FiEye size={11} /> View
                                     </Link>
                                 </div>
@@ -319,10 +319,10 @@ const page = () => {
                 </div>
             </div>
 
-            {/* ── Latest Transactions ───────────────────────────────────── */}
+            {/* â”€â”€ Latest Transactions â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
             <div className="bg-white rounded-xl border border-slate-100/80 shadow-sm overflow-hidden">
                 <div className="px-5 py-4 border-b border-slate-100 flex items-center gap-2 bg-slate-50/50">
-                    <div className="w-7 h-7 rounded-lg bg-[#5572fc]/10 text-[#5572fc] flex items-center justify-center shrink-0">
+                    <div className="w-7 h-7 rounded-lg bg-[#F97316]/10 text-[#F97316] flex items-center justify-center shrink-0">
                         <FiShoppingCart size={14} />
                     </div>
                     <h3 className="text-[13px] font-extrabold text-gray-800">Latest Transactions</h3>
@@ -340,3 +340,4 @@ const page = () => {
 };
 
 export default page;
+

@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 import { Form, message } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { fetchSinglePage, postLocalMultipleImage, postPage } from '../../../../../helpers/backend';
@@ -58,7 +58,7 @@ const CompanyDetails = ({ slug }) => {
     return (
         <div className="bg-white rounded-xl shadow-[0_2px_10px_-4px_rgba(0,0,0,0.05)] border border-slate-100/80 overflow-hidden">
             <div className="px-6 py-4 border-b border-slate-100 bg-slate-50/50 flex items-center gap-3">
-                <div className="w-8 h-8 rounded-lg bg-[#5572fc]/10 text-[#5572fc] flex items-center justify-center">
+                <div className="w-8 h-8 rounded-lg bg-[#F97316]/10 text-[#F97316] flex items-center justify-center">
                     <FiImage size={16} />
                 </div>
                 <div>
@@ -71,8 +71,8 @@ const CompanyDetails = ({ slug }) => {
                 <HiddenInput name="slug" />
                 <HiddenInput name="_id" />
 
-                <div className="bg-blue-50/30 border border-blue-100/50 rounded-xl p-4 mb-4">
-                    <div className="flex items-start gap-2 mb-4 text-[11px] text-blue-600 font-medium">
+                <div className="bg-orange-50/30 border border-orange-100/50 rounded-xl p-4 mb-4">
+                    <div className="flex items-start gap-2 mb-4 text-[11px] text-orange-600 font-medium">
                         <FiInfo size={13} className="mt-0.5 shrink-0" />
                         Upload up to 5 facility, team & brand showcase images. They will appear as the company gallery on the contact and about pages.
                     </div>
@@ -80,7 +80,7 @@ const CompanyDetails = ({ slug }) => {
                 </div>
 
                 <div className="flex justify-end pt-4 border-t border-slate-100">
-                    <Button type="submit" loading={loader} className="!px-6 !py-2 flex items-center gap-1.5 shadow-md shadow-[#5572fc]/20 !font-semibold !rounded-lg !text-xs">
+                    <Button type="submit" loading={loader} className="!px-6 !py-2 flex items-center gap-1.5 shadow-md shadow-[#F97316]/20 !font-semibold !rounded-lg !text-xs">
                         <FiSave size={13} /> {i18n?.t("Publish Gallery")}
                     </Button>
                 </div>
@@ -90,3 +90,4 @@ const CompanyDetails = ({ slug }) => {
 };
 
 export default CompanyDetails;
+

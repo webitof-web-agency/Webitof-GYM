@@ -1,4 +1,4 @@
-import { Card, Form, message } from 'antd';
+﻿import { Card, Form, message } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useI18n } from '../../../../app/providers/i18n';
 import { useFetch } from '../../../../app/helpers/hooks';
@@ -219,7 +219,7 @@ const Home4 = ({ slug }) => {
                             <div
                                 onClick={() => setSelectedLang(l.code)}
                                 className={`rounded-full px-3 py-1 text-sm font-medium transition-colors duration-200 ${l.code === selectedLang
-                                    ? 'cursor-pointer bg-[#5572fc] text-white'
+                                    ? 'cursor-pointer bg-[#F97316] text-white'
                                     : 'cursor-pointer bg-gray-200 text-gray-700 hover:bg-gray-300'
                                     }`}
                                 key={index}

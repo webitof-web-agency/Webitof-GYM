@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 import { Modal, Tooltip } from 'antd'
 import BannerTitle from '../../../../../components/common/banner-title';
 import { useFetch } from '../../../../helpers/hooks';
@@ -46,12 +46,12 @@ const ClassRoutine = () => {
           <tbody>
             {staticTimes.map((time, index) => (
               <tr key={index}>
-                <td className="border lg:py-6 py-4 px-3 sm:px-4 bg-[#5572fc] text-white font-medium text-sm whitespace-pre">{time}</td>
+                <td className="border lg:py-6 py-4 px-3 sm:px-4 bg-[#F97316] text-white font-medium text-sm whitespace-pre">{time}</td>
                 {['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'].map(day => {
                   const { title, trainer, data } = findScheduleByTime(time, day)
                   return (
                     <td className="group text-center border overflow-hidden relative" key={day} onClick={() => { setTrainer(data); setOpen(true) }}>
-                      <div className='transition-transform cursor-pointer duration-500 ease-in-out transform group-hover:translate-y-0 translate-y-[200px] bg-[#5572fc] text-white w-full h-full absolute top-0 left-0 py-4'>
+                      <div className='transition-transform cursor-pointer duration-500 ease-in-out transform group-hover:translate-y-0 translate-y-[200px] bg-[#F97316] text-white w-full h-full absolute top-0 left-0 py-4'>
                         {title.length > 20 ? (
                           <Tooltip className='cursor-pointer' title={i18n?.t(title)}>
                             <h4 className="scheduleTableTitle text-center">{i18n?.t(title.substring(0, 20) + '...')}</h4>
@@ -88,7 +88,7 @@ const ClassRoutine = () => {
         className='trainerModal'
       >
         <div className='relative bg-white rounded-t-[40px] rounded-[20px] overflow-hidden'>
-          <div className='w-full h-[100px] bg-[#5572fc]  flex items-center justify-center'>
+          <div className='w-full h-[100px] bg-[#F97316]  flex items-center justify-center'>
             <div className='z-20 rounded-full w-[100px] h-[100px] overflow-hidden relative top-[50%] bg-white'>
               <Image src={trainer?.image ? trainer?.image : "/defaultimg.jpg"} alt={trainer?.name} width={600} height={400} className='object-cover rounded-full w-full h-full' />
             </div>
@@ -101,7 +101,7 @@ const ClassRoutine = () => {
             </div>
             <p className='text-textMain font-normal text-sm line-clamp-4 mt-6'>{trainer?.about}</p>
           </div>
-          <button className='w-full mt-6 cursor-pointer text-lg font-semibold py-3 bg-[#5572fc]/90 text-white hover:bg-[#5572fc] '  onClick={() => push(`/trainers/view/${trainer?._id}`)}>{i18n?.t('View Details')} </button>
+          <button className='w-full mt-6 cursor-pointer text-lg font-semibold py-3 bg-[#F97316]/90 text-white hover:bg-[#F97316] '  onClick={() => push(`/trainers/view/${trainer?._id}`)}>{i18n?.t('View Details')} </button>
         </div>
       </Modal>
     </div>
@@ -109,3 +109,4 @@ const ClassRoutine = () => {
 }
 
 export default ClassRoutine;
+

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+﻿import React, { useEffect, useState } from 'react';
 import { Form, Radio } from 'antd';
 import FormInput from '../../../../components/form/input';
 import { useAction, useFetch } from '../../../../../helpers/hooks';
@@ -46,7 +46,7 @@ const SendEmail = () => {
         <div className="flex flex-col w-full">
             <div className="px-6 py-5 border-b border-slate-100">
                 <h2 className="text-lg font-bold text-gray-800 flex items-center gap-2">
-                    <FiSend className="text-[#5572fc]" /> Send Email Campaign
+                    <FiSend className="text-[#F97316]" /> Send Email Campaign
                 </h2>
                 <p className="text-xs text-gray-500 mt-1">Compose and send emails to your audiences. Credentials are automatically applied.</p>
             </div>
@@ -57,7 +57,7 @@ const SendEmail = () => {
                     {/* Audience Section */}
                     <div className="mb-8">
                         <div className="flex items-center gap-2 mb-4">
-                            <div className="w-6 h-6 rounded-md bg-[#5572fc]/10 text-[#5572fc] flex items-center justify-center">
+                            <div className="w-6 h-6 rounded-md bg-[#F97316]/10 text-[#F97316] flex items-center justify-center">
                                 <FiUsers size={12} />
                             </div>
                             <h3 className="text-sm font-bold text-gray-700">1. Select Audience</h3>
@@ -156,7 +156,7 @@ const SendEmail = () => {
 
                     <div className="flex justify-end pt-5 border-t border-slate-100">
                         <Button 
-                            className="flex items-center gap-2 !px-8 !py-2.5 shadow-lg shadow-[#5572fc]/20 hover:shadow-[#5572fc]/40 transition-all !rounded-xl text-sm font-bold" 
+                            className="flex items-center gap-2 !px-8 !py-2.5 shadow-lg shadow-[#F97316]/20 hover:shadow-[#F97316]/40 transition-all !rounded-xl text-sm font-bold" 
                             loading={loading} 
                             type={'submit'}
                         >
@@ -171,3 +171,4 @@ const SendEmail = () => {
 };
 
 export default SendEmail;
+

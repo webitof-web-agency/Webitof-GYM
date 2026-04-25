@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 import { Form, Input, message } from 'antd';
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
@@ -71,14 +71,14 @@ const AdminChangePassword = () => {
                             >
                                 <Input.Password
                                     placeholder="Enter your current password"
-                                    className="h-10 rounded-lg border-slate-200 focus:border-[#5572fc] focus:ring-[#5572fc]/20 text-sm"
+                                    className="h-10 rounded-lg border-slate-200 focus:border-[#F97316] focus:ring-[#F97316]/20 text-sm"
                                 />
                             </Form.Item>
                         </div>
                     </div>
 
-                    <div className="bg-blue-50/30 border border-blue-100/50 rounded-xl p-4 mb-5">
-                        <h4 className="text-[11px] font-bold text-blue-600 uppercase tracking-widest flex items-center gap-1.5 mb-4">
+                    <div className="bg-orange-50/30 border border-orange-100/50 rounded-xl p-4 mb-5">
+                        <h4 className="text-[11px] font-bold text-orange-600 uppercase tracking-widest flex items-center gap-1.5 mb-4">
                             <FiKey size={12} /> New Credentials
                         </h4>
                         <div className="flex flex-col gap-4">
@@ -91,7 +91,7 @@ const AdminChangePassword = () => {
                             >
                                 <Input.Password
                                     placeholder="Set a strong new password"
-                                    className="h-10 rounded-lg border-slate-200 focus:border-[#5572fc] focus:ring-[#5572fc]/20 text-sm"
+                                    className="h-10 rounded-lg border-slate-200 focus:border-[#F97316] focus:ring-[#F97316]/20 text-sm"
                                 />
                             </Form.Item>
 
@@ -113,7 +113,7 @@ const AdminChangePassword = () => {
                             >
                                 <Input.Password
                                     placeholder="Re-enter your new password"
-                                    className="h-10 rounded-lg border-slate-200 focus:border-[#5572fc] focus:ring-[#5572fc]/20 text-sm"
+                                    className="h-10 rounded-lg border-slate-200 focus:border-[#F97316] focus:ring-[#F97316]/20 text-sm"
                                 />
                             </Form.Item>
                         </div>
@@ -142,3 +142,4 @@ const AdminChangePassword = () => {
 };
 
 export default AdminChangePassword;
+

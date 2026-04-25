@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 import React from 'react';
 import dynamic from 'next/dynamic';
 import animationData from '../../public/xx.json'; 
@@ -29,7 +29,7 @@ const Preloader = ({ animateOut }) => {
           display: flex;
           justify-content: center;
           align-items: center;
-          background-color: #5572fc;
+          background-color: #F97316;
           z-index: 9999;
           transition: transform 1s ease-in-out;
         }
@@ -43,3 +43,4 @@ const Preloader = ({ animateOut }) => {
 };
 
 export default Preloader;
+

@@ -1,4 +1,4 @@
-import { Form } from 'antd';
+﻿import { Form } from 'antd';
 import { useRouter } from 'next/navigation';
 import FormInput, { HiddenInput } from '../../../../../components/form/input';
 import { postLanguage } from '../../../../helpers/backend';
@@ -15,7 +15,7 @@ const LanguageForm = ({ isEdit, form }) => {
     return (
         <div className="bg-white rounded-xl shadow-[0_2px_10px_-4px_rgba(0,0,0,0.05)] border border-slate-100/80 overflow-hidden">
             <div className="px-6 py-4 border-b border-slate-100 bg-slate-50/50 flex items-center gap-3">
-                 <div className="w-8 h-8 rounded-lg bg-[#5572fc]/10 text-[#5572fc] flex items-center justify-center">
+                 <div className="w-8 h-8 rounded-lg bg-[#F97316]/10 text-[#F97316] flex items-center justify-center">
                       <FiGlobe size={16} />
                  </div>
                  <div>
@@ -38,7 +38,7 @@ const LanguageForm = ({ isEdit, form }) => {
                  <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4">
                      <div className="col-span-1 md:col-span-2">
                          <FormInput 
-                            placeholder={("e.g. English, Español")} 
+                            placeholder={("e.g. English, EspaÃ±ol")} 
                             name="name" 
                             label={<span className="text-xs font-bold text-gray-700 flex items-center gap-1.5"><FiGlobe size={12}/> Dialect Target Name</span>} 
                             required 
@@ -87,7 +87,7 @@ const LanguageForm = ({ isEdit, form }) => {
 
                  <div className="flex justify-end pt-5 mt-5 border-t border-slate-100">
                       <Button type='button' onClick={() => push('/admin/languages')} className="!bg-white !text-gray-600 !border-gray-200 hover:!bg-gray-50 !px-6 !py-2 !font-semibold !rounded-lg !text-xs mr-2 transition-all">Cancel</Button>
-                      <Button type='submit' className="!px-6 !py-2 flex items-center gap-1.5 shadow-md shadow-[#5572fc]/20 !font-semibold !rounded-lg !text-xs transition-all tracking-wide">
+                      <Button type='submit' className="!px-6 !py-2 flex items-center gap-1.5 shadow-md shadow-[#F97316]/20 !font-semibold !rounded-lg !text-xs transition-all tracking-wide">
                           <FiSave size={14}/> {i18n?.t(isEdit ? "Update Translation Rules" : "Register Engine Code")}
                       </Button>
                  </div>
@@ -97,3 +97,4 @@ const LanguageForm = ({ isEdit, form }) => {
 }
 
 export default LanguageForm
+

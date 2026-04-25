@@ -1,4 +1,4 @@
-import { Form } from 'antd';
+﻿import { Form } from 'antd';
 import React from 'react';
 import Button from '../common/button';
 
@@ -18,10 +18,10 @@ const BmiForm = ({ onFinish, form, pathName, i18n, isHome3 }) => {
                             <input
                                 name="weight"
                                 autoComplete="off"
-                                placeholder={i18n?.t('Weight in kg, e.g. 70…')}
+                                placeholder={i18n?.t('Weight in kg, e.g. 70â€¦')}
                                 type='number'
                                 onInput={(e) => e.target.value = e.target.value.replace(/[^0-9]/g, '')}
-                                className={`w-full rounded border px-4 py-[18px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5572fc] focus-visible:ring-offset-2 ${pathName?.name === 'home3' && isHome3 ? 'border-gray-100 bg-black text-white focus-visible:ring-offset-black' : 'bg-white text-textMain focus-visible:ring-offset-white'}`}
+                                className={`w-full rounded border px-4 py-[18px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F97316] focus-visible:ring-offset-2 ${pathName?.name === 'home3' && isHome3 ? 'border-gray-100 bg-black text-white focus-visible:ring-offset-black' : 'bg-white text-textMain focus-visible:ring-offset-white'}`}
                             />
                         </Form.Item>
                     </div>
@@ -36,10 +36,10 @@ const BmiForm = ({ onFinish, form, pathName, i18n, isHome3 }) => {
                             <input
                                 name="height"
                                 autoComplete="off"
-                                placeholder={i18n?.t('Height in cm, e.g. 175…')}
+                                placeholder={i18n?.t('Height in cm, e.g. 175â€¦')}
                                 type='number'
                                 onInput={(e) => e.target.value = e.target.value.replace(/[^0-9]/g, '')}
-                                className={`w-full rounded border px-4 py-[18px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5572fc] focus-visible:ring-offset-2 ${pathName?.name === 'home3' && isHome3 ? 'border-gray-100 bg-black text-white focus-visible:ring-offset-black' : 'bg-white text-textMain focus-visible:ring-offset-white'}`}
+                                className={`w-full rounded border px-4 py-[18px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F97316] focus-visible:ring-offset-2 ${pathName?.name === 'home3' && isHome3 ? 'border-gray-100 bg-black text-white focus-visible:ring-offset-black' : 'bg-white text-textMain focus-visible:ring-offset-white'}`}
                             />
                         </Form.Item>
                     </div>
@@ -53,10 +53,10 @@ const BmiForm = ({ onFinish, form, pathName, i18n, isHome3 }) => {
                             <input
                                 name="age"
                                 autoComplete="off"
-                                placeholder={i18n?.t('Age, e.g. 28…')}
+                                placeholder={i18n?.t('Age, e.g. 28â€¦')}
                                 type='number'
                                 onInput={(e) => e.target.value = e.target.value.replace(/[^0-9]/g, '')}
-                                className={`w-full rounded border px-4 py-[18px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5572fc] focus-visible:ring-offset-2 ${pathName?.name === 'home3' && isHome3 ? 'border-gray-100 bg-black text-white focus-visible:ring-offset-black' : 'bg-white text-textMain focus-visible:ring-offset-white'}`}
+                                className={`w-full rounded border px-4 py-[18px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F97316] focus-visible:ring-offset-2 ${pathName?.name === 'home3' && isHome3 ? 'border-gray-100 bg-black text-white focus-visible:ring-offset-black' : 'bg-white text-textMain focus-visible:ring-offset-white'}`}
                             />
                         </Form.Item>
                     </div>
@@ -71,7 +71,7 @@ const BmiForm = ({ onFinish, form, pathName, i18n, isHome3 }) => {
                             <select
                                 name="gender"
                                 aria-label={i18n?.t('Gender') || 'Gender'}
-                                className={`w-full rounded border px-4 py-[18px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5572fc] focus-visible:ring-offset-2 ${pathName?.name === 'home3' && isHome3 ? 'border-gray-100 bg-black text-white focus-visible:ring-offset-black' : 'bg-white text-textMain focus-visible:ring-offset-white'}`}
+                                className={`w-full rounded border px-4 py-[18px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F97316] focus-visible:ring-offset-2 ${pathName?.name === 'home3' && isHome3 ? 'border-gray-100 bg-black text-white focus-visible:ring-offset-black' : 'bg-white text-textMain focus-visible:ring-offset-white'}`}
                             >
                                 <option value='Male'>{i18n?.t('Male')}</option>
                                 <option value='Female'>{i18n?.t('Female')}</option>
@@ -91,7 +91,7 @@ const BmiForm = ({ onFinish, form, pathName, i18n, isHome3 }) => {
                         <select
                             name="activity"
                             aria-label={i18n?.t('Activity level') || 'Activity level'}
-                            className={`w-full rounded border px-4 py-[18px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5572fc] focus-visible:ring-offset-2 ${pathName?.name === 'home3' && isHome3 ? 'border-gray-100 bg-black text-white focus-visible:ring-offset-black' : 'bg-white text-textMain focus-visible:ring-offset-white'}`}
+                            className={`w-full rounded border px-4 py-[18px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F97316] focus-visible:ring-offset-2 ${pathName?.name === 'home3' && isHome3 ? 'border-gray-100 bg-black text-white focus-visible:ring-offset-black' : 'bg-white text-textMain focus-visible:ring-offset-white'}`}
                         >
                             <option value='Little to no exercise'>
                                 {i18n?.t('Little to no exercise')}
@@ -123,3 +123,4 @@ const BmiForm = ({ onFinish, form, pathName, i18n, isHome3 }) => {
 };
 
 export default BmiForm;
+

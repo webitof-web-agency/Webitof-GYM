@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 import React, { useState, useEffect } from 'react';
 import { Calendar, Drawer, Select, Button, Spin, notification } from 'antd';
 import dayjs from 'dayjs';
@@ -216,7 +216,7 @@ const NoticeCalendar = ({ _id = null, isAdmin = false }) => {
                     {
                         !_id ? (
                             <button
-                                className='rounded bg-[#5572fc] px-4 py-2 text-sm font-semibold text-white'
+                                className='rounded bg-[#F97316] px-4 py-2 text-sm font-semibold text-white'
                                 onClick={() => setOpenDrawer(true)}
                             >
                                 {!checkInOutStatus?.clockOut && checkInOutStatus?.clockIn
@@ -225,7 +225,7 @@ const NoticeCalendar = ({ _id = null, isAdmin = false }) => {
                             </button>
                         ) : !isAdmin && (
                             <button
-                                className='rounded bg-[#5572fc] px-4 py-2 text-sm font-semibold text-white'
+                                className='rounded bg-[#F97316] px-4 py-2 text-sm font-semibold text-white'
                                 onClick={() => router.back()}
                             >
                                 Back
@@ -298,20 +298,20 @@ const NoticeCalendar = ({ _id = null, isAdmin = false }) => {
                     </div>
                     <div className='flex w-full items-center justify-center border-t-[1px]'>
                         <div className='flex items-center gap-2 py-4'>
-                            <p className='border border-[#5572fc] px-3 py-1 text-base font-medium'>
+                            <p className='border border-[#F97316] px-3 py-1 text-base font-medium'>
                                 Today
                             </p>
-                            <p className='border border-[#5572fc] px-3 py-1 text-base font-medium'>
+                            <p className='border border-[#F97316] px-3 py-1 text-base font-medium'>
                                 {currentDateTime.format('h:mm A')}
                             </p>
                         </div>
                     </div>
 
                     {loadingClockIn ? (
-                        <InfinitySpin width='140' color='#5572fc' />
+                        <InfinitySpin width='140' color='#F97316' />
                     ) : (
                         <button
-                            className='rounded bg-[#5572fc] px-4 py-2 text-sm font-semibold text-white'
+                            className='rounded bg-[#F97316] px-4 py-2 text-sm font-semibold text-white'
                             onClick={handleClockIn}
                         >
                             {!checkInOutStatus?.clockOut && checkInOutStatus?.clockIn
@@ -326,3 +326,4 @@ const NoticeCalendar = ({ _id = null, isAdmin = false }) => {
 };
 
 export default NoticeCalendar;
+

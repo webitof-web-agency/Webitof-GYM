@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 import Image from "next/image";
 import React, { useState } from "react";
 import { Skeleton } from "antd";
@@ -72,8 +72,8 @@ const Hero = ({ data, loading }) => {
                         ) : (
                             <button
                                 className={`${activeSection === "Mission"
-                                    ? "text-[#5572fc] font-poppins underline font-bold"
-                                    : "text-textMain font-poppins hover:text-[#5572fc]"
+                                    ? "text-[#F97316] font-poppins underline font-bold"
+                                    : "text-textMain font-poppins hover:text-[#F97316]"
                                     }`}
                                 onClick={() => setActiveSection("Mission")}
                             >
@@ -85,8 +85,8 @@ const Hero = ({ data, loading }) => {
                         ) : (
                             <button
                                 className={`${activeSection === "Vision"
-                                    ? "text-[#5572fc] font-poppins underline font-bold"
-                                    : "text-textMain font-poppins hover:text-[#5572fc]"
+                                    ? "text-[#F97316] font-poppins underline font-bold"
+                                    : "text-textMain font-poppins hover:text-[#F97316]"
                                     }`}
                                 onClick={() => setActiveSection("Vision")}
                             >
@@ -98,8 +98,8 @@ const Hero = ({ data, loading }) => {
                         ) : (
                             <button
                                 className={`${activeSection === "Values"
-                                    ? "text-[#5572fc] font-poppins underline font-bold"
-                                    : "text-textMain font-poppins hover:text-[#5572fc]"
+                                    ? "text-[#F97316] font-poppins underline font-bold"
+                                    : "text-textMain font-poppins hover:text-[#F97316]"
                                     }`}
                                 onClick={() => setActiveSection("Values")}
                             >

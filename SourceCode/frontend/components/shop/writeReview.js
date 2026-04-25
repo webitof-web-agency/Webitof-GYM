@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { Form,  Rate } from 'antd';
 import Button from '../common/button';
 import FormInput from '../form/input';
@@ -21,7 +21,7 @@ const WriteReview = ({ productId }) => {
     return (
         <Form form={form} layout="vertical" className='border  p-7 rounded' onFinish={onFinish}>
             <Form.Item name="rating" label={i18n?.t("Rating")}  rules={[{ required: true, message: 'Please provide a rating' }]}>
-                <Rate className='!text-[#5572fc]'/>
+                <Rate className='!text-[#F97316]'/>
             </Form.Item>
             <FormInput name="review" textArea={true} placeholder={i18n.t("Write a review")} row={4} label="Review" rules={[{ required: true, message: i18n.t('Please provide a review') }]} />
             
@@ -34,3 +34,4 @@ const WriteReview = ({ productId }) => {
 };
 
 export default WriteReview;
+

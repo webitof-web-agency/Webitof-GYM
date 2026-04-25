@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 import { useParams, useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import PageTitle from '../../../../components/common/page-title';
@@ -71,7 +71,7 @@ const page = () => {
             formatter: (_, d) => (
                 <div className="flex flex-col gap-0.5">
                     <span className="text-xs font-bold text-gray-800 capitalize leading-tight line-clamp-1">{d?.name}</span>
-                    <span className="text-[9px] font-bold text-[#5572fc] bg-[#5572fc]/10 px-1.5 py-0.5 rounded uppercase tracking-wider w-fit">{d?.role}</span>
+                    <span className="text-[9px] font-bold text-[#F97316] bg-[#F97316]/10 px-1.5 py-0.5 rounded uppercase tracking-wider w-fit">{d?.role}</span>
                 </div>
             ) 
         },
@@ -103,7 +103,7 @@ const page = () => {
                         onClick={() => {
                             useActionConfirm(addOrRemoveMarketingGroupUser, { _id: params?._id, userId: d?._id }, getData, 'Are you sure you want to add this user to the group?', 'Yes, Add');
                         }}
-                        className="flex items-center gap-1 bg-white hover:bg-[#5572fc]/10 text-gray-600 hover:text-[#5572fc] text-[10px] font-bold px-3 py-1.5 rounded-lg border border-slate-200 hover:border-[#5572fc]/30 transition-all whitespace-nowrap w-fit"
+                        className="flex items-center gap-1 bg-white hover:bg-[#F97316]/10 text-gray-600 hover:text-[#F97316] text-[10px] font-bold px-3 py-1.5 rounded-lg border border-slate-200 hover:border-[#F97316]/30 transition-all whitespace-nowrap w-fit"
                     >
                         <FiPlus size={11} /> Add to Group
                     </button>
@@ -134,7 +134,7 @@ const page = () => {
                     noActions={true}
                     action={
                         <Button
-                            className="flex items-center gap-1.5 !px-4 shadow-md shadow-[#5572fc]/20 hover:shadow-lg hover:shadow-[#5572fc]/30 transition-all !h-8 !py-0 !rounded-lg block !w-auto !text-xs whitespace-nowrap"
+                            className="flex items-center gap-1.5 !px-4 shadow-md shadow-[#F97316]/20 hover:shadow-lg hover:shadow-[#F97316]/30 transition-all !h-8 !py-0 !rounded-lg block !w-auto !text-xs whitespace-nowrap"
                             onClick={() => setOpen(true)}
                         >
                             <FiPlus size={14} /> Add User To Group
@@ -151,7 +151,7 @@ const page = () => {
                 footer={null}
                 title={
                     <div className="flex items-center gap-2.5 pb-2.5 border-b border-gray-100">
-                        <div className="w-8 h-8 rounded-lg bg-[#5572fc]/10 text-[#5572fc] flex items-center justify-center">
+                        <div className="w-8 h-8 rounded-lg bg-[#F97316]/10 text-[#F97316] flex items-center justify-center">
                             <FiUsers size={15} />
                         </div>
                         <div>

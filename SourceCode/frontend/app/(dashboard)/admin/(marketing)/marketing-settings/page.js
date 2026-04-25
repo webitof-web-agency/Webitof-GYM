@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 import { Form } from 'antd';
 import React, { useEffect, useState } from 'react';
 import GmailEmailProvider from './gmail';
@@ -36,7 +36,7 @@ const MarkettingSettings = () => {
                             onClick={() => setActiveTab('sendgrid')}
                             className={`flex items-center gap-2 px-5 py-2.5 rounded-t-xl text-xs font-bold transition-all duration-200 border-b-2 -mb-[1px] ${
                                 activeTab === 'sendgrid'
-                                    ? 'bg-white text-[#5572fc] border-[#5572fc] shadow-sm'
+                                    ? 'bg-white text-[#F97316] border-[#F97316] shadow-sm'
                                     : 'text-gray-500 border-transparent hover:text-gray-700 hover:bg-white/60'
                             }`}
                         >
@@ -50,7 +50,7 @@ const MarkettingSettings = () => {
                             onClick={() => setActiveTab('gmail')}
                             className={`flex items-center gap-2 px-5 py-2.5 rounded-t-xl text-xs font-bold transition-all duration-200 border-b-2 -mb-[1px] ${
                                 activeTab === 'gmail'
-                                    ? 'bg-white text-[#5572fc] border-[#5572fc] shadow-sm'
+                                    ? 'bg-white text-[#F97316] border-[#F97316] shadow-sm'
                                     : 'text-gray-500 border-transparent hover:text-gray-700 hover:bg-white/60'
                             }`}
                         >
@@ -96,7 +96,7 @@ const MarkettingSettings = () => {
                                     onClick={() => setActiveRootTab(index)}
                                     className={`flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-bold transition-all duration-200 w-full text-left ${
                                         isActive
-                                            ? "bg-[#5572fc] text-white shadow-md shadow-[#5572fc]/20"
+                                            ? "bg-[#F97316] text-white shadow-md shadow-[#F97316]/20"
                                             : "text-gray-600 hover:bg-slate-50 hover:text-gray-900"
                                     }`}
                                 >

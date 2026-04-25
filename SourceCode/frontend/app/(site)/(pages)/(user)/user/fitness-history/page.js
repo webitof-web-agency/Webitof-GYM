@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 import React, { useState } from 'react';
 import { useI18n } from '../../../../../providers/i18n';
 import dayjs from 'dayjs';
@@ -59,7 +59,7 @@ const page = () => {
     return (
         <div className="bg-white">
             <div className='flex justify-end mb-6'>
-                <Link href={"/bmi-calculator"} className='!h-fit !py-2.5 !px-6 bg-[#5572fc] hover:bg-indigo-600 transition-all text-white font-medium rounded-xl shadow-sm hover:-translate-y-0.5 inline-block'>{i18n?.t("Check Fitness")}</Link>
+                <Link href={"/bmi-calculator"} className='!h-fit !py-2.5 !px-6 bg-[#F97316] hover:bg-indigo-600 transition-all text-white font-medium rounded-xl shadow-sm hover:-translate-y-0.5 inline-block'>{i18n?.t("Check Fitness")}</Link>
             </div>
             <div className='hide-scrollbar'>
                 <TrainerTable

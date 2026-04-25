@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 import React, { useState } from "react";
 import ServiceCard from "../(home-2)/components/serviceCard";
 import { fetchServices } from "../../../helpers/backend";
@@ -24,9 +24,9 @@ const Services = () => {
         <div className="container py-16 lg:py-24">
             {/* Section header */}
             <div className='mb-12'>
-                <div className='inline-flex items-center gap-2 rounded-full border border-[#5572fc]/25 bg-[#5572fc]/8 px-4 py-1.5 mb-4'>
-                    <FiGrid size={11} className='text-[#5572fc]' />
-                    <span className='text-[11px] font-black text-[#5572fc] uppercase tracking-widest'>{i18n?.t('What We Offer')}</span>
+                <div className='inline-flex items-center gap-2 rounded-full border border-[#F97316]/25 bg-[#F97316]/8 px-4 py-1.5 mb-4'>
+                    <FiGrid size={11} className='text-[#F97316]' />
+                    <span className='text-[11px] font-black text-[#F97316] uppercase tracking-widest'>{i18n?.t('What We Offer')}</span>
                 </div>
                 <motion.h2
                     initial={{ opacity: 0, x: -30 }}
@@ -35,7 +35,7 @@ const Services = () => {
                     transition={{ duration: 0.5, ease: 'easeOut' }}
                     className='text-3xl lg:text-4xl font-extrabold text-gray-800 tracking-tight leading-tight'
                 >
-                    {i18n?.t("Services We're")} <span className='text-[#5572fc]'>{i18n?.t('Offering')}</span>
+                    {i18n?.t("Services We're")} <span className='text-[#F97316]'>{i18n?.t('Offering')}</span>
                 </motion.h2>
             </div>
 

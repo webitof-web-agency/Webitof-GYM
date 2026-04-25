@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 import React, { useState } from 'react';
 import dayjs from 'dayjs';
 import { useRouter } from 'next/navigation';
@@ -243,7 +243,7 @@ const UsersPageContent = () => {
                             </div>
                             <Button
                                 onClick={() => setOpen(true)}
-                                className="flex items-center gap-1.5 !px-4 shadow-md shadow-[#5572fc]/20 hover:shadow-lg hover:shadow-[#5572fc]/30 transition-all !h-8 !py-0 !rounded-lg block !w-auto !text-xs whitespace-nowrap"
+                                className="flex items-center gap-1.5 !px-4 shadow-md shadow-[#F97316]/20 hover:shadow-lg hover:shadow-[#F97316]/30 transition-all !h-8 !py-0 !rounded-lg block !w-auto !text-xs whitespace-nowrap"
                             >
                                 <FiPlus size={14} />
                                 {i18n?.t('Add Member')}
@@ -253,7 +253,7 @@ const UsersPageContent = () => {
                     actions={(d) => (
                         <div className='flex items-center gap-2'>
                             <button
-                                className='flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-[#5572fc]/30 text-[#5572fc] hover:bg-[#5572fc] hover:text-white transition-all duration-300 text-[11px] font-bold shadow-sm bg-white whitespace-nowrap'
+                                className='flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-[#F97316]/30 text-[#F97316] hover:bg-[#F97316] hover:text-white transition-all duration-300 text-[11px] font-bold shadow-sm bg-white whitespace-nowrap'
                                 onClick={(e) => {
                                     e.stopPropagation();
                                     setIsReset(true);
@@ -292,7 +292,7 @@ const UsersPageContent = () => {
                 }}
                 title={
                     <div className="flex items-center gap-2.5 pb-2.5 border-b border-gray-100">
-                        <div className={`w-8 h-8 rounded-lg ${renue ? 'bg-orange-100 text-orange-500' : 'bg-[#5572fc]/10 text-[#5572fc]'} flex items-center justify-center`}>
+                        <div className={`w-8 h-8 rounded-lg ${renue ? 'bg-orange-100 text-orange-500' : 'bg-[#F97316]/10 text-[#F97316]'} flex items-center justify-center`}>
                             {renue ? <FiRefreshCw size={16} /> : <FiUser size={16} />}
                         </div>
                         <div>
@@ -424,7 +424,7 @@ const UsersPageContent = () => {
                     <div className="rounded-lg border border-slate-100 bg-slate-50/60 px-3 py-2 text-[11px] text-gray-600">
                         <span className="font-semibold text-gray-700">Plan Price:</span>{' '}
                         {selectedPlan && selectedSubscriptionType ? (
-                            <span className="font-bold text-[#5572fc]">
+                            <span className="font-bold text-[#F97316]">
                                 {displayCurrencySymbol}{displayPrice}
                                 <span className="ml-1 text-[10px] font-semibold text-gray-500 uppercase">
                                     {selectedSubscriptionType}
@@ -453,7 +453,7 @@ const UsersPageContent = () => {
                         </Button>
                         <Button
                             type='submit'
-                            className='!px-5 !py-1.5 flex items-center gap-1.5 shadow-sm shadow-[#5572fc]/20 !font-semibold !rounded-lg block w-fit !text-xs'
+                            className='!px-5 !py-1.5 flex items-center gap-1.5 shadow-sm shadow-[#F97316]/20 !font-semibold !rounded-lg block w-fit !text-xs'
                         >
                             {renue ? <FiRefreshCw size={14} /> : <FiPlus size={14} />}
                             {renue ? i18n?.t('Confirm Renew') : i18n?.t('Save Details')}
@@ -518,7 +518,7 @@ const UsersPageContent = () => {
                         >
                             Cancel
                         </Button>
-                        <Button type='submit' loading={loading} className="!px-5 !py-1.5 shadow-md shadow-[#5572fc]/20 !font-semibold !rounded-lg block w-fit !text-xs">
+                        <Button type='submit' loading={loading} className="!px-5 !py-1.5 shadow-md shadow-[#F97316]/20 !font-semibold !rounded-lg block w-fit !text-xs">
                             {i18n?.t('Reset Pass')}
                         </Button>
                     </div>
@@ -628,3 +628,4 @@ const UsersPageContent = () => {
 };
 
 export default UsersPageContent;
+

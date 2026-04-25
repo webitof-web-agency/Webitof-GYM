@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 import React, { useState } from 'react';
 import { Pagination } from 'antd';
 import BasicBar from '../../../../components/common/basic-bar';
@@ -48,7 +48,7 @@ const Shop = () => {
                     transition={{ duration: 0.6, ease: "easeOut" }}
                     className="bg-white rounded gap-4 flex md:flex-row flex-col-reverse items-center w-full md:px-4 shadow-sm md:border border-gray-200">
                     <div className='flex justify-between w-full border md:border-none px-3 md:px-0 '>
-                        <button type="button" aria-label={i18n?.t('Search products') || 'Search products'} className="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5572fc] focus-visible:ring-offset-2 focus-visible:ring-offset-white">
+                        <button type="button" aria-label={i18n?.t('Search products') || 'Search products'} className="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F97316] focus-visible:ring-offset-2 focus-visible:ring-offset-white">
                             <Image src={'/searchicon.png'} width={24} height={24} alt="search" className='
                        min-w-6 '/>
                         </button>
@@ -56,8 +56,8 @@ const Shop = () => {
                             name="search"
                             type="search"
                             autoComplete="off"
-                            placeholder={i18n?.t("Search brands and products, e.g. protein powder…")}
-                            className="w-full pl-3 py-4 text-[#534C4C] text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5572fc] focus-visible:ring-offset-2 focus-visible:ring-offset-white bg-transparent"
+                            placeholder={i18n?.t("Search brands and products, e.g. protein powderâ€¦")}
+                            className="w-full pl-3 py-4 text-[#534C4C] text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F97316] focus-visible:ring-offset-2 focus-visible:ring-offset-white bg-transparent"
                             onChange={e => {
                                 if (e.target.value.length === 0) {
                                     getAllProducts({ langCode: langCode })
@@ -73,7 +73,7 @@ const Shop = () => {
                             onChange={e => { getAllProducts({ category: e.target.value, langCode: langCode }) }}
                             defaultValue=""
                             aria-label={i18n?.t('Product category') || 'Product category'}
-                            className="text-base w-full md:w-fit pl-4 pr-8 py-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5572fc] focus-visible:ring-offset-2 focus-visible:ring-offset-white rounded-md !bg-transparent transition-all duration-300"
+                            className="text-base w-full md:w-fit pl-4 pr-8 py-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F97316] focus-visible:ring-offset-2 focus-visible:ring-offset-white rounded-md !bg-transparent transition-all duration-300"
                         >
                             <option value="">{i18n?.t('All Categories')}</option>
                             {
@@ -91,7 +91,7 @@ const Shop = () => {
                             onChange={e => { getAllProducts({ category: e.target.value, langCode: langCode }) }}
                             defaultValue=""
                             aria-label={i18n?.t('Product category') || 'Product category'}
-                            className="text-base w-full md:w-fit pl-4 pr-8 py-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5572fc] focus-visible:ring-offset-2 focus-visible:ring-offset-white rounded-md transition-all duration-300 !bg-transparent"
+                            className="text-base w-full md:w-fit pl-4 pr-8 py-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F97316] focus-visible:ring-offset-2 focus-visible:ring-offset-white rounded-md transition-all duration-300 !bg-transparent"
                         >
                             <option value="">{i18n?.t('All Categories')}</option>
                             {
@@ -138,3 +138,4 @@ const Shop = () => {
 };
 
 export default Shop;
+

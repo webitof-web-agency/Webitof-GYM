@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 import React, { useState } from 'react';
 import { AiOutlineContacts } from "react-icons/ai";
 import { MdOutlinePrivacyTip } from "react-icons/md";
@@ -86,19 +86,19 @@ const Content = () => {
                                         key={index}
                                         className={`group flex items-center gap-3 p-3 rounded-lg cursor-pointer transition-all duration-300 ${
                                             isActive 
-                                              ? "bg-[#5572fc] text-white shadow-md shadow-[#5572fc]/20" 
-                                              : "bg-transparent text-gray-600 hover:bg-[#5572fc]/5 hover:text-[#5572fc]"
+                                              ? "bg-[#F97316] text-white shadow-md shadow-[#F97316]/20" 
+                                              : "bg-transparent text-gray-600 hover:bg-[#F97316]/5 hover:text-[#F97316]"
                                         }`}
                                         onClick={() => setTab(index)}
                                     >
-                                        <div className={`flex items-center justify-center shrink-0 w-8 h-8 rounded-md ${isActive ? 'bg-white/20' : 'bg-slate-100 text-gray-400 group-hover:bg-[#5572fc]/10 group-hover:text-[#5572fc]'}`}>
+                                        <div className={`flex items-center justify-center shrink-0 w-8 h-8 rounded-md ${isActive ? 'bg-white/20' : 'bg-slate-100 text-gray-400 group-hover:bg-[#F97316]/10 group-hover:text-[#F97316]'}`}>
                                             {method.icon}
                                         </div>
                                         <div className="flex flex-col">
-                                            <div className={`text-[13px] font-bold ${isActive ? 'text-white' : 'text-gray-800 group-hover:text-[#5572fc]'}`}>
+                                            <div className={`text-[13px] font-bold ${isActive ? 'text-white' : 'text-gray-800 group-hover:text-[#F97316]'}`}>
                                                 {i18n.t(method.label)}
                                             </div>
-                                            <div className={`text-[10px] font-semibold mt-0.5 tracking-wide ${isActive ? 'text-white/80' : 'text-gray-400 group-hover:text-[#5572fc]/60'}`}>
+                                            <div className={`text-[10px] font-semibold mt-0.5 tracking-wide ${isActive ? 'text-white/80' : 'text-gray-400 group-hover:text-[#F97316]/60'}`}>
                                                 {method.desc}
                                             </div>
                                         </div>

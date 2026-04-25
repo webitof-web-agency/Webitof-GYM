@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 import { FaMapLocationDot } from "react-icons/fa6";
 import BasicBar from "../../../../components/common/basic-bar";
 import { CiStopwatch } from "react-icons/ci";
@@ -62,7 +62,7 @@ const Page = () => {
                   height={200}
                   className="w-full h-[390px] rounded-b-full object-cover"
                 />
-                <div className="absolute inset-0 bg-[#5572fc] rounded-b-full opacity-0 transition-opacity duration-300 group-hover:opacity-[0.4]"></div>
+                <div className="absolute inset-0 bg-[#F97316] rounded-b-full opacity-0 transition-opacity duration-300 group-hover:opacity-[0.4]"></div>
                 <div className="absolute top-3 left-3 bg-white rounded-full px-3 py-1 text-sm font-semibold">
                   {dayjs(data?.start_date).format('MMMM D')}
                 </div>

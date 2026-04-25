@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 import { paySubscriptionDueByAdmin, subscriptionHistory, fetchUserPaymentMethods } from '../../../helpers/backend';
 import { useFetch } from '../../../helpers/hooks';
 import PageTitle from '../../components/common/page-title';
@@ -65,7 +65,7 @@ const Page = () => {
             dataField: 'subscription',
             formatter: (_, d) => (
                 <div className="flex flex-col">
-                    <span className="font-bold text-[#5572fc] text-xs capitalize truncate max-w-[150px] leading-tight flex items-center gap-1">
+                    <span className="font-bold text-[#F97316] text-xs capitalize truncate max-w-[150px] leading-tight flex items-center gap-1">
                         {d?.subscription?.name ? columnFormatter(d?.subscription?.name) : "Deleted Plan"}
                     </span>
                     <span className="text-[10px] text-gray-500 font-bold tracking-wide mt-1 uppercase bg-slate-50 border border-slate-100 px-1.5 w-fit rounded">
@@ -96,7 +96,7 @@ const Page = () => {
             formatter: (_, d) => (
                 <div className="flex flex-col gap-1.5 items-start">
                     {d?.payment?.status === "paid" ? (
-                        <span className="inline-flex items-center gap-1 rounded-md px-2 py-0.5 text-[9px] font-bold uppercase bg-blue-50 text-blue-600 border border-blue-100/50">
+                        <span className="inline-flex items-center gap-1 rounded-md px-2 py-0.5 text-[9px] font-bold uppercase bg-orange-50 text-orange-600 border border-orange-100/50">
                             PAID IN FULL
                         </span>
                     ) : d?.payment?.status === "partial" ? (
@@ -274,3 +274,4 @@ const Page = () => {
 };
 
 export default Page;
+

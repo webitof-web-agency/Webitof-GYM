@@ -1,4 +1,4 @@
-import React from 'react'
+﻿import React from 'react'
 import BasicBar from '../components/common/basic-bar'
 
 import Image from 'next/image'
@@ -14,7 +14,7 @@ export default function NotFound() {
         <h1 className='profileHeading text-center'>Whoops! That page doesn't exist.</h1>
         <Image src="/404.png" alt="404" width={740} height={594} />
         <h2 className='feturetitle lg:mt-[64px] mt-7 lg:mb-[50px] mb-7 text-textBody'>The page you requested could not be found</h2>
-        <Button className='bg-[#5572fc] text-white'>
+        <Button className='bg-[#F97316] text-white'>
         <Link href="/">
         back to home
         </Link>
@@ -23,3 +23,4 @@ export default function NotFound() {
     </div>
   )
 }
+

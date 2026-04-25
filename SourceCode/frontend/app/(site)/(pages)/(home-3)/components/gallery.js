@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 import { Image } from 'antd';
 import Link from 'next/link';
 import React from 'react';
@@ -74,7 +74,7 @@ const Gallery = () => {
                     );
                 })}
             </div>
-            <Link href='/gallary' className='button mt-10 border-b w-fit mx-auto border-[#5572fc] text-[#5572fc] flex justify-center'>
+            <Link href='/gallary' className='button mt-10 border-b w-fit mx-auto border-[#F97316] text-[#F97316] flex justify-center'>
                 {i18n?.t('View All')}
             </Link>
         </div>

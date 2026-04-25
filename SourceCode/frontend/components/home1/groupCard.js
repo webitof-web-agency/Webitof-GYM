@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { useI18n } from '../../app/providers/i18n';
 import Image from 'next/image';
 import { FiArrowRight, FiCheckCircle, FiUsers } from 'react-icons/fi';
@@ -17,7 +17,7 @@ const GroupCard = ({ group, index = 0 }) => {
             viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 0.6, ease: 'easeOut', delay: (index % 4) * 0.08 }}
             whileHover={{ y: -4, transition: { duration: 0.2 } }}
-            className='group relative bg-white rounded-2xl overflow-hidden border border-slate-100 shadow-[0_4px_20px_-6px_rgba(0,0,0,0.07)] hover:shadow-[0_16px_40px_-8px_rgba(85,114,252,0.13)] hover:border-[#5572fc]/20 transition-all duration-300 cursor-pointer'
+            className='group relative bg-white rounded-2xl overflow-hidden border border-slate-100 shadow-[0_4px_20px_-6px_rgba(0,0,0,0.07)] hover:shadow-[0_16px_40px_-8px_rgba(85,114,252,0.13)] hover:border-[#F97316]/20 transition-all duration-300 cursor-pointer'
             onClick={() => push(`/group/${group?._id}`)}
         >
             {/* Cover image */}
@@ -30,17 +30,17 @@ const GroupCard = ({ group, index = 0 }) => {
                         className='object-cover transition-transform duration-500 group-hover:scale-105'
                     />
                 ) : (
-                    <div className='w-full h-full flex items-center justify-center bg-gradient-to-br from-[#5572fc]/10 to-[#7c93ff]/10'>
-                        <FiUsers size={48} className='text-[#5572fc]/30' />
+                    <div className='w-full h-full flex items-center justify-center bg-gradient-to-br from-[#F97316]/10 to-[#FB923C]/10'>
+                        <FiUsers size={48} className='text-[#F97316]/30' />
                     </div>
                 )}
                 {/* Top accent */}
-                <div className='absolute top-0 left-0 right-0 h-0.5 bg-[#5572fc] scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left' />
+                <div className='absolute top-0 left-0 right-0 h-0.5 bg-[#F97316] scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left' />
             </div>
 
             {/* Content */}
             <div className='p-5'>
-                <h4 className='text-[14px] font-extrabold text-gray-800 capitalize leading-tight group-hover:text-[#5572fc] transition-colors mb-3'>
+                <h4 className='text-[14px] font-extrabold text-gray-800 capitalize leading-tight group-hover:text-[#F97316] transition-colors mb-3'>
                     {group?.name?.[i18n.langCode]}
                 </h4>
 
@@ -49,7 +49,7 @@ const GroupCard = ({ group, index = 0 }) => {
                     <ul className='space-y-1.5 mb-4'>
                         {group.facilities.slice(0, 3).map((facility, i) => (
                             <li key={i} className='flex items-center gap-2'>
-                                <FiCheckCircle size={12} className='text-[#5572fc] shrink-0' />
+                                <FiCheckCircle size={12} className='text-[#F97316] shrink-0' />
                                 <span className='text-[12px] text-gray-500 font-medium line-clamp-1'>{facility?.[i18n.langCode]}</span>
                             </li>
                         ))}
@@ -57,7 +57,7 @@ const GroupCard = ({ group, index = 0 }) => {
                 )}
 
                 {/* Read more */}
-                <div className='flex items-center gap-1.5 text-[12px] font-bold text-gray-400 group-hover:text-[#5572fc] transition-colors'>
+                <div className='flex items-center gap-1.5 text-[12px] font-bold text-gray-400 group-hover:text-[#F97316] transition-colors'>
                     {i18n?.t('View Group')}
                     <FiArrowRight size={12} className='transition-transform group-hover:translate-x-1' />
                 </div>
@@ -67,3 +67,4 @@ const GroupCard = ({ group, index = 0 }) => {
 };
 
 export default GroupCard;
+

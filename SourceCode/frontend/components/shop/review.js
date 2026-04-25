@@ -1,4 +1,4 @@
-import { Rate } from 'antd';
+﻿import { Rate } from 'antd';
 import Image from 'next/image';
 import React from 'react';
 import dayjs from 'dayjs';
@@ -28,7 +28,7 @@ const Review = ({ review }) => {
                     />
                     <div className="space-y-3">
                         <div className="flex items-center space-x-4">
-                            <Rate disabled defaultValue={val?.rating} className='!text-[#5572fc]'/>
+                            <Rate disabled defaultValue={val?.rating} className='!text-[#F97316]'/>
                             <span className="text-sm text-gray-500">{dayjs(val?.createdAt).format('DD MMM YYYY')}</span>
                         </div>
                         <p className="font-semibold text-gray-800">{val?.user?.name}</p>
@@ -41,3 +41,4 @@ const Review = ({ review }) => {
 };
 
 export default Review;
+

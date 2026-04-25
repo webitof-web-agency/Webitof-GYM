@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 import React, { useState } from 'react';
 import BannerTitle from '../common/banner-title';
 import PricingCard from './pricingCard';
@@ -34,7 +34,7 @@ const Pricing = () => {
             <div className="md:mt-10">
                 <label className="flex md:hidden cursor-pointer items-center my-5 w-fit mx-auto gap-2">
                     <span
-                        className={`font-poppins ${activeTab === 'monthly' ? 'text-[#5572fc]' : 'text-textMain'}`}
+                        className={`font-poppins ${activeTab === 'monthly' ? 'text-[#F97316]' : 'text-textMain'}`}
                     >
                         {i18n?.t('Monthly')}
                     </span>
@@ -45,7 +45,7 @@ const Pricing = () => {
                         className="toggle"
                     />
                     <span
-                        className={`font-poppins ${activeTab === 'yearly' ? 'text-[#5572fc]' : 'text-textMain'}`}
+                        className={`font-poppins ${activeTab === 'yearly' ? 'text-[#F97316]' : 'text-textMain'}`}
                     >
                         {i18n?.t('Yearly')}
                     </span>
@@ -75,3 +75,4 @@ const Pricing = () => {
 };
 
 export default Pricing;
+

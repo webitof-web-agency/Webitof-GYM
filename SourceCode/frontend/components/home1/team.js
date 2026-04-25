@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 import React, { useEffect, useRef, useState } from 'react';
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from 'react-icons/md';
 import 'swiper/css';
@@ -72,8 +72,8 @@ const Team = () => {
             <div className='flex justify-between items-center '>
                 <BannerTitle home3={findDefaultTheme} subtitle={i18n?.t('team')} title={i18n?.t("meet the pros")} className={''} />
                 <div className='flex items-center gap-6 mt-6 '>
-                    <button onClick={goPrev} className='w-[40px] h-[40px] rounded-full box-shadow flex items-center justify-center text-[#5572fc] hover:bg-[#5572fc] hover:text-white duration-500'><MdKeyboardArrowLeft size={30} /></button>
-                    <button onClick={goNext} className='w-[40px] h-[40px] rounded-full box-shadow flex items-center justify-center text-[#5572fc] hover:bg-[#5572fc] hover:text-white duration-500'><MdKeyboardArrowRight size={30} /></button>
+                    <button onClick={goPrev} className='w-[40px] h-[40px] rounded-full box-shadow flex items-center justify-center text-[#F97316] hover:bg-[#F97316] hover:text-white duration-500'><MdKeyboardArrowLeft size={30} /></button>
+                    <button onClick={goNext} className='w-[40px] h-[40px] rounded-full box-shadow flex items-center justify-center text-[#F97316] hover:bg-[#F97316] hover:text-white duration-500'><MdKeyboardArrowRight size={30} /></button>
                 </div>
             </div>
             <div className='overflow-hidden mt-10'>
@@ -122,3 +122,4 @@ const Team = () => {
 };
 
 export default Team;
+

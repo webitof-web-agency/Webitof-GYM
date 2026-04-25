@@ -1,4 +1,4 @@
-import { Modal, Button } from 'antd';
+﻿import { Modal, Button } from 'antd';
 import dayjs from 'dayjs';
 import React, { useState } from 'react';
 import { FiMail, FiUsers, FiClock, FiCheck, FiFileText, FiX } from 'react-icons/fi';
@@ -16,7 +16,7 @@ const EmailDetails = ({ open, setOpen, details }) => {
             destroyOnClose
             title={
                 <div className="flex items-center gap-2.5 pb-2.5 border-b border-gray-100">
-                    <div className="w-8 h-8 rounded-lg bg-[#5572fc]/10 text-[#5572fc] flex items-center justify-center">
+                    <div className="w-8 h-8 rounded-lg bg-[#F97316]/10 text-[#F97316] flex items-center justify-center">
                         <FiMail size={15} />
                     </div>
                     <div>
@@ -45,7 +45,7 @@ const EmailDetails = ({ open, setOpen, details }) => {
                         <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest flex items-center gap-1">
                             <FiUsers size={10} /> Sender Detail
                         </span>
-                        <span className="text-xs font-bold text-[#5572fc]">
+                        <span className="text-xs font-bold text-[#F97316]">
                             {details?.from || 'Default Sender Address'}
                         </span>
                     </div>
@@ -76,7 +76,7 @@ const EmailDetails = ({ open, setOpen, details }) => {
                         {details?.to?.length > maxRecipientsToShow && (
                             <div className="mt-3 pt-3 border-t border-slate-50 flex justify-center">
                                 <button 
-                                    className="text-[10px] font-bold text-[#5572fc] hover:text-[#5572fc]/80 uppercase tracking-wide bg-[#5572fc]/10 px-3 py-1 rounded"
+                                    className="text-[10px] font-bold text-[#F97316] hover:text-[#F97316]/80 uppercase tracking-wide bg-[#F97316]/10 px-3 py-1 rounded"
                                     onClick={() => setShowAllRecipients(!showAllRecipients)}
                                 >
                                     {showAllRecipients ? 'Collapse Target List' : `View ${details.to.length - maxRecipientsToShow} More Target Emails`}
@@ -122,3 +122,4 @@ const EmailDetails = ({ open, setOpen, details }) => {
 };
 
 export default EmailDetails;
+

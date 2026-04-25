@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 import React, { useState } from 'react';
 import dayjs from 'dayjs';
 import PageTitle from '../../components/common/page-title';
@@ -67,11 +67,11 @@ const page = () => {
                 <div className="flex flex-col gap-1.5">
                     <div className="flex items-center gap-1.5 min-w-[100px]">
                         <div className="w-4 h-4 rounded flex items-center justify-center bg-emerald-50 text-emerald-500"><FiLogIn size={9}/></div>
-                        <span className="text-[10px] font-bold text-gray-700">{d?.clockIn ? dayjs(d?.clockIn).format('hh:mm A') : "—"}</span>
+                        <span className="text-[10px] font-bold text-gray-700">{d?.clockIn ? dayjs(d?.clockIn).format('hh:mm A') : "â€”"}</span>
                     </div>
                     <div className="flex items-center gap-1.5 min-w-[100px]">
                         <div className="w-4 h-4 rounded flex items-center justify-center bg-slate-50 text-gray-500 border border-slate-200"><FiLogOut size={9}/></div>
-                        <span className="text-[10px] font-bold text-gray-700">{d?.clockOut ? dayjs(d?.clockOut).format('hh:mm A') : "—"}</span>
+                        <span className="text-[10px] font-bold text-gray-700">{d?.clockOut ? dayjs(d?.clockOut).format('hh:mm A') : "â€”"}</span>
                     </div>
                 </div>
             )
@@ -82,7 +82,7 @@ const page = () => {
             formatter: (_, d) => (
                 <span className="text-[10px] font-bold text-purple-600 bg-purple-50 px-2 py-1 rounded-md border border-purple-100 inline-flex items-center gap-1 whitespace-nowrap">
                     <FiClock size={10} />
-                    {d?.totalHours ? `${d?.totalHours} hrs` : "—"}
+                    {d?.totalHours ? `${d?.totalHours} hrs` : "â€”"}
                 </span>
             ),
         },
@@ -133,7 +133,7 @@ const page = () => {
                     <div className='bg-white rounded-xl shadow-sm border border-slate-100/80 p-5 sticky top-4'>
                         <div className="flex items-center justify-between pb-4 mb-4 border-b border-slate-100">
                             <div className="flex items-center gap-2">
-                                <div className="w-8 h-8 rounded-lg bg-[#5572fc]/10 text-[#5572fc] flex items-center justify-center">
+                                <div className="w-8 h-8 rounded-lg bg-[#F97316]/10 text-[#F97316] flex items-center justify-center">
                                     <FiUsers size={14} />
                                 </div>
                                 <div>
@@ -150,7 +150,7 @@ const page = () => {
                                     onClick={() => { setSelectedTab(tab.id); getTodayData({ status: tab.id }); }}
                                     className={`flex-1 text-[10px] font-bold py-1.5 rounded-md transition-all ${
                                         selectedTab === tab.id
-                                            ? 'bg-white shadow-sm text-[#5572fc]'
+                                            ? 'bg-white shadow-sm text-[#F97316]'
                                             : 'text-gray-500 hover:text-gray-700'
                                     }`}
                                 >
@@ -178,7 +178,7 @@ const page = () => {
             >
                 {details && (
                     <div className='w-full bg-slate-50 relative pb-5 rounded-2xl overflow-hidden'>
-                        <div className="h-24 w-full bg-gradient-to-br from-[#5572fc] to-[#7f93ff] relative">
+                        <div className="h-24 w-full bg-gradient-to-br from-[#F97316] to-[#FB923C] relative">
                              <div className="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] mix-blend-overlay"></div>
                         </div>
                         
@@ -204,19 +204,19 @@ const page = () => {
                                 <div className="bg-white border border-slate-100 rounded-xl p-3 flex flex-col items-center">
                                     <div className="w-6 h-6 rounded-full bg-emerald-50 text-emerald-500 mb-1 flex items-center justify-center"><FiLogIn size={11}/></div>
                                     <span className="text-[10px] text-gray-400 font-bold tracking-wide uppercase">Punched In</span>
-                                    <span className="text-sm font-bold text-gray-800">{details?.clockIn ? dayjs(details?.clockIn).format("hh:mm A") : "—"}</span>
+                                    <span className="text-sm font-bold text-gray-800">{details?.clockIn ? dayjs(details?.clockIn).format("hh:mm A") : "â€”"}</span>
                                 </div>
                                 <div className="bg-white border border-slate-100 rounded-xl p-3 flex flex-col items-center">
                                     <div className="w-6 h-6 rounded-full bg-slate-50 border border-slate-200 text-gray-400 mb-1 flex items-center justify-center"><FiLogOut size={11}/></div>
                                     <span className="text-[10px] text-gray-400 font-bold tracking-wide uppercase">Punched Out</span>
-                                    <span className="text-sm font-bold text-gray-800">{details?.clockOut ? dayjs(details?.clockOut).format("hh:mm A") : "—"}</span>
+                                    <span className="text-sm font-bold text-gray-800">{details?.clockOut ? dayjs(details?.clockOut).format("hh:mm A") : "â€”"}</span>
                                 </div>
                                 <div className="bg-white border border-slate-100 rounded-xl p-3 col-span-2 flex items-center justify-between">
                                     <div className="flex items-center gap-2">
                                         <div className="w-8 h-8 rounded bg-purple-50 text-purple-600 flex items-center justify-center"><FiClock size={14}/></div>
                                         <div className="flex flex-col text-left">
                                             <span className="text-[10px] font-bold text-gray-400 tracking-wide uppercase">Total Time Logged</span>
-                                            <span className="text-base font-black text-gray-800">{details?.totalHours || "—"}</span>
+                                            <span className="text-base font-black text-gray-800">{details?.totalHours || "â€”"}</span>
                                         </div>
                                     </div>
                                     <div className="flex flex-col text-right">
@@ -238,7 +238,7 @@ const page = () => {
                                      </div>
                                 </div>
                                 <button 
-                                    className="w-full bg-[#5572fc]/5 hover:bg-[#5572fc]/10 text-[#5572fc] border border-[#5572fc]/20 flex items-center justify-center gap-2 py-2 rounded-lg text-[11px] font-bold transition-all" 
+                                    className="w-full bg-[#F97316]/5 hover:bg-[#F97316]/10 text-[#F97316] border border-[#F97316]/20 flex items-center justify-center gap-2 py-2 rounded-lg text-[11px] font-bold transition-all" 
                                     onClick={() => router.push(`/admin/attendance/${details?.employee?._id}`)}
                                 >
                                     <FiExternalLink size={12}/> View Deep Access Logs

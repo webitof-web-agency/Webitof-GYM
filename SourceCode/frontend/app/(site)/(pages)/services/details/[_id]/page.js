@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useEffect } from "react";
 import { fetchService, fetchServices } from "../../../../../helpers/backend";
@@ -33,7 +33,7 @@ const Page = ({ params }) => {
                         {/* All Services card */}
                         <div className='rounded-2xl border border-slate-100 bg-white shadow-[0_4px_20px_-6px_rgba(0,0,0,0.07)] overflow-hidden'>
                             {/* Header */}
-                            <div className='bg-gradient-to-r from-[#3a52c4] to-[#5572fc] px-5 py-4'>
+                            <div className='bg-gradient-to-r from-[#EA580C] to-[#F97316] px-5 py-4'>
                                 <p className='text-[11px] font-black text-white/60 uppercase tracking-widest mb-0.5'>{i18n?.t('Browse')}</p>
                                 <h3 className='text-[15px] font-extrabold text-white capitalize'>{i18n?.t('All Services')}</h3>
                             </div>
@@ -46,18 +46,18 @@ const Page = ({ params }) => {
                                         <Link
                                             key={service?._id}
                                             href={`/services/details/${service?._id}`}
-                                            className={`flex items-center justify-between px-5 py-3.5 transition-all duration-200 group ${isActive ? 'bg-[#5572fc]/6' : 'hover:bg-slate-50'}`}
+                                            className={`flex items-center justify-between px-5 py-3.5 transition-all duration-200 group ${isActive ? 'bg-[#F97316]/6' : 'hover:bg-slate-50'}`}
                                         >
                                             <div className='flex items-center gap-3 min-w-0'>
-                                                <div className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-lg border transition-colors ${isActive ? 'bg-[#5572fc] border-[#5572fc]' : 'bg-slate-50 border-slate-200 group-hover:border-[#5572fc]/30'}`}>
-                                                    <FiChevronRight size={12} className={isActive ? 'text-white' : 'text-gray-400 group-hover:text-[#5572fc]'} />
+                                                <div className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-lg border transition-colors ${isActive ? 'bg-[#F97316] border-[#F97316]' : 'bg-slate-50 border-slate-200 group-hover:border-[#F97316]/30'}`}>
+                                                    <FiChevronRight size={12} className={isActive ? 'text-white' : 'text-gray-400 group-hover:text-[#F97316]'} />
                                                 </div>
-                                                <span className={`text-[13px] font-bold line-clamp-1 transition-colors ${isActive ? 'text-[#5572fc]' : 'text-gray-700 group-hover:text-[#5572fc]'}`}>
+                                                <span className={`text-[13px] font-bold line-clamp-1 transition-colors ${isActive ? 'text-[#F97316]' : 'text-gray-700 group-hover:text-[#F97316]'}`}>
                                                     {service?.name?.[i18n.langCode]}
                                                 </span>
                                             </div>
                                             {isActive && (
-                                                <span className='shrink-0 h-1.5 w-1.5 rounded-full bg-[#5572fc]' />
+                                                <span className='shrink-0 h-1.5 w-1.5 rounded-full bg-[#F97316]' />
                                             )}
                                         </Link>
                                     );
@@ -66,7 +66,7 @@ const Page = ({ params }) => {
                         </div>
 
                         {/* CTA card */}
-                        <div className='rounded-2xl overflow-hidden relative bg-gradient-to-br from-[#1a2f6e] via-[#3a52c4] to-[#5572fc] p-6'>
+                        <div className='rounded-2xl overflow-hidden relative bg-gradient-to-br from-[#C2410C] via-[#EA580C] to-[#F97316] p-6'>
                             <div className='absolute inset-0 opacity-[0.06]' style={{ backgroundImage: 'radial-gradient(circle, white 1px, transparent 1px)', backgroundSize: '18px 18px' }} />
                             <div className='relative z-10'>
                                 <p className='text-[11px] font-black text-white/60 uppercase tracking-widest mb-2'>{i18n?.t('Get Started')}</p>
@@ -75,7 +75,7 @@ const Page = ({ params }) => {
                                 </h4>
                                 <Link
                                     href='/contact'
-                                    className='inline-flex items-center gap-2 rounded-xl bg-white px-4 py-2.5 text-[12px] font-bold text-[#5572fc] hover:shadow-lg transition-all hover:-translate-y-0.5'
+                                    className='inline-flex items-center gap-2 rounded-xl bg-white px-4 py-2.5 text-[12px] font-bold text-[#F97316] hover:shadow-lg transition-all hover:-translate-y-0.5'
                                 >
                                     {i18n?.t('Contact Us')} <FiArrowRight size={13} />
                                 </Link>
@@ -103,7 +103,7 @@ const Page = ({ params }) => {
                                 <div className='absolute inset-0 bg-gradient-to-t from-black/40 to-transparent' />
                                 {/* Service name pill */}
                                 <div className='absolute bottom-5 left-5'>
-                                    <span className='inline-flex items-center gap-1.5 rounded-full bg-white/90 backdrop-blur-sm px-4 py-1.5 text-[12px] font-black text-[#5572fc] shadow-md capitalize'>
+                                    <span className='inline-flex items-center gap-1.5 rounded-full bg-white/90 backdrop-blur-sm px-4 py-1.5 text-[12px] font-black text-[#F97316] shadow-md capitalize'>
                                         {data?.name?.[i18n.langCode]}
                                     </span>
                                 </div>
@@ -113,7 +113,7 @@ const Page = ({ params }) => {
                         {/* Content card */}
                         <div className='rounded-2xl border border-slate-100 bg-white shadow-[0_4px_20px_-6px_rgba(0,0,0,0.07)] p-7 lg:p-10'>
                             <div className='flex items-center gap-2.5 mb-5'>
-                                <span className='h-5 w-0.5 rounded-full bg-[#5572fc]' />
+                                <span className='h-5 w-0.5 rounded-full bg-[#F97316]' />
                                 <h2 className='text-[13px] font-black text-gray-800 uppercase tracking-widest capitalize'>
                                     {i18n?.t('About This Service')}
                                 </h2>

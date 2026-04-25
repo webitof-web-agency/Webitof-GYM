@@ -1,4 +1,4 @@
-.status-warning {
+﻿.status-warning {
    @apply inline-flex items-center gap-1.5 py-1.5 px-3 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800 capitalize
 }
 
@@ -11,7 +11,7 @@
 }
 
 .status-info {
-   @apply inline-flex items-center gap-1.5 py-1.5 px-3 rounded-full text-xs font-medium bg-blue-100 text-blue-800 capitalize
+   @apply inline-flex items-center gap-1.5 py-1.5 px-3 rounded-full text-xs font-medium bg-orange-100 text-orange-800 capitalize
 }
 
 .status-secondary {

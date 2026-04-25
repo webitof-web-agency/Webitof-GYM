@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 import Image from 'next/image';
 import Link from 'next/link';
 import React, { useState } from 'react';
@@ -56,9 +56,9 @@ const Footer = () => {
     ];
 
     const contactInfo = [
-        { icon: <FiMapPin size={15} className='text-[#5572fc] shrink-0 mt-0.5' />, text: data?.address },
-        { icon: <FiPhoneCall size={15} className='text-[#5572fc] shrink-0' />, text: data?.phone },
-        { icon: <FiMail size={15} className='text-[#5572fc] shrink-0' />, text: data?.email },
+        { icon: <FiMapPin size={15} className='text-[#F97316] shrink-0 mt-0.5' />, text: data?.address },
+        { icon: <FiPhoneCall size={15} className='text-[#F97316] shrink-0' />, text: data?.phone },
+        { icon: <FiMail size={15} className='text-[#F97316] shrink-0' />, text: data?.email },
     ];
 
     if (pathname === '/setting') return null;
@@ -67,9 +67,9 @@ const Footer = () => {
         <footer className={`relative overflow-hidden bg-[#0c1728] ${findDefaultTheme?.name === 'home3' && pathname === '/' ? '' : 'mt-40'}`}>
 
             {/* Ambient glow top */}
-            <div className='absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[1px] bg-gradient-to-r from-transparent via-[#5572fc]/40 to-transparent' />
-            <div className='absolute top-0 left-1/4 w-[400px] h-[300px] bg-[#5572fc]/5 rounded-full blur-[100px] pointer-events-none' />
-            <div className='absolute bottom-0 right-1/4 w-[300px] h-[200px] bg-[#5572fc]/4 rounded-full blur-[80px] pointer-events-none' />
+            <div className='absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[1px] bg-gradient-to-r from-transparent via-[#F97316]/40 to-transparent' />
+            <div className='absolute top-0 left-1/4 w-[400px] h-[300px] bg-[#F97316]/5 rounded-full blur-[100px] pointer-events-none' />
+            <div className='absolute bottom-0 right-1/4 w-[300px] h-[200px] bg-[#F97316]/4 rounded-full blur-[80px] pointer-events-none' />
 
             {/* Newsletter Banner */}
             <div className='relative border-b border-white/5'>
@@ -77,7 +77,7 @@ const Footer = () => {
                     <div className='flex flex-col lg:flex-row items-center gap-8 lg:gap-16'>
                         {/* Left copy */}
                         <div className='shrink-0 text-center lg:text-left'>
-                            <p className='text-[11px] font-black text-[#5572fc] uppercase tracking-widest mb-1.5'>{i18n?.t('Stay Updated')}</p>
+                            <p className='text-[11px] font-black text-[#F97316] uppercase tracking-widest mb-1.5'>{i18n?.t('Stay Updated')}</p>
                             <h3 className='text-xl lg:text-2xl font-extrabold text-white leading-tight'>
                                 {i18n?.t('Subscribe to our Newsletter')}
                             </h3>
@@ -110,7 +110,7 @@ const Footer = () => {
                                 <button
                                     type='submit'
                                     disabled={isSubmitting}
-                                    className='flex items-center gap-2 rounded-xl bg-[#5572fc] px-5 py-2.5 text-[13px] font-bold text-white shadow-lg shadow-[#5572fc]/25 transition-all hover:bg-[#4461eb] disabled:opacity-60 shrink-0'
+                                    className='flex items-center gap-2 rounded-xl bg-[#F97316] px-5 py-2.5 text-[13px] font-bold text-white shadow-lg shadow-[#F97316]/25 transition-all hover:bg-[#EA580C] disabled:opacity-60 shrink-0'
                                 >
                                     {isSubmitting ? (
                                         <span className='h-4 w-4 rounded-full border-2 border-white/30 border-t-white animate-spin' />
@@ -158,7 +158,7 @@ const Footer = () => {
                                         target={link.href ? '_blank' : '_self'}
                                         rel={link.href ? 'noopener noreferrer' : undefined}
                                         aria-label={link.label}
-                                        className='flex h-9 w-9 items-center justify-center rounded-xl border border-white/8 bg-white/4 text-white/50 transition-all hover:border-[#5572fc]/40 hover:bg-[#5572fc]/10 hover:text-[#5572fc]'
+                                        className='flex h-9 w-9 items-center justify-center rounded-xl border border-white/8 bg-white/4 text-white/50 transition-all hover:border-[#F97316]/40 hover:bg-[#F97316]/10 hover:text-[#F97316]'
                                     >
                                         {link.icon}
                                     </Link>
@@ -169,7 +169,7 @@ const Footer = () => {
                         {/* Quick Links */}
                         <div>
                             <h4 className='flex items-center gap-2.5 text-[13px] font-black text-white uppercase tracking-widest mb-5'>
-                                <span className='h-4 w-0.5 rounded-full bg-[#5572fc]' />
+                                <span className='h-4 w-0.5 rounded-full bg-[#F97316]' />
                                 {i18n?.t('Quick Links')}
                             </h4>
                             <ul className='space-y-3'>
@@ -177,9 +177,9 @@ const Footer = () => {
                                     <li key={i}>
                                         <Link
                                             href={link.href}
-                                            className='group flex items-center gap-2 text-[13px] text-white/50 font-medium transition-all hover:text-[#5572fc]'
+                                            className='group flex items-center gap-2 text-[13px] text-white/50 font-medium transition-all hover:text-[#F97316]'
                                         >
-                                            <FiArrowRight size={12} className='opacity-0 -translate-x-2 transition-all group-hover:opacity-100 group-hover:translate-x-0 text-[#5572fc]' />
+                                            <FiArrowRight size={12} className='opacity-0 -translate-x-2 transition-all group-hover:opacity-100 group-hover:translate-x-0 text-[#F97316]' />
                                             {i18n?.t(link.text)}
                                         </Link>
                                     </li>
@@ -190,7 +190,7 @@ const Footer = () => {
                         {/* Support */}
                         <div>
                             <h4 className='flex items-center gap-2.5 text-[13px] font-black text-white uppercase tracking-widest mb-5'>
-                                <span className='h-4 w-0.5 rounded-full bg-[#5572fc]' />
+                                <span className='h-4 w-0.5 rounded-full bg-[#F97316]' />
                                 {i18n?.t('Support')}
                             </h4>
                             <ul className='space-y-3'>
@@ -198,9 +198,9 @@ const Footer = () => {
                                     <li key={i}>
                                         <Link
                                             href={link.href}
-                                            className='group flex items-center gap-2 text-[13px] text-white/50 font-medium transition-all hover:text-[#5572fc]'
+                                            className='group flex items-center gap-2 text-[13px] text-white/50 font-medium transition-all hover:text-[#F97316]'
                                         >
-                                            <FiArrowRight size={12} className='opacity-0 -translate-x-2 transition-all group-hover:opacity-100 group-hover:translate-x-0 text-[#5572fc]' />
+                                            <FiArrowRight size={12} className='opacity-0 -translate-x-2 transition-all group-hover:opacity-100 group-hover:translate-x-0 text-[#F97316]' />
                                             {i18n?.t(link.text)}
                                         </Link>
                                     </li>
@@ -211,13 +211,13 @@ const Footer = () => {
                         {/* Contact */}
                         <div>
                             <h4 className='flex items-center gap-2.5 text-[13px] font-black text-white uppercase tracking-widest mb-5'>
-                                <span className='h-4 w-0.5 rounded-full bg-[#5572fc]' />
+                                <span className='h-4 w-0.5 rounded-full bg-[#F97316]' />
                                 {i18n?.t('Contacts')}
                             </h4>
                             <ul className='space-y-4'>
                                 {contactInfo.map((info, i) => (
                                     <li key={i} className='flex items-start gap-3'>
-                                        <div className='flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-[#5572fc]/10 border border-[#5572fc]/15 mt-0.5'>
+                                        <div className='flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-[#F97316]/10 border border-[#F97316]/15 mt-0.5'>
                                             {info.icon}
                                         </div>
                                         <span className='text-[13px] text-white/50 font-medium leading-snug'>{info.text}</span>
@@ -234,10 +234,10 @@ const Footer = () => {
                 <div className='container flex flex-col sm:flex-row items-center justify-between gap-3 py-5'>
                     <p className='text-[12px] text-white/30 font-medium'>{data?.footer_text}</p>
                     <div className='flex items-center gap-5'>
-                        <Link href='/privacy-policy' className='text-[11px] text-white/25 hover:text-[#5572fc] font-medium transition-colors'>
+                        <Link href='/privacy-policy' className='text-[11px] text-white/25 hover:text-[#F97316] font-medium transition-colors'>
                             {i18n?.t('Privacy Policy')}
                         </Link>
-                        <Link href='/termsCondition' className='text-[11px] text-white/25 hover:text-[#5572fc] font-medium transition-colors'>
+                        <Link href='/termsCondition' className='text-[11px] text-white/25 hover:text-[#F97316] font-medium transition-colors'>
                             {i18n?.t('Terms of Service')}
                         </Link>
                     </div>
@@ -248,3 +248,4 @@ const Footer = () => {
 };
 
 export default Footer;
+

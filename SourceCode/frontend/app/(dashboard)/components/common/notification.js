@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 import dayjs from "dayjs";
 import React from "react";
 import relativeTime from "dayjs/plugin/relativeTime";
@@ -37,11 +37,11 @@ const NotificationDropdown = ({ isOpen = true, notices, getNotifications, setLim
             <div
                 className="px-4 py-2 mt-4 border-b"
                 style={{
-                    borderColor: "#5572fc",
+                    borderColor: "#F97316",
                 }}
             >
                 <div className="flex items-center justify-between">
-                    <h4 className="text-sm font-medium" style={{ color: "#5572fc" }}>
+                    <h4 className="text-sm font-medium" style={{ color: "#F97316" }}>
                         {i18n?.t("Notifications")}
                     </h4>
                     <button
@@ -51,8 +51,8 @@ const NotificationDropdown = ({ isOpen = true, notices, getNotifications, setLim
                                 getNotifications();
                             });
                         }}
-                        className="text-xs hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5572fc] focus-visible:ring-offset-2 focus-visible:ring-offset-white"
-                        style={{ color: "#5572fc" }}
+                        className="text-xs hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F97316] focus-visible:ring-offset-2 focus-visible:ring-offset-white"
+                        style={{ color: "#F97316" }}
                     >
                         {i18n?.t("Mark all as read")}
                     </button>
@@ -70,7 +70,7 @@ const NotificationDropdown = ({ isOpen = true, notices, getNotifications, setLim
                         >
                             <div
                                 className="w-10 h-10 flex-shrink-0 rounded-full flex items-center justify-center"
-                                style={{ backgroundColor: "#FFE6D7", color: "#5572fc" }}
+                                style={{ backgroundColor: "#FFE6D7", color: "#F97316" }}
                             >
                                 <span className="material-icons">info</span>
                             </div>
@@ -102,7 +102,7 @@ const NotificationDropdown = ({ isOpen = true, notices, getNotifications, setLim
                                                 getNotifications();
                                             });
                                         }}
-                                        className="font-semibold hover:underline cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5572fc] focus-visible:ring-offset-2 focus-visible:ring-offset-white"
+                                        className="font-semibold hover:underline cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F97316] focus-visible:ring-offset-2 focus-visible:ring-offset-white"
                                     >
                                         {notification?.isRead ? i18n?.t("Marked as read") : i18n?.t("Mark as read")}
                                     </button>
@@ -132,7 +132,7 @@ const NotificationDropdown = ({ isOpen = true, notices, getNotifications, setLim
 
                 {
                     notices?.totalDocs > limit && (<>
-                        <button onClick={handleShowMore} className="text-xs hover:underline py-1 text-white mx-auto mt-2 px-3 block text-center bg-[#5572fc] rounded-sm">{i18n?.t("Show more")}</button>
+                        <button onClick={handleShowMore} className="text-xs hover:underline py-1 text-white mx-auto mt-2 px-3 block text-center bg-[#F97316] rounded-sm">{i18n?.t("Show more")}</button>
                     </>
                     )
                 }
@@ -143,3 +143,4 @@ const NotificationDropdown = ({ isOpen = true, notices, getNotifications, setLim
 
 
 export default NotificationDropdown;
+

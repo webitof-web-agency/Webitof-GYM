@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 import { Form } from "antd";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
@@ -39,7 +39,7 @@ const page = () => {
                 <div className="flex items-center gap-4">
                     <button 
                         onClick={() => router.back()}
-                        className="flex flex-shrink-0 items-center justify-center w-8 h-8 bg-white border border-slate-200 rounded-lg shadow-sm text-gray-500 hover:text-[#5572fc] hover:border-[#5572fc] transition-all"
+                        className="flex flex-shrink-0 items-center justify-center w-8 h-8 bg-white border border-slate-200 rounded-lg shadow-sm text-gray-500 hover:text-[#F97316] hover:border-[#F97316] transition-all"
                     >
                         <FaArrowLeft size={14} />
                     </button>
@@ -55,7 +55,7 @@ const page = () => {
                                 onClick={() => setSelectedLang(l.code)}
                                 className={`rounded-lg px-4 py-1.5 text-xs font-bold transition-all duration-300 flex-shrink-0 ${
                                     l.code === selectedLang
-                                        ? 'bg-slate-50 text-[#5572fc] shadow-inner border border-slate-200'
+                                        ? 'bg-slate-50 text-[#F97316] shadow-inner border border-slate-200'
                                         : 'text-gray-500 hover:bg-slate-50 hover:text-gray-700'
                                 }`}
                                 key={index}
@@ -87,3 +87,4 @@ const page = () => {
 };
 
 export default page;
+

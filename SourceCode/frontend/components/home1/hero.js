@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 import Image from 'next/image';
 import React from 'react';
 import Link from 'next/link';
@@ -37,8 +37,8 @@ const Hero = ({ data }) => {
             <Image src={'/banner.png'} width={1920} height={986} alt='banner' className='absolute h-full w-full object-cover' />
             <div className='relative w-full overflow-hidden bg-[#001223]/88 md:h-[80vh] md:pt-10 md:pb-20 lg:h-[100vh]'>
                 {/* Decorative gradient orbs */}
-                <div className='absolute top-20 right-[10%] w-[500px] h-[500px] bg-[#5572fc]/15 rounded-full blur-[120px] pointer-events-none' />
-                <div className='absolute bottom-10 left-[5%] w-[300px] h-[300px] bg-[#5572fc]/10 rounded-full blur-[80px] pointer-events-none' />
+                <div className='absolute top-20 right-[10%] w-[500px] h-[500px] bg-[#F97316]/15 rounded-full blur-[120px] pointer-events-none' />
+                <div className='absolute bottom-10 left-[5%] w-[300px] h-[300px] bg-[#F97316]/10 rounded-full blur-[80px] pointer-events-none' />
 
                 <Image
                     src={'/banner-vector.png'}
@@ -63,10 +63,10 @@ const Hero = ({ data }) => {
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: false }}
                                 transition={{ duration: 0.6, delay: 0.2 }}
-                                className='mb-6 inline-flex w-fit items-center gap-2 rounded-full border border-[#5572fc]/30 bg-[#5572fc]/10 px-4 py-1.5 backdrop-blur-sm'
+                                className='mb-6 inline-flex w-fit items-center gap-2 rounded-full border border-[#F97316]/30 bg-[#F97316]/10 px-4 py-1.5 backdrop-blur-sm'
                             >
-                                <span className='h-2 w-2 rounded-full bg-[#5572fc] animate-pulse' />
-                                <span className='text-[12px] font-bold text-[#7c93ff] uppercase tracking-widest'>
+                                <span className='h-2 w-2 rounded-full bg-[#F97316] animate-pulse' />
+                                <span className='text-[12px] font-bold text-[#FB923C] uppercase tracking-widest'>
                                     {i18n?.t('Premier Fitness Hub')}
                                 </span>
                             </motion.div>
@@ -80,10 +80,10 @@ const Hero = ({ data }) => {
                                 transition={{ duration: 1 }}
                             >
                                 <span className='text-white'>{firstThreeWords} </span>
-                                <span className='text-[#5572fc] relative'>
+                                <span className='text-[#F97316] relative'>
                                     {remainingWords}
                                     <svg className='absolute -bottom-2 left-0 w-full' height='6' viewBox='0 0 200 6' fill='none'>
-                                        <path d='M0 3 Q50 0 100 3 Q150 6 200 3' stroke='#5572fc' strokeWidth='2.5' strokeLinecap='round' fill='none' opacity='0.5' />
+                                        <path d='M0 3 Q50 0 100 3 Q150 6 200 3' stroke='#F97316' strokeWidth='2.5' strokeLinecap='round' fill='none' opacity='0.5' />
                                     </svg>
                                 </span>
                             </motion.h1>
@@ -109,7 +109,7 @@ const Hero = ({ data }) => {
                             >
                                 <Link
                                     href='/services'
-                                    className='group flex items-center gap-2.5 rounded-xl bg-[#5572fc] px-7 py-3.5 text-sm font-bold text-white shadow-lg shadow-[#5572fc]/30 transition-all hover:bg-[#4461eb] hover:shadow-xl hover:shadow-[#5572fc]/40 hover:-translate-y-0.5'
+                                    className='group flex items-center gap-2.5 rounded-xl bg-[#F97316] px-7 py-3.5 text-sm font-bold text-white shadow-lg shadow-[#F97316]/30 transition-all hover:bg-[#EA580C] hover:shadow-xl hover:shadow-[#F97316]/40 hover:-translate-y-0.5'
                                 >
                                     {i18n?.t("Start Your Journey")}
                                     <FiArrowRight size={16} className='transition-transform group-hover:translate-x-1' />
@@ -118,7 +118,7 @@ const Hero = ({ data }) => {
                                     href='/about'
                                     className='group flex items-center gap-2.5 rounded-xl border border-white/20 bg-white/5 px-7 py-3.5 text-sm font-bold text-white backdrop-blur-sm transition-all hover:bg-white/10 hover:border-white/30'
                                 >
-                                    <span className='flex h-7 w-7 items-center justify-center rounded-full bg-white/10 transition-all group-hover:bg-[#5572fc]/30'>
+                                    <span className='flex h-7 w-7 items-center justify-center rounded-full bg-white/10 transition-all group-hover:bg-[#F97316]/30'>
                                         <FiPlay size={12} className='ml-0.5' />
                                     </span>
                                     {i18n?.t("Learn More")}
@@ -135,7 +135,7 @@ const Hero = ({ data }) => {
                             >
                                 {stats.map((stat, i) => (
                                     <div key={i} className='flex items-center gap-3'>
-                                        <div className='flex h-10 w-10 items-center justify-center rounded-xl border border-[#5572fc]/30 bg-[#5572fc]/10 text-[#5572fc] shrink-0'>
+                                        <div className='flex h-10 w-10 items-center justify-center rounded-xl border border-[#F97316]/30 bg-[#F97316]/10 text-[#F97316] shrink-0'>
                                             {stat.icon}
                                         </div>
                                         <div>
@@ -174,3 +174,4 @@ const Hero = ({ data }) => {
 };
 
 export default Hero;
+

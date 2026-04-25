@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import dayjs from "dayjs";
 import { useState } from "react";
@@ -70,7 +70,7 @@ const Page = () => {
                     action={
                         <Button
                             onClick={() => { form.resetFields(); setOpen(true); }}
-                            className="flex items-center gap-1.5 !px-4 shadow-md shadow-[#5572fc]/20 hover:shadow-lg hover:shadow-[#5572fc]/30 transition-all !h-8 !py-0 !rounded-lg block !w-auto !text-xs whitespace-nowrap"
+                            className="flex items-center gap-1.5 !px-4 shadow-md shadow-[#F97316]/20 hover:shadow-lg hover:shadow-[#F97316]/30 transition-all !h-8 !py-0 !rounded-lg block !w-auto !text-xs whitespace-nowrap"
                         >
                             <FiPlus size={14} /> {i18n?.t('Upload Image')}
                         </Button>
@@ -113,7 +113,7 @@ const Page = () => {
                             Cancel
                         </Button>
                         <Button type="submit" loading={loading}
-                            className="flex items-center gap-1.5 !px-5 !py-1.5 shadow-md shadow-[#5572fc]/20 !font-semibold !rounded-lg !text-xs transition-all">
+                            className="flex items-center gap-1.5 !px-5 !py-1.5 shadow-md shadow-[#F97316]/20 !font-semibold !rounded-lg !text-xs transition-all">
                             <FiPlus size={13} /> {i18n?.t('Upload')}
                         </Button>
                     </div>
@@ -124,3 +124,4 @@ const Page = () => {
 };
 
 export default Page;
+

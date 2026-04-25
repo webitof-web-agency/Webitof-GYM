@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 import React, { useEffect, useState } from 'react';
 import { Form, DatePicker, Checkbox, Input, Typography, Radio, notification } from 'antd';
 import { CalendarOutlined } from '@ant-design/icons';
@@ -202,7 +202,7 @@ const Edit = ({ params }) => {
         </div>
 
         <div className="w-full border">
-          <div className="bg-[#5572fc] text-white p-3 rounded-t mb-4">
+          <div className="bg-[#F97316] text-white p-3 rounded-t mb-4">
             <h3 className="text-lg font-semibold">{i18n?.t('Select Day')}</h3>
           </div>
           <div className="md:flex gap-8 p-6">
@@ -241,7 +241,7 @@ const Edit = ({ params }) => {
         </div>
 
         <div className="flex justify-start my-[25px]">
-          <Button type="submit" className="rounded bg-white hover:bg-[#5572fc] text-black duration-300 hover:text-white text-[16px] capitalize">
+          <Button type="submit" className="rounded bg-white hover:bg-[#F97316] text-black duration-300 hover:text-white text-[16px] capitalize">
             {i18n?.t('Save Changes')}
           </Button>
         </div>

@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 import { Card, Form, Input, message } from 'antd';
 import { useParams } from 'next/navigation';
 import React, { useEffect } from 'react';
@@ -42,7 +42,7 @@ const ContactReply = () => {
                     <div className="flex flex-col lg:w-[680px] ">
                         <div className='bg-secondary_gray relative rounded'>
                             <div className='h-12 bg-gray-200'>
-                                <div className='absolute w-16 h-16 bg-[#5572fc] shadow-md rounded flex items-center justify-center text-white -top-5'>
+                                <div className='absolute w-16 h-16 bg-[#F97316] shadow-md rounded flex items-center justify-center text-white -top-5'>
                                     <span> <HiOutlineMailOpen size={35} /> </span>
                                 </div>
                                 <span className='capitalize ml-20 text-[18px] font-bold'>
@@ -71,7 +71,7 @@ const ContactReply = () => {
                     <div className="flex flex-col lg:mt-0 mt-8 w-full">
                         <div className='bg-gray-200 relative rounded'>
                             <div className='h-12'>
-                                <div className='absolute w-16 h-16 bg-[#5572fc] shadow-md rounded flex items-center justify-center text-white -top-5'>
+                                <div className='absolute w-16 h-16 bg-[#F97316] shadow-md rounded flex items-center justify-center text-white -top-5'>
                                     <span> <HiOutlineMailOpen size={35} /> </span>
                                 </div>
                                 <span className='capitalize ml-20 text-[18px] font-bold'>

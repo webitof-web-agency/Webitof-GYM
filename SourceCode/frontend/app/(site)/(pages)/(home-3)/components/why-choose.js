@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { useFetch } from '../../../../helpers/hooks';
@@ -61,7 +61,7 @@ const ChooseWe = () => {
                     initial="hidden"
                     whileInView="visible"
                     viewport={{ once: false, amount: 0.3 }}
-                    className='heading font-montserrat font-bold capitalize text-[#5572fc]'>
+                    className='heading font-montserrat font-bold capitalize text-[#F97316]'>
                     {i18n?.t('Who we are and what we do')}
                 </motion.h1>
             </div>
@@ -81,7 +81,7 @@ const ChooseWe = () => {
                                 <div className='flex flex-row-reverse lg:items-start justify-start items-start gap-3 md:flex-row'>
                                     <div>
                                         <h1 className="relative lg:text-[21px] text-2xl 2xl:text-3xl font-semibold">
-                                            <span className="absolute inset-0 bg-[#5572fc] blur-[10px] h-[15px] mt-3.5"></span>
+                                            <span className="absolute inset-0 bg-[#F97316] blur-[10px] h-[15px] mt-3.5"></span>
                                             <span className="relative z-10 montserrat line-clamp-1">
                                                 {facilitie?.name[i18n?.langCode]}
                                             </span>
@@ -130,7 +130,7 @@ const ChooseWe = () => {
                                     />
                                     <div>
                                         <h1 className='relative text-2xl whitespace-pre font-semibold lg:text-[21px] 2xl:text-3xl'>
-                                            <span className='absolute inset-0 mt-3.5 h-[15px] bg-[#5572fc] blur-[10px]'></span>
+                                            <span className='absolute inset-0 mt-3.5 h-[15px] bg-[#F97316] blur-[10px]'></span>
                                             <span className='relative z-10 font-montserrat'>
                                                 {facilitie?.name[i18n.langCode]?.slice(0, 21)}
                                             </span>
@@ -150,3 +150,4 @@ const ChooseWe = () => {
 };
 
 export default ChooseWe;
+

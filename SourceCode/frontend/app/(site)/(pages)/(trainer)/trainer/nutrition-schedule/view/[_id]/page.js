@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 import React, { useEffect } from 'react';
 import { useFetch } from '../../../../../../../helpers/hooks';
 import { fetchNutritionDetail } from '../../../../../../../helpers/backend';
@@ -21,7 +21,7 @@ const Details = ({ params }) => {
                 <Button onClick={() => push('/trainer/nutrition-schedule')} type="button" className='!h-fit !py-2.5 !px-6 rounded-xl shadow-sm'>{i18n?.t("Back")}</Button>
             </div>
             <div className='w-[684px] md:w-full overflow-x-scroll mt-5 pb-8'>
-                <div className='grid grid-cols-5 w-full px-5 bg-[#5572fc] text-white font-medium text-base py-4 '>
+                <div className='grid grid-cols-5 w-full px-5 bg-[#F97316] text-white font-medium text-base py-4 '>
                     <p className='whitespace-pre text-center'>{i18n?.t('Day Name')}</p>
                     <p className='whitespace-pre text-center'>{i18n?.t('Type')}</p>
                     <p className='whitespace-pre text-center'>{i18n?.t('Description')}</p>

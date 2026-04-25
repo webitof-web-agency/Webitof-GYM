@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 import React, { useEffect } from 'react';
 import { groupDetails, joinGroup } from '../../../../helpers/backend';
 import { useAction, useFetch } from '../../../../helpers/hooks';
@@ -86,7 +86,7 @@ const Page = ({ params }) => {
                         <h1 className='capitalize text-2xl font-poppins font-medium text-secondary my-10 '>{columnFormatter(data?.name)}</h1>
                         {data?.facilities?.map((facility, index) => (
                             <div key={index} className="flex items-center my-3 gap-4">
-                                <FaCheckCircle size={20} className='text-[#5572fc]' />
+                                <FaCheckCircle size={20} className='text-[#F97316]' />
                                 <p className='font-poppins'>{columnFormatter(facility)}</p>
                             </div>
                         ))}

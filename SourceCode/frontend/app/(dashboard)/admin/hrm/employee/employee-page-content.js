@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import dayjs from 'dayjs';
 import { useState } from 'react';
@@ -58,10 +58,10 @@ const EmployeePageContent = () => {
             formatter: (_, d) => (
                 <div className="flex flex-col gap-1">
                     <span className="text-[10px] text-gray-500 flex items-center gap-1 font-medium">
-                        <FiMail size={9} className="text-gray-400" /> {d?.email || '—'}
+                        <FiMail size={9} className="text-gray-400" /> {d?.email || 'â€”'}
                     </span>
                     <span className="text-[10px] text-gray-500 flex items-center gap-1 font-medium">
-                        <FiPhone size={9} className="text-gray-400" /> {d?.phone || '—'}
+                        <FiPhone size={9} className="text-gray-400" /> {d?.phone || 'â€”'}
                     </span>
                 </div>
             )
@@ -70,7 +70,7 @@ const EmployeePageContent = () => {
             text: 'System Role',
             dataField: 'role',
             formatter: (_, d) => (
-                <span className="text-[9px] font-bold text-[#5572fc] bg-[#5572fc]/10 px-2 py-1 rounded-md uppercase tracking-wider whitespace-nowrap">
+                <span className="text-[9px] font-bold text-[#F97316] bg-[#F97316]/10 px-2 py-1 rounded-md uppercase tracking-wider whitespace-nowrap">
                     {d?.permission?.name || 'No Role'}
                 </span>
             ),
@@ -139,7 +139,7 @@ const EmployeePageContent = () => {
                                 setOpen(true);
                                 setIsEdit(false);
                             }}
-                            className="flex items-center gap-1.5 !px-4 shadow-md shadow-[#5572fc]/20 hover:shadow-lg hover:shadow-[#5572fc]/30 transition-all !h-8 !py-0 !rounded-lg block !w-auto !text-xs whitespace-nowrap"
+                            className="flex items-center gap-1.5 !px-4 shadow-md shadow-[#F97316]/20 hover:shadow-lg hover:shadow-[#F97316]/30 transition-all !h-8 !py-0 !rounded-lg block !w-auto !text-xs whitespace-nowrap"
                         >
                             <FiPlus size={14} />
                             {i18n?.t('Add Employee')}
@@ -147,7 +147,7 @@ const EmployeePageContent = () => {
                     }
                     actions={(d) => (
                         <button
-                            className='flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-[#5572fc]/30 text-[#5572fc] hover:bg-[#5572fc] hover:text-white transition-all duration-300 text-[11px] font-bold shadow-sm bg-white whitespace-nowrap'
+                            className='flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-[#F97316]/30 text-[#F97316] hover:bg-[#F97316] hover:text-white transition-all duration-300 text-[11px] font-bold shadow-sm bg-white whitespace-nowrap'
                             onClick={(e) => {
                                 e.stopPropagation();
                                 setIsReset(true);
@@ -184,7 +184,7 @@ const EmployeePageContent = () => {
                 onCancel={() => setOpen(false)}
                 title={
                     <div className="flex items-center gap-2.5 pb-2.5 border-b border-gray-100">
-                        <div className="w-8 h-8 rounded-lg bg-[#5572fc]/10 flex items-center justify-center text-[#5572fc]">
+                        <div className="w-8 h-8 rounded-lg bg-[#F97316]/10 flex items-center justify-center text-[#F97316]">
                             <FiBriefcase size={16} />
                         </div>
                         <div>
@@ -233,7 +233,7 @@ const EmployeePageContent = () => {
                         >
                             Cancel
                         </Button>
-                        <Button type='submit' loading={loading} className='!px-5 !py-1.5 flex items-center gap-1.5 shadow-sm shadow-[#5572fc]/20 !font-semibold !rounded-lg block w-fit !text-xs'>
+                        <Button type='submit' loading={loading} className='!px-5 !py-1.5 flex items-center gap-1.5 shadow-sm shadow-[#F97316]/20 !font-semibold !rounded-lg block w-fit !text-xs'>
                             {isEdit ? i18n?.t('Save Changes') : <><FiPlus size={14} /> {i18n?.t('Create Employee')}</>}
                         </Button>
                     </div>
@@ -281,7 +281,7 @@ const EmployeePageContent = () => {
                         >
                             Cancel
                         </Button>
-                        <Button type='submit' loading={loading} className="!px-5 !py-1.5 shadow-md shadow-[#5572fc]/20 !font-semibold !rounded-lg block w-fit !text-xs">
+                        <Button type='submit' loading={loading} className="!px-5 !py-1.5 shadow-md shadow-[#F97316]/20 !font-semibold !rounded-lg block w-fit !text-xs">
                             {i18n?.t('Reset Pass')}
                         </Button>
                     </div>
@@ -292,3 +292,4 @@ const EmployeePageContent = () => {
 };
 
 export default EmployeePageContent;
+

@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 import { Image } from 'antd';
 import React, { useEffect } from 'react';
 import { FaArrowLeft } from 'react-icons/fa6';
@@ -36,7 +36,7 @@ const page = ({ params }) => {
             <div className="flex items-center gap-4 mb-5">
                 <button 
                     onClick={() => router.back()}
-                    className="flex items-center justify-center w-8 h-8 bg-white border border-slate-200 rounded-lg shadow-sm text-gray-500 hover:text-[#5572fc] hover:border-[#5572fc] transition-all"
+                    className="flex items-center justify-center w-8 h-8 bg-white border border-slate-200 rounded-lg shadow-sm text-gray-500 hover:text-[#F97316] hover:border-[#F97316] transition-all"
                 >
                     <FaArrowLeft size={14} />
                 </button>
@@ -45,7 +45,7 @@ const page = ({ params }) => {
 
             {/* Profile Header Block */}
             <div className='w-full bg-white relative pb-6 rounded-2xl shadow-sm border border-slate-100/80 overflow-hidden mb-6 mt-2'>
-                <div className="h-32 w-full bg-gradient-to-br from-[#5572fc] to-[#7f93ff] relative">
+                <div className="h-32 w-full bg-gradient-to-br from-[#F97316] to-[#FB923C] relative">
                      <div className="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] mix-blend-overlay"></div>
                      <div className="absolute bottom-3.5 left-[160px] z-10 w-[calc(100%-180px)] pr-4">
                          <h2 className="text-2xl font-bold text-white tracking-wide leading-none drop-shadow-sm truncate">{productTitle !== '-' ? productTitle : "Loading Details..."}</h2>
@@ -66,7 +66,7 @@ const page = ({ params }) => {
 
                 <div className='pt-3 pl-[160px] pr-8 pb-4 flex justify-between items-start'>
                     <div className="mb-2 flex items-center gap-2">
-                        <span className="inline-flex items-center gap-1.5 bg-[#5572fc]/10 text-[#5572fc] px-3 py-1 rounded-full text-[10px] font-bold tracking-widest uppercase">
+                        <span className="inline-flex items-center gap-1.5 bg-[#F97316]/10 text-[#F97316] px-3 py-1 rounded-full text-[10px] font-bold tracking-widest uppercase">
                             <FiBox size={10} />
                             {productCategory}
                         </span>
@@ -92,7 +92,7 @@ const page = ({ params }) => {
                 {/* Product Specifications Card */}
                 <div className="bg-white rounded-2xl shadow-sm border border-slate-100/80 p-5">
                     <div className="flex items-center gap-2 pb-4 border-b border-gray-100/80 mb-4">
-                        <div className="w-8 h-8 rounded-lg bg-[#5572fc]/10 text-[#5572fc] flex items-center justify-center font-bold">
+                        <div className="w-8 h-8 rounded-lg bg-[#F97316]/10 text-[#F97316] flex items-center justify-center font-bold">
                             <FiTag size={16} />
                         </div>
                         <h3 className="text-sm font-bold text-gray-800 uppercase tracking-wide leading-none">{i18n?.t("Product Metrics")}</h3>
@@ -207,7 +207,7 @@ const page = ({ params }) => {
                 {/* Description Card */}
                 <div className="bg-white rounded-2xl shadow-sm border border-slate-100/80 p-5 h-fit">
                     <div className="flex items-center gap-2 pb-4 border-b border-gray-100/80 mb-4">
-                        <div className="w-8 h-8 rounded-lg bg-blue-50 text-blue-500 border border-blue-100/50 flex items-center justify-center font-bold">
+                        <div className="w-8 h-8 rounded-lg bg-orange-50 text-orange-500 border border-orange-100/50 flex items-center justify-center font-bold">
                             <FiFileText size={16} />
                         </div>
                         <h3 className="text-sm font-bold text-gray-800 uppercase tracking-wide leading-none">{i18n?.t("Extended Details")}</h3>
@@ -215,7 +215,7 @@ const page = ({ params }) => {
                     
                     {productDescription && productDescription !== '-' ? (
                         <div 
-                            className="prose prose-sm max-w-none text-gray-600 prose-headings:text-gray-800 prose-headings:font-bold prose-a:text-[#5572fc] prose-strong:text-gray-800 pt-2"
+                            className="prose prose-sm max-w-none text-gray-600 prose-headings:text-gray-800 prose-headings:font-bold prose-a:text-[#F97316] prose-strong:text-gray-800 pt-2"
                             dangerouslySetInnerHTML={{ __html: productDescription }} 
                             style={{ whiteSpace: 'pre-line' }} 
                         />

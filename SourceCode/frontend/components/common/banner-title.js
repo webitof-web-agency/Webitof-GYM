@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 import Image from 'next/image';
 import React from 'react';
 import { motion } from 'framer-motion';
@@ -37,7 +37,7 @@ const pathName = usePathname()
         // initial="hidden"
         // whileInView="visible"
         // viewport={{ once: false, amount: 0.3 }}
-        className={`text-[#5572fc] flex items-center gap-[13px]`}
+        className={`text-[#F97316] flex items-center gap-[13px]`}
       >
         {getImageSrc() && (
           <Image
@@ -65,3 +65,4 @@ const pathName = usePathname()
 };
 
 export default BannerTitle;
+

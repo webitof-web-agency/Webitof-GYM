@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import {
   LineChart,
   Line,
@@ -28,7 +28,7 @@ const ChartComponent = ({data}) => {
           <YAxis datakey="money"/> {/* YAxis for numerical values */}
           <Tooltip />
           {/* <Legend /> */}
-          <Line type="monotone" dataKey="money" stroke="#5572fc" strokeWidth={2} />
+          <Line type="monotone" dataKey="money" stroke="#F97316" strokeWidth={2} />
           {/* <Line type="monotone" dataKey="uv" stroke="#82ca9d" strokeWidth={2} /> */}
         </LineChart>
       </ResponsiveContainer>
@@ -37,3 +37,4 @@ const ChartComponent = ({data}) => {
 };
 
 export default ChartComponent;
+

@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 import { Form } from 'antd';
 import { useI18n } from '../../../../../../providers/i18n';
 import { useEffect, useState } from 'react';
@@ -83,7 +83,7 @@ const BlogAddPageContent = () => {
                 {availableLanguages?.map((l, index) => (
                     <button
                         onClick={() => setSelectedLang(l.code)}
-                        className={`rounded-full px-3 py-1 text-sm font-medium transition-colors duration-200 ${l.code === selectedLang ? 'bg-[#5572fc] text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'}`}
+                        className={`rounded-full px-3 py-1 text-sm font-medium transition-colors duration-200 ${l.code === selectedLang ? 'bg-[#F97316] text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'}`}
                         key={index}
                     >
                         {l.name}
@@ -95,7 +95,7 @@ const BlogAddPageContent = () => {
                 <HiddenInput name='_id' />
                 {loading2 ? (
                     <div className='min-h-[20vh] flex items-center justify-center'>
-                        <InfinitySpin width='140' color='#5572fc' />
+                        <InfinitySpin width='140' color='#F97316' />
                     </div>
                 ) : (
                     availableLanguages?.map((l, index) => (
@@ -148,3 +148,4 @@ const BlogAddPageContent = () => {
 };
 
 export default BlogAddPageContent;
+

@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 import Image from 'next/image';
 import React from 'react';
 import Button from '../../../../../components/common/button';
@@ -32,7 +32,7 @@ const Hero = ({ data }) => {
                         className='xl:w-[60%] sm:w-[70%] w-full '>
                         <h1 className='largeHeading mb-6 line-clamp-3 capitalize xl:mb-10 '>
                             <span className='text-white'>{firstThreeWords}</span>
-                            <span className='text-[#5572fc] ml-4 '>{remainingWords}</span>
+                            <span className='text-[#F97316] ml-4 '>{remainingWords}</span>
                         </h1>
                         <p className=' text-white font-poppins w-[75%]'>{data?.description[i18n.langCode]}</p>
                         <div className='xl:mt-[56px] mt-10 flex items-center md:gap-10 gap-2'>

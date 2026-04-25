@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 import React from 'react';
 import { Switch } from 'antd';
 import { useRouter } from 'next/navigation';
@@ -32,7 +32,7 @@ const Languages = () => {
                       </div>
                       <div className="flex flex-col">
                           <span className="font-bold text-gray-800 text-[13px] capitalize">{name}</span>
-                          <span className="text-[9px] font-bold text-[#5572fc] mt-0.5 tracking-widest uppercase flex items-center gap-1">
+                          <span className="text-[9px] font-bold text-[#F97316] mt-0.5 tracking-widest uppercase flex items-center gap-1">
                               <FiSettings size={9}/> Locale Code: {d?.code}
                           </span>
                       </div>
@@ -88,7 +88,7 @@ const Languages = () => {
 
     let actions = ({ _id }) => (
         <button 
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-slate-200 text-[#5572fc] hover:bg-[#5572fc]/5 hover:border-[#5572fc]/30 transition-all duration-300 text-[11px] font-bold shadow-sm bg-white whitespace-nowrap"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-slate-200 text-[#F97316] hover:bg-[#F97316]/5 hover:border-[#F97316]/30 transition-all duration-300 text-[11px] font-bold shadow-sm bg-white whitespace-nowrap"
             title="Edit Translations" 
             onClick={(e) => { e.stopPropagation(); push('/admin/languages/translations/' + _id); }}
         >
@@ -117,7 +117,7 @@ const Languages = () => {
                     pagination
                     indexed
                     action={(
-                        <Button onClick={() => push('/admin/languages/add')} className="flex items-center gap-1.5 !px-4 shadow-md shadow-[#5572fc]/20 hover:shadow-lg hover:shadow-[#5572fc]/30 transition-all !h-8 !py-0 !rounded-lg block !w-auto !text-xs whitespace-nowrap">
+                        <Button onClick={() => push('/admin/languages/add')} className="flex items-center gap-1.5 !px-4 shadow-md shadow-[#F97316]/20 hover:shadow-lg hover:shadow-[#F97316]/30 transition-all !h-8 !py-0 !rounded-lg block !w-auto !text-xs whitespace-nowrap">
                             <FiPlus size={14} /> {i18n?.t("Add Dictionary")}
                         </Button>
                     )}

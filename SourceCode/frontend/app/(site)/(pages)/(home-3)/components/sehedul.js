@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 import Image from 'next/image';
 import BannerTitle from '../../../../../components/common/banner-title';
 import { fetchShedule } from '../../../../helpers/backend';
@@ -95,7 +95,7 @@ const ClassRoutine = () => {
                                             transition={{ duration: 0.5, ease: 'easeOut' }}
                                             key={index}
                                         >
-                                            <td className='whitespace-pre border bg-[#5572fc] px-3 py-4 text-sm font-medium text-white sm:px-4 lg:py-6'>
+                                            <td className='whitespace-pre border bg-[#F97316] px-3 py-4 text-sm font-medium text-white sm:px-4 lg:py-6'>
                                                 {time}
                                             </td>
                                             {[
@@ -114,7 +114,7 @@ const ClassRoutine = () => {
                                                 return (
                                                     <td
                                                         onClick={() => { setTrainer(data); setOpen(true) }}
-                                                        className={`scheduleTableTD cursor-pointer group text-center ${title !== '-' ? 'hover:bg-[#5572fc]' : 'bg-transparent'} `}
+                                                        className={`scheduleTableTD cursor-pointer group text-center ${title !== '-' ? 'hover:bg-[#F97316]' : 'bg-transparent'} `}
                                                         key={day}
                                                     >
                                                         {title.length > 20 ? (
@@ -156,7 +156,7 @@ const ClassRoutine = () => {
                 className='trainerModal'
             >
                 <div className='relative bg-white rounded-t-[40px] rounded-[20px] overflow-hidden'>
-                    <div className='w-full h-[100px] bg-[#5572fc]  flex items-center justify-center'>
+                    <div className='w-full h-[100px] bg-[#F97316]  flex items-center justify-center'>
                         <div className='z-20 rounded-full w-[100px] h-[100px] overflow-hidden relative top-[50%] bg-white'>
                             <Image src={trainer?.image ? trainer?.image : "/defaultimg.jpg"} alt={trainer?.name} width={600} height={400} className='object-cover rounded-full w-full h-full' />
                         </div>
@@ -169,7 +169,7 @@ const ClassRoutine = () => {
                         </div>
                         <p className='text-textMain font-normal text-sm line-clamp-4 mt-6'>{trainer?.about}</p>
                     </div>
-                    <button className='w-full mt-6 cursor-pointer text-lg font-semibold py-3 bg-[#5572fc]/90 text-white hover:bg-[#5572fc] ' onClick={() => push(`/trainers/view/${trainer?._id}`)}>{i18n?.t('View Details')} </button>
+                    <button className='w-full mt-6 cursor-pointer text-lg font-semibold py-3 bg-[#F97316]/90 text-white hover:bg-[#F97316] ' onClick={() => push(`/trainers/view/${trainer?._id}`)}>{i18n?.t('View Details')} </button>
                 </div>
             </Modal>
         </div>
@@ -177,3 +177,4 @@ const ClassRoutine = () => {
 };
 
 export default ClassRoutine;
+

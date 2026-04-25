@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 import React, { useEffect, useState } from 'react';
 import { Form, Input } from 'antd';
 import Image from 'next/image';
@@ -40,7 +40,7 @@ const AdminProfile = () => {
             <div className="bg-white rounded-xl shadow-[0_2px_10px_-4px_rgba(0,0,0,0.05)] border border-slate-100/80 overflow-hidden">
 
                 {/* Hero Banner */}
-                <div className="h-28 bg-gradient-to-r from-[#5572fc] to-[#7c93ff] relative">
+                <div className="h-28 bg-gradient-to-r from-[#F97316] to-[#FB923C] relative">
                     <div className="absolute inset-0 opacity-20" style={{ backgroundImage: 'radial-gradient(circle at 20% 50%, white 1px, transparent 1px)', backgroundSize: '24px 24px' }} />
                 </div>
 
@@ -52,24 +52,24 @@ const AdminProfile = () => {
                                 <Image width={96} height={96} src={user?.image} alt="admin avatar"
                                     className="w-24 h-24 rounded-2xl border-4 border-white shadow-xl object-cover" />
                             ) : (
-                                <div className="w-24 h-24 rounded-2xl border-4 border-white shadow-xl bg-[#5572fc]/10 flex items-center justify-center">
-                                    <FiUser className="text-[#5572fc]" size={36} />
+                                <div className="w-24 h-24 rounded-2xl border-4 border-white shadow-xl bg-[#F97316]/10 flex items-center justify-center">
+                                    <FiUser className="text-[#F97316]" size={36} />
                                 </div>
                             )}
-                            <button onClick={() => setEdit(true)} className="absolute -bottom-1 -right-1 w-7 h-7 bg-[#5572fc] rounded-lg text-white flex items-center justify-center shadow-md hover:bg-[#4461eb] transition-colors">
+                            <button onClick={() => setEdit(true)} className="absolute -bottom-1 -right-1 w-7 h-7 bg-[#F97316] rounded-lg text-white flex items-center justify-center shadow-md hover:bg-[#EA580C] transition-colors">
                                 <FiCamera size={13} />
                             </button>
                         </div>
                         <div className="flex gap-2 mb-1">
                             <button
                                 onClick={() => setEdit(false)}
-                                className={`flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-bold border transition-all ${!edit ? 'bg-[#5572fc] text-white border-[#5572fc] shadow-md shadow-[#5572fc]/20' : 'bg-white text-gray-500 border-slate-200 hover:bg-slate-50'}`}
+                                className={`flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-bold border transition-all ${!edit ? 'bg-[#F97316] text-white border-[#F97316] shadow-md shadow-[#F97316]/20' : 'bg-white text-gray-500 border-slate-200 hover:bg-slate-50'}`}
                             >
                                 <FiUser size={12} /> View Profile
                             </button>
                             <button
                                 onClick={() => setEdit(true)}
-                                className={`flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-bold border transition-all ${edit ? 'bg-[#5572fc] text-white border-[#5572fc] shadow-md shadow-[#5572fc]/20' : 'bg-white text-gray-500 border-slate-200 hover:bg-slate-50'}`}
+                                className={`flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-bold border transition-all ${edit ? 'bg-[#F97316] text-white border-[#F97316] shadow-md shadow-[#F97316]/20' : 'bg-white text-gray-500 border-slate-200 hover:bg-slate-50'}`}
                             >
                                 <FiEdit2 size={12} /> Edit Profile
                             </button>
@@ -81,14 +81,14 @@ const AdminProfile = () => {
                         <div>
                             <div className="mb-6">
                                 <h2 className="text-xl font-extrabold text-gray-800">{user?.name || 'Administrator'}</h2>
-                                <span className="text-xs text-[#5572fc] font-bold uppercase tracking-widest">Admin Account</span>
+                                <span className="text-xs text-[#F97316] font-bold uppercase tracking-widest">Admin Account</span>
                             </div>
 
                             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                                 {[
                                     { icon: <FiUser size={15} />, label: 'Full Name', value: user?.name, color: 'blue' },
                                     { icon: <FiMail size={15} />, label: 'Email Address', value: user?.email, color: 'purple' },
-                                    { icon: <FiPhone size={15} />, label: 'Phone Number', value: user?.phone || '—', color: 'emerald' },
+                                    { icon: <FiPhone size={15} />, label: 'Phone Number', value: user?.phone || 'â€”', color: 'emerald' },
                                 ].map(({ icon, label, value, color }) => (
                                     <div key={label} className={`bg-${color}-50/40 border border-${color}-100/60 rounded-xl p-4`}>
                                         <div className={`w-8 h-8 rounded-lg bg-${color}-100 text-${color}-600 flex items-center justify-center mb-3`}>
@@ -164,7 +164,7 @@ const AdminProfile = () => {
                                 <Button
                                     type="submit"
                                     loading={loader}
-                                    className="!px-6 !py-2 flex items-center gap-1.5 shadow-md shadow-[#5572fc]/20 !font-semibold !rounded-lg !text-xs transition-all"
+                                    className="!px-6 !py-2 flex items-center gap-1.5 shadow-md shadow-[#F97316]/20 !font-semibold !rounded-lg !text-xs transition-all"
                                 >
                                     <FiEdit2 size={13} /> Save Profile Changes
                                 </Button>

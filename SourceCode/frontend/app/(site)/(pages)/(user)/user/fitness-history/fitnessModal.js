@@ -1,4 +1,4 @@
-import { Modal } from 'antd';
+﻿import { Modal } from 'antd';
 import React from 'react';
 import { useI18n } from '../../../../../providers/i18n';
 import { AiOutlineMan, AiOutlineWoman } from "react-icons/ai";
@@ -38,7 +38,7 @@ const FitnessModal = ({ open = false, setOpen, data, setDetails }) => {
                 <div className="p-5 bg-white rounded-lg shadow-md">
                     <h3 className="font-semibold text-lg text-gray-800 border-b pb-2">{i18n?.t("Fitness Metrics")} </h3>
                     <div className="grid grid-cols-2 gap-4 mt-4">
-                        <ResultCard title="BMI" value={`${data?.bmi?.bmi}`} bgColor="bg-blue-100" i18n={i18n} />
+                        <ResultCard title="BMI" value={`${data?.bmi?.bmi}`} bgColor="bg-orange-100" i18n={i18n} />
                         <ResultCard title="BMR" value={data?.bmi?.bmr} unit="cal/day" bgColor="bg-green-100" i18n={i18n} />
                         <ResultCard title="Daily Calories" value={data?.bmi?.daily_calories} unit="calories" bgColor="bg-yellow-100" i18n={i18n} />
                         <ResultCard title="Water Intake" value={data?.bmi?.waterIntake} unit="liters/day" bgColor="bg-purple-100" i18n={i18n} />
@@ -59,3 +59,4 @@ const FitnessModal = ({ open = false, setOpen, data, setDetails }) => {
 };
 
 export default FitnessModal;
+

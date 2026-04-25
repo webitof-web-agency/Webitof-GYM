@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 import React, { useEffect } from 'react';
 import Image from 'next/image';
 import { useRouter, useParams } from 'next/navigation';
@@ -51,7 +51,7 @@ const AdminBlogView = () => {
                         />
                          <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-transparent to-transparent"></div>
                          <div className="absolute bottom-6 left-6 right-6 lg:left-10 lg:right-10 flex items-center gap-3">
-                              <span className="bg-[#5572fc] text-white px-3 py-1 rounded text-[11px] font-bold tracking-widest uppercase flex items-center gap-1.5 shadow-md">
+                              <span className="bg-[#F97316] text-white px-3 py-1 rounded text-[11px] font-bold tracking-widest uppercase flex items-center gap-1.5 shadow-md">
                                   <FiFolder size={12}/> {columnFormatter(data?.category?.name) || 'Category'}
                               </span>
                               <span className="bg-white/20 backdrop-blur-sm text-white px-3 py-1 rounded text-[11px] font-bold flex items-center gap-1.5 shadow-md">
@@ -71,7 +71,7 @@ const AdminBlogView = () => {
                      </h1>
                      
                      {data?.short_description && (
-                         <div className="border-l-4 border-[#5572fc] pl-4 py-1 mb-6">
+                         <div className="border-l-4 border-[#F97316] pl-4 py-1 mb-6">
                             <p className="text-lg text-gray-600 font-medium leading-relaxed italic">
                                 "{columnFormatter(data?.short_description)}"
                             </p>

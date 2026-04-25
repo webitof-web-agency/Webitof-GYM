@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 import Image from 'next/image';
 import React from 'react';
 import Button from "../../../../../components/common/button";
@@ -52,7 +52,7 @@ const Hero = ({ data }) => {
                             viewport={{ once: true, amount: 0.5 }}
                         >
                             <motion.h1
-                                className="!text-[#5572fc] bannertittle uppercase line-clamp-1"
+                                className="!text-[#F97316] bannertittle uppercase line-clamp-1"
                                 initial="hidden"
                                 whileInView="visible"
                                 variants={leftToRightVariant}
@@ -155,3 +155,4 @@ const Hero = ({ data }) => {
 };
 
 export default Hero;
+

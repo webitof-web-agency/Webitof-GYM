@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import dayjs from 'dayjs';
 import { useState } from 'react';
@@ -27,7 +27,7 @@ const Page = () => {
             dataField: 'name',
             formatter: (_, d) => (
                 <div className="flex items-center gap-2.5">
-                    <div className="w-8 h-8 rounded-full bg-blue-50 text-[#5572fc] flex items-center justify-center flex-shrink-0">
+                    <div className="w-8 h-8 rounded-full bg-orange-50 text-[#F97316] flex items-center justify-center flex-shrink-0">
                         <FiShield size={14} />
                     </div>
                     <span className="text-xs font-bold text-gray-800 uppercase tracking-wide">{d?.name}</span>
@@ -50,7 +50,7 @@ const Page = () => {
             formatter: (_, d) => (
                 <button
                     onClick={() => push(`/admin/hrm/permission/${d?._id}`)}
-                    className="flex items-center justify-center gap-1.5 bg-[#5572fc]/10 hover:bg-[#5572fc] text-[#5572fc] hover:text-white border border-[#5572fc]/20 rounded-lg px-3 py-1.5 text-[10px] font-bold transition-all w-fit whitespace-nowrap"
+                    className="flex items-center justify-center gap-1.5 bg-[#F97316]/10 hover:bg-[#F97316] text-[#F97316] hover:text-white border border-[#F97316]/20 rounded-lg px-3 py-1.5 text-[10px] font-bold transition-all w-fit whitespace-nowrap"
                 >
                     <FiSettings size={12} /> Assign Permissions
                 </button>
@@ -86,7 +86,7 @@ const Page = () => {
                                 setIsEdit(false);
                                 setOpen(true);
                             }}
-                            className="flex items-center gap-1.5 !px-4 shadow-md shadow-[#5572fc]/20 hover:shadow-lg hover:shadow-[#5572fc]/30 transition-all !h-8 !py-0 !rounded-lg block !w-auto !text-xs whitespace-nowrap"
+                            className="flex items-center gap-1.5 !px-4 shadow-md shadow-[#F97316]/20 hover:shadow-lg hover:shadow-[#F97316]/30 transition-all !h-8 !py-0 !rounded-lg block !w-auto !text-xs whitespace-nowrap"
                         >
                             <FiPlus size={14} /> {i18n.t('Create Role')}
                         </Button>
@@ -116,7 +116,7 @@ const Page = () => {
                 footer={null}
                 title={
                     <div className="flex items-center gap-2.5 pb-2.5 border-b border-gray-100">
-                        <div className="w-8 h-8 rounded-lg bg-[#5572fc]/10 text-[#5572fc] flex items-center justify-center">
+                        <div className="w-8 h-8 rounded-lg bg-[#F97316]/10 text-[#F97316] flex items-center justify-center">
                             {isEdit ? <FiEdit2 size={15} /> : <FiShield size={15} />}
                         </div>
                         <span className="text-base font-bold text-gray-800 leading-tight">
@@ -147,7 +147,7 @@ const Page = () => {
                         <Button
                             type='submit'
                             loading={loading}
-                            className='!px-5 !py-1.5 flex items-center gap-1.5 shadow-md shadow-[#5572fc]/20 !font-semibold !rounded-lg !text-xs transition-all'
+                            className='!px-5 !py-1.5 flex items-center gap-1.5 shadow-md shadow-[#F97316]/20 !font-semibold !rounded-lg !text-xs transition-all'
                         >
                             {isEdit ? <FiEdit2 size={13} /> : <FiPlus size={13} />}
                             {isEdit ? 'Save Changes' : 'Create Role'}
@@ -160,3 +160,4 @@ const Page = () => {
 };
 
 export default Page;
+

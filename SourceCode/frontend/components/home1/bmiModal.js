@@ -1,4 +1,4 @@
-import { Modal } from 'antd';
+﻿import { Modal } from 'antd';
 import React from 'react';
 import { useAction } from '../../app/helpers/hooks';
 import { postFitness } from '../../app/helpers/backend';
@@ -52,7 +52,7 @@ const BmiModal = ({ isModalVisible, handleClose, setResults, results, i18n, valu
                     <div className="space-y-4">
                         <h2 className="text-2xl font-bold text-center">{i18n?.t("Your Fitness Results")}</h2>
                         <div className="grid grid-cols-2 gap-4">
-                            <ResultCard title="BMI" value={`${results.bmi} (${results.category})`} bgColor="bg-blue-50" i18n={i18n} />
+                            <ResultCard title="BMI" value={`${results.bmi} (${results.category})`} bgColor="bg-orange-50" i18n={i18n} />
                             <ResultCard title="BMR" value={results.bmr} unit="calories/day" bgColor="bg-green-50" i18n={i18n} />
                             <ResultCard title="Daily Calories" value={results.dailyCalories} unit="calories" bgColor="bg-yellow-50" i18n={i18n} />
                             <ResultCard title="Water Intake" value={results.waterIntake} unit="liters/day" bgColor="bg-purple-50" i18n={i18n} />
@@ -65,7 +65,7 @@ const BmiModal = ({ isModalVisible, handleClose, setResults, results, i18n, valu
                                 <ResultCard title="Fats" value={results.macros.fats} unit="g" i18n={i18n} />
                             </div>
                         </div>
-                        <button onClick={onSaveClick} className="bg-[#5572fc] text-white font-bold py-2 px-4 rounded">{i18n?.t("Save")}</button>
+                        <button onClick={onSaveClick} className="bg-[#F97316] text-white font-bold py-2 px-4 rounded">{i18n?.t("Save")}</button>
                     </div>
                 </Modal>
             )}

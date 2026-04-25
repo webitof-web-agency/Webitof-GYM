@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 import React from 'react';
 import NoticeCalendar from '../../../../(site)/(pages)/(trainer)/components/noticeCalender';
 import { useParams, useRouter } from 'next/navigation';
@@ -27,7 +27,7 @@ const page = () => {
             </div>
 
             <div className="bg-white rounded-xl shadow-sm border border-slate-100/80 p-5">
-                <div className="flex items-center gap-2 text-[#5572fc] mb-2 pb-4 border-b border-slate-100">
+                <div className="flex items-center gap-2 text-[#F97316] mb-2 pb-4 border-b border-slate-100">
                     <FiCalendar size={14} />
                     <span className="text-xs font-bold uppercase tracking-widest">Attendance History Matrix</span>
                 </div>

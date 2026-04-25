@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import Image from 'next/image';
 import Link from 'next/link';
@@ -86,7 +86,7 @@ const IntroductionCard = ({ data }) => {
 
                                 <Link
                                     href='/about'
-                                    className='absolute bottom-0 right-0 flex cursor-pointer items-center justify-end gap-2 text-[#5572fc] lg:-mt-6'
+                                    className='absolute bottom-0 right-0 flex cursor-pointer items-center justify-end gap-2 text-[#F97316] lg:-mt-6'
                                 >
                                     Read More <FaArrowRightLong />
                                 </Link>
@@ -126,7 +126,7 @@ const IntroductionCard = ({ data }) => {
                                 {descrptionLimit(sections[1].description)}{' '}
                                 <Link
                                     href='/about'
-                                    className='absolute bottom-0 right-0 flex cursor-pointer items-center justify-end gap-2 text-[#5572fc] lg:-mt-6'
+                                    className='absolute bottom-0 right-0 flex cursor-pointer items-center justify-end gap-2 text-[#F97316] lg:-mt-6'
                                 >
                                     Read More <FaArrowRightLong />
                                 </Link>
@@ -142,7 +142,7 @@ const IntroductionCard = ({ data }) => {
                                 {descrptionLimit(sections[2].description)}
                                 <Link
                                     href='/about'
-                                    className='absolute bottom-0 right-0 flex cursor-pointer items-center justify-end gap-2 text-[#5572fc] lg:-mt-6'
+                                    className='absolute bottom-0 right-0 flex cursor-pointer items-center justify-end gap-2 text-[#F97316] lg:-mt-6'
                                 >
                                     Read More <FaArrowRightLong />
                                 </Link>
@@ -181,3 +181,4 @@ const IntroductionCard = ({ data }) => {
 };
 
 export default IntroductionCard;
+

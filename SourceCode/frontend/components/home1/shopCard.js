@@ -1,4 +1,4 @@
-import Image from 'next/image';
+﻿import Image from 'next/image';
 import React, { useState, useEffect } from 'react';
 import { FiHeart, FiEye, FiShoppingBag } from 'react-icons/fi';
 import Link from 'next/link';
@@ -49,7 +49,7 @@ const ShopCard = ({ data, getData }) => {
             viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.5, ease: 'easeOut' }}
             whileHover={{ y: -4, transition: { duration: 0.2 } }}
-            className='group relative bg-white rounded-2xl overflow-hidden border border-slate-100 shadow-[0_4px_20px_-6px_rgba(0,0,0,0.07)] hover:shadow-[0_16px_40px_-8px_rgba(85,114,252,0.12)] hover:border-[#5572fc]/20 transition-all duration-300 flex flex-col'
+            className='group relative bg-white rounded-2xl overflow-hidden border border-slate-100 shadow-[0_4px_20px_-6px_rgba(0,0,0,0.07)] hover:shadow-[0_16px_40px_-8px_rgba(85,114,252,0.12)] hover:border-[#F97316]/20 transition-all duration-300 flex flex-col'
         >
             {/* Image area */}
             <div className='relative overflow-hidden bg-slate-50 lg:h-[240px] sm:h-[200px] h-[170px] shrink-0'>
@@ -80,21 +80,21 @@ const ShopCard = ({ data, getData }) => {
                 <div className='absolute inset-x-0 bottom-0 flex items-center justify-center gap-2 translate-y-full group-hover:translate-y-0 transition-transform duration-300 bg-white/90 backdrop-blur-sm py-2.5'>
                     <button
                         onClick={() => submitWishlist(data?._id)}
-                        className={`flex h-8 w-8 items-center justify-center rounded-xl border transition-all duration-200 ${wishListed ? 'bg-[#5572fc] border-[#5572fc] text-white' : 'border-slate-200 text-gray-500 hover:border-[#5572fc] hover:text-[#5572fc]'}`}
+                        className={`flex h-8 w-8 items-center justify-center rounded-xl border transition-all duration-200 ${wishListed ? 'bg-[#F97316] border-[#F97316] text-white' : 'border-slate-200 text-gray-500 hover:border-[#F97316] hover:text-[#F97316]'}`}
                         title={i18n?.t('Wishlist')}
                     >
                         <FiHeart size={14} className={wishListed ? 'fill-current' : ''} />
                     </button>
                     <Link
                         href={`/shop/${data?._id}`}
-                        className='flex h-8 w-8 items-center justify-center rounded-xl border border-slate-200 text-gray-500 hover:border-[#5572fc] hover:text-[#5572fc] transition-all duration-200'
+                        className='flex h-8 w-8 items-center justify-center rounded-xl border border-slate-200 text-gray-500 hover:border-[#F97316] hover:text-[#F97316] transition-all duration-200'
                         title={i18n?.t('Quick View')}
                     >
                         <FiEye size={14} />
                     </Link>
                     <Link
                         href={`/shop/${data?._id}`}
-                        className='flex h-8 items-center gap-1.5 px-4 rounded-xl bg-[#5572fc] text-[11px] font-bold text-white hover:bg-[#4461eb] transition-colors'
+                        className='flex h-8 items-center gap-1.5 px-4 rounded-xl bg-[#F97316] text-[11px] font-bold text-white hover:bg-[#EA580C] transition-colors'
                     >
                         <FiShoppingBag size={12} /> {i18n?.t('Buy')}
                     </Link>
@@ -103,12 +103,12 @@ const ShopCard = ({ data, getData }) => {
 
             {/* Info */}
             <div className='p-4 flex flex-col flex-1'>
-                <Link href={`/shop/${data?._id}`} className='text-[13px] font-extrabold text-gray-800 leading-snug line-clamp-2 hover:text-[#5572fc] transition-colors mb-1'>
+                <Link href={`/shop/${data?._id}`} className='text-[13px] font-extrabold text-gray-800 leading-snug line-clamp-2 hover:text-[#F97316] transition-colors mb-1'>
                     {columnFormatter(data?.name)}
                 </Link>
                 <p className='text-[11px] text-gray-400 font-medium capitalize mb-2'>{columnFormatter(data?.category?.name)}</p>
                 <div className='mt-auto flex items-center justify-between'>
-                    <span className='text-base font-black text-[#5572fc]'>
+                    <span className='text-base font-black text-[#F97316]'>
                         {currencySymbol}{convertAmount(data?.price || 0)}
                     </span>
                     {data?.compare_price > data?.price && (
@@ -123,3 +123,4 @@ const ShopCard = ({ data, getData }) => {
 };
 
 export default ShopCard;
+

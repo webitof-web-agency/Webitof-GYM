@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 import React, { useState } from 'react';
 import { Form } from 'antd';
 import BannerTitle from '../common/banner-title';
@@ -88,9 +88,9 @@ const FitnessCalculator = () => {
     };
 
     const bmiRows = [
-        { range: i18n?.t('Below 18.5'), status: i18n?.t('Underweight'), color: 'bg-blue-50 text-blue-600', dot: 'bg-blue-400' },
-        { range: i18n?.t('18.5 – 24.9'), status: i18n?.t('Healthy'), color: 'bg-emerald-50 text-emerald-600', dot: 'bg-emerald-400' },
-        { range: i18n?.t('25.0 – 29.9'), status: i18n?.t('Overweight'), color: 'bg-amber-50 text-amber-600', dot: 'bg-amber-400' },
+        { range: i18n?.t('Below 18.5'), status: i18n?.t('Underweight'), color: 'bg-orange-50 text-orange-600', dot: 'bg-orange-400' },
+        { range: i18n?.t('18.5 â€“ 24.9'), status: i18n?.t('Healthy'), color: 'bg-emerald-50 text-emerald-600', dot: 'bg-emerald-400' },
+        { range: i18n?.t('25.0 â€“ 29.9'), status: i18n?.t('Overweight'), color: 'bg-amber-50 text-amber-600', dot: 'bg-amber-400' },
         { range: i18n?.t('30.0+'), status: i18n?.t('Obese'), color: 'bg-red-50 text-red-500', dot: 'bg-red-400' },
     ];
 
@@ -98,10 +98,10 @@ const FitnessCalculator = () => {
         <section className='container overflow-x-hidden'>
             <div className='lg:grid grid-cols-1 lg:gap-14 gap-10 lg:grid-cols-2 flex flex-col-reverse'>
 
-                {/* Left — BMI chart card */}
+                {/* Left â€” BMI chart card */}
                 <div className='rounded-2xl overflow-hidden border border-slate-100 shadow-[0_4px_30px_-8px_rgba(0,0,0,0.08)] flex flex-col'>
                     {/* Gradient header */}
-                    <div className='bg-gradient-to-r from-[#3a52c4] to-[#5572fc] px-6 py-5'>
+                    <div className='bg-gradient-to-r from-[#EA580C] to-[#F97316] px-6 py-5'>
                         <p className='text-[11px] font-black text-white/60 uppercase tracking-widest mb-1'>{i18n?.t('Reference Chart')}</p>
                         <h3 className='text-xl font-extrabold text-white'>{i18n?.t('BMI & Fitness Chart')}</h3>
                     </div>
@@ -134,13 +134,13 @@ const FitnessCalculator = () => {
                     {/* Footer legend */}
                     <div className='border-t border-slate-100 px-6 py-4 bg-slate-50/50'>
                         <p className='text-[12px] text-gray-500 font-medium'>
-                            <span className='font-black text-[#5572fc]'>{i18n?.t('BMR')}</span> {i18n?.t('— Basal Metabolic Rate')} &nbsp;·&nbsp;
-                            <span className='font-black text-[#5572fc]'>{i18n?.t('BMI')}</span> {i18n?.t('— Body Mass Index')}
+                            <span className='font-black text-[#F97316]'>{i18n?.t('BMR')}</span> {i18n?.t('â€” Basal Metabolic Rate')} &nbsp;Â·&nbsp;
+                            <span className='font-black text-[#F97316]'>{i18n?.t('BMI')}</span> {i18n?.t('â€” Body Mass Index')}
                         </p>
                     </div>
                 </div>
 
-                {/* Right — Form panel */}
+                {/* Right â€” Form panel */}
                 <div className='rounded-2xl border border-slate-100 shadow-[0_4px_30px_-8px_rgba(0,0,0,0.08)] p-6 lg:p-8 bg-white'>
                     <BannerTitle
                         home3={findDefaultTheme?.name === "home3" && pathName === "/" ? true : false}
@@ -174,3 +174,4 @@ const FitnessCalculator = () => {
 };
 
 export default FitnessCalculator;
+

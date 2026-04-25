@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 import { Checkbox, Form, message } from 'antd';
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
@@ -73,7 +73,7 @@ export const PaymentMethodForm = ({ title, form, selectedMethod, setSelectedMeth
     return (
         <div className="bg-white rounded-xl shadow-[0_2px_10px_-4px_rgba(0,0,0,0.05)] border border-slate-100/80 overflow-hidden">
             <div className="px-6 py-4 border-b border-slate-100 bg-slate-50/50 flex items-center gap-3">
-                 <div className="w-8 h-8 rounded-lg bg-[#5572fc]/10 text-[#5572fc] flex items-center justify-center">
+                 <div className="w-8 h-8 rounded-lg bg-[#F97316]/10 text-[#F97316] flex items-center justify-center">
                       <FiLock size={16} />
                  </div>
                  <div>
@@ -162,7 +162,7 @@ export const PaymentMethodForm = ({ title, form, selectedMethod, setSelectedMeth
 
                 <div className="flex justify-end pt-5 mt-5 border-t border-slate-100">
                      <Button type='button' onClick={() => push('/admin/payment-method')} className="!bg-white !text-gray-600 !border-gray-200 hover:!bg-gray-50 !px-6 !py-2 !font-semibold !rounded-lg !text-xs mr-2 transition-all">Cancel</Button>
-                     <Button type='submit' loading={loader} className="!px-6 !py-2 flex items-center gap-1.5 shadow-md shadow-[#5572fc]/20 !font-semibold !rounded-lg !text-xs transition-all tracking-wide">
+                     <Button type='submit' loading={loader} className="!px-6 !py-2 flex items-center gap-1.5 shadow-md shadow-[#F97316]/20 !font-semibold !rounded-lg !text-xs transition-all tracking-wide">
                          <FiSave size={14}/> {isEdit ? i18n?.t('Patch Gateway Configuration') : i18n?.t('Mount Payment Gateway')}
                      </Button>
                 </div>
@@ -170,3 +170,4 @@ export const PaymentMethodForm = ({ title, form, selectedMethod, setSelectedMeth
         </div>
     )
 }
+

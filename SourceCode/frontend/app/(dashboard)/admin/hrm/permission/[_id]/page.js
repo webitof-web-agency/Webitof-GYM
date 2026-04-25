@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Checkbox } from 'antd';
@@ -150,7 +150,7 @@ const RolePermission = ({params}) => {
                             push('/admin/hrm/roles');
                         });
                     }}
-                    className="flex items-center gap-1.5 !px-6 !py-2.5 shadow-md shadow-[#5572fc]/20 hover:shadow-lg hover:shadow-[#5572fc]/30 transition-all !rounded-xl text-xs font-bold shrink-0"
+                    className="flex items-center gap-1.5 !px-6 !py-2.5 shadow-md shadow-[#F97316]/20 hover:shadow-lg hover:shadow-[#F97316]/30 transition-all !rounded-xl text-xs font-bold shrink-0"
                 >
                     <FiSave size={14} /> Save Authorization Rules
                 </Button>
@@ -158,7 +158,7 @@ const RolePermission = ({params}) => {
             
             <div className="bg-white rounded-xl shadow-sm border border-slate-100/80 overflow-hidden">
                 <div className="bg-slate-50 px-5 py-3 border-b border-slate-100 flex items-center justify-between">
-                    <div className="flex items-center gap-2 text-[#5572fc]">
+                    <div className="flex items-center gap-2 text-[#F97316]">
                         <FiShield size={14} />
                         <span className="text-xs font-bold uppercase tracking-widest">Global Module Matrix</span>
                     </div>

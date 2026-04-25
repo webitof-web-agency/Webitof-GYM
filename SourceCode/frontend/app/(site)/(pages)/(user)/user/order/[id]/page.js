@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useRef } from 'react';
 import dayjs from 'dayjs';
@@ -75,7 +75,7 @@ const OrderDetails = ({ params }) => {
       <div className="w-full max-w-4xl bg-white">
         <div className="mb-4">
           <button
-            className="bg-[#5572fc] hover:bg-[#5572fc]/90 text-white font-bold py-2 px-6 rounded"
+            className="bg-[#F97316] hover:bg-[#F97316]/90 text-white font-bold py-2 px-6 rounded"
             onClick={() => router.back()}
           >
             {i18n?.t("Back")}
@@ -164,7 +164,7 @@ const OrderDetails = ({ params }) => {
         </div>
         <div className='w-full flex justify-end mt-10'>
           <button
-            className="bg-[#5572fc] hover:bg-[#5572fc]/90 !w-fit text-white font-bold py-2 px-6 rounded"
+            className="bg-[#F97316] hover:bg-[#F97316]/90 !w-fit text-white font-bold py-2 px-6 rounded"
             onClick={downloadInvoice}
           >
             {i18n?.t("Download Invoice")}

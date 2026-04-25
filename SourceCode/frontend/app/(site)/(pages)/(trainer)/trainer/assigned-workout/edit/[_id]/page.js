@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 import React, { useEffect, useState } from 'react';
 import { Form, Checkbox, DatePicker, Radio, notification } from 'antd';
 import { CalendarOutlined } from '@ant-design/icons';
@@ -190,7 +190,7 @@ const Page = ({ params }) => {
                                     <div
                                         onClick={() => setSelectedLang(l.code)}
                                         className={`rounded-full cursor-pointer px-3 py-1 text-sm font-medium transition-colors duration-200 ${l.code === selectedLang
-                                            ? 'bg-[#5572fc] text-white '
+                                            ? 'bg-[#F97316] text-white '
                                             : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
                                             }`}
                                         key={index}
@@ -222,7 +222,7 @@ const Page = ({ params }) => {
                     </div>
                     <div className='grid md:grid-cols-2 grid-cols-1 lg:gap-4 gap-2 mt-5'>
                         <div className='mb-4 rounded border'>
-                            <div className='rounded-t bg-[#5572fc] p-3 text-white'>
+                            <div className='rounded-t bg-[#F97316] p-3 text-white'>
                                 <h3 className='text-lg font-semibold'>{i18n?.t("Select Day")}</h3>
                             </div>
                             <div className='p-[26px] '>
@@ -242,7 +242,7 @@ const Page = ({ params }) => {
                             </div>
                         </div>
                         <div className='mb-4 rounded border'>
-                            <div className='rounded-t bg-[#5572fc] p-3 text-white'>
+                            <div className='rounded-t bg-[#F97316] p-3 text-white'>
                                 <h3 className='text-lg font-semibold'>{i18n?.t("Select Workouts")}</h3>
                             </div>
                             <div className='p-[26px]  overflow-y-auto h-[35vh] hide-scrollbar'>

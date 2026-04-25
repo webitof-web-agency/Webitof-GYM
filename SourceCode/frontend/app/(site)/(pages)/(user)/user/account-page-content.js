@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 import React, { useEffect } from 'react';
 import { Form } from 'antd';
 import FormInput, { HiddenInput } from '../../../../../components/form/input';
@@ -130,7 +130,7 @@ const AccountPageContent = () => {
 
                     {/* Action Buttons */}
                     <div className="pt-6 border-t border-slate-100 flex justify-end">
-                        <button type='submit' className='w-full sm:w-auto rounded-xl bg-[#5572fc] shadow-md shadow-[#5572fc]/20 px-8 py-3.5 text-[15px] font-semibold text-white transition-all duration-300 hover:bg-indigo-600 hover:shadow-lg hover:-translate-y-0.5'>
+                        <button type='submit' className='w-full sm:w-auto rounded-xl bg-[#F97316] shadow-md shadow-[#F97316]/20 px-8 py-3.5 text-[15px] font-semibold text-white transition-all duration-300 hover:bg-indigo-600 hover:shadow-lg hover:-translate-y-0.5'>
                             {i18n?.t('Save Changes')}
                         </button>
                     </div>
@@ -141,3 +141,4 @@ const AccountPageContent = () => {
 };
 
 export default AccountPageContent;
+

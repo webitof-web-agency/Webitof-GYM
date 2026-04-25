@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 import React from 'react';
 import Image from 'next/image';
 import { useI18n } from '../../../../providers/i18n';
@@ -26,7 +26,7 @@ const ServiceCard = ({ data }) => {
                 </Link>
             </div>
 
-            <div className='absolute bg-[#5572fc] !z-10 w-full lg:h-[250px] h-[200px] lg:-bottom-[160px] -bottom-[120px] group-hover:bottom-0 transition-all duration-700'>
+            <div className='absolute bg-[#F97316] !z-10 w-full lg:h-[250px] h-[200px] lg:-bottom-[160px] -bottom-[120px] group-hover:bottom-0 transition-all duration-700'>
                 <div className='rounded-full lg:w-16 lg:h-16 w-14 h-14 duration-700 bottom-8 lg:p-4 p-2 bg-white flex mx-auto relative box-shadow items-center justify-center'>
                     <Image src={data?.icon} width={50} height={50} alt='service' className='object-contain w-[32px]' />
                 </div>
@@ -47,3 +47,4 @@ const ServiceCard = ({ data }) => {
 };
 
 export default ServiceCard;
+

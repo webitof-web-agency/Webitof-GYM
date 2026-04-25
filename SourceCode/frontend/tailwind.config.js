@@ -1,4 +1,4 @@
-/** @type {import('tailwindcss').Config} */
+﻿/** @type {import('tailwindcss').Config} */
 module.exports = {
     content: [ "./app/**/*.js", 'components/**/*.js'],
     theme: {
@@ -15,7 +15,7 @@ module.exports = {
                 'custom-light': '0px 0px 20px 0px rgba(0, 0, 0, 0.10)',
               },
             colors: {
-                primary: "#5572fc",
+                primary: "#F97316",
                 textMain: "#2B2B2B",
                 textBody: "#534C4C",
             }
