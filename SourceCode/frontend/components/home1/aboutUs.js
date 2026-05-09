@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 import React from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
@@ -33,29 +33,31 @@ const AboutUs = ({ data }) => {
                     transition={{ duration: 0.6, ease: 'easeOut' }}
                     className='relative w-full lg:basis-1/2 flex justify-center'
                 >
-                    {/* Decorative background block */}
-                    <div className='absolute -bottom-4 -right-4 w-[calc(100%-48px)] h-[calc(100%-48px)] max-w-[338px] bg-[#F97316]/8 rounded-2xl border border-[#F97316]/15 hidden sm:block' />
+                    <div className='relative w-full max-w-[380px] lg:max-w-[480px]'>
+                        {/* Decorative background block */}
+                        <div className='absolute -bottom-5 -right-5 w-full h-full bg-[#F97316]/8 rounded-2xl border border-[#F97316]/15 hidden sm:block' />
 
-                    {/* Main image */}
-                    <div className='relative rounded-2xl overflow-hidden shadow-xl shadow-black/10 border border-slate-100 xs:h-[400px] h-[300px] lg:h-[480px] w-full max-w-[386px]'>
-                        <Image
-                            src={aboutImage}
-                            fill
-                            alt='About Us'
-                            className='object-cover'
-                        />
-                        {/* Subtle gradient overlay at bottom */}
-                        <div className='absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-black/30 to-transparent' />
-                    </div>
+                        {/* Main image */}
+                        <div className='relative rounded-2xl overflow-hidden shadow-xl shadow-black/10 border border-slate-100 xs:h-[400px] h-[300px] lg:h-[500px] w-full z-10'>
+                            <Image
+                                src={aboutImage}
+                                fill
+                                alt='About Us'
+                                className='object-cover'
+                            />
+                            {/* Subtle gradient overlay at bottom */}
+                            <div className='absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-black/30 to-transparent' />
+                        </div>
 
-                    {/* Floating stat badges */}
-                    <div className='absolute -bottom-6 left-2 sm:left-6 flex gap-3'>
-                        {stats.map((s, i) => (
-                            <div key={i} className='flex flex-col items-center bg-white rounded-xl px-3 py-2.5 shadow-lg border border-slate-100 min-w-[70px]'>
-                                <span className='text-lg font-black text-[#F97316] leading-none'>{s.value}</span>
-                                <span className='text-[9px] text-gray-400 font-semibold text-center leading-tight mt-0.5'>{s.label}</span>
-                            </div>
-                        ))}
+                        {/* Floating stat badges */}
+                        <div className='absolute -bottom-6 left-0 right-0 sm:left-4 sm:right-auto flex justify-center sm:justify-start gap-3 z-20'>
+                            {stats.map((s, i) => (
+                                <div key={i} className='flex flex-col items-center bg-white rounded-xl px-3 py-2.5 shadow-lg shadow-black/5 border border-slate-100 min-w-[80px]'>
+                                    <span className='text-lg font-black text-[#F97316] leading-none'>{s.value}</span>
+                                    <span className='text-[9px] text-gray-400 font-bold text-center leading-tight mt-0.5'>{s.label}</span>
+                                </div>
+                            ))}
+                        </div>
                     </div>
                 </motion.div>
 
