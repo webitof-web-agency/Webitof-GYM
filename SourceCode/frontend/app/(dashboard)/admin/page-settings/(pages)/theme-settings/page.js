@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 import { Form } from 'antd';
 import React, { useState, useRef, useEffect } from 'react';
 import { useI18n } from '../../../../../providers/i18n';
@@ -42,7 +42,7 @@ const ThemeSetting = () => {
     if (!Array.isArray(allThemes)) {
         return (
             <div className="bg-white rounded-xl border border-slate-100/80 p-8 flex items-center justify-center">
-                <div className="text-gray-400 text-sm font-medium animate-pulse">Loading themesâ€¦</div>
+                <div className="text-gray-400 text-sm font-medium animate-pulse">Loading themes...</div>
             </div>
         );
     }
@@ -55,7 +55,7 @@ const ThemeSetting = () => {
                 </div>
                 <div>
                     <h3 className="text-base font-bold text-gray-800 leading-tight">Display Theme Activation</h3>
-                    <p className="text-[11px] text-gray-500 font-medium">Hover to preview â€” click to activate as global layout</p>
+                    <p className="text-[11px] text-gray-500 font-medium">Hover to preview — click to activate as global layout</p>
                 </div>
             </div>
 
@@ -99,7 +99,7 @@ const ThemeSetting = () => {
                                         useActionConfirm(updateTheme, { _id: theme?._id }, getAllThemes, 'Are you sure you want to activate this theme?');
                                     }}
                                 >
-                                    {theme?.isDefault ? `âœ“ ${i18n?.t('Currently Active')}` : i18n?.t('Set as Default')}
+                                    {theme?.isDefault ? `✓ ${i18n?.t('Currently Active')}` : i18n?.t('Set as Default')}
                                 </Button>
                             </div>
                         </div>

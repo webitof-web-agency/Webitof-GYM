@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 import React from 'react';
 import { fetchTheme } from '../../../../../helpers/backend';
 import { useFetch } from '../../../../../helpers/hooks';
@@ -16,7 +16,7 @@ const HomePageSetting = ({ slug }) => {
     if (!Array.isArray(theme)) {
         return (
             <div className="bg-white rounded-xl border border-slate-100/80 p-8 flex items-center justify-center">
-                <div className="text-gray-400 text-sm font-medium animate-pulse">Loading layout configâ€¦</div>
+                <div className="text-gray-400 text-sm font-medium animate-pulse">Loading layout config...</div>
             </div>
         );
     }

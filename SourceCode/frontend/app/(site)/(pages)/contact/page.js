@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 import React, { useState } from 'react';
 import { Form, Input, message } from 'antd';
 import BasicBar from '../../../../components/common/basic-bar';
@@ -30,19 +30,19 @@ const Page = () => {
         {
             icon: <FiPhone size={20} className='text-[#F97316]' />,
             label: i18n?.t('Phone'),
-            value: data?.phone ? `+${data.phone}` : 'â€”',
+            value: data?.phone ? `+${data.phone}` : '—',
             href: `tel:${data?.phone}`,
         },
         {
             icon: <FiMail size={20} className='text-[#F97316]' />,
             label: i18n?.t('Email'),
-            value: data?.email || 'â€”',
+            value: data?.email || '—',
             href: `mailto:${data?.email}`,
         },
         {
             icon: <FiMapPin size={20} className='text-[#F97316]' />,
             label: i18n?.t('Address'),
-            value: data?.address || 'â€”',
+            value: data?.address || '—',
             href: null,
         },
     ];

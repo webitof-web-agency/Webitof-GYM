@@ -7,8 +7,8 @@ export default function RootLayout({ children }) {
     return (
         <html lang='en' suppressHydrationWarning>
             <head>
-                <title>Gymstick</title>
-                <meta name="description" content="Manage your gym with Gymstick" />
+                <title>Webitof Gym</title>
+                <meta name="description" content="Manage your gym with Webitof Gym" />
             </head>
             <I18nProvider>
                 <SiteProvider>

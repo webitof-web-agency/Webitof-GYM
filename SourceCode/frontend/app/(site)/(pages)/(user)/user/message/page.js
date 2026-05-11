@@ -1,4 +1,4 @@
-﻿'use client'
+'use client'
 import Image from 'next/image'
 import React, { useState, useRef, useEffect } from 'react'
 import { FiSend, FiChevronLeft, FiPaperclip, FiSearch, FiMessageCircle, FiImage, FiDownload, FiMoreVertical } from 'react-icons/fi'
@@ -91,7 +91,7 @@ export default function MedicalChat() {
                         type="text"
                         name="chat-search"
                         autoComplete="off"
-                        placeholder="Search conversationsâ€¦"
+                        placeholder="Search conversations..."
                         onChange={(e) => getUsers({ search: e.target.value })}
                         className="w-full pl-9 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-lg text-[12px] text-gray-600 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#F97316]/20 focus:border-[#F97316] transition-all"
                     />
@@ -193,7 +193,7 @@ export default function MedicalChat() {
                             onClick={() => setLimit(limit + 10)}
                             className="text-[11px] font-semibold px-4 py-1.5 rounded-full bg-white border border-slate-200 text-gray-500 hover:bg-[#F97316] hover:text-white hover:border-[#F97316] transition-all shadow-sm"
                         >
-                            {loading ? "Loadingâ€¦" : "Load earlier messages"}
+                            {loading ? "Loading..." : "Load earlier messages"}
                         </button>
                     </div>
                 )}
@@ -240,7 +240,7 @@ export default function MedicalChat() {
                                             <a href={msg?.file} target="_blank" rel="noopener noreferrer" download
                                                 className={`flex items-center gap-2 text-xs font-semibold underline ${isSent ? "text-white/90" : "text-gray-700"}`}>
                                                 <MdDownload size={16} />
-                                                {i18n.t('Download')} â€” {msg?.file?.split("/")?.pop()?.slice(0, 20)}
+                                                {i18n.t('Download')} — {msg?.file?.split("/")?.pop()?.slice(0, 20)}
                                             </a>
                                         </div>
                                         <p className="text-[10px] text-gray-400 mt-1 font-medium">{dayjs(msg?.createdAt).fromNow()}</p>
@@ -289,7 +289,7 @@ export default function MedicalChat() {
                         name="message"
                         type="text"
                         autoComplete="off"
-                        placeholder="Type a messageâ€¦"
+                        placeholder="Type a message..."
                         aria-label="Message"
                         className="flex-1 bg-transparent text-[13px] text-gray-700 placeholder-gray-400 focus:outline-none"
                         value={message || ''}

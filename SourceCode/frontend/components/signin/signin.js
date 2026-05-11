@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 import React, { useEffect, useState } from 'react';
 import FormInput from '../form/input';
 import { Form, Input, message, Modal } from 'antd';
@@ -132,7 +132,7 @@ const SignIn = () => {
                             <div className='relative'>
                                 <FiLock size={15} className='absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none z-10' />
                                 <Input.Password
-                                    placeholder={i18n?.t('â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢')}
+                                    placeholder={i18n?.t('••••••••')}
                                     className='pl-10 h-11 rounded-xl border-slate-200 text-[13px] focus:border-[#F97316] focus:ring-2 focus:ring-[#F97316]/15'
                                 />
                             </div>

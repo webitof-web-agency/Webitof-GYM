@@ -1,4 +1,4 @@
-﻿'use client'
+'use client'
 import { Form, message } from 'antd';
 import Image from 'next/image';
 import React from 'react';
@@ -71,7 +71,7 @@ const Joining = () => {
                                     <input
                                         name="name"
                                         autoComplete="given-name"
-                                        placeholder={i18n?.t('Enter first name, e.g. Johnâ€¦')}
+                                        placeholder={i18n?.t('Enter first name, e.g. John...')}
                                         type="text"
                                         className={`w-full px-4 py-[18px] border rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F97316] focus-visible:ring-offset-2 ${findDefaultTheme?.name === "home3" && pathName=== "/" ? "bg-black border-gray-100 text-white focus-visible:ring-offset-black" : " bg-white text-textMain focus-visible:ring-offset-white"}`}
                                     />
@@ -86,7 +86,7 @@ const Joining = () => {
                                     <input
                                         name="subject"
                                         autoComplete="family-name"
-                                        placeholder={i18n?.t('Enter last name, e.g. Smithâ€¦')}
+                                        placeholder={i18n?.t('Enter last name, e.g. Smith...')}
                                         type="text"
                                         className={`w-full px-4 py-[18px] border rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F97316] focus-visible:ring-offset-2 ${findDefaultTheme?.name === "home3" && pathName=== "/"  ? "bg-black border-gray-100 text-white focus-visible:ring-offset-black" : " bg-white text-textMain focus-visible:ring-offset-white"}`}
                                     />
@@ -103,7 +103,7 @@ const Joining = () => {
                                     <input
                                         name="email"
                                         autoComplete="email"
-                                        placeholder={i18n?.t('Enter email, e.g. name@example.comâ€¦')}
+                                        placeholder={i18n?.t('Enter email, e.g. name@example.com...')}
                                         type="email"
                                         className={`w-full px-4 py-[18px] border rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F97316] focus-visible:ring-offset-2 ${findDefaultTheme?.name === "home3" && pathName=== "/"  ? "bg-black border-gray-100 text-white focus-visible:ring-offset-black" : " bg-white text-textMain focus-visible:ring-offset-white"}`}
                                     />
@@ -119,7 +119,7 @@ const Joining = () => {
                                         name="phone"
                                         autoComplete="tel"
                                         inputMode="tel"
-                                        placeholder={i18n?.t('Enter phone number, e.g. 5551234567â€¦')}
+                                        placeholder={i18n?.t('Enter phone number, e.g. 5551234567...')}
                                         type="tel"
                                         className={`w-full px-4 py-[18px] border rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F97316] focus-visible:ring-offset-2 ${findDefaultTheme?.name === "home3" && pathName=== "/"  ? "bg-black border-gray-100 text-white focus-visible:ring-offset-black" : " bg-white text-textMain focus-visible:ring-offset-white"}`}
                                     />
@@ -135,7 +135,7 @@ const Joining = () => {
                                 <textarea
                                     name="message"
                                     autoComplete="off"
-                                    placeholder={i18n?.t('Enter your message, e.g. Iâ€™d like to joinâ€¦')}
+                                    placeholder={i18n?.t("Enter your message, e.g. I'd like to join...")}
                                     className={`w-full px-4 py-[18px] border rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F97316] focus-visible:ring-offset-2 ${findDefaultTheme?.name === "home3" && pathName=== "/"  ? "bg-black border-gray-100 text-white focus-visible:ring-offset-black" : " bg-white text-textMain focus-visible:ring-offset-white"}`}
                                     rows={5}
                                 />

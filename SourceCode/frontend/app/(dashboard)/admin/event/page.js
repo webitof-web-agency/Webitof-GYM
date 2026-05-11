@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 import dayjs from 'dayjs';
 import { Modal, Switch, DatePicker, Form } from 'antd';
 import React, { useEffect, useState } from 'react';
@@ -85,7 +85,7 @@ const Page = () => {
                             {columnFormatter(d?.name)}
                         </span>
                         <span className="text-[10px] text-gray-400 flex items-center gap-1 mt-0.5">
-                            <FiMapPin size={9} /> {d?.location || 'â€”'}
+                            <FiMapPin size={9} /> {d?.location || '—'}
                         </span>
                     </div>
                 </div>

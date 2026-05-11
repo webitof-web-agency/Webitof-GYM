@@ -67,11 +67,11 @@ const page = () => {
                 <div className="flex flex-col gap-1.5">
                     <div className="flex items-center gap-1.5 min-w-[100px]">
                         <div className="w-4 h-4 rounded flex items-center justify-center bg-emerald-50 text-emerald-500"><FiLogIn size={9}/></div>
-                        <span className="text-[10px] font-bold text-gray-700">{d?.clockIn ? dayjs(d?.clockIn).format('hh:mm A') : "â€”"}</span>
+                        <span className="text-[10px] font-bold text-gray-700">{d?.clockIn ? dayjs(d?.clockIn).format('hh:mm A') : "0:0"}</span>
                     </div>
                     <div className="flex items-center gap-1.5 min-w-[100px]">
                         <div className="w-4 h-4 rounded flex items-center justify-center bg-slate-50 text-gray-500 border border-slate-200"><FiLogOut size={9}/></div>
-                        <span className="text-[10px] font-bold text-gray-700">{d?.clockOut ? dayjs(d?.clockOut).format('hh:mm A') : "â€”"}</span>
+                        <span className="text-[10px] font-bold text-gray-700">{d?.clockOut ? dayjs(d?.clockOut).format('hh:mm A') : "0:0"}</span>
                     </div>
                 </div>
             )
@@ -82,7 +82,7 @@ const page = () => {
             formatter: (_, d) => (
                 <span className="text-[10px] font-bold text-purple-600 bg-purple-50 px-2 py-1 rounded-md border border-purple-100 inline-flex items-center gap-1 whitespace-nowrap">
                     <FiClock size={10} />
-                    {d?.totalHours ? `${d?.totalHours} hrs` : "â€”"}
+                    {d?.totalHours ? `${d?.totalHours} hrs` : "0:0"}
                 </span>
             ),
         },
@@ -204,19 +204,19 @@ const page = () => {
                                 <div className="bg-white border border-slate-100 rounded-xl p-3 flex flex-col items-center">
                                     <div className="w-6 h-6 rounded-full bg-emerald-50 text-emerald-500 mb-1 flex items-center justify-center"><FiLogIn size={11}/></div>
                                     <span className="text-[10px] text-gray-400 font-bold tracking-wide uppercase">Punched In</span>
-                                    <span className="text-sm font-bold text-gray-800">{details?.clockIn ? dayjs(details?.clockIn).format("hh:mm A") : "â€”"}</span>
+                                    <span className="text-sm font-bold text-gray-800">{details?.clockIn ? dayjs(details?.clockIn).format("hh:mm A") : "0:0"}</span>
                                 </div>
                                 <div className="bg-white border border-slate-100 rounded-xl p-3 flex flex-col items-center">
                                     <div className="w-6 h-6 rounded-full bg-slate-50 border border-slate-200 text-gray-400 mb-1 flex items-center justify-center"><FiLogOut size={11}/></div>
                                     <span className="text-[10px] text-gray-400 font-bold tracking-wide uppercase">Punched Out</span>
-                                    <span className="text-sm font-bold text-gray-800">{details?.clockOut ? dayjs(details?.clockOut).format("hh:mm A") : "â€”"}</span>
+                                    <span className="text-sm font-bold text-gray-800">{details?.clockOut ? dayjs(details?.clockOut).format("hh:mm A") : "0:0"}</span>
                                 </div>
                                 <div className="bg-white border border-slate-100 rounded-xl p-3 col-span-2 flex items-center justify-between">
                                     <div className="flex items-center gap-2">
                                         <div className="w-8 h-8 rounded bg-purple-50 text-purple-600 flex items-center justify-center"><FiClock size={14}/></div>
                                         <div className="flex flex-col text-left">
                                             <span className="text-[10px] font-bold text-gray-400 tracking-wide uppercase">Total Time Logged</span>
-                                            <span className="text-base font-black text-gray-800">{details?.totalHours || "â€”"}</span>
+                                            <span className="text-base font-black text-gray-800">{details?.totalHours || "0:0"}</span>
                                         </div>
                                     </div>
                                     <div className="flex flex-col text-right">

@@ -1,4 +1,4 @@
-﻿"use client"
+"use client"
 import BannerTitle from '../common/banner-title'
 import { useFetch } from '../../app/helpers/hooks'
 import { fetchShedule } from '../../app/helpers/backend'
@@ -85,12 +85,12 @@ const ClassRoutine = () => {
                                             onClick={() => { if (!isEmpty) { setTrainer(data); setOpen(true) } }}
                                             className={`border-b border-slate-100 px-3 py-3 text-center text-[12px] transition-all duration-200 ${isEmpty ? 'text-slate-300 font-medium' : 'cursor-pointer group hover:bg-[#F97316]/6'}`}
                                         >
-                                            {isEmpty ? 'â€”' : (
+                                            {isEmpty ? '—' : (
                                                 <>
                                                     {title.length > 18 ? (
                                                         <Tooltip title={i18n?.t(title)}>
                                                             <p className="font-bold text-gray-700 group-hover:text-[#F97316] transition-colors line-clamp-1">
-                                                                {i18n?.t(title.substring(0, 18) + 'â€¦')}
+                                                                {i18n?.t(title.substring(0, 18) + '...')}
                                                             </p>
                                                         </Tooltip>
                                                     ) : (

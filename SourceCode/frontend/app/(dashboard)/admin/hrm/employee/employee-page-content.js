@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import dayjs from 'dayjs';
 import { useState } from 'react';
@@ -58,10 +58,10 @@ const EmployeePageContent = () => {
             formatter: (_, d) => (
                 <div className="flex flex-col gap-1">
                     <span className="text-[10px] text-gray-500 flex items-center gap-1 font-medium">
-                        <FiMail size={9} className="text-gray-400" /> {d?.email || 'â€”'}
+                        <FiMail size={9} className="text-gray-400" /> {d?.email || '—'}
                     </span>
                     <span className="text-[10px] text-gray-500 flex items-center gap-1 font-medium">
-                        <FiPhone size={9} className="text-gray-400" /> {d?.phone || 'â€”'}
+                        <FiPhone size={9} className="text-gray-400" /> {d?.phone || '—'}
                     </span>
                 </div>
             )

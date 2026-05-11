@@ -46,7 +46,7 @@ const AttendanceTable = ({ data }) => {
                     {/* The punch indicator actions or other icons used to exist here, left flexible */}
                     <div className="px-1">
                          {d?.clockIn && d?.clockOut ? (
-                            <span className="text-[9px] font-bold text-slate-500 bg-slate-50 px-1.5 py-0.5 rounded border border-slate-200">{d?.totalHours || "â€”"}</span>
+                            <span className="text-[9px] font-bold text-slate-500 bg-slate-50 px-1.5 py-0.5 rounded border border-slate-200">{d?.totalHours || "0:0"}</span>
                          ) : (
                             <span className="text-[9px] font-bold text-emerald-600 bg-emerald-50 px-1.5 py-0.5 rounded border border-emerald-100 uppercase tracking-wide">Active</span>
                          )}

@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import CheckOutCard from '../../../../components/shop/chackoutCard';
@@ -258,7 +258,7 @@ const Page = () => {
                                                 disabled={couponStatus || applyingCoupon}
                                                 className={`px-4 h-10 rounded-xl text-[12px] font-bold whitespace-nowrap transition-all ${couponStatus ? 'bg-emerald-50 border border-emerald-200 text-emerald-600' : 'bg-[#F97316] text-white hover:bg-[#EA580C] disabled:opacity-60'}`}
                                             >
-                                                {couponStatus ? `âœ“ ${i18n?.t('Applied')}` : applyingCoupon ? 'â€¦' : i18n?.t('Apply')}
+                                                {couponStatus ? `✓ ${i18n?.t('Applied')}` : applyingCoupon ? '...' : i18n?.t('Apply')}
                                             </button>
                                         </div>
                                     </div>
@@ -299,7 +299,7 @@ const Page = () => {
                                             }
                                         </button>
                                         <p className='text-[10px] text-gray-400 font-medium text-center mt-3'>
-                                            ðŸ”’ {i18n?.t('Secure & encrypted checkout')}
+                                            🔒 {i18n?.t('Secure & encrypted checkout')}
                                         </p>
                                     </div>
                                 </motion.div>

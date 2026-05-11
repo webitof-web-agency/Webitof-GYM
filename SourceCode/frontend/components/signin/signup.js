@@ -1,4 +1,4 @@
-﻿"use client"
+"use client"
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -152,7 +152,7 @@ const SignUp = () => {
                             >
                                 <div className='relative'>
                                     <FiLock size={14} className='absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none z-10' />
-                                    <Input.Password placeholder={i18n?.t('â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢')} className='pl-9 h-11 rounded-xl border-slate-200 text-[13px]' />
+                                    <Input.Password placeholder={i18n?.t('••••••••')} className='pl-9 h-11 rounded-xl border-slate-200 text-[13px]' />
                                 </div>
                             </Form.Item>
 
@@ -167,7 +167,7 @@ const SignUp = () => {
                             >
                                 <div className='relative'>
                                     <FiLock size={14} className='absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none z-10' />
-                                    <Input.Password placeholder={i18n?.t('â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢')} className='pl-9 h-11 rounded-xl border-slate-200 text-[13px]' />
+                                    <Input.Password placeholder={i18n?.t('••••••••')} className='pl-9 h-11 rounded-xl border-slate-200 text-[13px]' />
                                 </div>
                             </Form.Item>
                         </div>

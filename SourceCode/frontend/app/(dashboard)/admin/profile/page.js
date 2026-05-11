@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 import React, { useEffect, useState } from 'react';
 import { Form, Input } from 'antd';
 import Image from 'next/image';
@@ -88,7 +88,7 @@ const AdminProfile = () => {
                                 {[
                                     { icon: <FiUser size={15} />, label: 'Full Name', value: user?.name, color: 'blue' },
                                     { icon: <FiMail size={15} />, label: 'Email Address', value: user?.email, color: 'purple' },
-                                    { icon: <FiPhone size={15} />, label: 'Phone Number', value: user?.phone || 'â€”', color: 'emerald' },
+                                    { icon: <FiPhone size={15} />, label: 'Phone Number', value: user?.phone || '—', color: 'emerald' },
                                 ].map(({ icon, label, value, color }) => (
                                     <div key={label} className={`bg-${color}-50/40 border border-${color}-100/60 rounded-xl p-4`}>
                                         <div className={`w-8 h-8 rounded-lg bg-${color}-100 text-${color}-600 flex items-center justify-center mb-3`}>

@@ -1,4 +1,4 @@
-﻿import { Form } from 'antd';
+import { Form } from 'antd';
 import React from 'react';
 import Button from '../common/button';
 
@@ -18,7 +18,7 @@ const BmiForm = ({ onFinish, form, pathName, i18n, isHome3 }) => {
                             <input
                                 name="weight"
                                 autoComplete="off"
-                                placeholder={i18n?.t('Weight in kg, e.g. 70â€¦')}
+                                placeholder={i18n?.t('Weight in kg, e.g. 70...')}
                                 type='number'
                                 onInput={(e) => e.target.value = e.target.value.replace(/[^0-9]/g, '')}
                                 className={`w-full rounded border px-4 py-[18px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F97316] focus-visible:ring-offset-2 ${pathName?.name === 'home3' && isHome3 ? 'border-gray-100 bg-black text-white focus-visible:ring-offset-black' : 'bg-white text-textMain focus-visible:ring-offset-white'}`}
@@ -36,7 +36,7 @@ const BmiForm = ({ onFinish, form, pathName, i18n, isHome3 }) => {
                             <input
                                 name="height"
                                 autoComplete="off"
-                                placeholder={i18n?.t('Height in cm, e.g. 175â€¦')}
+                                placeholder={i18n?.t('Height in cm, e.g. 175...')}
                                 type='number'
                                 onInput={(e) => e.target.value = e.target.value.replace(/[^0-9]/g, '')}
                                 className={`w-full rounded border px-4 py-[18px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F97316] focus-visible:ring-offset-2 ${pathName?.name === 'home3' && isHome3 ? 'border-gray-100 bg-black text-white focus-visible:ring-offset-black' : 'bg-white text-textMain focus-visible:ring-offset-white'}`}
@@ -53,7 +53,7 @@ const BmiForm = ({ onFinish, form, pathName, i18n, isHome3 }) => {
                             <input
                                 name="age"
                                 autoComplete="off"
-                                placeholder={i18n?.t('Age, e.g. 28â€¦')}
+                                placeholder={i18n?.t('Age, e.g. 28...')}
                                 type='number'
                                 onInput={(e) => e.target.value = e.target.value.replace(/[^0-9]/g, '')}
                                 className={`w-full rounded border px-4 py-[18px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F97316] focus-visible:ring-offset-2 ${pathName?.name === 'home3' && isHome3 ? 'border-gray-100 bg-black text-white focus-visible:ring-offset-black' : 'bg-white text-textMain focus-visible:ring-offset-white'}`}

@@ -1,4 +1,4 @@
-﻿"use client"
+"use client"
 import React from 'react'
 import { Tooltip } from "antd";
 import { useRouter } from "next/navigation";
@@ -40,7 +40,7 @@ const Page = () => {
                     <span className="text-xs text-gray-700 font-medium flex items-start gap-1.5 cursor-help max-w-[220px]">
                         <FiMessageSquare size={11} className="text-gray-400 mt-0.5 flex-shrink-0" />
                         <span className="line-clamp-2">
-                            {subject?.length > 40 ? subject?.slice(0, 40) + 'â€¦' : subject}
+                            {subject?.length > 40 ? subject?.slice(0, 40) + '...' : subject}
                         </span>
                     </span>
                 </Tooltip>

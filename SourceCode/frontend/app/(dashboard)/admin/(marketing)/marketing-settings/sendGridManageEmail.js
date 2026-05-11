@@ -85,7 +85,7 @@ const SendGridMarketing = ({ settings, getSettings, loading }) => {
                     <Input placeholder="e.g. apikey" className="!rounded-lg !text-sm" />
                 </Form.Item>
                 <Form.Item name={'password'} label={<span className="text-xs font-bold text-gray-600 flex items-center gap-1"><FiLock size={11} className="text-gray-400"/> {i18n?.t('Email Password')}</span>} rules={[{ required: true, message: i18n?.t('Please input email password!') }]} className="!mb-0">
-                    <Input.Password placeholder="â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢" className="!rounded-lg !text-sm" />
+                    <Input.Password placeholder="e.g. 123" className="!rounded-lg !text-sm" />
                 </Form.Item>
                 <Form.Item name={'sender_email'} label={<span className="text-xs font-bold text-gray-600 flex items-center gap-1"><FiMail size={11} className="text-gray-400"/> {i18n?.t('Sender Email')}</span>} rules={[{ required: true, message: i18n?.t('Please input sender email!') }]} className="!mb-0 md:col-span-2">
                     <Input placeholder="e.g. noreply@yourdomain.com" className="!rounded-lg !text-sm" />

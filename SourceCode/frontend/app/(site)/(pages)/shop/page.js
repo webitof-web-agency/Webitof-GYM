@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 import React, { useState } from 'react';
 import { Pagination } from 'antd';
 import BasicBar from '../../../../components/common/basic-bar';
@@ -56,7 +56,7 @@ const Shop = () => {
                             name="search"
                             type="search"
                             autoComplete="off"
-                            placeholder={i18n?.t("Search brands and products, e.g. protein powderâ€¦")}
+                            placeholder={i18n?.t("Search brands and products, e.g. protein powder...")}
                             className="w-full pl-3 py-4 text-[#534C4C] text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F97316] focus-visible:ring-offset-2 focus-visible:ring-offset-white bg-transparent"
                             onChange={e => {
                                 if (e.target.value.length === 0) {

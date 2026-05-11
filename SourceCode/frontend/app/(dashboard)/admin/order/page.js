@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import dayjs from "dayjs";
 import { useRouter } from "next/navigation";
@@ -98,7 +98,7 @@ const Page = () => {
                             {d?.payment?.status || 'N/A'}
                         </span>
                         <span className="text-[10px] text-gray-500 font-medium capitalize bg-slate-50 border border-slate-100 px-1.5 py-0.5 rounded w-fit">
-                            {d?.payment?.method || 'â€”'}
+                            {d?.payment?.method || '—'}
                         </span>
                     </div>
                 );

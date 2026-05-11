@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 import { useState } from 'react';
 import { Rate, Switch } from 'antd';
 import { delAdminTestimonial, detailsTestimonial, fetchAdminTestimonial, postAdminTestimonial } from '../../../helpers/backend';
@@ -48,7 +48,7 @@ const Page = () => {
             dataField: 'description',
             formatter: (_, d) => (
                 <span className="text-xs text-gray-600 line-clamp-2 max-w-[220px] leading-relaxed">
-                    {d?.description || 'â€”'}
+                    {d?.description || '—'}
                 </span>
             ),
         },

@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 import React, { useState } from 'react';
 import { usePathname } from 'next/navigation';
 const Button = ({
@@ -6,7 +6,7 @@ const Button = ({
   onClick,
   className = '',
   type = 'button',
-  loadingText = 'Loadingâ€¦',
+  loadingText = 'Loading...',
   skipDemo,
   pathName,
   ...props
