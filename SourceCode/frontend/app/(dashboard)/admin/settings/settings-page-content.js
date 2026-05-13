@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 import React, { useEffect, useState } from 'react';
 import { Form, Radio, message } from 'antd';
 import PageTitle from '../../components/common/page-title';
@@ -9,7 +9,8 @@ import MultipleImageInput from '../../components/form/multiImage';
 import { useFetch } from '../../../helpers/hooks';
 import Button from '../../../../components/common/button';
 import { useI18n } from '../../../providers/i18n';
-import { FiGlobe, FiDatabase, FiCloud, FiServer, FiShare2, FiMonitor, FiSmartphone, FiMapPin, FiMail, FiEdit2, FiSave, FiSettings } from 'react-icons/fi';
+import { FiGlobe, FiDatabase, FiCloud, FiServer, FiShare2, FiMonitor, FiSmartphone, FiMapPin, FiMail, FiEdit2, FiSave, FiSettings, FiType } from 'react-icons/fi';
+import { applyFont } from '../../../contexts/site';
 
 const SettingsPageContent = () => {
     const [baseForm] = Form.useForm();
@@ -20,6 +21,9 @@ const SettingsPageContent = () => {
     
     const [baseLoader, setBaseLoader] = useState(false);
     const [storageLoader, setStorageLoader] = useState(false);
+    const [fontLoader, setFontLoader] = useState(false);
+    const [selectedFont, setSelectedFont] = useState('Poppins');
+    const [previewFont, setPreviewFont] = useState('Poppins');
 
     useEffect(() => {
         if (data) {
@@ -46,6 +50,11 @@ const SettingsPageContent = () => {
             };
             baseForm.setFieldsValue(baseSettingsData);
             storageForm.setFieldsValue(storageSettingsData);
+            // Restore saved font
+            if (data?.font_family) {
+                setSelectedFont(data.font_family);
+                setPreviewFont(data.font_family);
+            }
         }
     }, [baseForm, data, storageForm]);
 
@@ -92,6 +101,22 @@ const SettingsPageContent = () => {
             }
         } finally {
             setStorageLoader(false);
+        }
+    };
+
+    const handleFontSave = async () => {
+        setFontLoader(true);
+        try {
+            const submitData = { _id: data?._id || undefined, font_family: selectedFont };
+            const { error, msg } = await postAdminSettings(submitData);
+            if (error) { message.error(msg); }
+            else {
+                applyFont(selectedFont);
+                message.success('Font updated successfully! Changes are live on the public site.');
+                getData();
+            }
+        } finally {
+            setFontLoader(false);
         }
     };
 
@@ -267,11 +292,138 @@ const SettingsPageContent = () => {
                           </Form>
                      </div>
                 </div>
-
             </div>
+
+            {/* ── Global Font Family ── */}
+            <div className="bg-white rounded-xl shadow-[0_2px_10px_-4px_rgba(0,0,0,0.05)] border border-slate-100/80 overflow-hidden">
+                <div className="px-6 py-4 border-b border-slate-100 bg-violet-50/40 flex items-center gap-3">
+                    <div className="w-8 h-8 rounded-lg bg-violet-100 text-violet-600 flex items-center justify-center">
+                        <FiType size={16} />
+                    </div>
+                    <div>
+                        <h3 className="text-base font-bold text-gray-800 leading-tight">Global Font Family</h3>
+                        <p className="text-[11px] text-gray-500 font-medium">Type any Google Font name — it applies to all public pages</p>
+                    </div>
+                </div>
+
+                <div className="p-6 space-y-5">
+                    {/* Free-text font input */}
+                    <div>
+                        <label className="text-xs font-bold text-gray-700 flex items-center gap-1.5 mb-2">
+                            <FiType size={12} /> Font Name
+                        </label>
+                        <div className="relative">
+                            <input
+                                type="text"
+                                value={selectedFont}
+                                onChange={(e) => {
+                                    const val = e.target.value;
+                                    setSelectedFont(val);
+                                    clearTimeout(window.__fontDebounce);
+                                    window.__fontDebounce = setTimeout(() => {
+                                        const name = val.trim();
+                                        if (!name) return;
+                                        const slug = name.replace(/ /g, '+');
+                                        const linkId = 'gf-preview-font';
+                                        let link = document.getElementById(linkId);
+                                        if (!link) { link = document.createElement('link'); link.id = linkId; link.rel = 'stylesheet'; document.head.appendChild(link); }
+                                        link.href = `https://fonts.googleapis.com/css2?family=${slug}:wght@300;400;600;700&display=swap`;
+                                        setPreviewFont(name);
+                                    }, 600);
+                                }}
+                                placeholder="e.g. Poppins, Nunito Sans, Plus Jakarta Sans, Figtree…"
+                                className="w-full px-4 py-3 text-sm border-2 border-slate-200 rounded-xl focus:border-violet-400 focus:outline-none transition-colors bg-white text-gray-800 placeholder-gray-400 font-medium"
+                            />
+                            {selectedFont && (
+                                <span className="absolute right-3 top-1/2 -translate-y-1/2 text-[10px] font-bold text-violet-500 bg-violet-50 px-2 py-0.5 rounded-full border border-violet-100">
+                                    {selectedFont}
+                                </span>
+                            )}
+                        </div>
+                        <p className="mt-1.5 text-[11px] text-gray-400">
+                            Browse all fonts at{' '}
+                            <a href="https://fonts.google.com" target="_blank" rel="noreferrer" className="text-violet-500 hover:underline font-semibold">fonts.google.com</a>{' '}
+                            and paste the exact name here.
+                        </p>
+                    </div>
+
+                    {/* Popular quick-picks */}
+                    <div>
+                        <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2">Popular Picks</p>
+                        <div className="flex flex-wrap gap-2">
+                            {[
+                                'Poppins','Inter','Roboto','Montserrat','Nunito','Lato',
+                                'Open Sans','Raleway','Playfair Display','DM Sans','Outfit',
+                                'Josefin Sans','Sora','Plus Jakarta Sans','Space Grotesk',
+                                'Manrope','Urbanist','Figtree',
+                            ].map((f) => (
+                                <button
+                                    key={f}
+                                    type="button"
+                                    onClick={() => {
+                                        setSelectedFont(f);
+                                        const slug = f.replace(/ /g, '+');
+                                        const linkId = 'gf-preview-font';
+                                        let link = document.getElementById(linkId);
+                                        if (!link) { link = document.createElement('link'); link.id = linkId; link.rel = 'stylesheet'; document.head.appendChild(link); }
+                                        link.href = `https://fonts.googleapis.com/css2?family=${slug}:wght@300;400;600;700&display=swap`;
+                                        setPreviewFont(f);
+                                    }}
+                                    className={`px-3 py-1.5 rounded-full text-[11px] font-semibold border transition-all duration-150 ${
+                                        selectedFont === f
+                                            ? 'bg-violet-500 text-white border-violet-500 shadow-sm'
+                                            : 'bg-white text-gray-600 border-slate-200 hover:border-violet-300 hover:text-violet-600 hover:bg-violet-50'
+                                    }`}
+                                >
+                                    {f}
+                                </button>
+                            ))}
+                        </div>
+                    </div>
+
+                    {/* Live preview box */}
+                    <div className="bg-gradient-to-br from-slate-50 to-violet-50/30 border border-slate-100 rounded-xl p-5">
+                        <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-3">
+                            Live Preview {previewFont ? `— ${previewFont}` : '— start typing…'}
+                        </p>
+                        <p
+                            style={{ fontFamily: `'${previewFont}', sans-serif`, fontWeight: 700, fontSize: '22px', color: '#1e293b', lineHeight: 1.3 }}
+                            className="transition-all duration-500 mb-1"
+                        >
+                            Train Hard. Stay Strong. Build India.
+                        </p>
+                        <p
+                            style={{ fontFamily: `'${previewFont}', sans-serif`, fontWeight: 400, fontSize: '14px', color: '#64748b', lineHeight: 1.6 }}
+                            className="transition-all duration-500 mb-2"
+                        >
+                            Webitof GYM — Your fitness journey starts here. Join thousands of members across India.
+                        </p>
+                        <div className="flex flex-wrap gap-5 mt-3 pt-3 border-t border-slate-200">
+                            {[['300','Light'],['400','Regular'],['600','Semibold'],['700','Bold']].map(([w, label]) => (
+                                <span key={w} style={{ fontFamily: `'${previewFont}', sans-serif`, fontWeight: Number(w), fontSize: '12px', color: '#94a3b8' }}>
+                                    {label} {w}
+                                </span>
+                            ))}
+                        </div>
+                    </div>
+
+                    <div className="flex justify-end pt-2 border-t border-slate-100">
+                        <Button
+                            onClick={handleFontSave}
+                            loading={fontLoader}
+                            className="!px-6 !py-2 flex items-center gap-1.5 shadow-md shadow-violet-500/20 !font-semibold !rounded-lg !text-xs transition-all !bg-violet-600 hover:!shadow-violet-600/30 border-violet-600 !text-white"
+                        >
+                            <FiSave size={13} /> Apply Font to Site
+                        </Button>
+                    </div>
+                </div>
+            </div>
+
         </div>
     );
+
 };
 
 export default SettingsPageContent;
+
 

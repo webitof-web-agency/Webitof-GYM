@@ -19,226 +19,216 @@ async function seed1() {
     const settings = await Settings.findOne();
     if (settings) {
         settings.title = 'Webitof GYM';
-        settings.description = 'The ultimate fitness destination for achieving your health goals with state-of-the-art equipment and expert trainers.';
-        settings.email = 'contact@webitofgym.com';
-        settings.phone = '+1 (555) 123-4567';
-        settings.address = '123 Fitness Street, Gym City, NY 10001';
+        settings.description = 'India\'s premier fitness destination — combining traditional strength training with modern techniques to help you reach your health goals.';
+        settings.email = 'contact@webitofgym.in';
+        settings.phone = '+91 98765 43210';
+        settings.address = 'Plot No. 12, Sector 18, Noida, Uttar Pradesh - 201301';
         settings.facebook = 'https://facebook.com/webitofgym';
         settings.twitter = 'https://twitter.com/webitofgym';
         settings.instagram = 'https://instagram.com/webitofgym';
         settings.youtube = 'https://youtube.com/webitofgym';
-        settings.footer_text = '© 2026 Webitof GYM. All rights reserved.';
+        settings.footer_text = '© 2026 Webitof GYM. All rights reserved. Made in India 🇮🇳';
         await settings.save();
         console.log('Settings updated.');
     }
 
-    // 2. Services
+    // 2. Services — delete old, insert new
+    console.log('Clearing old Services...');
+    await Service.deleteMany({});
     console.log('Seeding Services...');
     const services = [
         {
             name: { en: 'Weight Training' },
-            description: { en: 'Build strength and muscle mass with our extensive range of free weights and resistance machines.' },
-            icon: 'flaticon-weightlifting',
-            image: 'https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?q=80&w=1000&auto=format&fit=crop'
-        },
-        {
-            name: { en: 'Cardio Fitness' },
-            description: { en: 'Boost your endurance and burn calories with our top-of-the-line treadmills, ellipticals, and bikes.' },
-            icon: 'flaticon-treadmill',
-            image: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=1000&auto=format&fit=crop'
+            description: { en: 'Build raw strength and muscle mass with barbells, dumbbells, and resistance machines suited for all levels — from beginners to competitive powerlifters.' },
+            icon: 'https://images.pexels.com/photos/1552252/pexels-photo-1552252.jpeg?auto=compress&cs=tinysrgb&w=200',
+            image: 'https://images.pexels.com/photos/1552252/pexels-photo-1552252.jpeg?auto=compress&cs=tinysrgb&w=1000'
         },
         {
             name: { en: 'Yoga & Meditation' },
-            description: { en: 'Improve flexibility, balance, and mental clarity through our expert-led yoga and meditation classes.' },
-            icon: 'flaticon-yoga',
-            image: 'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?q=80&w=1000&auto=format&fit=crop'
+            description: { en: 'Embrace the ancient Indian science of Yoga. Our certified instructors guide sessions in Hatha, Ashtanga, and Pranayama to improve flexibility, focus, and mental peace.' },
+            icon: 'https://images.pexels.com/photos/3822906/pexels-photo-3822906.jpeg?auto=compress&cs=tinysrgb&w=200',
+            image: 'https://images.pexels.com/photos/3822906/pexels-photo-3822906.jpeg?auto=compress&cs=tinysrgb&w=1000'
+        },
+        {
+            name: { en: 'Zumba & Dance Fitness' },
+            description: { en: 'Enjoy high-energy Zumba and Bollywood dance fitness classes that make workouts feel like a celebration while burning serious calories.' },
+            icon: 'https://images.pexels.com/photos/3775566/pexels-photo-3775566.jpeg?auto=compress&cs=tinysrgb&w=200',
+            image: 'https://images.pexels.com/photos/3775566/pexels-photo-3775566.jpeg?auto=compress&cs=tinysrgb&w=1000'
+        },
+        {
+            name: { en: 'Cardio & Cycling' },
+            description: { en: 'Boost cardiovascular endurance with our modern treadmills, stationary bikes, ellipticals, and high-energy indoor cycling classes led by certified coaches.' },
+            icon: 'https://images.pexels.com/photos/4164766/pexels-photo-4164766.jpeg?auto=compress&cs=tinysrgb&w=200',
+            image: 'https://images.pexels.com/photos/4164766/pexels-photo-4164766.jpeg?auto=compress&cs=tinysrgb&w=1000'
+        },
+        {
+            name: { en: 'HIIT & Functional Training' },
+            description: { en: 'Torch fat and build endurance with scientifically designed High-Intensity Interval Training and functional movement workouts tailored for the Indian climate and lifestyle.' },
+            icon: 'https://images.pexels.com/photos/2827400/pexels-photo-2827400.jpeg?auto=compress&cs=tinysrgb&w=200',
+            image: 'https://images.pexels.com/photos/2827400/pexels-photo-2827400.jpeg?auto=compress&cs=tinysrgb&w=1000'
+        },
+        {
+            name: { en: 'Kabaddi & Wrestling Conditioning' },
+            description: { en: 'Train like a champion with sport-specific conditioning for Kabaddi, Kushti (wrestling), and other traditional Indian sports under the guidance of experienced coaches.' },
+            icon: 'https://images.pexels.com/photos/4162449/pexels-photo-4162449.jpeg?auto=compress&cs=tinysrgb&w=200',
+            image: 'https://images.pexels.com/photos/4162449/pexels-photo-4162449.jpeg?auto=compress&cs=tinysrgb&w=1000'
+        },
+        {
+            name: { en: 'Nutrition & Diet Consultation' },
+            description: { en: 'Get personalised Indian diet plans from our certified nutritionists, incorporating traditional foods like dal, millets, and paneer for optimal fitness results.' },
+            icon: 'https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?auto=compress&cs=tinysrgb&w=200',
+            image: 'https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?auto=compress&cs=tinysrgb&w=1000'
         },
         {
             name: { en: 'CrossFit' },
-            description: { en: 'Challenge yourself with high-intensity interval training designed to push your limits.' },
-            icon: 'flaticon-fitness',
-            image: 'https://images.unsplash.com/photo-1526506114636-f0331006eb46?q=80&w=1000&auto=format&fit=crop'
-        },
-        {
-            name: { en: 'Swimming' },
-            description: { en: 'Enjoy a full-body workout in our Olympic-sized indoor swimming pool.' },
-            icon: 'flaticon-swimming',
-            image: 'https://images.unsplash.com/photo-1530549387789-4c1017266635?q=80&w=1000&auto=format&fit=crop'
-        },
-        {
-            name: { en: 'Cycling' },
-            description: { en: 'Join our high-energy indoor cycling classes for an intense cardio session.' },
-            icon: 'flaticon-stationary-bike',
-            image: 'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?q=80&w=1000&auto=format&fit=crop'
-        },
-        {
-            name: { en: 'Boxing & MMA' },
-            description: { en: 'Learn self-defense and get fit with our professional boxing and MMA training.' },
-            icon: 'flaticon-boxing-gloves',
-            image: 'https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?q=80&w=1000&auto=format&fit=crop'
-        },
-        {
-            name: { en: 'Pilates' },
-            description: { en: 'Strengthen your core and improve posture with our dedicated Pilates classes.' },
-            icon: 'flaticon-gym',
-            image: 'https://images.unsplash.com/photo-1518611012118-696072aa579a?q=80&w=1000&auto=format&fit=crop'
+            description: { en: 'Challenge yourself with high-intensity functional movements. Our CrossFit classes are designed to build strength, agility, and endurance through varied daily workouts.' },
+            icon: 'https://images.pexels.com/photos/3076514/pexels-photo-3076514.jpeg?auto=compress&cs=tinysrgb&w=200',
+            image: 'https://images.pexels.com/photos/3076514/pexels-photo-3076514.jpeg?auto=compress&cs=tinysrgb&w=1000'
         }
     ];
-    for (const service of services) {
-        const exists = await Service.findOne({ 'name.en': service.name.en });
-        if (!exists) {
-            await Service.create(service);
-        }
-    }
+    await Service.insertMany(services);
     console.log('Services seeded.');
 
-    // 3. Features
+    // 3. Features — delete old, insert new
+    console.log('Clearing old Features...');
+    await Feature.deleteMany({});
     console.log('Seeding Features...');
     const features = [
         {
-            name: { en: 'Expert Trainers' },
-            description: { en: 'Train with certified professionals who are dedicated to helping you achieve your fitness goals.' },
-            image: 'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?q=80&w=1000&auto=format&fit=crop'
+            name: { en: 'Certified Indian Trainers' },
+            description: { en: 'Train with ISSA & Sports Authority of India (SAI) certified coaches who understand Indian body types, dietary habits, and fitness goals.' },
+            image: 'https://images.pexels.com/photos/4162487/pexels-photo-4162487.jpeg?auto=compress&cs=tinysrgb&w=1000'
         },
         {
-            name: { en: 'State-of-the-art Equipment' },
-            description: { en: 'Access the latest and most advanced fitness equipment to maximize your workout efficiency.' },
-            image: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=1000&auto=format&fit=crop'
+            name: { en: 'World-Class Equipment' },
+            description: { en: 'Access premium imported and Indian-made fitness equipment — updated regularly to ensure you always have the best tools for your training.' },
+            image: 'https://images.pexels.com/photos/1552252/pexels-photo-1552252.jpeg?auto=compress&cs=tinysrgb&w=1000'
         },
         {
             name: { en: 'Flexible Timings' },
-            description: { en: 'Work out on your own schedule with our 24/7 access and wide range of class timings.' },
-            image: 'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?q=80&w=1000&auto=format&fit=crop'
+            description: { en: 'Open from 5:00 AM to 11:00 PM, 7 days a week, including all national holidays — so you never miss a workout.' },
+            image: 'https://images.pexels.com/photos/4164766/pexels-photo-4164766.jpeg?auto=compress&cs=tinysrgb&w=1000'
         },
         {
-            name: { en: 'Nutrition Guidance' },
-            description: { en: 'Get personalized meal plans and nutrition advice to complement your training routine.' },
-            image: 'https://images.unsplash.com/photo-1490645935967-10de6ba17061?q=80&w=1000&auto=format&fit=crop'
+            name: { en: 'Indian Diet & Nutrition Plans' },
+            description: { en: 'Customised meal plans based on your goals, using traditional Indian superfoods like turmeric, ashwagandha, ghee, and seasonal vegetables.' },
+            image: 'https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?auto=compress&cs=tinysrgb&w=1000'
         },
         {
-            name: { en: 'Group Classes' },
-            description: { en: 'Stay motivated and make friends in our energetic and fun-filled group fitness classes.' },
-            image: 'https://images.unsplash.com/photo-1518611012118-696072aa579a?q=80&w=1000&auto=format&fit=crop'
+            name: { en: 'Group Batch Classes' },
+            description: { en: 'Stay motivated with our community batch classes for Yoga, Zumba, HIIT, and more — specially structured for Indian working professionals.' },
+            image: 'https://images.pexels.com/photos/3775566/pexels-photo-3775566.jpeg?auto=compress&cs=tinysrgb&w=1000'
         },
         {
-            name: { en: 'Progress Tracking' },
-            description: { en: 'Monitor your fitness journey with our advanced progress tracking tools and regular assessments.' },
-            image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1000&auto=format&fit=crop'
+            name: { en: 'Progress Tracking & Body Analysis' },
+            description: { en: 'Track your fitness journey with monthly body composition analysis, strength assessments, and digital reports powered by modern technology.' },
+            image: 'https://images.pexels.com/photos/4162449/pexels-photo-4162449.jpeg?auto=compress&cs=tinysrgb&w=1000'
         }
     ];
-    for (const feature of features) {
-        const exists = await Feature.findOne({ 'name.en': feature.name.en });
-        if (!exists) {
-            await Feature.create(feature);
-        }
-    }
+    await Feature.insertMany(features);
     console.log('Features seeded.');
 
-    // 4. Subscriptions
+    // 4. Subscriptions — delete old, insert new
+    console.log('Clearing old Subscriptions...');
+    await Subscription.deleteMany({});
     console.log('Seeding Subscriptions...');
     const subscriptions = [
         {
-            name: { en: 'Starter' },
-            image: 'https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?q=80&w=1000&auto=format&fit=crop',
-            monthly_price: 29,
-            yearly_price: 290,
+            name: { en: 'Sadharan (Basic)' },
+            image: 'https://images.pexels.com/photos/1552252/pexels-photo-1552252.jpeg?auto=compress&cs=tinysrgb&w=1000',
+            monthly_price: 999,
+            yearly_price: 9999,
             features: [
-                { en: 'Access to Gym Equipment' },
-                { en: 'Locker Room Access' },
+                { en: 'Access to All Gym Equipment' },
+                { en: 'Locker & Changing Room Access' },
                 { en: '1 Free Fitness Assessment' },
                 { en: 'Free Wi-Fi' },
-                { en: 'Standard Support' }
+                { en: 'Standard Customer Support' }
             ],
             is_active: true
         },
         {
-            name: { en: 'Pro' },
-            image: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=1000&auto=format&fit=crop',
-            monthly_price: 59,
-            yearly_price: 590,
+            name: { en: 'Shaktiman (Pro)' },
+            image: 'https://images.pexels.com/photos/4164766/pexels-photo-4164766.jpeg?auto=compress&cs=tinysrgb&w=1000',
+            monthly_price: 1999,
+            yearly_price: 19999,
             features: [
-                { en: 'All Starter Features' },
-                { en: 'Access to Group Classes' },
-                { en: 'Monthly Fitness Assessment' },
-                { en: 'Free Guest Pass (1/month)' },
+                { en: 'All Sadharan (Basic) Features' },
+                { en: 'Unlimited Group Batch Classes' },
+                { en: 'Monthly Body Composition Analysis' },
+                { en: 'Indian Diet Plan (Basic)' },
+                { en: '1 Guest Pass per Month' },
                 { en: 'Priority Support' }
             ],
             is_active: true
         },
         {
-            name: { en: 'Elite' },
-            image: 'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?q=80&w=1000&auto=format&fit=crop',
-            monthly_price: 99,
-            yearly_price: 990,
+            name: { en: 'Pratham (Elite)' },
+            image: 'https://images.pexels.com/photos/3822906/pexels-photo-3822906.jpeg?auto=compress&cs=tinysrgb&w=1000',
+            monthly_price: 3499,
+            yearly_price: 34999,
             features: [
-                { en: 'All Pro Features' },
-                { en: 'Unlimited Personal Training' },
-                { en: 'Custom Nutrition Plan' },
-                { en: 'Access to Spa & Sauna' },
-                { en: '24/7 Dedicated Support' },
-                { en: 'Free Merchandise' }
+                { en: 'All Shaktiman (Pro) Features' },
+                { en: 'Unlimited Personal Training Sessions' },
+                { en: 'Custom Nutrition Plan with Indian Meals' },
+                { en: 'Access to Steam Room & Sauna' },
+                { en: 'Priority Batch Booking' },
+                { en: '24/7 Dedicated WhatsApp Support' },
+                { en: 'Webitof GYM Branded Merchandise Kit' }
             ],
             is_active: true
         }
     ];
-    for (const sub of subscriptions) {
-        const exists = await Subscription.findOne({ 'name.en': sub.name.en });
-        if (!exists) {
-            await Subscription.create(sub);
-        }
-    }
+    await Subscription.insertMany(subscriptions);
     console.log('Subscriptions seeded.');
 
-    // 5. FAQs
+    // 5. FAQs — delete old, insert new
+    console.log('Clearing old FAQs...');
+    await Faq.deleteMany({});
     console.log('Seeding FAQs...');
     const faqs = [
         {
             question: { en: 'What are your gym timings?' },
-            answer: { en: 'We are open 24/7 for our Elite members. For Starter and Pro members, the gym is accessible from 5:00 AM to 11:00 PM every day.' }
+            answer: { en: 'We are open from 5:00 AM to 11:00 PM, 7 days a week, including all Indian national holidays and festivals, so you can maintain your fitness routine year-round.' }
         },
         {
             question: { en: 'Do you offer personal training?' },
-            answer: { en: 'Yes, we have certified personal trainers available. Personal training is included in the Elite plan and can be purchased as an add-on for other plans.' }
+            answer: { en: 'Yes! All our personal trainers are certified by the Sports Authority of India (SAI) or ISSA. Personal training is included in the Pratham (Elite) plan and available as an add-on for other plans.' }
         },
         {
-            question: { en: 'Is there a joining fee?' },
-            answer: { en: 'No, we do not charge any hidden joining or initiation fees. You only pay for your selected subscription plan.' }
+            question: { en: 'Is there a joining or registration fee?' },
+            answer: { en: 'No hidden charges! We believe in complete transparency. You only pay the subscription plan amount — no joining fee, no registration fee.' }
         },
         {
-            question: { en: 'Can I cancel my membership at any time?' },
-            answer: { en: 'Yes, monthly memberships can be canceled at any time with a 30-day notice. Yearly memberships are non-refundable.' }
+            question: { en: 'Can I cancel or pause my membership?' },
+            answer: { en: 'Monthly memberships can be cancelled any time with a 15-day notice. We also offer a freeze option for up to 2 months per year for medical, travel, or personal reasons.' }
         },
         {
-            question: { en: 'Do you provide diet plans?' },
-            answer: { en: 'Nutrition guidance is included in our Pro and Elite plans. Our experts will create a custom meal plan tailored to your goals.' }
+            question: { en: 'Do you provide vegetarian-friendly diet plans?' },
+            answer: { en: 'Absolutely! Our nutritionists specialise in creating high-protein, balanced meal plans using traditional Indian vegetarian foods like paneer, dal, millets, soya, and sprouts.' }
         },
         {
             question: { en: 'Are group classes included in the membership?' },
-            answer: { en: 'Group classes are included in the Pro and Elite memberships. Starter members can pay a small fee per class.' }
+            answer: { en: 'Group classes like Yoga, Zumba, and HIIT are included in the Shaktiman (Pro) and Pratham (Elite) plans. Sadharan (Basic) members can attend at a nominal fee of ₹99 per class.' }
         },
         {
-            question: { en: 'Is there parking available?' },
-            answer: { en: 'Yes, we have a large, secure parking lot available free of charge for all our members.' }
+            question: { en: 'Is parking available at the gym?' },
+            answer: { en: 'Yes, we have a spacious parking area for both two-wheelers and four-wheelers, free of charge for all active members.' }
         },
         {
-            question: { en: 'What should I bring for my first workout?' },
-            answer: { en: 'Please bring comfortable workout clothes, sports shoes, a water bottle, and a towel. A lock for the locker room is also recommended.' }
+            question: { en: 'What should I carry for my first visit?' },
+            answer: { en: 'Please bring a valid government ID, comfortable workout clothes, sports shoes, a reusable water bottle, and a small towel. We provide lockers at no extra cost.' }
         },
         {
-            question: { en: 'Can I freeze my membership if I travel?' },
-            answer: { en: 'Yes, you can freeze your membership for up to 3 months per year if you are traveling or have a medical reason.' }
+            question: { en: 'Do you have separate sections for men and women?' },
+            answer: { en: 'Yes, we have a dedicated ladies\' workout zone for privacy and comfort, along with separate changing rooms and shower facilities for men and women.' }
         },
         {
-            question: { en: 'Do you have locker rooms and showers?' },
-            answer: { en: 'Yes, we have fully equipped locker rooms with clean showers, complimentary toiletries, and hair dryers for all members.' }
+            question: { en: 'Is this gym suitable for senior citizens?' },
+            answer: { en: 'Definitely! We have specially designed fitness programs for senior citizens focusing on joint health, flexibility, and balance. Our trainers are experienced in working with elderly members.' }
         }
     ];
-    for (const faq of faqs) {
-        const exists = await Faq.findOne({ 'question.en': faq.question.en });
-        if (!exists) {
-            await Faq.create(faq);
-        }
-    }
+    await Faq.insertMany(faqs);
     console.log('FAQs seeded.');
 
     await mongoose.disconnect();

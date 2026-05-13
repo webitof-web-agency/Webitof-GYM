@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 import Image from 'next/image';
 import React from 'react';
 import { usePathname, useRouter } from 'next/navigation';
@@ -67,7 +67,7 @@ const ProductCard = ({ data, getWaishlist, getData }) => {
                 {/* Top row: name + price */}
                 <div className='flex items-start justify-between gap-3'>
                     <div className='min-w-0'>
-                        <Link href={`/shop/${data?._id}`} className='text-[14px] font-extrabold text-gray-800 capitalize line-clamp-2 hover:text-[#F97316] transition-colors leading-snug'>
+                        <Link href={`/shop/${data?._id}`} className='text-[14px] font-semibold text-gray-800 capitalize line-clamp-2 hover:text-[#F97316] transition-colors leading-snug'>
                             {data?.name?.[i18n.langCode]}
                         </Link>
                         {data?.variant && (

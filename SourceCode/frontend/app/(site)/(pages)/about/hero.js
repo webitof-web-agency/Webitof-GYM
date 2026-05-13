@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 import Image from "next/image";
 import React, { useState } from "react";
 import { Skeleton } from "antd";
@@ -15,21 +15,29 @@ const Hero = ({ data, loading }) => {
     const i18n = useI18n();
     const { push } = useRouter();
 
+    // Helper: handle string URL or [{url:...}] array shape
+    const resolveImg = (val) => {
+        if (!val) return '/banner.png';
+        if (typeof val === 'string') return val;
+        if (Array.isArray(val) && val.length > 0) return val[0]?.url || val[0] || '/banner.png';
+        return '/banner.png';
+    };
+
     const sectionContent = {
         Mission: {
             text: columnFormatter(data?.mission?.text),
-            image1: data?.mission?.mission_image1[0].url ? data?.mission?.mission_image1[0].url : data?.mission?.mission_image1,
-            image2: data?.mission?.mission_image2[0].url ? data?.mission?.mission_image2[0].url : data?.mission?.mission_image2
+            image1: resolveImg(data?.mission?.mission_image1),
+            image2: resolveImg(data?.mission?.mission_image2),
         },
         Vision: {
             text: columnFormatter(data?.vision?.text),
-            image1: data?.vision?.vision_image1[0].url ? data?.vision?.vision_image1[0].url : data?.vision?.vision_image1,
-            image2: data?.vision?.vision_image2[0].url ? data?.vision?.vision_image2[0].url : data?.vision?.vision_image2,
+            image1: resolveImg(data?.vision?.vision_image1),
+            image2: resolveImg(data?.vision?.vision_image2),
         },
         Values: {
             text: columnFormatter(data?.values?.text),
-            image1: data?.values?.values_image1[0].url ? data?.values?.values_image1[0].url : data?.values?.values_image1,
-            image2: data?.values?.values_image2[0].url ? data?.values?.values_image2[0].url : data?.values?.values_image2,
+            image1: resolveImg(data?.values?.values_image1),
+            image2: resolveImg(data?.values?.values_image2),
         },
     };
 

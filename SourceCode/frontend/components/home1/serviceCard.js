@@ -1,4 +1,4 @@
-﻿import React from 'react';
+import React from 'react';
 import { useI18n } from '../../app/providers/i18n';
 import Image from 'next/image';
 import { FiArrowRight } from 'react-icons/fi';
@@ -43,7 +43,7 @@ const ServiceCard = ({ service, index = 0 }) => {
             </div>
 
             {/* Title */}
-            <h4 className='text-[15px] font-extrabold text-gray-800 leading-snug mb-2 tracking-tight group-hover:text-[#F97316] transition-colors duration-300'>
+            <h4 className='text-[15px] font-semibold text-gray-800 leading-snug mb-2 tracking-tight group-hover:text-[#F97316] transition-colors duration-300'>
                 {columnFormatter(service?.name)}
             </h4>
 

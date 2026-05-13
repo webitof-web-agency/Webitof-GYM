@@ -14,6 +14,7 @@ const schema = new Schema({
     youtube: String,
     ai_key: String,
     footer_text: String,
+    font_family: String,
     storage: {
         provider: {
             type: String,

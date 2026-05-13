@@ -1,4 +1,4 @@
-﻿import Image from 'next/image';
+import Image from 'next/image';
 import Link from 'next/link';
 import React, { useState } from 'react';
 import { FaInstagram, FaLinkedin, FaFacebook } from 'react-icons/fa';
@@ -56,7 +56,7 @@ const ExpartCard = ({ team }) => {
                 <div className='min-w-0'>
                     <Link
                         href={`/trainers/view/${team?._id}`}
-                        className='text-[15px] font-extrabold text-gray-800 capitalize hover:text-[#F97316] transition-colors block leading-tight truncate'
+                        className='text-[15px] font-semibold text-gray-800 capitalize hover:text-[#F97316] transition-colors block leading-tight truncate'
                     >
                         {team?.name}
                     </Link>

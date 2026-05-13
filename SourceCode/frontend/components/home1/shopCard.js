@@ -1,4 +1,4 @@
-﻿import Image from 'next/image';
+import Image from 'next/image';
 import React, { useState, useEffect } from 'react';
 import { FiHeart, FiEye, FiShoppingBag } from 'react-icons/fi';
 import Link from 'next/link';
@@ -103,7 +103,7 @@ const ShopCard = ({ data, getData }) => {
 
             {/* Info */}
             <div className='p-4 flex flex-col flex-1'>
-                <Link href={`/shop/${data?._id}`} className='text-[13px] font-extrabold text-gray-800 leading-snug line-clamp-2 hover:text-[#F97316] transition-colors mb-1'>
+                <Link href={`/shop/${data?._id}`} className='text-[13px] font-semibold text-gray-800 leading-snug line-clamp-2 hover:text-[#F97316] transition-colors mb-1'>
                     {columnFormatter(data?.name)}
                 </Link>
                 <p className='text-[11px] text-gray-400 font-medium capitalize mb-2'>{columnFormatter(data?.category?.name)}</p>

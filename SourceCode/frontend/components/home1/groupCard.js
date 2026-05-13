@@ -1,4 +1,4 @@
-﻿import React from 'react';
+import React from 'react';
 import { useI18n } from '../../app/providers/i18n';
 import Image from 'next/image';
 import { FiArrowRight, FiCheckCircle, FiUsers } from 'react-icons/fi';
@@ -40,7 +40,7 @@ const GroupCard = ({ group, index = 0 }) => {
 
             {/* Content */}
             <div className='p-5'>
-                <h4 className='text-[14px] font-extrabold text-gray-800 capitalize leading-tight group-hover:text-[#F97316] transition-colors mb-3'>
+                <h4 className='text-[14px] font-semibold text-gray-800 capitalize leading-tight group-hover:text-[#F97316] transition-colors mb-3'>
                     {group?.name?.[i18n.langCode]}
                 </h4>
 

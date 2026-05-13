@@ -1,4 +1,4 @@
-﻿import React from 'react';
+import React from 'react';
 import Image from 'next/image';
 import { useI18n } from '../../app/providers/i18n';
 import { useCurrency } from '../../app/contexts/site';
@@ -66,7 +66,7 @@ const TestimonialCard = ({ allreview }) => {
                         </div>
                     </div>
                     <div className='min-w-0'>
-                        <h4 className={`text-[13px] font-extrabold truncate ${isHome3 ? 'text-white' : 'text-gray-800'}`}>
+                        <h4 className={`text-[13px] font-semibold truncate ${isHome3 ? 'text-white' : 'text-gray-800'}`}>
                             {name}
                         </h4>
                         <p className='text-[11px] font-semibold text-[#F97316] uppercase tracking-wide'>

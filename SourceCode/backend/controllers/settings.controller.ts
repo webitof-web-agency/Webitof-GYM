@@ -36,7 +36,7 @@ const normalizeStoragePayload = (body, previousStorage: any = {}) => {
 export const getSiteSettings = async (req, res) => {
     try {
         const currency = await Currency.findOne({ default: true }, 'symbol');
-        const data = await Settings.findOne({}, 'title description logo dark_logo footer_text email phone address facebook twitter instagram linkedin youtube ai_key')
+        const data = await Settings.findOne({}, 'title description logo dark_logo footer_text email phone address facebook twitter instagram linkedin youtube ai_key font_family')
 
         const responseData = {
             ...(data ? data.toObject() : {}),

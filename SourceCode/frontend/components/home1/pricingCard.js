@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 import Image from 'next/image';
 import React, { useState, useContext } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
@@ -78,7 +78,7 @@ const PricingCard = ({ data, activeTab, index = 0 }) => {
             <div className='flex flex-col flex-1 p-6'>
                 {/* Plan name + price */}
                 <div className='mb-5'>
-                    <h2 className={`text-xl font-extrabold capitalize tracking-tight mb-1 ${isPopular ? 'text-white' : isHome3 ? 'text-white' : 'text-gray-800'}`}>
+                    <h2 className={`text-xl font-bold capitalize tracking-tight mb-1 ${isPopular ? 'text-white' : isHome3 ? 'text-white' : 'text-gray-800'}`}>
                         {data?.name?.[i18n.langCode]}
                     </h2>
                     <div className='flex items-end gap-1'>

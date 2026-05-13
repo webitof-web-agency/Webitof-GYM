@@ -1,13 +1,38 @@
-﻿'use client';
-import Image from 'next/image';
+'use client';
 import React from 'react';
 import { motion } from 'framer-motion';
 import { useI18n } from '../../app/providers/i18n';
 import { useCurrency } from '../../app/contexts/site';
+import {
+    FiActivity, FiClock, FiUsers, FiTrendingUp, FiZap, FiHeart,
+    FiAward, FiTarget, FiStar, FiShield, FiSun, FiBarChart2
+} from 'react-icons/fi';
+import { GiMuscleUp, GiYinYang, GiWeightLiftingUp } from 'react-icons/gi';
+import { MdSportsGymnastics, MdOutlineFitnessCenter } from 'react-icons/md';
+
+// Map feature name keywords → icon component
+const getFeatureIcon = (name = '') => {
+    const n = name.toLowerCase();
+    if (n.includes('trainer') || n.includes('coach') || n.includes('expert')) return <FiAward size={28} />;
+    if (n.includes('equipment') || n.includes('machine') || n.includes('world')) return <MdOutlineFitnessCenter size={28} />;
+    if (n.includes('timing') || n.includes('time') || n.includes('hour') || n.includes('flexible')) return <FiClock size={28} />;
+    if (n.includes('diet') || n.includes('nutrition') || n.includes('meal') || n.includes('food')) return <FiHeart size={28} />;
+    if (n.includes('group') || n.includes('class') || n.includes('batch') || n.includes('community')) return <FiUsers size={28} />;
+    if (n.includes('progress') || n.includes('track') || n.includes('analysis') || n.includes('body')) return <FiBarChart2 size={28} />;
+    if (n.includes('yoga') || n.includes('meditat') || n.includes('mind')) return <GiYinYang size={28} />;
+    if (n.includes('strength') || n.includes('muscle') || n.includes('weight') || n.includes('lifting')) return <GiWeightLiftingUp size={28} />;
+    if (n.includes('cardio') || n.includes('hiit') || n.includes('energy') || n.includes('burn')) return <FiZap size={28} />;
+    if (n.includes('sport') || n.includes('performan')) return <FiTarget size={28} />;
+    if (n.includes('award') || n.includes('certif') || n.includes('quality')) return <FiStar size={28} />;
+    if (n.includes('safe') || n.includes('secure') || n.includes('hygiene')) return <FiShield size={28} />;
+    // Default fallback
+    return <FiActivity size={28} />;
+};
 
 const FeatureCard = ({ feature }) => {
     const i18n = useI18n();
-    const { findDefaultTheme } = useCurrency();
+    const featureName = feature?.name?.[i18n?.langCode] || feature?.name?.en || '';
+    const icon = getFeatureIcon(featureName);
 
     return (
         <motion.div
@@ -27,14 +52,8 @@ const FeatureCard = ({ feature }) => {
             <div className='relative lg:py-10 py-8 px-6 flex flex-col items-center text-center'>
                 {/* Icon */}
                 <div className='mb-6 relative'>
-                    <div className='w-16 h-16 rounded-2xl bg-[#F97316]/8 group-hover:bg-[#F97316]/12 border border-[#F97316]/10 group-hover:border-[#F97316]/25 flex items-center justify-center transition-all duration-300 shadow-sm'>
-                        <Image
-                            src={feature?.image}
-                            width={34}
-                            height={34}
-                            alt={'Feature icon'}
-                            className='object-contain h-[34px] w-[34px]'
-                        />
+                    <div className='w-16 h-16 rounded-2xl bg-[#F97316]/8 group-hover:bg-[#F97316]/12 border border-[#F97316]/10 group-hover:border-[#F97316]/25 flex items-center justify-center transition-all duration-300 shadow-sm text-[#F97316] group-hover:scale-110'>
+                        {icon}
                     </div>
                     {/* Outer ring on hover */}
                     <div className='absolute inset-0 rounded-2xl border-2 border-[#F97316]/0 group-hover:border-[#F97316]/20 scale-110 transition-all duration-300' />
@@ -42,11 +61,11 @@ const FeatureCard = ({ feature }) => {
 
                 {/* Text */}
                 <div className='space-y-3'>
-                    <h3 className='text-[17px] font-extrabold text-gray-800 leading-tight tracking-tight group-hover:text-[#F97316] transition-colors duration-300'>
-                        {i18n.t(feature?.name?.[i18n.langCode])}
+                    <h3 className='text-[17px] font-semibold text-gray-800 leading-tight tracking-tight group-hover:text-[#F97316] transition-colors duration-300'>
+                        {i18n.t(featureName)}
                     </h3>
                     <p className='text-[13px] text-gray-500 leading-relaxed line-clamp-3 font-medium'>
-                        {feature?.description?.[i18n.langCode]}
+                        {feature?.description?.[i18n.langCode] || feature?.description?.en}
                     </p>
                 </div>
 
@@ -63,4 +82,3 @@ const FeatureCard = ({ feature }) => {
 };
 
 export default FeatureCard;
-

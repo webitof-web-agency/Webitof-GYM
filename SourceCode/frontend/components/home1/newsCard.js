@@ -1,4 +1,4 @@
-﻿import Image from 'next/image';
+import Image from 'next/image';
 import React from 'react';
 import { FiUser, FiCalendar, FiArrowRight } from 'react-icons/fi';
 import Link from 'next/link';
@@ -51,7 +51,7 @@ const NewsCard = ({ data, index = 0 }) => {
 
                 {/* Title */}
                 <Link href={`/blog/view/${data?._id}`} className='flex-1'>
-                    <h5 className='text-[14.5px] font-extrabold text-gray-800 leading-snug line-clamp-2 capitalize group-hover:text-[#F97316] transition-colors'>
+                    <h5 className='text-[14.5px] font-semibold text-gray-800 leading-snug line-clamp-2 capitalize group-hover:text-[#F97316] transition-colors'>
                         {data?.title?.[i18n.langCode]}
                     </h5>
                 </Link>
