@@ -64,11 +64,12 @@ const Sidebar = ({ title, menu }) => {
                 <div className="title">
                     <Link href="/admin" className="flex items-center justify-center w-full h-full px-4">
                         <Image
-                            src="/logonight.png"
+                            // src="/logonight.png"
+                            src="/GYM-admin.png"
                             alt={title || "webitofgym"}
-                            width={180}
-                            height={54}
-                            className="h-10 w-auto object-contain"
+                            width={200}
+                            height={60}
+                            className="h-36 mt-8 w-auto object-contain text-center"
                             priority
                         />
                     </Link>

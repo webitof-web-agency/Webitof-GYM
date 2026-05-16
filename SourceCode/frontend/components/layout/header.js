@@ -338,7 +338,7 @@ const Navbar = () => {
             // src={setting?.logo || '/logo.png'}
             src={setting?.logo || '/GYM_HOMELOGO.png'}
             alt="Logo"
-            className="h-[42px] w-auto max-w-[200px] object-contain"
+            className="h-[48px] w-auto max-w-[200px] object-contain"
             // onError={(e) => { e.currentTarget.src = '/logo.png'; }}
             onError={(e) => { e.currentTarget.src = '/GYM_HOMELOGO.png'; }}
           />
