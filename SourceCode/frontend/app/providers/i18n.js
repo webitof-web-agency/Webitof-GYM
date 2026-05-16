@@ -1,6 +1,7 @@
 'use client';
 
 import { createContext, useContext, useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 import { useFetch } from "../helpers/hooks";
 import { fetchLanguages, fetchPublicLanguages, fetchTranslations } from "../helpers/backend";
 
@@ -23,6 +24,7 @@ const findPreferredLanguage = (items = []) => {
 };
 
 export const I18nProvider = ({ children }) => {
+  const pathname = usePathname();
   const [publicLanguages] = useFetch(fetchPublicLanguages);
   const [adminLanguages] = useFetch(fetchLanguages, { limit: 100 }, false);
   const [translations, setTranslations] = useState({});
@@ -68,7 +70,7 @@ export const I18nProvider = ({ children }) => {
   }, [adminLanguages, publicLanguages]);
 
   useEffect(() => {
-    if (isClient && localStorage.getItem('token')) {
+    if (isClient && pathname?.startsWith('/admin') && localStorage.getItem('token')) {
       const run = () => {
         adminLanguages === undefined && fetchLanguages({ limit: 100 }).then(({ error, data }) => {
           if (!error && Array.isArray(data?.docs) && data.docs.length > 0) {
@@ -85,7 +87,7 @@ export const I18nProvider = ({ children }) => {
         setTimeout(run, 1);
       }
     }
-  }, [adminLanguages, isClient]);
+  }, [adminLanguages, isClient, pathname]);
 
   useEffect(() => {
     if (isClient) { 

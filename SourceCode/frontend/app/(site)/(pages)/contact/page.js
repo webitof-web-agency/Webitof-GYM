@@ -56,7 +56,7 @@ const Page = () => {
             <div className='container py-16 lg:py-24'>
                 <div className='grid grid-cols-1 lg:grid-cols-5 gap-8 xl:gap-14'>
 
-                    {/* â”€â”€ Left info panel â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+                    {/* --- Left info panel --- */}
                     <motion.div
                         initial={{ opacity: 0, x: -30 }}
                         animate={{ opacity: 1, x: 0 }}
@@ -107,7 +107,7 @@ const Page = () => {
                         </div>
                     </motion.div>
 
-                    {/* â”€â”€ Right form â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+                    {/* --- Right form --- */}
                     <motion.div
                         initial={{ opacity: 0, x: 30 }}
                         animate={{ opacity: 1, x: 0 }}

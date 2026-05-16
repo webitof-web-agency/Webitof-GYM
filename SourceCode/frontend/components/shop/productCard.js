@@ -11,6 +11,7 @@ import { message } from 'antd';
 import { columnFormatter } from '../../app/helpers/utils';
 import { useCurrency } from '../../app/contexts/site';
 import Link from 'next/link';
+import { createProductSlug } from '../../app/helpers/product';
 
 const ProductCard = ({ data, getWaishlist, getData }) => {
     const i18n = useI18n();
@@ -48,11 +49,12 @@ const ProductCard = ({ data, getWaishlist, getData }) => {
     };
 
     const lineTotal = currencySymbol + convertAmount((data?.price * data?.quantity)?.toFixed(2));
+    const productHref = `/shop/${createProductSlug(data)}`;
 
     return (
         <div className='flex sm:flex-row flex-col gap-4 rounded-2xl border border-slate-100 bg-white shadow-[0_2px_12px_-4px_rgba(0,0,0,0.06)] hover:border-[#F97316]/20 hover:shadow-[0_4px_20px_-6px_rgba(85,114,252,0.08)] transition-all p-4'>
             {/* Product image */}
-            <Link href={`/shop/${data?._id}`} className='shrink-0'>
+            <Link href={productHref} className='shrink-0'>
                 <Image
                     className='rounded-xl object-cover sm:w-[120px] sm:h-[120px] w-full h-[200px]'
                     src={data?.thumbnail_image}
@@ -67,7 +69,7 @@ const ProductCard = ({ data, getWaishlist, getData }) => {
                 {/* Top row: name + price */}
                 <div className='flex items-start justify-between gap-3'>
                     <div className='min-w-0'>
-                        <Link href={`/shop/${data?._id}`} className='text-[14px] font-semibold text-gray-800 capitalize line-clamp-2 hover:text-[#F97316] transition-colors leading-snug'>
+                        <Link href={productHref} className='text-[14px] font-semibold text-gray-800 capitalize line-clamp-2 hover:text-[#F97316] transition-colors leading-snug'>
                             {data?.name?.[i18n.langCode]}
                         </Link>
                         {data?.variant && (

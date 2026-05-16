@@ -202,7 +202,7 @@ const SettingsPageContent = () => {
                                   <div className="md:col-span-2 pt-4 border-t border-slate-100">
                                       <div className="flex gap-6 items-start">
                                           <div className="flex-1">
-                                              <FormInput placeholder={"e.g. Â© 2026 Webitof GYM. All rights reserved."} name="footer_text" label={<span className="text-xs font-bold text-gray-700">Footer Attribution String</span>} required />
+                                              <FormInput placeholder={"e.g. © 2026 Webitof GYM. All rights reserved."} name="footer_text" label={<span className="text-xs font-bold text-gray-700">Footer Attribution String</span>} required />
                                           </div>
                                           <div>
                                               <MultipleImageInput name="logo" label={<span className="text-[10px] font-bold text-gray-600">Brand Imprint Override</span>} required />

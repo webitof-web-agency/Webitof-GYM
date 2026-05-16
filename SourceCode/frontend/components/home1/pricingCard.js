@@ -7,7 +7,7 @@ import UserContext from '../../app/contexts/user';
 import { message, Tooltip } from 'antd';
 import { useCurrency } from '../../app/contexts/site';
 import { motion } from 'framer-motion';
-import { FiCheck, FiArrowRight, FiZap } from 'react-icons/fi';
+import { FiCheck, FiArrowRight, FiZap, FiChevronDown, FiChevronUp } from 'react-icons/fi';
 
 const PricingCard = ({ data, activeTab, index = 0 }) => {
     const i18n = useI18n();
@@ -18,7 +18,7 @@ const PricingCard = ({ data, activeTab, index = 0 }) => {
     const [showAllFeatures, setShowAllFeatures] = useState(false);
 
     // Middle card is "most popular"
-    const isPopular = index === 1;
+    const isPopular = false; // index === 1;
 
     const handleButtonClick = () => {
         switch (user?.role) {
@@ -114,9 +114,13 @@ const PricingCard = ({ data, activeTab, index = 0 }) => {
                 {data?.features?.length > 4 ? (
                     <button
                         onClick={() => setShowAllFeatures(!showAllFeatures)}
-                        className={`mt-3 text-[12px] font-bold hover:underline ${isPopular ? 'text-white/70 hover:text-white' : 'text-[#F97316]'}`}
+                        className={`mt-3 text-[12px] font-bold hover:underline flex items-center gap-1 ${isPopular ? 'text-white/70 hover:text-white' : 'text-[#F97316]'}`}
                     >
-                        {showAllFeatures ? i18n?.t('Show Less â†‘') : i18n?.t('Show More â†“')}
+                        {showAllFeatures ? (
+                            <>{i18n?.t('Show Less')} <FiChevronUp size={14} /></>
+                        ) : (
+                            <>{i18n?.t('Show More')} <FiChevronDown size={14} /></>
+                        )}
                     </button>
                 ) : <div className='h-3' />}
 

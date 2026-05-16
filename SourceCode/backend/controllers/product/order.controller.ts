@@ -447,7 +447,7 @@ export const postOrder = async (req, res) => {
                     key_secret: razorpayConfig.config.clientSecret
                 });
                 const frontendBaseUrl = (process.env.FRONTEND_URL || 'http://localhost:3000').replace(/\/$/, '');
-                const amountInPaise = orderData.subTotal * 100;
+                const amountInPaise = Math.round((Number(orderData.payment.amount) + Number.EPSILON) * 100);
                 const linkData = {
                     amount: amountInPaise,
                     currency: body.currency || 'INR',
@@ -1299,9 +1299,10 @@ export const razorpayPaymentSuccess = async (req, res) => {
             });
         }
         if (order.payment.status === 'completed') {
-            return res.status(400).send({
-                error: true,
-                msg: 'Payment already completed'
+            return res.status(200).json({
+                error: false,
+                msg: 'Payment already completed',
+                data: order
             });
         }
         if (razorpay_payment_link_reference_id !== session_id) {

@@ -35,7 +35,7 @@ const ExpartCard = ({ team }) => {
                 {/* Gradient overlay */}
                 <div className='absolute inset-0 bg-gradient-to-t from-[#F97316]/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-400' />
 
-                {/* Social icons â€” appear on hover */}
+                {/* Social icons - appear on hover */}
                 <div className='absolute bottom-4 left-0 right-0 flex justify-center gap-2 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300'>
                     {socials.map((s, i) => (
                         <Link

@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { SkeletonTheme } from "react-loading-skeleton";
 import UserContext from "../contexts/user";
 import { fetchSiteSettings, fetchUser } from "../helpers/backend";
+import { clearAuthStorage } from "../helpers/auth";
 import EnvContext from "../contexts/envContext";
 
 
@@ -48,6 +49,7 @@ const Providers = ({ children }) => {
         if (error === false) {
             setUser(data);
         } else {
+            clearAuthStorage();
             setUser({});
         }
         setUserLoaded(true);

@@ -15,6 +15,7 @@ import { FaFacebookF, FaLinkedinIn, FaRedditAlien, FaTwitter } from 'react-icons
 import ProductImageSlider from '../../../../../components/common/imageSlider';
 import { FiHeart, FiShoppingCart, FiStar, FiCheckCircle, FiPackage, FiTag } from 'react-icons/fi';
 import { motion } from 'framer-motion';
+import { createProductSlug, isMongoObjectId } from '../../../../helpers/product';
 
 const Review = dynamic(() => import('../../../../../components/shop/review'));
 const WriteReview = dynamic(() => import('../../../../../components/shop/writeReview'));
@@ -31,15 +32,20 @@ const Wheyprotein = ({ params }) => {
     const [varientPrice, setVariantPrice] = useState(null);
     const [addingToCart, setAddingToCart] = useState(false);
     const [url, setUrl] = useState('');
+    const productParam = Array.isArray(params?._id) ? params._id[0] : params?._id;
 
-    useEffect(() => { getData({ _id: params._id }); }, [params._id]);
+    useEffect(() => {
+        if (productParam) {
+            getData(isMongoObjectId(productParam) ? { _id: productParam } : { slug: productParam });
+        }
+    }, [getData, productParam]);
     useEffect(() => { setUrl(window.location.href); }, []);
 
     useEffect(() => {
         if (wishlist?.docs?.length > 0) {
-            setWishListed(Boolean(wishlist.docs[0].products?.some(item => item._id === params._id)));
+            setWishListed(Boolean(wishlist.docs[0].products?.some(item => item._id === data?.product?._id)));
         }
-    }, [wishlist, params._id]);
+    }, [data?.product?._id, wishlist]);
 
     useEffect(() => {
         let varientProduct = data?.product?.variants?.find(item => item?._id === variant);
@@ -52,15 +58,16 @@ const Wheyprotein = ({ params }) => {
 
     const submitWishlist = async () => {
         try {
-            const res = await postWishlist({ productId: params._id, variantId: variant });
-            if (res?.error === false) { getWaishlist(); getData({ _id: params._id }); message.success(res.msg); }
+            const currentProductId = data?.product?._id;
+            const res = await postWishlist({ productId: currentProductId, variantId: variant });
+            if (res?.error === false) { getWaishlist(); getData(currentProductId ? { _id: currentProductId } : { slug: productParam }); message.success(res.msg); }
             else message.error(res.msg);
         } catch { message.error('Failed to add to wishlist.'); }
     };
 
     const addToCart = async () => {
         setAddingToCart(true);
-        const res = await postCartlist({ product_id: params._id, variant_id: variant, quantity: 1 });
+        const res = await postCartlist({ product_id: data?.product?._id, variant_id: variant, quantity: 1 });
         setAddingToCart(false);
         if (res.error === false) { getCartItems(); message.success(res?.msg); router.push('/cart'); }
         else { message.error(res?.msg); router.push('/signin'); }
@@ -247,7 +254,7 @@ const Wheyprotein = ({ params }) => {
                             />
                         )}
                         {activeTab === 'review' && <Review review={data?.reviews} />}
-                        {activeTab === 'Write review' && <WriteReview productId={params._id} />}
+                        {activeTab === 'Write review' && <WriteReview productId={data?.product?._id} />}
                     </div>
                 </div>
 
@@ -260,8 +267,8 @@ const Wheyprotein = ({ params }) => {
                     {data?.relatedProducts?.length > 0 ? (
                         <div className='grid grid-cols-2 lg:grid-cols-4 gap-6'>
                             {data.relatedProducts.map(product => (
-                                <Link key={product._id} href={`/shop/${product._id}`} passHref>
-                                    <ShopCard data={product} getData={() => getData({ _id: params._id })} />
+                                <Link key={product._id} href={`/shop/${createProductSlug(product)}`} passHref>
+                                    <ShopCard data={product} getData={() => getData(data?.product?._id ? { _id: data.product._id } : { slug: productParam })} />
                                 </Link>
                             ))}
                         </div>

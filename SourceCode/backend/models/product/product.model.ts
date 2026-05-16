@@ -18,6 +18,13 @@ let productSchema = new Schema({
         of: String,
         required: true,
     },
+    slug: {
+        type: String,
+        unique: true,
+        sparse: true,
+        index: true,
+        trim: true,
+    },
     price: {
         type: Number,
         required: true,

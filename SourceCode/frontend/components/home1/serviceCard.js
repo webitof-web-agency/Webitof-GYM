@@ -22,7 +22,7 @@ const ServiceCard = ({ service, index = 0 }) => {
             whileHover={{ y: -5, transition: { duration: 0.2 } }}
             className='group relative bg-white rounded-2xl overflow-hidden border border-slate-100 shadow-[0_4px_20px_-6px_rgba(0,0,0,0.07)] hover:shadow-[0_16px_40px_-8px_rgba(0,0,0,0.12)] transition-all duration-300 p-6 flex flex-col'
         >
-            {/* Top accent line â€” slides in on hover */}
+            {/* Top accent line - slides in on hover */}
             <div
                 className='absolute top-0 left-0 right-0 h-0.5 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left rounded-t-2xl'
                 style={{ background: accent }}

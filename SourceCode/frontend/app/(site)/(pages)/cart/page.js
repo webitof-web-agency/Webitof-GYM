@@ -1,4 +1,4 @@
-﻿"use client"
+"use client"
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import BasicBar from '../../../../components/common/basic-bar';
@@ -6,7 +6,7 @@ import ProductCard from '../../../../components/shop/productCard';
 import { Empty } from 'antd';
 import { useI18n } from '../../../providers/i18n';
 import { useCurrency } from '../../../contexts/site';
-import { FiArrowRight, FiShoppingBag, FiShoppingCart } from 'react-icons/fi';
+import { FiArrowRight, FiShoppingBag, FiShoppingCart, FiArrowLeft } from 'react-icons/fi';
 import { motion } from 'framer-motion';
 
 const Page = () => {
@@ -41,7 +41,7 @@ const Page = () => {
 
                 {itemCount > 0 ? (
                     <div className='flex flex-col lg:flex-row gap-8 xl:gap-12'>
-                        {/* â”€â”€ Cart items â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+                        {/* --- Cart items --- */}
                         <div className='w-full lg:w-2/3 flex flex-col gap-4'>
                             {cartItems.products.map((product, index) => (
                                 <motion.div
@@ -59,11 +59,11 @@ const Page = () => {
                                 href='/shop'
                                 className='inline-flex items-center gap-2 text-[12px] font-bold text-gray-400 hover:text-[#F97316] transition-colors mt-2 w-fit'
                             >
-                                â† {i18n?.t('Continue Shopping')}
+                                <FiArrowLeft size={14} /> {i18n?.t('Continue Shopping')}
                             </Link>
                         </div>
 
-                        {/* â”€â”€ Order summary â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+                        {/* Order summary */}
                         <div className='w-full lg:w-1/3 shrink-0'>
                             <div className='rounded-2xl border border-slate-100 bg-white shadow-[0_4px_30px_-8px_rgba(0,0,0,0.08)] overflow-hidden sticky top-24'>
                                 {/* Header */}
@@ -105,7 +105,7 @@ const Page = () => {
                         </div>
                     </div>
                 ) : (
-                    /* â”€â”€ Empty state â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+                    /* --- Empty state --- */
                     <div className='flex flex-col items-center justify-center min-h-[50vh] rounded-2xl border border-slate-100 bg-white shadow-[0_4px_20px_-6px_rgba(0,0,0,0.06)]'>
                         <div className='flex h-20 w-20 items-center justify-center rounded-2xl bg-[#F97316]/8 border border-[#F97316]/15 mb-6'>
                             <FiShoppingBag size={36} className='text-[#F97316]/50' />

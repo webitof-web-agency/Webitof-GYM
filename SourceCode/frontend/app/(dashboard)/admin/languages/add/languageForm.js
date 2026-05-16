@@ -1,4 +1,4 @@
-﻿import { Form } from 'antd';
+import { Form } from 'antd';
 import { useRouter } from 'next/navigation';
 import FormInput, { HiddenInput } from '../../../../../components/form/input';
 import { postLanguage } from '../../../../helpers/backend';
@@ -38,7 +38,7 @@ const LanguageForm = ({ isEdit, form }) => {
                  <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4">
                      <div className="col-span-1 md:col-span-2">
                          <FormInput 
-                            placeholder={("e.g. English, EspaÃ±ol")} 
+                            placeholder={("e.g. English, Español")} 
                             name="name" 
                             label={<span className="text-xs font-bold text-gray-700 flex items-center gap-1.5"><FiGlobe size={12}/> Dialect Target Name</span>} 
                             required 

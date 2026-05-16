@@ -10,7 +10,7 @@ import { useUser } from '../../app/contexts/user';
 import { useI18n } from '../../app/providers/i18n';
 import { useCurrency } from '../../app/contexts/site';
 import { useEnv } from '../../app/contexts/envContext';
-import Cookies from 'js-cookie';
+import { clearAuthStorage } from '../../app/helpers/auth';
 import { notifySuccess } from '../../app/helpers/notify';
 import dynamic from 'next/dynamic';
 
@@ -120,11 +120,7 @@ const Navbar = () => {
 
   const handleLogout = async () => {
     try {
-      localStorage.removeItem('token');
-      sessionStorage.removeItem('token');
-      Cookies.remove('token');
-      Cookies.remove('auth');
-      Cookies.remove('access_token');
+      clearAuthStorage();
     } catch (error) { console.log(error); }
     setUser({});
     notifySuccess('Sign out successfully');

@@ -98,7 +98,7 @@ const FitnessCalculator = () => {
         <section className='container overflow-x-hidden'>
             <div className='lg:grid grid-cols-1 lg:gap-14 gap-10 lg:grid-cols-2 flex flex-col-reverse'>
 
-                {/* Left â€” BMI chart card */}
+                {/* Left - BMI chart card */}
                 <div className='rounded-2xl overflow-hidden border border-slate-100 shadow-[0_4px_30px_-8px_rgba(0,0,0,0.08)] flex flex-col'>
                     {/* Gradient header */}
                     <div className='bg-gradient-to-r from-[#EA580C] to-[#F97316] px-6 py-5'>

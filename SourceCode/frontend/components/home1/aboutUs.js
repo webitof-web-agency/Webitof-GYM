@@ -25,7 +25,7 @@ const AboutUs = ({ data }) => {
         <div className='container mb-[60px] lg:mb-[120px] overflow-hidden'>
             <div className='flex flex-col items-center gap-12 lg:flex-row xl:gap-[80px]'>
 
-                {/* Left â€” Image with decorative frame */}
+                {/* Left - Image with decorative frame */}
                 <motion.div
                     initial={{ opacity: 0, x: -50 }}
                     whileInView={{ opacity: 1, x: 0 }}
@@ -61,7 +61,7 @@ const AboutUs = ({ data }) => {
                     </div>
                 </motion.div>
 
-                {/* Right â€” Text content */}
+                {/* Right - Text content */}
                 <motion.div
                     initial={{ opacity: 0, x: 50 }}
                     whileInView={{ opacity: 1, x: 0 }}

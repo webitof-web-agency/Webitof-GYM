@@ -24,7 +24,7 @@ const SignIn = () => {
     const i18n = useI18n();
     const data = useEnv();
     const [loadingRequest, setLoadingRequest] = useState(true);
-    const { getUser, user } = useUser();
+    const { getUser, user, userLoaded } = useUser();
     const [form] = Form.useForm();
     const [otpform] = Form.useForm();
     const [newform] = Form.useForm();
@@ -43,26 +43,41 @@ const SignIn = () => {
             const redirectPath = getDashboardPath(data?.role);
             localStorage.setItem('token', data?.token);
             await getUser();
-            setLoadingRequest(false);
             message.success(msg);
-            window.location.href = redirectPath;
+            router.replace(redirectPath);
         }
     };
 
     const { time, start, pause, reset, status } = useTimer({ initialTime: 150, timerType: 'DECREMENTAL' });
     useEffect(() => { if (email) start(); if (time === 0) pause(); }, [time, start, pause, email]);
     useEffect(() => {
-        if (user?.role) { setLoadingRequest(false); router.replace(getDashboardPath(user.role)); }
+        if (!userLoaded) {
+            return;
+        }
+        if (user?.role) {
+            router.replace(getDashboardPath(user.role));
+            return;
+        }
         setLoadingRequest(false);
-    }, [user, router]);
+    }, [router, user, userLoaded]);
+
+    if (!userLoaded || user?.role) {
+        return (
+            <div className='px-2 sm:px-8 md:px-0 lg:mt-[80px] mt-[40px] max-w-[1320px] mx-auto pb-20'>
+                <div className='relative overflow-hidden rounded-2xl shadow-2xl shadow-black/15 min-h-[520px] bg-white flex items-center justify-center'>
+                    <div className='h-10 w-10 rounded-full border-2 border-[#F97316]/20 border-t-[#F97316] animate-spin' />
+                </div>
+            </div>
+        );
+    }
 
     return (
         <div className='px-2 sm:px-8 md:px-0 lg:mt-[80px] mt-[40px] max-w-[1320px] mx-auto pb-20'>
 
-            {/* â”€â”€ Main Card â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+            {/* --- Main Card --- */ }
             <div className='relative overflow-hidden rounded-2xl shadow-2xl shadow-black/15 flex flex-col md:flex-row min-h-[520px]'>
 
-                {/* Left â€” Athlete Panel */}
+                {/* Left - Athlete Panel */}
                 <div className='relative hidden md:flex md:w-[42%] flex-col items-center justify-end overflow-hidden bg-gradient-to-br from-[#C2410C] via-[#EA580C] to-[#F97316]'>
                     {/* Background pattern */}
                     <div className='absolute inset-0 opacity-[0.07]' style={{ backgroundImage: 'radial-gradient(circle, white 1px, transparent 1px)', backgroundSize: '28px 28px' }} />
@@ -70,12 +85,12 @@ const SignIn = () => {
                     <div className='absolute top-10 left-10 w-48 h-48 bg-white/10 rounded-full blur-3xl' />
                     <div className='absolute bottom-20 right-0 w-32 h-32 bg-[#FB923C]/20 rounded-full blur-2xl' />
 
-                    {/* Brand watermark â€” centered behind image */}
+                    {/* Brand watermark - centered behind image */}
                     <p className='absolute inset-0 flex items-center justify-center text-[70px] xl:text-[90px] font-black font-montserrat text-white/15 leading-none select-none pointer-events-none tracking-tight text-center'>
                         {data?.title?.slice(0, 8)}
                     </p>
 
-                    {/* Athlete image â€” constrained, bottom-anchored */}
+                    {/* Athlete image - constrained, bottom-anchored */}
                     <div className='relative z-10 w-[280px] xl:w-[320px] shrink-0'>
                         <Image
                             className='w-full h-auto object-contain object-bottom drop-shadow-2xl'
@@ -87,7 +102,7 @@ const SignIn = () => {
                     </div>
                 </div>
 
-                {/* Right â€” Form Panel */}
+                {/* Right - Form Panel */}
                 <div className='flex-1 bg-white flex flex-col justify-center px-8 sm:px-12 lg:px-16 py-12'>
                     {/* Header */}
                     <div className='mb-8'>
@@ -166,7 +181,7 @@ const SignIn = () => {
                 </div>
             </div>
 
-            {/* â”€â”€ Forget Password Modal â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+            {/* --- Forget Password Modal --- */}
             <Modal open={forget} maskClosable={false} footer={null} onCancel={() => setForget(false)}
                 className='!w-[460px]'
                 styles={{ content: { borderRadius: '16px', padding: '32px' } }}
@@ -201,7 +216,7 @@ const SignIn = () => {
                 </Form>
             </Modal>
 
-            {/* â”€â”€ OTP Modal â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+            {/* --- OTP Modal --- */}
             <Modal open={otpModal} maskClosable={false} footer={null} onCancel={() => setOtpModal(false)}
                 className='!w-[460px]'
                 styles={{ content: { borderRadius: '16px', padding: '32px' } }}
@@ -244,7 +259,7 @@ const SignIn = () => {
                 </Form>
             </Modal>
 
-            {/* â”€â”€ Reset Password Modal â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+            {/* --- Reset Password Modal --- */}
             <Modal open={newPass} maskClosable={false} footer={null} onCancel={() => setNewPass(false)}
                 className='!w-[460px]'
                 styles={{ content: { borderRadius: '16px', padding: '32px' } }}

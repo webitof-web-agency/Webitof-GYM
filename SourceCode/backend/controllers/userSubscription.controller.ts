@@ -314,7 +314,7 @@ export const buySubscription = async (req, res) => {
                 });
 
                 let link = await razorpay.paymentLink.create({
-                    amount: subsPrice * 100,
+                    amount: Math.round((Number(subsPrice) + Number.EPSILON) * 100),
                     currency: body.currency,
                     description: "Subscription Payment",
                     customer: {
@@ -685,10 +685,17 @@ export const getSubscriptionRazorpayPaymentSuccess = async (req, res) => {
             'uid': session_id,
         });
 
-        if (!subscription || subscription.payment.status === 'paid') {
+        if (!subscription) {
             return res.status(400).send({
                 error: true,
-                msg: `Payment already done or Invalid session ID`
+                msg: `Invalid session ID`
+            });
+        }
+        if (subscription.payment.status === 'paid') {
+            return res.status(200).send({
+                error: false,
+                msg: 'Payment already completed',
+                data: subscription
             });
         }
 

@@ -1,4 +1,4 @@
-﻿"use client"
+"use client"
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useRef } from 'react';
 import dayjs from 'dayjs';
@@ -9,6 +9,7 @@ import { useCurrency } from '../../../../../../contexts/site';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useI18n } from '../../../../../../providers/i18n';
+import { createProductSlug } from '../../../../../../helpers/product';
 
 const InfoRow = ({ label, value, customClass }) => (
   <tr>
@@ -81,13 +82,14 @@ const OrderDetails = ({ params }) => {
             {i18n?.t("Back")}
           </button>
         </div>
-        <div className="flex flex-col md:flex-row justify-between items-center mb-8 border-b pb-4" ref={invoiceRef}>
-          <h1 className="text-2xl md:text-4xl font-extrabold text-gray-800 uppercase">{i18n?.t("invoice")}</h1>
-          <div className="text-sm text-gray-600 text-right mt-4 md:mt-0">
-            <p>{i18n?.t("Invoice Date")}: {formattedDate}</p>
-            <p>{i18n?.t("Order ID")}: {order?.uid}</p>
+        <div ref={invoiceRef} className="bg-white p-2">
+          <div className="flex flex-col md:flex-row justify-between items-center mb-8 border-b pb-4">
+            <h1 className="text-2xl md:text-4xl font-extrabold text-gray-800 uppercase">{i18n?.t("invoice")}</h1>
+            <div className="text-sm text-gray-600 text-right mt-4 md:mt-0">
+              <p>{i18n?.t("Invoice Date")}: {formattedDate}</p>
+              <p>{i18n?.t("Order ID")}: {order?.uid}</p>
+            </div>
           </div>
-        </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
           <div >
@@ -138,7 +140,7 @@ const OrderDetails = ({ params }) => {
                 data?.items.map((item, index) => (
                   <tr className="border-b">
                     <td className="py-2 px-2 md:px-4"><Image src={item?.thumbnail_image} width={50} height={50} className='h-[40px] w-[40px]' alt="Product Image" /></td>
-                    <td className="py-2 px-2 md:px-4"><Link href={`/shop/${item?._id}`}>{item?.name?.en}</Link></td>
+                    <td className="py-2 px-2 md:px-4"><Link href={`/shop/${createProductSlug(item)}`}>{item?.name?.en}</Link></td>
                     <td className="py-2 px-2 md:px-4">{item?.variant?.name?.en || 'No Variant'}</td>
                     <td className="py-2 px-2 md:px-4 text-center">{item?.quantity}</td>
                     <td className="py-2 px-2 md:px-4 text-right">{getCurrencySymbol(order?.currency)}{item?.total}</td>
@@ -162,6 +164,8 @@ const OrderDetails = ({ params }) => {
             </table>
           </div>
         </div>
+        </div>
+
         <div className='w-full flex justify-end mt-10'>
           <button
             className="bg-[#F97316] hover:bg-[#F97316]/90 !w-fit text-white font-bold py-2 px-6 rounded"

@@ -24,28 +24,41 @@ const SignUp = () => {
     const [otpModal, setOtpModal] = useState(false);
     const [email, setEmail] = useState('');
     const [registrationValues, setRegistrationValues] = useState({});
-    const { getUser, user } = useUser();
+    const { getUser, user, userLoaded } = useUser();
     const [getEmail, setGetEmail] = useState('');
 
     const { time, start, pause, reset } = useTimer({ initialTime: 150, timerType: 'DECREMENTAL' });
     useEffect(() => { if (email) start(); if (time === 0) pause(); }, [time, start, pause, email]);
     useEffect(() => {
+        if (!userLoaded) {
+            return;
+        }
         if (user?.role) {
-            setLoadingRequest(false);
-            if (user.role === 'admin') router.push('/admin');
-            else if (user.role === 'user') router.push('/user');
-            else if (user.role === 'trainer') router.push('/trainer');
+            if (user.role === 'admin' || user.role === 'employee') router.replace('/admin');
+            else if (user.role === 'user') router.replace('/user');
+            else if (user.role === 'trainer') router.replace('/trainer');
+            return;
         }
         setLoadingRequest(false);
-    }, [user, router]);
+    }, [router, user, userLoaded]);
+
+    if (!userLoaded || user?.role) {
+        return (
+            <div className='container lg:my-[80px] my-[40px] otp-modal pb-20'>
+                <div className='relative overflow-hidden rounded-2xl shadow-2xl shadow-black/15 min-h-[580px] bg-white flex items-center justify-center'>
+                    <div className='h-10 w-10 rounded-full border-2 border-[#F97316]/20 border-t-[#F97316] animate-spin' />
+                </div>
+            </div>
+        );
+    }
 
     return (
         <div className='container lg:my-[80px] my-[40px] otp-modal pb-20'>
 
-            {/* â”€â”€ Main Card â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+            {/* --- Main Card --- */ }
             <div className='relative overflow-hidden rounded-2xl shadow-2xl shadow-black/15 flex flex-col lg:flex-row min-h-[580px]'>
 
-                {/* Left â€” Athlete Panel */}
+                {/* Left - Athlete Panel */}
                 <div className='relative hidden lg:flex lg:w-[42%] flex-col items-center justify-end overflow-hidden bg-gradient-to-br from-[#C2410C] via-[#EA580C] to-[#F97316]'>
                     {/* Background pattern */}
                     <div className='absolute inset-0 opacity-[0.07]' style={{ backgroundImage: 'radial-gradient(circle, white 1px, transparent 1px)', backgroundSize: '28px 28px' }} />
@@ -53,12 +66,12 @@ const SignUp = () => {
                     <div className='absolute top-10 left-10 w-48 h-48 bg-white/10 rounded-full blur-3xl' />
                     <div className='absolute bottom-20 right-0 w-32 h-32 bg-[#FB923C]/20 rounded-full blur-2xl' />
 
-                    {/* Brand watermark â€” centered behind image */}
+                    {/* Brand watermark - centered behind image */}
                     <p className='absolute inset-0 flex items-center justify-center text-[70px] xl:text-[90px] font-black font-montserrat text-white/15 leading-none select-none pointer-events-none tracking-tight text-center'>
                         {data?.title?.slice(0, 8)}
                     </p>
 
-                    {/* Athlete image â€” constrained, bottom-anchored */}
+                    {/* Athlete image - constrained, bottom-anchored */}
                     <div className='relative z-10 w-[280px] xl:w-[320px] shrink-0'>
                         <Image
                             className='w-full h-auto object-contain object-bottom drop-shadow-2xl'
@@ -70,7 +83,7 @@ const SignUp = () => {
                     </div>
                 </div>
 
-                {/* Right â€” Form Panel */}
+                {/* Right - Form Panel */}
                 <div className='flex-1 bg-white flex flex-col justify-center px-8 sm:px-12 lg:px-14 py-12'>
                     {/* Header */}
                     <div className='mb-7'>
@@ -192,7 +205,7 @@ const SignUp = () => {
                 </div>
             </div>
 
-            {/* â”€â”€ OTP Modal â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+            {/* --- OTP Modal --- */ }
             <Modal open={otpModal} maskClosable={false} footer={null} onCancel={() => setOtpModal(false)}
                 className='!w-[460px]'
                 styles={{ content: { borderRadius: '16px', padding: '32px' } }}
@@ -216,9 +229,11 @@ const SignUp = () => {
                             else {
                                 setOtpModal(false);
                                 localStorage.setItem('token', data.token);
+                                await getUser();
                                 message.success(msg);
-                                if (data?.role === 'admin') router.push('/admin');
-                                else { router.push('/'); getUser(); }
+                                if (data?.role === 'admin' || data?.role === 'employee') router.replace('/admin');
+                                else if (data?.role === 'trainer') router.replace('/trainer');
+                                else router.replace('/user');
                             }
                         }
                     }}

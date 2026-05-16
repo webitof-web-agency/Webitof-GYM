@@ -1,4 +1,4 @@
-﻿import Image from 'next/image';
+import Image from 'next/image';
 import React from 'react';
 import { columnFormatter } from '../../app/helpers/utils';
 import { useI18n } from '../../app/providers/i18n';
@@ -27,7 +27,7 @@ const CheckOutCard = ({ thumbnail_image, name, price, quantity, currencySymbol, 
                     {columnFormatter(name)}
                 </p>
                 <p className='text-[11px] text-gray-400 font-medium mt-0.5'>
-                    {quantity} Ã— {currencySymbol}{convertAmount(price?.toFixed(2))}
+                    {quantity} × {currencySymbol}{convertAmount(price?.toFixed(2))}
                 </p>
             </div>
 

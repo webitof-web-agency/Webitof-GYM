@@ -1,6 +1,6 @@
 'use client';
 import React, { useState } from 'react';
-import { Pagination } from 'antd';
+import { Pagination, Select } from 'antd';
 import BasicBar from '../../../../components/common/basic-bar';
 import ShopCard from '../../../../components/home1/shopCard';
 import { useFetch } from '../../../helpers/hooks';
@@ -9,6 +9,7 @@ import { columnFormatter } from '../../../helpers/utils';
 import { useI18n } from '../../../providers/i18n';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
+import { FiSearch, FiFilter } from 'react-icons/fi';
 
 
 const Shop = () => {
@@ -46,18 +47,17 @@ const Shop = () => {
                     whileInView="visible"
                     viewport={{ once: false, amount: 0.3 }}
                     transition={{ duration: 0.6, ease: "easeOut" }}
-                    className="bg-white rounded gap-4 flex md:flex-row flex-col-reverse items-center w-full md:px-4 shadow-sm md:border border-gray-200">
-                    <div className='flex justify-between w-full border md:border-none px-3 md:px-0 '>
-                        <button type="button" aria-label={i18n?.t('Search products') || 'Search products'} className="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F97316] focus-visible:ring-offset-2 focus-visible:ring-offset-white">
-                            <Image src={'/searchicon.png'} width={24} height={24} alt="search" className='
-                       min-w-6 '/>
-                        </button>
+                    className="bg-white rounded-2xl flex md:flex-row flex-col items-center w-full shadow-[0_4px_30px_-8px_rgba(0,0,0,0.08)] border border-slate-100 overflow-hidden"
+                >
+                    {/* Search Input */}
+                    <div className='flex items-center flex-1 w-full px-5 py-1 md:py-0'>
+                        <FiSearch size={20} className='text-gray-400 min-w-5 shrink-0' />
                         <input
                             name="search"
                             type="search"
                             autoComplete="off"
-                            placeholder={i18n?.t("Search brands and products, e.g. protein powder...")}
-                            className="w-full pl-3 py-4 text-[#534C4C] text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F97316] focus-visible:ring-offset-2 focus-visible:ring-offset-white bg-transparent"
+                            placeholder={i18n?.t("Search brands and products...")}
+                            className="w-full pl-4 py-4 text-gray-700 font-medium text-sm focus:outline-none bg-transparent placeholder:text-gray-400"
                             onChange={e => {
                                 if (e.target.value.length === 0) {
                                     getAllProducts({ langCode: langCode })
@@ -67,41 +67,29 @@ const Shop = () => {
                             }}
                         />
                     </div>
-                    <div className="md:block hidden border-s h-full md:py-3 pr-3 py-2 w-full md:w-fit">
-                        <select
-                            name="category"
-                            onChange={e => { getAllProducts({ category: e.target.value, langCode: langCode }) }}
+                    
+                    {/* Divider for desktop */}
+                    <div className="hidden md:block w-px h-8 bg-slate-100 mx-2"></div>
+                    
+                    {/* Category Selector */}
+                    <div className="flex items-center w-full md:w-auto px-5 py-2 md:py-0 bg-slate-50/50 md:bg-transparent border-t border-slate-100 md:border-t-0">
+                        <div className='flex h-8 w-8 items-center justify-center rounded-lg bg-[#F97316]/10 border border-[#F97316]/20 shrink-0 mr-3'>
+                            <FiFilter size={14} className='text-[#F97316]' />
+                        </div>
+                        <Select
+                            onChange={value => { getAllProducts({ category: value, langCode: langCode }) }}
                             defaultValue=""
-                            aria-label={i18n?.t('Product category') || 'Product category'}
-                            className="text-base w-full md:w-fit pl-4 pr-8 py-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F97316] focus-visible:ring-offset-2 focus-visible:ring-offset-white rounded-md !bg-transparent transition-all duration-300"
-                        >
-                            <option value="">{i18n?.t('All Categories')}</option>
-                            {
-                                category?.docs?.map(category => (
-                                    <option key={category?._id} value={columnFormatter(category?.name)}>
-                                        {columnFormatter(category?.name)}
-                                    </option>
-                                ))
-                            }
-                        </select>
-                    </div>
-                    <div className=" md:hidden border h-full md:py-3 pr-3 py-2 w-full md:w-fit">
-                        <select
-                            name="category-mobile"
-                            onChange={e => { getAllProducts({ category: e.target.value, langCode: langCode }) }}
-                            defaultValue=""
-                            aria-label={i18n?.t('Product category') || 'Product category'}
-                            className="text-base w-full md:w-fit pl-4 pr-8 py-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F97316] focus-visible:ring-offset-2 focus-visible:ring-offset-white rounded-md transition-all duration-300 !bg-transparent"
-                        >
-                            <option value="">{i18n?.t('All Categories')}</option>
-                            {
-                                category?.docs?.map(category => (
-                                    <option key={category?._id} value={columnFormatter(category?.name)}>
-                                        {columnFormatter(category?.name)}
-                                    </option>
-                                ))
-                            }
-                        </select>
+                            bordered={false}
+                            className="w-full md:w-48 !font-bold text-[13px]"
+                            dropdownStyle={{ borderRadius: '12px', padding: '8px' }}
+                            options={[
+                                { value: '', label: i18n?.t('All Categories') },
+                                ...(category?.docs?.map(c => ({
+                                    value: columnFormatter(c?.name),
+                                    label: columnFormatter(c?.name)
+                                })) || [])
+                            ]}
+                        />
                     </div>
                 </motion.div>
 

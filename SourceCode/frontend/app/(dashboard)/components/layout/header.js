@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 import { FaBars } from 'react-icons/fa';
 import { FiLock, FiLogOut, FiUser, FiChevronDown, FiKey, FiBell, FiMessageSquare } from 'react-icons/fi';
 import { useRouter } from 'next/navigation';
@@ -11,6 +11,7 @@ import { initializeSocket } from '../../../helpers/socket';
 import { useFetch } from '../../../helpers/hooks';
 import Image from 'next/image';
 import { notifyInfo, notifySuccess } from '../../../helpers/notify';
+import { clearAuthStorage } from '../../../helpers/auth';
 
 const findPreferredLanguage = (items = []) => {
     return (
@@ -85,7 +86,7 @@ const Header = () => {
 
     const handleLogout = () => {
         try {
-            localStorage.removeItem('token');
+            clearAuthStorage();
             notifySuccess('Logged out successfully');
             window.location.href = '/signin';
         } catch (error) {
@@ -103,7 +104,7 @@ const Header = () => {
         <header className='header z-10 border-b border-slate-100/80 bg-white/95 backdrop-blur-sm'>
             <div className='flex h-full items-center justify-between px-4 py-2.5'>
                 
-                {/* Left â€” hamburger (mobile) */}
+                {/* Left - hamburger (mobile) */}
                 <div className='flex items-center gap-3'>
                     <button
                         type="button"
@@ -117,7 +118,7 @@ const Header = () => {
                     </button>
                 </div>
 
-                {/* Right â€” action row */}
+                {/* Right - action row */}
                 <div className='flex items-center gap-2'>
 
                     {/* Message Icon */}

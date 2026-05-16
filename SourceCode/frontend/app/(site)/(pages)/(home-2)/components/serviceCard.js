@@ -1,4 +1,4 @@
-﻿'use client'
+'use client'
 import React from 'react';
 import Image from 'next/image';
 import { useI18n } from '../../../../providers/i18n';
@@ -42,7 +42,7 @@ const ServiceCard = ({ data, index = 0 }) => {
                 />
             </Link>
 
-            {/* Icon tile â€” overlapping the image bottom */}
+            {/* Icon tile - overlapping the image bottom */}
             <div className='px-5 -mt-6 relative z-10'>
                 <div className={`inline-flex h-12 w-12 items-center justify-center rounded-xl border ${ac.icon} shadow-md bg-white`}>
                     <Image

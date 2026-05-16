@@ -11,6 +11,7 @@ import { useUser } from '../../app/contexts/user';
 import { motion } from 'framer-motion';
 import { useI18n } from '../../app/providers/i18n';
 import { useFetch } from '../../app/helpers/hooks';
+import { createProductSlug } from '../../app/helpers/product';
 
 const ShopCard = ({ data, getData }) => {
     const { user } = useUser();
@@ -41,6 +42,7 @@ const ShopCard = ({ data, getData }) => {
     };
 
     const isSoldOut = data?.quantity === 0;
+    const productHref = `/shop/${createProductSlug(data)}`;
 
     return (
         <motion.div
@@ -54,7 +56,7 @@ const ShopCard = ({ data, getData }) => {
             {/* Image area */}
             <div className='relative overflow-hidden bg-slate-50 lg:h-[240px] sm:h-[200px] h-[170px] shrink-0'>
                 {/* Main image */}
-                <Link href={`/shop/${data?._id}`} className='block w-full h-full'>
+                <Link href={productHref} className='block w-full h-full'>
                     <Image
                         src={data?.thumbnail_image}
                         alt={columnFormatter(data?.name)}
@@ -86,14 +88,14 @@ const ShopCard = ({ data, getData }) => {
                         <FiHeart size={14} className={wishListed ? 'fill-current' : ''} />
                     </button>
                     <Link
-                        href={`/shop/${data?._id}`}
+                        href={productHref}
                         className='flex h-8 w-8 items-center justify-center rounded-xl border border-slate-200 text-gray-500 hover:border-[#F97316] hover:text-[#F97316] transition-all duration-200'
                         title={i18n?.t('Quick View')}
                     >
                         <FiEye size={14} />
                     </Link>
                     <Link
-                        href={`/shop/${data?._id}`}
+                        href={productHref}
                         className='flex h-8 items-center gap-1.5 px-4 rounded-xl bg-[#F97316] text-[11px] font-bold text-white hover:bg-[#EA580C] transition-colors'
                     >
                         <FiShoppingBag size={12} /> {i18n?.t('Buy')}
@@ -103,7 +105,7 @@ const ShopCard = ({ data, getData }) => {
 
             {/* Info */}
             <div className='p-4 flex flex-col flex-1'>
-                <Link href={`/shop/${data?._id}`} className='text-[13px] font-semibold text-gray-800 leading-snug line-clamp-2 hover:text-[#F97316] transition-colors mb-1'>
+                <Link href={productHref} className='text-[13px] font-semibold text-gray-800 leading-snug line-clamp-2 hover:text-[#F97316] transition-colors mb-1'>
                     {columnFormatter(data?.name)}
                 </Link>
                 <p className='text-[11px] text-gray-400 font-medium capitalize mb-2'>{columnFormatter(data?.category?.name)}</p>

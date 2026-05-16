@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 import { Form, Modal, Switch } from 'antd';
 import React, { useState } from 'react';
 import { useI18n } from '../../../providers/i18n';
@@ -188,7 +188,7 @@ const Currency = () => {
                                  <FormInput placeholder={('e.g. US Dollar, Euro')} label={<span className="text-xs font-bold text-gray-700">Display Identity</span>} name='name' required />
                              </div>
                              <div className="col-span-1">
-                                 <FormInput placeholder={('e.g. $, â‚¬')} label={<span className="text-xs font-bold text-gray-700">Finance Symbol</span>} name='symbol' required />
+                                 <FormInput placeholder={('e.g. $, €')} label={<span className="text-xs font-bold text-gray-700">Finance Symbol</span>} name='symbol' required />
                              </div>
                              <div className="col-span-1">
                                  <FormInput placeholder={('e.g. USD, EUR')} label={<span className="text-xs font-bold text-gray-700">ISO Standard Code</span>} name='code' required />

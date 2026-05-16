@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 import React, { useEffect, useState } from "react";
 import "swiper/css";
 import Image from "next/image";
@@ -51,7 +51,7 @@ const ProductImageSlider = ({ thumbnail_image, images = [] }) => {
         />
       </div>
 
-      {/* Thumbnail strip â€” simple click-to-select, no Thumbs module needed */}
+      {/* Thumbnail strip - simple click-to-select, no Thumbs module needed */}
       <Swiper
         spaceBetween={10}
         slidesPerView={4}

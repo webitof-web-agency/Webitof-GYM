@@ -99,7 +99,7 @@ const Page = () => {
                     <Form form={form} onFinish={handlePlaceOrder}>
                         <div className='grid grid-cols-1 lg:grid-cols-3 gap-8 xl:gap-12'>
 
-                            {/* â”€â”€ LEFT: Shipping + Payment â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+                            {/* --- LEFT: Shipping + Payment --- */}
                             <div className='lg:col-span-2 space-y-6'>
 
                                 {/* Shipping details card */}
@@ -213,7 +213,7 @@ const Page = () => {
                                 </motion.div>
                             </div>
 
-                            {/* â”€â”€ RIGHT: Order Summary â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+                            {/* --- RIGHT: Order Summary --- */}
                             <div className='lg:col-span-1'>
                                 <motion.div
                                     initial={{ opacity: 0, y: 20 }}

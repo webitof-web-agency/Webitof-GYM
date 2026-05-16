@@ -5,6 +5,60 @@ import Cart from "../../models/product/cart.model";
 import ProductReview from "../../models/product/review.model";
 import Order from "../../models/product/order.model";
 
+const getProductSlugSource = (name) => {
+    if (!name) {
+        return "";
+    }
+
+    if (typeof name?.get === "function") {
+        return name.get("en") || Array.from(name.values()).find(Boolean) || "";
+    }
+
+    if (typeof name === "object") {
+        return name.en || Object.values(name).find(Boolean) || "";
+    }
+
+    return String(name);
+};
+
+const slugifyProductName = (name) => {
+    const baseValue = getProductSlugSource(name)
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/^-+|-+$/g, "")
+        .replace(/-{2,}/g, "-");
+
+    return baseValue || "product";
+};
+
+const buildUniqueProductSlug = async (name, excludeId = undefined) => {
+    const baseSlug = slugifyProductName(name);
+    let nextSlug = baseSlug;
+    let suffix = 2;
+
+    while (await Product.exists({ slug: nextSlug, ...(excludeId ? { _id: { $ne: excludeId } } : {}) })) {
+        nextSlug = `${baseSlug}-${suffix}`;
+        suffix += 1;
+    }
+
+    return nextSlug;
+};
+
+const ensureProductSlug = async (product) => {
+    if (!product || product.slug) {
+        return product;
+    }
+
+    product.slug = await buildUniqueProductSlug(product.name, product._id);
+    await product.save();
+    return product;
+};
+
+const ensureProductSlugs = async (products = []) => {
+    await Promise.all((products || []).map((product) => ensureProductSlug(product)));
+    return products;
+};
+
 
 // product list
 export const getProductListAdmin = async (req, res) => {
@@ -27,6 +81,7 @@ export const getProductListAdmin = async (req, res) => {
                 { path: 'category', select: '-__v -createdAt -updatedAt' },
             ]
         })
+        await ensureProductSlugs(data?.docs);
         return res.status(200).send({
             error: false,
             msg: "Products fetched successfully",
@@ -67,7 +122,10 @@ export const addProduct = async (req, res) => {
             });
         }
 
-        const newProduct = await new Product(body)
+        const newProduct = await new Product({
+            ...body,
+            slug: await buildUniqueProductSlug(body.name),
+        })
 
         await newProduct.save();
 
@@ -127,6 +185,8 @@ export const updateProduct = async (req, res) => {
         if (!body.variants) {
             updateData.variants = [];
         }
+
+        updateData.slug = await buildUniqueProductSlug(updateData.name || product.name, product._id);
 
         console.log("Updating product with data:", updateData); // Debug log
         await Product.findByIdAndUpdate(body._id, updateData);
@@ -252,6 +312,7 @@ export const getProductList = async (req, res) => {
         });
 
 
+        await ensureProductSlugs(data?.docs);
         return res.status(200).send({
             error: false,
             msg: "Products fetched successfully",
@@ -275,6 +336,11 @@ export const getProductDetails = async (req, res) => {
                 path: 'category',
                 select: '-__v -createdAt -updatedAt',
             });
+        } else if (!!query.slug) {
+            product = await Product.findOne({ slug: query.slug }).populate({
+                path: 'category',
+                select: '-__v -createdAt -updatedAt',
+            });
         }
         if (!product) {
             return res.status(404).send({
@@ -282,6 +348,7 @@ export const getProductDetails = async (req, res) => {
                 msg: 'Product not found'
             });
         }
+        await ensureProductSlug(product);
         let relatedProducts = undefined;
         if(!!product?.category?._id){
             relatedProducts = await Product.find({
@@ -290,6 +357,7 @@ export const getProductDetails = async (req, res) => {
             })
                 .select('-__v -createdAt -updatedAt -description -short_description')
                 .limit(5);
+            await ensureProductSlugs(relatedProducts);
         }
         const reviews = await ProductReview.find({ product: product._id })
             .select('-__v')
@@ -414,9 +482,12 @@ export const removeProductFromCart = async (req, res) => {
         const cart = await Cart.findOne({ user: user });
 
         if (!cart) {
-            return res.status(404).send({
-                error: true,
-                msg: 'Cart not found'
+            return res.status(200).send({
+                error: false,
+                msg: 'Cart fetched successfully',
+                data: {
+                    products: []
+                }
             });
         }
 

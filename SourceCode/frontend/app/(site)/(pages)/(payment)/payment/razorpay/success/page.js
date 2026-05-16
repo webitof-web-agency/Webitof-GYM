@@ -11,37 +11,60 @@ import PaymentSuccess from "../../../../../../../components/common/paymentSucces
 const PaymentSuccessPage = () => {
     const i18n = useI18n();
     const [loading, setLoading] = useState(true);
-    const [mollieSuccess, getSuccess,{ error }] = useFetch(getRazorpayOrderPaymentSuccess, {}, false)
+    const [paymentSuccess, getSuccess, { error }] = useFetch(getRazorpayOrderPaymentSuccess, {}, false)
     const router = useRouter();
-    const [sessionId, setSessionId] = useState(null);
-    const [razorpayPaymentId, setRazorpayPaymentId] = useState(null);
-    const [razorpaySignature, setRazorpaySignature] = useState(null);
+    const [paymentQuery, setPaymentQuery] = useState(null);
+
     useEffect(() => {
         const urlParams = new URLSearchParams(window.location.search);
         const session_id = urlParams.get('session_id');
         const razorpay_payment_id = urlParams.get('razorpay_payment_id');
         const razorpay_signature = urlParams.get('razorpay_signature');
-        if (session_id && razorpay_payment_id && razorpay_signature) {
-            setSessionId(session_id);
-            setRazorpayPaymentId(razorpay_payment_id);
-            setRazorpaySignature(razorpay_signature);
+        const razorpay_payment_link_id = urlParams.get('razorpay_payment_link_id');
+        const razorpay_payment_link_reference_id = urlParams.get('razorpay_payment_link_reference_id');
+        const razorpay_payment_link_status = urlParams.get('razorpay_payment_link_status');
+
+        if (
+            session_id &&
+            razorpay_payment_id &&
+            razorpay_signature &&
+            razorpay_payment_link_id &&
+            razorpay_payment_link_reference_id &&
+            razorpay_payment_link_status
+        ) {
+            setPaymentQuery({
+                session_id,
+                razorpay_payment_id,
+                razorpay_signature,
+                razorpay_payment_link_id,
+                razorpay_payment_link_reference_id,
+                razorpay_payment_link_status,
+            });
         } else {
             message.error('Missing payment information.');
             router.push('/');
         }
-    }, []);
+    }, [router]);
 
     useEffect(() => {
-        if (sessionId && razorpayPaymentId && razorpaySignature) {
-            getSuccess({ session_id: sessionId, razorpay_payment_id: razorpayPaymentId, razorpay_signature: razorpaySignature });
+        if (paymentQuery) {
+            getSuccess(paymentQuery);
+        }
+    }, [getSuccess, paymentQuery]);
+
+    useEffect(() => {
+        if (paymentSuccess?.uid || paymentSuccess?._id) {
             setLoading(false);
         }
-    }, [sessionId, razorpayPaymentId, razorpaySignature]);
+    }, [paymentSuccess]);
+
     useEffect(() => {
-        if(error) {
-            message.error(error)
+        if (error) {
+            message.error(error);
+            setLoading(false);
+            router.push('/payment/failed');
         }
-    },[error])
+    }, [error, router]);
 
     return (
         <div>

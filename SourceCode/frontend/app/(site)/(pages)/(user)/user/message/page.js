@@ -74,7 +74,7 @@ export default function MedicalChat() {
         setMemberRole(role); setActiveChat(name); setActiveChatId(id)
     }
 
-    // â”€â”€ Sidebar / Chat List â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // --- Sidebar / Chat List ---
     const renderChatList = () => (
         <div className={`w-full md:w-[320px] md:border-r border-slate-100 flex-shrink-0 flex flex-col bg-white ${activeChat ? "hidden lg:flex" : "flex"}`}>
             {/* Header */}
@@ -161,7 +161,7 @@ export default function MedicalChat() {
         </div>
     );
 
-    // â”€â”€ Chat Area â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // --- Chat Area ---
     const renderChatArea = () => (
         <div className={`flex-1 flex flex-col min-w-0 ${activeChat ? 'flex' : 'hidden lg:flex'}`}>
             {/* Chat Header */}
